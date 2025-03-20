@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*Editar el fondo*/
+body {
+  background-image: url("../imagenes/fotofondo.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+/*Editar la imagen*/
+.contenedor {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 30vh; /* Ocupar toda la pantalla */
+}
+
+img {
+  margin-top: 100px; /*hace que la imagen este mas abajo */
+  border-radius: 8%;
+  object-fit: cover; /* Asegura que la imagen se recorte bien */
+  width: 450px; /* Ajusta el ancho */
+  height: auto; /* Mantiene la proporción */
+  opacity: 70%;
+  cursor: pointer;
+}
+
+/*
+header { 
+    width: 100px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;  Centra el contenido horizontalmente 
+    align-items: center;      Centra el contenido verticalmente 
+    width: 100%;
+    height: auto;              Asegura que el header ocupe todo el ancho de la ventana 
+}
+*/
+/* Textos en este caso Bienvenidos*/
+h1 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600; /* Ajusta el peso según lo necesario */
+  font-style: italic;
+  display: block;
+  margin-top: 0.9%;
+  color: #549657;
+  font-size: 100px;
+  text-align: center;
+  margin-bottom: 20px; /* Un pequeño espacio entre el letrero y los botones */
+}
+
+/* Contenedor de los botones Iniciar sesion y Registrate */
+.contenedor_botones {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 250px; /* Ocupa toda la altura de la pantalla */
+  gap: 100px;
+}
+
+.btn-Inicio,
+.btn-Registrate {
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 500; /* Ajusta el peso según lo necesario */
+  font-style: italic;
+  justify-content: space-around;
+  padding: 10px 20px;
+  font-size: 20px;
+  background: #549657;
+  color: #ecebf0;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-Inicio:hover,
+.btn-Registrate:hover {
+  background: rgba(
+    230,
+    168,
+    93,
+    0.7
+  ); /* Color de fondo cuando el ratón pasa sobre el botón */
+  transform: scale(1.1);
+}

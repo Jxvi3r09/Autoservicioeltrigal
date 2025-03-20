@@ -1,0 +1,280 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/*Mensaje de alerta*/
+.alert {
+  padding: 15px;
+  background-color: #4caf50; /* Verde */
+  color: white;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/*Espacio textos*/
+h4 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600; /* ExtraLight */
+  position: absolute;
+  top: 0; /* Alinea el h4 con el borde superior del form */
+  left: 0; /* Opcional: Alinea a la izquierda del form */
+  width: 100%; /* Opcional: Que ocupe todo el ancho */
+}
+.linea1,
+.linea2,
+.linea3 {
+  display: block; /* Asegura que cada línea esté debajo de la otra */
+}
+
+.linea1 {
+  margin-left: 0px;
+}
+
+.linea2 {
+  margin-left: 20px; /* Ajusta el margen para escalonar */
+}
+
+.linea3 {
+  margin-left: 25px;
+}
+/*Edicion de la linea*/
+hr {
+  height: 2px; /* Ajusta el grosor */
+  background-color: black; /* Color de la línea */
+  border: none; /* Quita el borde por defecto */
+  margin-top: 20px;
+  align-self: stretch;
+}
+
+body {
+  background-image: url(../imagenes/fotofondo.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+/*Edicion parte donde se piden los datos*/
+input {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 500; /* Ajusta el peso según lo necesario */
+  font-size: 15px;
+  font-style: normal;
+  background: #549657;
+  border-radius: 6px;
+  padding: 10px 30px;
+  margin-top: -2px;
+}
+
+input:focus {
+  border-color: #000000; /* Cambia el borde */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Agrega un resplandor azul */
+  background-color: #f0f8ffa6; /* Cambia el fondo ligeramente */
+}
+::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+.contenedor {
+  display: flex;
+  justify-content: flex-start; /* Centra horizontalmente */
+  align-items: flex-start; /* Centra verticalmente */
+  height: 30vh; /* Ocupar toda la pantalla */
+}
+img {
+  position: absolute;
+  right: 650px; /* Ajusta según necesites */
+  margin-top: 190px; /*hace que la imagen este mas abajo o arriba */
+  border-radius: 20px;
+  object-fit: cover; /* Asegura que la imagen se recorte bien */
+  width: 350px; /* Ajusta el ancho */
+  height: auto; /* Mantiene la proporción */
+  opacity: 80%;
+  cursor: pointer;
+}
+
+form {
+  position: absolute;
+  right: 280px; /* Ajusta según necesites */
+  text-align: center;
+  margin-top: -95px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Fondo blanco con 70% de opacidad */
+  border-radius: 10px;
+  /* Reduce el ancho */
+  height: 400px; /* Aumenta la altura */
+  padding: 30px; /* Espaciado interno */
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se acomoden en columna */
+  justify-content: center; /* Centra verticalmente el contenido */
+  align-items: center;
+}
+
+/*Recuperar contraseña*/
+.olvide {
+  text-align: center; /* Centra el texto */
+  margin-top: 12px; /* Agrega un margen superior */
+}
+.olvide a {
+  font-family: "Inter", sans-serif;
+  font-weight: 500; /* Ajusta el peso según lo necesario */
+  font-style: bold;
+  color: #000000; /* Cambia el color del enlace */
+  text-decoration: none; /* Elimina el subrayado */
+  font-weight: bold; /* Hace el texto más grueso */
+}
+
+.olvide a:hover {
+  text-decoration: underline; /* Agrega subrayado al pasar el cursor */
+}
+/*Edicion del boton Registrate*/
+.btn-Registrate {
+  position: relative;
+  top: 20px; /* Ajusta la cantidad según necesites */
+  /*Fuente y su tamaño*/
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 500; /* Ajusta el peso según lo necesario */
+  font-style: normal;
+  justify-content: space-around;
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #549657;
+  color: #000000;
+  padding: 5px 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  transition: background 0.3s ease-in-out; /* Suaviza el hover */
+}
+
+/*Para quitarle las viñetas a nuestras listas*/
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+/*Margen entre las listas de usuario y contraseña*/
+form li + li {
+  margin-top: 1em;
+}
+
+label {
+  /* Tamaño y alineación uniforme de nuestros label*/
+  display: inline-block;
+  width: 90px;
+  text-align: right;
+}
+/*Boton iniciar sesión*/
+.button {
+  text-align: center;
+}
+/*Edicion del boton iniciar sesión*/
+button {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600; /* Ajusta el peso según lo necesario */
+  font-style: normal;
+  font-size: 17px;
+  border-radius: 6px;
+  padding: 5px 50px;
+  color: rgb(0, 0, 0);
+  background-color: #549657;
+  margin-top: 1.5em;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out; /* Suaviza el hover */
+}
+
+.btn-index {
+  margin-left: 20px;
+  margin-right: 20px;
+  position: relative;
+  top: 40px;
+  border-radius: 6px;
+  padding: 10px 20px;
+  color: white;
+  background-color: #549657;
+}
+li {
+  list-style: none;
+}
+/* Estilos generales de los inputs */
+input {
+  background-color: #549657;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  width: 100%;
+  outline: none;
+}
+
+/* Efecto cuando el usuario hace clic en los inputs */
+input:focus {
+  background-color: #3a653e;
+  box-shadow: 0 0 10px rgba(84, 150, 87, 0.8);
+  transform: scale(1.05);
+}
+
+/* Estilos para los contenedores de los inputs con icono */
+.user-logo,
+.password-logo {
+  display: flex;
+  align-items: center;
+  background-color: #549657;
+  border-radius: 6px;
+  padding: 3px;
+  gap: 10px;
+}
+
+/* Estilos para los iconos */
+.user-logo i,
+.password-logo i {
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+}
+
+/* Estilo del botón */
+.button button {
+  color: white;
+  border: none;
+  padding: 12px 60px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  width: 100%;
+}
+
+.button button:hover {
+  background-color: #467a49;
+  transform: scale(1.05);
+}
+
+/* Botón de registro */
+.btn-Registrate {
+  display: block;
+  text-align: center;
+  background-color: #467a49;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  font-size: 18px;
+}
+
+.btn-Registrate:hover {
+  background-color: #3a653e;
+  transform: scale(1.05);
+}
