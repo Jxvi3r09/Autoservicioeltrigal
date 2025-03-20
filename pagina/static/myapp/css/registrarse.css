@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600; /* ExtraLight */
+  font-size: 35px;
+  margin-top: -40px;
+  display: block;
+}
+/*Edicion de la linea*/
+hr {
+  height: 2px; /* Ajusta el grosor */
+  background-color: black; /* Color de la línea */
+  border: none; /* Quita el borde por defecto */
+  margin-top: 20px;
+  align-self: stretch;
+}
+/*Escritos*/
+.linea1,
+.linea2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 450;
+  display: block;
+}
+/*Agregar imagen de fondo*/
+body {
+  background-image: url(../imagenes/fotofondo.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+/*Edicion del formulario*/
+form {
+  margin-left: 360px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  text-align: center;
+  padding: 36px;
+  flex-direction: row-reverse;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 450px;
+}
+/*Edicion viñetas*/
+form li + li {
+  margin-top: 1em;
+}
+li {
+  list-style: none;
+}
+/*Edicion de los campos de datos input*/
+input {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 500; /* Ajusta el peso según lo necesario */
+  font-size: 15px;
+  background-color: #549657;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 15px;
+  margin-bottom: -5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+/*Estilos de input pot separado*/
+#nombre {
+  margin-left: -24px;
+  width: 200px;
+}
+#apellido {
+  width: 200px;
+  position: relative;
+  left: 35px;
+}
+#correo {
+  width: 400px;
+}
+#contraseña {
+  width: 300px;
+}
+#numero_id {
+  width: 200px;
+  position: relative;
+  left: -75px;
+}
+/*Edicion elegir rol*/
+select {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 500; /* Ajusta el peso según lo necesario */
+  font-size: 15px;
+  background-color: #549657; /* Color de fondo */
+  color: white; /* Color del texto */
+  padding: 10px;
+  border-radius: 6px; /* Bordes redondeados */
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  width: 200px;
+  position: relative;
+  left: 135px;
+}
+label {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600; /* Ajusta el peso según lo necesario */
+  font-size: 15px;
+}
+
+/* Cambiar el estilo de las opciones */
+select option {
+  background-color: white;
+  color: black;
+}
+
+input,
+select {
+  background-color: #549657;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+/* Efecto cuando se selecciona el input o select */
+input:focus,
+select:focus {
+  background-color: #3a653e;
+  outline: none;
+  box-shadow: 0 0 10px rgba(84, 150, 87, 0.8);
+  transform: scale(1.05); /* Hace que crezca un poco */
+}
+
+::placeholder {
+  color: #000000;
+}
+img {
+  width: 350px;
+  border-radius: 15px;
+  margin-top: -35px;
+  margin-left: 450px;
+  opacity: 75%;
+  cursor: pointer;
+}
+/*Boton de registrarse*/
+button {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600; /* Ajusta el peso según lo necesario */
+  font-size: smaller;
+  font-style: normal;
+  font-size: 17px;
+  border-radius: 6px;
+  padding: 8px 60px;
+  color: rgb(255, 255, 255);
+  background-color: #549657;
+  margin-top: 1.5em;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out; /* Suaviza el hover */
+  border: none;
+}
+.button button:hover {
+  background-color: #467a49;
+  transform: scale(1.05);
+}
