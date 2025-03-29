@@ -1,0 +1,116 @@
+/*Editar los colores del header*/
+/*Convertir el color en  rgb*/
+.navbar-dark {
+  --bs-dark-rgb: 242, 242, 242;
+  background-color: #f2f2f2 !important;
+}
+
+/*Edicion de la imagen*/
+.logo-hover {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.logo-hover:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/*Edicion del boton acceder*/
+.mi-boton {
+  background-color: rgb(243, 154, 49) !important;
+}
+.mi-boton:hover {
+  background-color: rgb(243, 154, 49, 0.5) !important;
+}
+/*Edicion barra header*/
+.navbar {
+  background-color: #cb2222 !important; /* Cambia el color de fondo */
+  padding: 15px 20px; /* Ajusta el espacio interior */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #000000 !important; /* Cambia el color del texto */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: rgb(243, 154, 49) !important; /* Color al pasar el mouse */
+}
+
+.navbar-brand {
+  font-size: 1.5rem; /* Ajusta el tamaño del logo o texto */
+  font-weight: bold;
+}
+.carousel-caption {
+  color: rgb(243, 154, 49) !important; /* Cambia el color del texto */
+
+  padding: 10px;
+  /*background: none !important;
+  backdrop-filter: none !important; /* Si Bootstrap usa desenfoque */
+  border-radius: 8px;
+}
+/* Estilos para el carrusel */
+.hero-carousel .carousel-item {
+  height: 80vh;
+  min-height: 500px;
+}
+
+.hero-carousel img {
+  object-fit: cover;
+  filter: brightness(0.7);
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-caption {
+  bottom: 30%;
+  text-align: left;
+  padding: 2rem;
+  background: rgba(155, 155, 155, 0.139);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+/* Estilos para el botón "volver arriba" */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.back-to-top.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .carousel-caption {
+    bottom: 20%;
+  }
+
+  .carousel-caption h1 {
+    font-size: 2rem;
+  }
+
+  .carousel-caption p {
+    font-size: 1rem;
+  }
+
+  .hero-carousel .carousel-item {
+    height: 60vh;
+  }
+}

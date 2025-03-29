@@ -1,0 +1,154 @@
+/* Reset global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Establecer fondo */
+body {
+  background-image: url("../imagenes/fotofondo.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Contenedor de la imagen */
+.contenedor {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 30vh; /* Ocupa el 30% de la altura de la pantalla */
+}
+
+/* Imagen de portada */
+img {
+  margin-top: 100px; /* Hacer que la imagen esté más abajo */
+  border-radius: 8%;
+  object-fit: cover; /* Asegura que la imagen se recorte bien */
+  width: 450px; /* Ajusta el ancho */
+  height: auto; /* Mantiene la proporción */
+  opacity: 70%;
+  cursor: pointer;
+}
+
+/* Títulos */
+h1 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  color: #549657;
+  font-size: 100px;
+  text-align: center;
+  margin-top: 0.9%;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de los botones */
+.contenedor_botones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  gap: 100px;
+}
+
+/* Botones */
+.btn-Inicio,
+.btn-Registrate {
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  padding: 10px 30px;
+  font-size: 20px;
+  background: #549657;
+  color: #ecebf0;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.btn-Inicio:hover,
+.btn-Registrate:hover {
+  background: rgba(230, 168, 93, 0.7);
+  transform: scale(1.1);
+}
+
+/* Para pantallas grandes */
+@media (min-width: 1200px) {
+  .contenedor {
+    height: 30vh; /* Mantiene el tamaño en pantallas grandes */
+  }
+
+  .contenedor_botones {
+    gap: 100px; /* Espacio más grande entre los botones */
+  }
+
+  h1 {
+    font-size: 100px; /* Título grande para pantallas grandes */
+  }
+
+  .btn-Inicio,
+  .btn-Registrate {
+    font-size: 20px; /* Tamaño de texto adecuado */
+    padding: 10px 30px; /* Ajuste de padding */
+  }
+}
+
+/* Para pantallas medianas */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .contenedor {
+    height: 40vh; /* Un poco más de espacio para pantallas medianas */
+  }
+
+  h1 {
+    font-size: 80px; /* Tamaño del título ajustado */
+  }
+
+  .contenedor_botones {
+    gap: 50px; /* Menor espacio entre botones */
+  }
+
+  .btn-Inicio,
+  .btn-Registrate {
+    font-size: 18px; /* Tamaño de fuente adecuado */
+    padding: 10px 20px; /* Ajuste de padding */
+  }
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 767px) {
+  body {
+    background-size: auto 100%; /* Ajuste del fondo para pantallas pequeñas */
+  }
+
+  .contenedor {
+    flex-direction: column; /* Organiza la imagen y el título en columnas */
+    height: auto;
+    margin-top: 50px; /* Ajuste para imagen más arriba */
+  }
+
+  img {
+    width: 80%; /* Reducir el tamaño de la imagen */
+    margin-top: 20px; /* Menos espacio arriba de la imagen */
+    opacity: 90%;
+  }
+
+  h1 {
+    font-size: 40px; /* Título pequeño en pantallas pequeñas */
+  }
+
+  .contenedor_botones {
+    flex-direction: column; /* Botones en columna */
+    gap: 20px; /* Menor espacio entre los botones */
+    height: auto;
+  }
+
+  .btn-Inicio,
+  .btn-Registrate {
+    font-size: 16px; /* Ajuste de tamaño de fuente para botones */
+    padding: 8px 20px; /* Ajuste de padding */
+  }
+}

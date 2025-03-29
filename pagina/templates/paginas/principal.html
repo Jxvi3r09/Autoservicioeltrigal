@@ -1,0 +1,558 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Autoservicio el Trigal - Tu tienda de conveniencia con los mejores productos"
+    />
+    <title>Autoservicio el Trigal | Tienda de conveniencia</title>
+
+    <!-- Conexión CSS -->
+    <link href="{% static 'myapp/css/principal.css' %}" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Animate CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img
+            src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+            alt="Autoservicio el Trigal"
+            width="170"
+            class="logo-hover"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#mision-vision">Nosotros</a>
+            
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contacto">Contacto</a>
+            </li>
+            <li class="nav-item ms-lg-3">
+              <button
+                class="btn mi-boton"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+              >
+                <i class="bi bi-person-circle me-1"></i> Acceder
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <div
+      id="heroCarousel"
+      class="carousel slide hero-carousel"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-indicators">
+        {% for i in "12345678" %}
+        <button
+          type="button"
+          data-bs-target="#heroCarousel"
+          data-bs-slide-to="{{ forloop.counter0 }}"
+          {%
+          if
+          forloop.first
+          %}class="active"
+          {%
+          endif
+          %}
+        ></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for i in "12345" %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img
+            src="{% static 'myapp/imagenes/ima01.jpeg' %}"
+            class="d-block w-100"
+            alt="Autoservicio el Trigal - Imagen {{ i }}"
+          />
+          <div class="carousel-caption animate__animated animate__fadeIn">
+            <h1 class="display-4 fw-bold">
+              Bienvenidos a Autoservicio el Trigal
+            </h1>
+            <p class="lead">
+              Tu tienda de conveniencia con los mejores productos y atención
+            </p>
+            
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-white">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card border-0 text-center p-4 h-100">
+              <div class="card-icon">
+                <i class="bi bi-truck"></i>
+              </div>
+              <h3>Envíos Rápidos</h3>
+              <p class="text-muted">
+                Entregamos tus productos en el menor tiempo posible para que no
+                tengas que esperar.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 text-center p-4 h-100">
+              <div class="card-icon">
+                <i class="bi bi-currency-dollar"></i>
+              </div>
+              <h3>Precios Competitivos</h3>
+              <p class="text-muted">
+                Ofrecemos los mejores precios del mercado con productos de alta
+                calidad.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 text-center p-4 h-100">
+              <div class="card-icon">
+                <i class="bi bi-headset"></i>
+              </div>
+              <h3>Atención 24/7</h3>
+              <p class="text-muted">
+                Nuestro equipo está disponible para atenderte en cualquier
+                momento del día.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section id="mision-vision" class="mission-vision">
+      <div class="container position-relative">
+        <h2
+          class="text-center section-title animate__animated animate__fadeInUp"
+        >
+          Nuestra Empresa
+        </h2>
+        <div class="row g-5">
+          <div class="col-lg-6 animate__animated animate__fadeInLeft">
+            <div class="card bg-white p-4">
+              <div class="card-body">
+                <h3 class="card-title text-center mb-4">
+                  <i class="bi bi-bullseye me-2"></i>Misión
+                </h3>
+                <p class="card-text">
+                  En Autoservicio el Trigal nos comprometemos a ofrecer
+                  productos de alta calidad a precios competitivos, brindando un
+                  servicio excepcional que supere las expectativas de nuestros
+                  clientes. Nos esforzamos por crear una experiencia de compra
+                  agradable y conveniente para toda la comunidad.
+                </p>
+                <p class="card-text">
+                  Nuestro objetivo es ser el autoservicio de referencia en la
+                  zona, destacando por nuestra variedad de productos, atención
+                  personalizada y compromiso con la satisfacción del cliente.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 animate__animated animate__fadeInRight">
+            <div class="card bg-white p-4">
+              <div class="card-body">
+                <h3 class="card-title text-center mb-4">
+                  <i class="bi bi-eye me-2"></i>Visión
+                </h3>
+                <p class="card-text">
+                  Aspiramos a ser reconocidos como el autoservicio líder en
+                  nuestra región, expandiendo nuestra presencia y diversificando
+                  nuestra oferta de productos para satisfacer las necesidades
+                  cambiantes de nuestros clientes.
+                </p>
+                <p class="card-text">
+                  Buscamos implementar tecnologías innovadoras que mejoren la
+                  experiencia de compra, manteniendo siempre nuestros valores de
+                  honestidad, calidad y servicio al cliente como pilares
+                  fundamentales de nuestro negocio.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-5 bg-light">
+      <div class="container">
+        <h2
+          class="text-center section-title animate__animated animate__fadeInUp"
+        >
+          Contáctanos
+        </h2>
+        <p class="text-center mb-5 animate__animated animate__fadeInUp">
+          Estamos aquí para atenderte. Visítanos o escríbenos.
+        </p>
+
+        <div class="row g-5">
+          <div class="col-lg-6 animate__animated animate__fadeInLeft">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4">
+                <h3 class="card-title mb-4">Información de Contacto</h3>
+                <ul class="list-unstyled">
+                  <li class="mb-3">
+                    <i class="bi bi-geo-alt-fill me-2 text-primary"></i> Av.
+                    Principal #123, Ciudad, País
+                  </li>
+                  <li class="mb-3">
+                    <i class="bi bi-telephone-fill me-2 text-primary"></i> +123
+                    456 7890
+                  </li>
+                  <li class="mb-3">
+                    <i class="bi bi-envelope-fill me-2 text-primary"></i>
+                    info@autoserviciotrigal.com
+                  </li>
+                  <li class="mb-3">
+                    <i class="bi bi-clock-fill me-2 text-primary"></i> Lunes a
+                    Domingo: 9:00 AM - 5:00 PM
+                  </li>
+                </ul>
+                <div class="mt-4">
+                  <h4>Síguenos</h4>
+                  <div class="social-icons mt-3">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-whatsapp"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 animate__animated animate__fadeInRight">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4">
+                <h3 class="card-title mb-4">Envíanos un mensaje</h3>
+                <form>
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="message" class="form-label">Mensaje</label>
+                    <textarea
+                      class="form-control"
+                      id="message"
+                      rows="4"
+                      required
+                    ></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Enviar mensaje
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d-75.5688951249875!3d6.211326493798887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44282d8786c3a5%3A0x4a1a0d69e9a2f5a1!2sAutoservicio%20El%20Trigal!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco"
+        width="100%"
+        height="450"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+      <div class="container py-5">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <img
+              src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+              alt="Autoservicio el Trigal"
+              width="150"
+              class="mb-3"
+            />
+            <p>
+              Tu tienda de conveniencia con los mejores productos y atención
+              personalizada desde 2010.
+            </p>
+            <div class="social-icons mt-3">
+              <a href="#"><i class="bi bi-facebook"></i></a>
+              <a href="#"><i class="bi bi-instagram"></i></a>
+              <a href="#"><i class="bi bi-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h5 class="mb-4">Enlaces</h5>
+            <ul class="list-unstyled footer-links">
+              <li class="mb-2"><a href="#">Inicio</a></li>
+              <li class="mb-2"><a href="#mision-vision">Nosotros</a></li>
+              <li class="mb-2"><a href="#productos">Productos</a></li>
+              <li class="mb-2"><a href="#contacto">Contacto</a></li>
+              <li class="mb-2">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                  >Acceder</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="mb-4">Horario</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">Lunes a Viernes: 8:00 AM - 7:00 PM</li>
+              <li class="mb-2">Sábados: 8:00 AM - 7:00 PM</li>
+              <li class="mb-2">Domingos: 9:00 AM - 5:00 PM</li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <h5 class="mb-4">Newsletter</h5>
+            <p>Suscríbete para recibir ofertas especiales y novedades.</p>
+            <form class="mt-3">
+              <div class="input-group mb-3">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Tu email"
+                  aria-label="Tu email"
+                />
+                <button class="btn btn-primary" type="button">Suscribir</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">
+              © 2025 Autoservicio el Trigal. Todos los derechos reservados.
+            </p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <p class="mb-0">
+              Diseñado con <i class="bi bi-heart-fill text-danger"></i>
+               por: Carol Stefany Cepeda  <br>
+               Cristian Andres Meneses <br>
+               Yeisson Francisco Gonzalez  <br>
+               Oscar Javier Gomez Tamaral
+          
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!--Boton de login-->
+    <a href="#" class="back-to-top"><i class="bi bi-arrow-up"></i></a>
+    {% include 'paginas/modal_inicio.html' %}
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#modalLogin"
+    >
+<<<<<<< HEAD
+      Abrir Iniciar Sesión
+    </button>
+=======
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Mensajes de alerta -->
+            {% if messages %}
+            <div class="mb-4">
+              {% for message in messages %}
+              <div
+                class="alert alert-dismissible {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}"
+              >
+                {{ message }}
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <img
+              src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+              alt="Logo"
+              class="logo-modal"
+            />
+            {% csrf_token %} 
+            <form action="{% url 'inicio' %}" method="POST">
+              {% csrf_token %}
+
+              <div class="form-group">
+                <i class="bi bi-person-fill input-icon"></i>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="usuario"
+                  name="username"
+                  placeholder="Usuario"
+                  required
+                />
+              </div>
+
+              <div class="form-group position-relative">
+                <i class="bi bi-lock-fill input-icon"></i>
+                <input
+                  type="password"
+                  class="form-control pe-5"
+                  id="contraseña"
+                  name="password"
+                  placeholder="Contraseña"
+                  required
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  onclick="togglePassword()"
+                >
+                  <i class="bi bi-eye-fill"></i>
+                </button>
+              </div>
+
+              <button type="submit" class="btn btn-login mt-3">
+                Iniciar sesión
+              </button>
+            </form>
+
+            <div class="extra-links mt-3">
+              <a href="/recuperar-contraseña">¿Olvidaste tu contraseña?</a> |
+              <a href="{% url 'register' %}">Registrarse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+>>>>>>> 2026e05a0d8d5c250c9b1a879a1b11d663c1b9cb
+
+    <!-- jQuery (necesario para Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Conexión JS -->
+    {% if show_login_modal %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var loginModal = new bootstrap.Modal(
+          document.getElementById("loginModal")
+        );
+        loginModal.show();
+      });
+    </script>
+    {% endif %}
+
+    <script>
+      var hasErrorMessages = false;
+      {% for message in messages %}
+          {% if "error" in message.tags %}
+              hasErrorMessages = true;
+    </script>
+    {% endif %} {% endfor %}
+    <script src="{% static 'myapp/js/principal.js' %}"></script>
+
+    <script src="/static/myapp/js/principal.js"></script>
+  </body>
+</html>
