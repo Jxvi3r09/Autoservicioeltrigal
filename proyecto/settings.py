@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 #     'PORT': '3306',  # Solo el número del puerto, sin IP
 # }
 # }
-# AUTH_USER_MODEL = 'pagina.Usuario'
+AUTH_USER_MODEL = 'pagina.Usuario'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}Contraseña Actualizada | Mi Sitio{%
+endblock %} {% block auth_content %}
+<div class="auth-header">
+  <h2>¡Listo!</h2>
+  <p class="text-muted">Contraseña actualizada correctamente</p>
+</div>
+
+<div class="alert alert-success">
+  Tu contraseña ha sido cambiada exitosamente. Ahora puedes iniciar sesión con
+  tu nueva contraseña.
+</div>
+
+<div class="text-center">
+  <a href="{% url 'login' %}" class="btn btn-success">Iniciar Sesión</a>
+</div>
+{% endblock %}
