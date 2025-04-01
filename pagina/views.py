@@ -17,6 +17,12 @@ def inventario(request):
 def administrador(request):
     return render(request, "sistema/administrador.html")
 
+def proveedores(request):
+    return render(request, "sistema/proveedores.html")
+
+def agregar_proveedores(request):
+    return render(request, "sistema/agregar_proveedores.html")
+
 def modal_inicio(request):
     if request.method == "POST":
         username = request.POST.get("username", "").strip()

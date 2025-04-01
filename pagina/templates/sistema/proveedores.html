@@ -20,6 +20,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <link rel="stylesheet" href="{% static 'myapp/css/proveedores.css' %}">
   </head>
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -87,18 +88,69 @@
         </div>
       </aside>
 
-      <!-- Content Wrapper -->
+        <!-- Content Wrapper -->
       <div class="content-wrapper">
         <div class="content-header">
           <div class="container-fluid">
-            <h1 class="m-0">Panel de Administración</h1>
+            <h1 class="m-0">Proveedores</h1>
           </div>
         </div>
-        <div class="content">
-          <div class="container-fluid">
-            <p>Bienvenido al panel de administración con AdminLTE.</p>
+
+        <div class="container-fluid">
+          <div class="row mb-3">
+  
+              <div class="col-md-12 mt-3"> 
+                  <div class="card">
+                      <div class="card-header">
+                          <h3 class="card-title">Proveedores Registrados</h3>
+                      </div>
+                      <div class="col-md-12 mt-3">
+                        <a href="{% url 'agregar_proveedores' %}" class="btn btn-success mb-3">Agregar Proveedor</a>
+                      </div>
+                      <div class="card-body">
+                        <form method="GET" action="#" class="mb-3">
+                          <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Buscar proveedor" name="buscar" value="{{ request.GET.buscar }}">
+                              <div class="input-group-append">
+                                  <button class="btn btn-primary" type="submit">
+                                      <i class="fa fa-search"></i> Buscar
+                                  </button>
+                              </div>
+                          </div>
+                        </form>                      
+                      <table class="table table-bordered table-striped">
+                          <thead>
+                              <tr>
+                                  <th>Nombre</th>
+                                  <th>Municipio</th>
+                                  <th>NIT</th>
+                                  <th>Acciones</th> <!-- Columna para los botones de acciones -->
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for proveedor in proveedores %}
+                              <tr>
+                                  <td>{{ proveedor.nombre }}</td>
+                                  <td>{{ proveedor.municipio }}</td>
+                                  <td>{{ proveedor.nit }}</td>
+                                  <td>
+                                      <!-- Botones de editar y eliminar -->
+                                      <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                                      <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este proveedor?');">Eliminar</a>
+                                  </td>
+                              </tr>
+                              {% empty %}
+                              <tr>
+                                  <td colspan="4">No hay proveedores registrados</td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
+      </div>
       </div>
     </div>
   </body>
