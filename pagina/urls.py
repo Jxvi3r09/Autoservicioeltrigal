@@ -10,15 +10,19 @@ urlpatterns = [
     
     path('bienvenido', views.index, name='index'),
     
-    path('inicio/', views.modal_inicio, name='inicio'),
+    path('inicio/', views.inicio, name='inicio'),
+ 
+     path("register/", views.registro, name="registro"),  # Ruta para el registro
     
-    path("register/", views.registro, name="register"), 
-    
-    path("register/", views.registro, name="registro"),  # Ruta para el registro
-    
+    path("gestion/", views.gestion, name="gestion"),
+
     path('inventario/', views.inventario, name='inventario'),
-    
+
     path('administrador/', views.administrador, name='administrador'),
+
+    path('usuarios', views.lista_usuarios, name='usuarios'),
+
+
 
     # ✅ Nueva ruta para iniciar sesión
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),

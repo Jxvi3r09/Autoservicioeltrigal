@@ -477,9 +477,8 @@
               alt="Logo"
               class="logo-modal"
             />
-            {% csrf_token %} 
+            {% csrf_token %}
             <form action="{% url 'inicio' %}" method="POST">
-              {% csrf_token %}
 
               <div class="form-group">
                 <i class="bi bi-person-fill input-icon"></i>
@@ -519,7 +518,6 @@
 
             <div class="extra-links mt-3">
               <a href="/recuperar-contraseña">¿Olvidaste tu contraseña?</a> |
-              <a href="{% url 'register' %}">Registrarse</a>
             </div>
           </div>
         </div>

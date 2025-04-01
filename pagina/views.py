@@ -4,6 +4,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import RegistroUsuarioForm  # Asegúrate de importar el formulario
 
+from django.shortcuts import render
+from .models import Usuario
+
+def lista_usuarios(request):
+    usuarios = Usuario.objects.all()  # Obtiene todos los usuarios de la base de datos
+    return render(request, 'sistema/administrador.html', {'usuarios': usuarios})
 
 def principal(request):
     return render(request, "paginas/principal.html")
@@ -17,7 +23,9 @@ def inventario(request):
 def administrador(request):
     return render(request, "sistema/administrador.html")
 
-def modal_inicio(request):
+
+
+def inicio(request):
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "").strip()

@@ -36,15 +36,11 @@
       <!-- Sidebar -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <a href="#" class="brand-link">
-          <span class="brand-text font-weight-light">AdminLTE Django</span>
+
         </a>
         <div class="sidebar">
           <nav class="mt-2">
-            <ul
-              class="nav nav-pills nav-sidebar flex-column"
-              data-widget="treeview"
-              role="menu"
-            >
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
@@ -83,13 +79,13 @@
       <div class="content-wrapper">
         <div class="content-header">
           <div class="container-fluid">
-            <h1 class="m-0">Panel de Administración</h1>
+            <h1 class="m-0">Usuarios</h1>
           </div>
         </div>
         <div class="content">
           <div class="container-fluid">
-            <p>Bienvenido al panel de administración con AdminLTE.</p>
-
+            <p>Bienvenido al panel de gestion de usuarios</p>
+            
             <!-- Sección para gestionar usuarios -->
             <div class="card">
               <div class="card-header">
@@ -103,50 +99,43 @@
 
                 <!-- Tabla de usuarios registrados -->
                 <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Nombre Usuario</th>
-                      <th>Tipo Documento</th>
-                      <th>Correo de Contacto</th>
-                      <th>Rol</th>
-                      <th>Fecha de Registro</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for usuario in usuarios %}
-                    <tr>
-                      <td>{{ usuario.id }}</td>
-                      <!-- ID del usuario -->
-                      <td>{{ usuario.username }}</td>
-                      <!-- Nombre de usuario -->
-                      <td>{{ usuario.tipo_documento }}</td>
-                      <!-- Tipo de documento -->
-                      <td>{{ usuario.contacto }}</td>
-                      <!-- Contacto -->
-                      <td>{{ usuario.get_rol_display }}</td>
-                      <!-- Rol del usuario -->
-                      <td>{{ usuario.date_joined }}</td>
-                      <!-- Fecha de registro (date_joined es un campo de AbstractUser) -->
-                      <td>
-                        <!-- Botones para editar y eliminar -->
-                        <a href="#" class="btn btn-warning btn-sm">
-                          <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <a href="#" class="btn btn-danger btn-sm">
-                          <i class="fas fa-trash-alt"></i> Eliminar
-                        </a>
-                      </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                      <td colspan="8" class="text-center">
-                        No hay usuarios registrados
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Nombre Usuario</th>
+                        <th>Tipo Documento</th>
+                        <th>Correo de Contacto</th>
+                        <th>Rol</th>
+                        <th>Fecha de Registro</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for usuario in usuarios %}
+                        <tr>
+                          <td>{{ usuario.id }}</td>  <!-- ID del usuario -->
+                          <td>{{ usuario.username }}</td>  <!-- Nombre de usuario -->
+                          <td>{{ usuario.tipo_documento }}</td>  <!-- Tipo de documento -->
+                          <td>{{ usuario.contacto }}</td>  <!-- Contacto -->
+                          <td>{{ usuario.get_rol_display }}</td>  <!-- Rol del usuario -->
+                          <td>{{ usuario.date_joined }}</td>  <!-- Fecha de registro (date_joined es un campo de AbstractUser) -->
+                          <td>
+                            <!-- Botones para editar y eliminar -->
+                            <a href="#" class="btn btn-warning btn-sm">
+                              <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a href="#" class="btn btn-danger btn-sm">
+                              <i class="fas fa-trash-alt"></i> Eliminar
+                            </a>
+                          </td>
+                        </tr>
+                      {% empty %}
+                        <tr>
+                          <td colspan="8" class="text-center">No hay usuarios registrados</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  
               </div>
             </div>
           </div>
