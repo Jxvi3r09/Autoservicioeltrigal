@@ -9,12 +9,10 @@ urlpatterns = [
     path('',views.principal, name='principal'),
     
     path('bienvenido', views.index, name='index'),
+
+    path("register/", views.registro, name="registro"),  # Ruta para el registro
     
-    path('inicio/', views.inicio, name='inicio'),
- 
-     path("register/", views.registro, name="registro"),  # Ruta para el registro
-    
-    path("gestion/", views.gestion, name="gestion"),
+    path("inicio/", views.inicio, name="inicio"),
 
     path('inventario/', views.inventario, name='inventario'),
 
@@ -22,6 +20,7 @@ urlpatterns = [
 
     path('usuarios', views.lista_usuarios, name='usuarios'),
 
+    path("inicioinv/", views.inicioinv, name="inicioinv"),
 
 
     # ✅ Nueva ruta para iniciar sesión

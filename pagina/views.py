@@ -62,6 +62,6 @@ def registro(request):
 
     return render(request, "paginas/registrate.html", {"form": form})
 
-def gestion(request):
+def inicioinv(request):
     messages.success(request, f"¡Bienvenido, {request.user.username}!")
-    return render(request, "sistema/gestion.html")
+    return render(request, "sistema/inicioinv.html")

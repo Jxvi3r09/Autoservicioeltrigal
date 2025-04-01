@@ -21,21 +21,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <script src="{% static 'myapp/css/inicioinv.css' %}"></script>
   </head>
 
-  <body class="hold-transition sidebar-mini">
+  <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
       <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Botón para mostrar/ocultar el sidebar -->
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-              <i class="fas fa-bars"></i>
-            </a>
-          </li>
-        </ul>
-      </nav>
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
@@ -53,17 +44,22 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="{% static 'myapp/img/user-default.png' %}"
+                src="{% static 'myapp/imagenes/usuariodefault.png' %}"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
             </div>
-            <div class="info">
-              <a href="#" class="d-block">Usuario</a>
+                <div class="info">
+                  <a href="#" class="d-block">
+                    {% if request.user.is_authenticated %}
+                      {{ request.user.username }}
+                    {% else %}
+                      Usuario
+                    {% endif %}
+                  </a>
+                </div>
             </div>
-          </div>
-         
-
+                
           <!-- Menu principal -->
           <nav class="mt-2">
             <ul
@@ -74,7 +70,7 @@
             >
               <!-- Ejemplo de sección "Dashboard" o "Inicio" -->
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'inicioinv' %}" class="nav-link">
                   <i class="nav-icon fas fa-home"></i>
                   <p>Inicio</p>
                 </a>
@@ -86,12 +82,11 @@
                   <i class="nav-icon fas fa-users"></i>
                   <p>
                     Usuarios
-                    <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
               </li>
 
-              <!-- Sección Empresas -->
+              <!-- Sección Empresas
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-city"></i>
@@ -114,7 +109,7 @@
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> -->
 
               <!-- Sección Inventario -->
               <li class="nav-item">
@@ -130,7 +125,6 @@
                   <i class="nav-icon fas fa-box"></i>
                   <p>
                     Productos
-                    <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
