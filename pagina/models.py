@@ -26,3 +26,22 @@ class Usuario(AbstractUser):
 
     def __str__(self):
         return f"{self.username} - {self.rol}"
+
+#Creacion de proveedor
+class Proveedor(models.Model):
+    nit_proveedor = models.CharField(max_length=20, unique=True, verbose_name="NIT Proveedor")
+    empresa = models.CharField(max_length=100, verbose_name="Empresa")
+    correo = models.EmailField(max_length=100, verbose_name="Correo Electrónico")
+    telefono = models.BigIntegerField(verbose_name="Teléfono")
+    direccion = models.CharField(max_length=255, verbose_name="Dirección")
+
+    def __str__(self):
+        # Representación en formato string del proveedor, por ejemplo, por el nombre de la empresa
+        return self.empresa
+
+    class Meta:
+        # Nombre de la tabla en la base de datos y ordenamiento
+        db_table = 'proveedores'
+        ordering = ['empresa']
+        verbose_name = 'Proveedor'
+        verbose_name_plural = 'Proveedores'

@@ -63,3 +63,21 @@ class RegistroUsuarioForm(forms.ModelForm):
         if len(password) < 8 or not any(char.isdigit() for char in password) or not any(char.isalpha() for char in password):
             raise ValidationError("La contraseña debe tener al menos 8 caracteres y contener números y letras.")
         return password
+
+from django import forms
+from .models import Proveedor
+
+class ProveedorForm(forms.ModelForm):
+    class Meta:
+        model = Proveedor
+        fields = ['nit_proveedor', 'empresa', 'correo', 'telefono', 'direccion']
+        widgets = {
+            'direccion': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Ingrese la dirección completa'}),
+        }
+
+    # Validación adicional si es necesario (opcional)
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono')
+        if len(str(telefono)) < 10:
+            raise forms.ValidationError("El teléfono debe tener al menos 10 dígitos.")
+        return telefono
