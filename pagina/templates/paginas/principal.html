@@ -439,63 +439,7 @@
       data-target="#modalLogin"
     >
 
-<<<<<<< HEAD
-            <img
-              src="{% static 'myapp/imagenes/logosinfondo.png' %}"
-              alt="Logo"
-              class="logo-modal"
-            />
-            {% csrf_token %} 
-            <form action="{% url 'inicio' %}" method="POST">
-              {% csrf_token %}
 
-              <div class="form-group">
-                <i class="bi bi-person-fill input-icon"></i>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="usuario"
-                  name="username"
-                  placeholder="Usuario"
-                  required
-                />
-              </div>
-
-              <div class="form-group position-relative">
-                <i class="bi bi-lock-fill input-icon"></i>
-                <input
-                  type="password"
-                  class="form-control pe-5"
-                  id="contraseña"
-                  name="password"
-                  placeholder="Contraseña"
-                  required
-                />
-                <button
-                  type="button"
-                  class="password-toggle"
-                  onclick="togglePassword()"
-                >
-                  <i class="bi bi-eye-fill"></i>
-                </button>
-              </div>
-
-              <button type="submit" class="btn btn-login mt-3">
-                Iniciar sesión
-              </button>
-            </form>
-
-            <div class="extra-links mt-3">
-              <a href="{% url 'password_reset' %}">Recuperar Contraseña</a>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
->>>>>>> 2026e05a0d8d5c250c9b1a879a1b11d663c1b9cb
-=======
->>>>>>> d184ea5b1d37b2eba1ffc484dd44966b36da3a98
 
     <!-- jQuery (necesario para Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
