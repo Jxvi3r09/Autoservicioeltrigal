@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import RegistroUsuarioForm  # Asegúrate de importar el formulario
 
-
 def principal(request):
     return render(request, "paginas/principal.html")
 
@@ -20,8 +19,10 @@ def administrador(request):
 def proveedores(request):
     return render(request, "sistema/proveedores.html")
 
-def agregar_proveedores(request):
-    return render(request, "sistema/agregar_proveedores.html")
+def agregar_proveedor(request):
+    return render(request, "sistema/agregar_proveedor.html")
+
+
 
 def modal_inicio(request):
     if request.method == "POST":

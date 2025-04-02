@@ -22,7 +22,6 @@ urlpatterns = [
 
     path('proveedores/', views.proveedores, name='proveedores'),
 
-    path('agregar_proveedores/', views.agregar_proveedores, name='agregar_proveedores'),
 
     # ✅ Nueva ruta para iniciar sesión
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
