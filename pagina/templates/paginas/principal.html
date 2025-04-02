@@ -105,45 +105,173 @@
         ></button>
         {% endfor %}
       </div>
-      <div class="carousel-inner">
-        {% for i in "12345" %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <img
-            src="{% static 'myapp/imagenes/imagen4.jpeg' %}"
-            class="d-block w-100"
-            alt="Autoservicio el Trigal - Imagen {{ i }}"
-          />
-          <div class="carousel-caption animate__animated animate__fadeIn">
-            <h1 class="display-4 fw-bold">
-              Bienvenidos a Autoservicio el Trigal
-            </h1>
-            <p class="lead">
-              Tu tienda de conveniencia con los mejores productos y atención
-            </p>
-            
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#heroCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#heroCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
+      <!--Carrusel de imagenes-->
+<!-- Reemplaza tu sección de carrusel actual con este código -->
+<div id="customCarousel" class="carousel slide" data-bs-ride="false">
+  <!-- Indicadores -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="2"></button>
+    <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="3"></button>
+    <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="4"></button>
+    <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="5"></button>
+  </div>
+
+  <!-- Slides -->
+  <div class="carousel-inner">
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <img src="{% static 'myapp/imagenes/imagen1.jpeg' %}" class="d-block w-100" alt="Imagen 1">
     </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <img src="{% static 'myapp/imagenes/imagen2.jpeg' %}" class="d-block w-100" alt="Imagen 2">
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <img src="{% static 'myapp/imagenes/imagen3.jpeg' %}" class="d-block w-100" alt="Imagen 3">
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="carousel-item">
+      <img src="{% static 'myapp/imagenes/imagen4.jpeg' %}" class="d-block w-100" alt="Imagen 4">
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="carousel-item">
+      <img src="{% static 'myapp/imagenes/imagen5.jpeg' %}" class="d-block w-100" alt="Imagen 5">
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="carousel-item">
+      <img src="{% static 'myapp/imagenes/imagen6.jpeg' %}" class="d-block w-100" alt="Imagen 6">
+    </div>
+  </div>
+
+  <!-- Controles -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
+
+<!-- JavaScript personalizado para el carrusel -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Seleccionamos el carrusel
+  const carousel = document.getElementById('customCarousel');
+  
+  // Configuración del carrusel
+  const carouselInstance = new bootstrap.Carousel(carousel, {
+    interval: 5000, // Cambia cada 5 segundos
+    wrap: true, // Permite bucle infinito
+    pause: 'hover' // Pausa al pasar el mouse
+  });
+
+  // Opcional: Personalizar la altura del carrusel
+  function adjustCarouselHeight() {
+    const activeItem = document.querySelector('#customCarousel .carousel-item.active');
+    if (activeItem) {
+      const img = activeItem.querySelector('img');
+      if (img.complete) {
+        carousel.style.height = img.height + 'px';
+      } else {
+        img.onload = function() {
+          carousel.style.height = this.height + 'px';
+        };
+      }
+    }
+  }
+
+  // Ajustar altura al cargar y al cambiar de slide
+  window.addEventListener('load', adjustCarouselHeight);
+  carousel.addEventListener('slid.bs.carousel', adjustCarouselHeight);
+  
+  // Opcional: Ajustar altura al redimensionar la ventana
+  window.addEventListener('resize', adjustCarouselHeight);
+  
+  // Inicializar altura
+  adjustCarouselHeight();
+  
+  // Opcional: Navegación con teclado
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+      carouselInstance.prev();
+    } else if (e.key === 'ArrowRight') {
+      carouselInstance.next();
+    }
+  });
+});
+</script>
+
+<!-- CSS adicional para personalizar -->
+<style>
+  #customCarousel {
+  height: 400px; /* Altura extra grande */
+}
+  /* Estilo base del carrusel */
+  #customCarousel {
+    background: #000; /* Fondo negro para mejor contraste */
+    margin-bottom: 20px;
+    transition: height 0.3s ease; /* Transición suave para cambios de altura */
+  }
+  
+  /* Imágenes del carrusel */
+  #customCarousel .carousel-item img {
+    object-fit: cover;
+    max-height: 500px; /* Altura máxima */
+    width: 100%;
+  }
+  
+  /* Títulos del carrusel */
+  #customCarousel .carousel-caption {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 5px;
+    bottom: 20px;
+  }
+  
+  #customCarousel .carousel-caption h5 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+  
+  /* Indicadores */
+  #customCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 5px;
+  }
+  
+  /* Efecto hover para controles */
+  #customCarousel .carousel-control-prev,
+  #customCarousel .carousel-control-next {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    width: 5%;
+  }
+  
+  #customCarousel .carousel-control-prev:hover,
+  #customCarousel .carousel-control-next:hover {
+    opacity: 1;
+  }
+  
+  /* Responsive: Ocultar controles en móviles muy pequeños */
+  @media (max-width: 400px) {
+    #customCarousel .carousel-control-prev,
+    #customCarousel .carousel-control-next {
+      display: none;
+    }
+  }
+</style>
 
     <!-- Features Section -->
     <section class="py-5 bg-white">
