@@ -76,6 +76,7 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+<<<<<<< HEAD
 #desconecte la base de datos
 # DATABASES = {
 # 'default': {
@@ -87,6 +88,19 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 #     'PORT': '3306',  # Solo el número del puerto, sin IP
 # }
 # }
+=======
+# desconecte la base de datos
+DATABASES = {
+'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'proyecto',
+    'USER': 'root',
+    'PASSWORD':'',
+    'HOST': 'localhost',  # Asegúrate de que solo sea la IP
+    'PORT': '3306',  # Solo el número del puerto, sin IP
+}
+}
+>>>>>>> productos
 AUTH_USER_MODEL = 'pagina.Usuario'
 
 # Password validation

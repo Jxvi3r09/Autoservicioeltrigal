@@ -3,8 +3,10 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <!-- Viewport para responsividad -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Administración</title>
+<<<<<<< HEAD
     <!-- AdminLTE JS -->
     <!-- AdminLTE CSS -->
     <link
@@ -15,27 +17,72 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+=======
+
+    <!-- jQuery (requerido por AdminLTE) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Archivo JS para submenús (opcional) -->
+    <script src="{% static 'myapp/js/submenu.js' %}"></script>
+
+    <!-- AdminLTE CSS (incluye Bootstrap) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Bootstrap 5 CSS (para otros estilos si se requiere) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+>>>>>>> productos
   </head>
-  <body class="hold-transition sidebar-mini">
+  <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
       <!-- Navbar -->
       <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <ul class="navbar-nav">
           <li class="nav-item">
+<<<<<<< HEAD
             <a class="nav-link" data-widget="pushmenu" href="#"
               ><i class="fas fa-bars"></i
             ></a>
+=======
+            <!-- Botón para contraer/expandir el sidebar -->
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+              <i class="fas fa-bars"></i>
+            </a>
+>>>>>>> productos
           </li>
         </ul>
       </nav>
+      <!-- /.navbar -->
 
-      <!-- Sidebar -->
+      <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="#" class="brand-link">
-          <span class="brand-text font-weight-light">AdminLTE Django</span>
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link text-center">
+          <span class="brand-text font-weight-light">
+            <strong>Sistema Inventario</strong>
+          </span>
         </a>
+
+        <!-- Sidebar -->
         <div class="sidebar">
+          <!-- Panel de usuario -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2" alt="User Image" />
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">
+                {% if request.user.is_authenticated %}
+                  {{ request.user.username }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </a>
+            </div>
+          </div>
+
+          <!-- Menú principal -->
           <nav class="mt-2">
+<<<<<<< HEAD
             <ul
               class="nav nav-pills nav-sidebar flex-column"
               data-widget="treeview"
@@ -64,6 +111,20 @@
                     </a>
                   </li>
                 </ul>
+=======
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <li class="nav-item">
+                <a href="{% url 'inicioinv' %}" class="nav-link">
+                  <i class="nav-icon fas fa-home"></i>
+                  <p>Inicio</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'usuarios' %}" class="nav-link active">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>Usuarios</p>
+                </a>
+>>>>>>> productos
               </li>
               <li class="nav-item">
                 <a href="{% url 'inventario' %}" class="nav-link">
@@ -71,40 +132,121 @@
                   <p>Inventario</p>
                 </a>
               </li>
+<<<<<<< HEAD
               <li class="nav-item">
                 <a href="{% url 'proveedores' %}" class="nav-link">
                   <i class="nav-icon fas fa-boxes"></i>
                   <p>Proveedores</p>
+=======
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-box"></i>
+                  <p>Productos</p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Agregar Producto</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Listado de Productos</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>Configuraciones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'principal' %}" class="nav-link">
+                  <i class="nav-icon fas fa-sign-out-alt"></i>
+                  <p>Cerrar Sesión</p>
+>>>>>>> productos
                 </a>
               </li>
             </ul>
           </nav>
+          <!-- /.sidebar-menu -->
         </div>
+        <!-- /.sidebar -->
       </aside>
+      <!-- /.Main Sidebar Container -->
 
-      <!-- Content Wrapper -->
+      <!-- Content Wrapper. Contiene el contenido principal -->
       <div class="content-wrapper">
+        <!-- Encabezado del contenido -->
         <div class="content-header">
           <div class="container-fluid">
-            <h1 class="m-0">Panel de Administración</h1>
+            <h1 class="m-0">Usuarios</h1>
           </div>
         </div>
+        <!-- /.content-header -->
+
+        <!-- Contenido principal -->
         <div class="content">
           <div class="container-fluid">
-            <p>Bienvenido al panel de administración con AdminLTE.</p>
-
+            <p>Bienvenido al panel de gestión de usuarios</p>
+            
             <!-- Sección para gestionar usuarios -->
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Gestión de Usuarios</h3>
               </div>
               <div class="card-body">
-                <!-- Botón para agregar un nuevo usuario -->
-                <a href="{% url 'registro' %}" class="btn btn-success mb-3">
+                <!-- Botón para abrir el modal de agregar usuario -->
+                <button id="btnAbrirModal" class="btn btn-success mb-3">
                   <i class="fas fa-plus"></i> Agregar Usuario
-                </a>
+                </button>
+                <!-- Modal -->
+                <div id="modalRegistro" class="modal" aria-hidden="true">
+                  <div class="modal-fondo"></div>
+                  <div class="modal-contenido">
+                    <div class="modal-encabezado">
+                      <h5 class="modal-titulo">Crear Cuenta</h5>
+                      <button id="btnCerrarModal" class="btn-cerrar">&times;</button>
+                    </div>
+                    <div class="modal-cuerpo">
+                      <form method="post" autocomplete="off">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          {{ form.tipo_documento.label_tag }} {{ form.tipo_documento }}
+                        </div>
+                        <div class="mb-3">
+                          {{ form.numero_documento.label_tag }} {{ form.numero_documento }}
+                        </div>
+                        <div class="mb-3">
+                          {{ form.first_name.label_tag }} {{ form.first_name }}
+                        </div>
+                        <div class="mb-3">
+                          {{ form.last_name.label_tag }} {{ form.last_name }}
+                        </div>
+                        <div class="mb-3">
+                          {{ form.rol.label_tag }} {{ form.rol }}
+                        </div>
+                        <div class="mb-3">
+                          {{ form.contacto.label_tag }} {{ form.contacto }}
+                        </div>
+                        <div class="mb-3">
+                          {{ form.username.label_tag }} {{ form.username }}
+                        </div>
+                        <div class="mb-3">
+                          {{ form.password.label_tag }} {{ form.password }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- Fin del modal -->
 
-                <!-- Tabla de usuarios registrados -->
+                <!-- Tabla de usuarios -->
                 <table class="table table-bordered table-striped">
                   <thead>
                     <tr>
@@ -114,39 +256,83 @@
                       <th>Correo de Contacto</th>
                       <th>Rol</th>
                       <th>Fecha de Registro</th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for usuario in usuarios %}
-                    <tr>
-                      <td>{{ usuario.id }}</td>
-                      <!-- ID del usuario -->
-                      <td>{{ usuario.username }}</td>
-                      <!-- Nombre de usuario -->
-                      <td>{{ usuario.tipo_documento }}</td>
-                      <!-- Tipo de documento -->
-                      <td>{{ usuario.contacto }}</td>
-                      <!-- Contacto -->
-                      <td>{{ usuario.get_rol_display }}</td>
-                      <!-- Rol del usuario -->
-                      <td>{{ usuario.date_joined }}</td>
-                      <!-- Fecha de registro (date_joined es un campo de AbstractUser) -->
-                      <td>
-                        <!-- Botones para editar y eliminar -->
-                        <a href="#" class="btn btn-warning btn-sm">
-                          <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <a href="#" class="btn btn-danger btn-sm">
-                          <i class="fas fa-trash-alt"></i> Eliminar
-                        </a>
-                      </td>
-                    </tr>
+                      <tr>
+                        <td>{{ usuario.id }}</td>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.tipo_documento }}</td>
+                        <td>{{ usuario.contacto }}</td>
+                        <td>{{ usuario.get_rol_display }}</td>
+                        <td>{{ usuario.date_joined }}</td>
+                        <td>
+                          <a href="#" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Editar
+                          </a><!-- Botón para mover la tabla a la derecha -->
+                          <button id="moverDerecha" class="btn btn-primary mb-3">
+                            <i class="fas fa-arrow-right"></i> Desplazar Tabla
+                          </button>
+                          
+                          <!-- Contenedor de la tabla con desplazamiento horizontal -->
+                          <div id="tabla-container" style="overflow-x: auto; white-space: nowrap;">
+                            <table class="table table-bordered table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Nombre Usuario</th>
+                                  <th>Tipo Documento</th>
+                                  <th>Correo de Contacto</th>
+                                  <th>Rol</th>
+                                  <th>Fecha de Registro</th>
+                                  <th>Acciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for usuario in usuarios %}
+                                  <tr>
+                                    <td>{{ usuario.id }}</td>
+                                    <td>{{ usuario.username }}</td>
+                                    <td>{{ usuario.tipo_documento }}</td>
+                                    <td>{{ usuario.contacto }}</td>
+                                    <td>{{ usuario.get_rol_display }}</td>
+                                    <td>{{ usuario.date_joined }}</td>
+                                    <td>
+                                      <a href="#" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Editar
+                                      </a>
+                                      <a href="#" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                      </a>
+                                    </td>
+                                  </tr>
+                                {% empty %}
+                                  <tr>
+                                    <td colspan="8" class="text-center">No hay usuarios registrados</td>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                          
+                          <!-- Script para desplazar la tabla a la derecha -->
+                          <script>
+                            document.getElementById("moverDerecha").addEventListener("click", function () {
+                              document.getElementById("tabla-container").scrollBy({ left: 200, behavior: "smooth" });
+                            });
+                          </script>
+                          
+                          <a href="#" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                          </a>
+                        </td>
+                      </tr>
                     {% empty %}
-                    <tr>
-                      <td colspan="8" class="text-center">
-                        No hay usuarios registrados
-                      </td>
-                    </tr>
+                      <tr>
+                        <td colspan="8" class="text-center">No hay usuarios registrados</td>
+                      </tr>
                     {% endfor %}
                   </tbody>
                 </table>
@@ -154,7 +340,17 @@
             </div>
           </div>
         </div>
+        <!-- /.content -->
       </div>
+      <!-- /.content-wrapper -->
     </div>
+    <!-- /.wrapper -->
+
+    <!-- Bootstrap 5 Bundle (incluye Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE JS -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+
   </body>
 </html>

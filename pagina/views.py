@@ -8,6 +8,12 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.contrib.auth.views import PasswordResetView
 
+from django.shortcuts import render
+from .models import Usuario
+
+def lista_usuarios(request):
+    usuarios = Usuario.objects.all()  # Obtiene todos los usuarios de la base de datos
+    return render(request, 'sistema/administrador.html', {'usuarios': usuarios})
 
 def principal(request):
     return render(request, "paginas/principal.html")
@@ -21,6 +27,7 @@ def inventario(request):
 def administrador(request):
     return render(request, "sistema/administrador.html")
 
+<<<<<<< HEAD
 def proveedores(request):
     return render(request, "sistema/proveedores.html")
 
@@ -30,6 +37,11 @@ def agregar_proveedor(request):
 
 
 def modal_inicio(request):
+=======
+
+
+def inicio(request):
+>>>>>>> productos
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "").strip()
@@ -48,7 +60,7 @@ def modal_inicio(request):
         else:
             messages.error(request, "❌ Usuario o contraseña incorrectos.")
 
-    return render(request, "paginas/inicio.html")
+    return render(request, "paginas/principal.html")
 
 def registro(request):
     if request.method == "POST":
@@ -66,6 +78,7 @@ def registro(request):
 
     return render(request, "paginas/registrate.html", {"form": form})
 
+<<<<<<< HEAD
 #Recuperacion de contraseña
 class CustomPasswordResetView(auth_views.PasswordResetView):
     template_name = "contrasena/recuperar_contrasena.html"
@@ -96,5 +109,8 @@ password_reset_views = {
     'password_reset_complete': CustomPasswordResetCompleteView.as_view(),
 }
 def gestion(request):
+=======
+def inicioinv(request):
+>>>>>>> productos
     messages.success(request, f"¡Bienvenido, {request.user.username}!")
-    return render(request, "sistema/gestion.html")
+    return render(request, "sistema/inicioinv.html")

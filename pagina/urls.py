@@ -17,16 +17,29 @@ urlpatterns = [
     path('',views.principal, name='principal'),
     
     path('bienvenido', views.index, name='index'),
+<<<<<<< HEAD
     
     path('inicio/', views.modal_inicio, name='inicio'),
     
     path("registrate/", views.registro, name="register"), 
+=======
+
+    path("register/", views.registro, name="registro"),  # Ruta para el registro
+>>>>>>> productos
     
+    path("inicio/", views.inicio, name="inicio"),
+
     path('inventario/', views.inventario, name='inventario'),
-    
+
     path('administrador/', views.administrador, name='administrador'),
 
+<<<<<<< HEAD
     path('proveedores/', views.proveedores, name='proveedores'),
+=======
+    path('usuarios', views.lista_usuarios, name='usuarios'),
+
+    path("inicioinv/", views.inicioinv, name="inicioinv"),
+>>>>>>> productos
 
 
     # ✅ Nueva ruta para iniciar sesión
