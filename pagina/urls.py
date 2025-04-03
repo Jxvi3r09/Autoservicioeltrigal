@@ -36,6 +36,8 @@ urlpatterns = [
 
     path("inicioinv/", views.inicioinv, name="inicioinv"),
 
+    path('productos', views.productos, name='productos'),
+
 
     # ✅ Nueva ruta para iniciar sesión
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
