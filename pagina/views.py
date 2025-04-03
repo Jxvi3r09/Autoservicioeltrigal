@@ -44,7 +44,7 @@ def inicio(request):
         else:
             messages.error(request, "❌ Usuario o contraseña incorrectos.")
 
-    return render(request, "paginas/inicio.html")
+    return render(request, "paginas/principal.html")
 
 def registro(request):
     if request.method == "POST":
