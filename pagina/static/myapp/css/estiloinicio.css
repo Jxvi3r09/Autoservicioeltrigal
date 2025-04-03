@@ -16,19 +16,18 @@ body {
 /* Contenedor de la imagen */
 .contenedor {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
-  height: 30vh; /* Ocupa el 30% de la altura de la pantalla */
+  justify-content: center;
+  align-items: center; 
+  height: 30vh; 
 }
 
-/* Imagen de portada */
+
 img {
-  margin-top: 100px; /* Hacer que la imagen esté más abajo */
+  margin-top: 100px;
   border-radius: 8%;
-  object-fit: cover; /* Asegura que la imagen se recorte bien */
-  width: 450px; /* Ajusta el ancho */
-  height: auto; /* Mantiene la proporción */
-  opacity: 70%;
+  object-fit: cover; 
+  width: 450px; 
+  height: auto; 
   cursor: pointer;
 }
 
