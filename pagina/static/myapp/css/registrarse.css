@@ -1,42 +1,63 @@
-body {
-  font-family: "Inter", sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-}
+/* Estilos generales (puedes personalizar colores, tamaños, etc.) */
 
-/* Contenedor del logo */
-.contenedor {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.formulario-contenedor {
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+/* El contenedor principal del modal: inicialmente oculto */
+.modal-contenedor {
+  display: none; /* Se mostrará con JavaScript */
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 400px; /* Se adapta hasta 400px de ancho */
+  height: 100%;
+  z-index: 999; /* Asegura que quede al frente */
 }
 
-h2 {
-  text-align: center;
-  color: #333;
+/* Fondo semitransparente que oscurece la página */
+.modal-fondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Oscurece con transparencia */
 }
 
-.descripcion {
-  font-size: 14px;
-  text-align: center;
-  color: #666;
+/* Ventana central */
+.modal-ventana {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  margin: 50px auto; /* Centra horizontalmente */
+  background-color: #fff; /* Fondo blanco o el color que quieras */
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1000; /* Por encima del fondo */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Ajustes para los campos de formulario */
+/* Botón para cerrar la ventana (X) */
+.modal-cerrar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Botón o enlace que abre la ventana */
+.btn-abrir-modal {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Estilos del formulario */
 .form-group {
   margin-bottom: 15px;
 }
@@ -44,50 +65,29 @@ h2 {
 .form-group label {
   display: block;
   font-weight: bold;
-  color: #333;
+  margin-bottom: 5px;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
 }
 
-/* Botón estilizado */
 .btn {
-  width: 100%;
-  background: #4caf50;
-  color: white;
-  padding: 12px;
+  background-color: #28a745; /* Mismo color que el botón */
+  color: #fff;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  border-radius: 4px;
+  font-size: 16px;
 }
 
-.btn:hover {
-  background: #45a049;
-}
-
-/* 🌟 Responsividad */
-@media (max-width: 480px) {
-  .formulario-contenedor {
-    width: 90%; /* Se adapta mejor en móviles */
-    padding: 20px;
-  }
-
-  .btn {
-    font-size: 14px;
-    padding: 10px;
-  }
-}
-
-@media (min-width: 768px) {
-  .formulario-contenedor {
-    max-width: 450px;
-  }
+/* Opcional: darle un color de cabecera distinto */
+.modal-ventana h2 {
+  color: #28a745;
+  margin-top: 0;
 }
