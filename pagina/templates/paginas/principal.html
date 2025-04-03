@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -72,85 +73,17 @@
               <a class="nav-link" href="#contacto">Contacto</a>
             </li>
             <li class="nav-item ms-lg-3">
-              <button
-                class="btn mi-boton"
-                data-bs-toggle="modal"
-                data-bs-target="#loginModal"
-              >
-                <i class="bi bi-person-circle me-1"></i> Acceder
+              <button class="btn mi-boton" data-bs-toggle="modal" data-bs-target="#modal_inicio">
+                  <i class="bi bi-person-circle me-1"></i> Acceder
               </button>
-            </li>
+          </li>
+          
           </ul>
         </div>
       </div>
     </nav>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <!-- Hero Carousel -->
-    <div
-      id="heroCarousel"
-      class="carousel slide hero-carousel"
-      data-bs-ride="carousel"
-    >
-      <div class="carousel-indicators">
-        {% for i in "12345678" %}
-        <button
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide-to="{{ forloop.counter0 }}"
-          {%
-          if
-          forloop.first
-          %}class="active"
-          {%
-          endif
-          %}
-        ></button>
-        {% endfor %}
-      </div>
-      <div class="carousel-inner">
-        {% for i in "12345" %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <img
-            src="{% static 'myapp/imagenes/imagen4.jpeg' %}"
-            class="d-block w-100"
-            alt="Autoservicio el Trigal - Imagen {{ i }}"
-          />
-          <div class="carousel-caption animate__animated animate__fadeIn">
-            <h1 class="display-4 fw-bold">
-              Bienvenidos a Autoservicio el Trigal
-            </h1>
-            <p class="lead">
-              Tu tienda de conveniencia con los mejores productos y atención
-            </p>
-            
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#heroCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#heroCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
-=======
-=======
->>>>>>> carrusel
-   
+
       <!--Carrusel de imagenes-->
 <!-- Reemplaza tu sección de carrusel actual con este código -->
 <div id="customCarousel" class="carousel slide" data-bs-ride="false">
@@ -170,11 +103,10 @@
      <center>
     <div class="carousel-item active">
       <img src="{% static 'myapp/imagenes/imagen1.jpeg' %}" class="d-block w-50" alt="Imagen 1">
-<<<<<<< HEAD
->>>>>>> fbeadc1 (Carrusel)
+
     </div>
   </center>
-=======
+
     </div>
   </center>
 
@@ -331,10 +263,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 
->>>>>>> carrusel
 
-<<<<<<< HEAD
-=======
+
     <!-- Slide 2 -->
      <center>
     <div class="carousel-item">
@@ -489,7 +419,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 
 
->>>>>>> fbeadc1 (Carrusel)
     <!-- Features Section -->
     <section class="py-5 bg-white">
       <div class="container">
@@ -755,11 +684,13 @@ document.addEventListener('DOMContentLoaded', function() {
               <li class="mb-2"><a href="#mision-vision">Nosotros</a></li>
               <li class="mb-2"><a href="#productos">Productos</a></li>
               <li class="mb-2"><a href="#contacto">Contacto</a></li>
-              <li class="mb-2">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
-                  >Acceder</a
-                >
-              </li>
+              <li class="nav-item ms-lg-3">
+                <button class="btn mi-boton" data-bs-toggle="modal" data-bs-target="#loginModal">
+                  
+                    <i class="bi bi-person-circle me-1"></i> Acceder
+                </button>
+            </li>
+            
             </ul>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -807,73 +738,10 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </footer>
 
-    <!--Boton de login-->
-    <a href="#" class="back-to-top"><i class="bi bi-arrow-up"></i></a>
-    {% include 'paginas/modal_inicio.html' %}
 
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#modalLogin"
-    >
 
-<<<<<<< HEAD
+ 
 
-=======
-            <img
-              src="{% static 'myapp/imagenes/logosinfondo.png' %}"
-              alt="Logo"
-              class="logo-modal"
-            />
-            {% csrf_token %}
-            <form action="{% url 'inicio' %}" method="POST">
-
-              <div class="form-group">
-                <i class="bi bi-person-fill input-icon"></i>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="usuario"
-                  name="username"
-                  placeholder="Usuario"
-                  required
-                />
-              </div>
-
-              <div class="form-group position-relative">
-                <i class="bi bi-lock-fill input-icon"></i>
-                <input
-                  type="password"
-                  class="form-control pe-5"
-                  id="contraseña"
-                  name="password"
-                  placeholder="Contraseña"
-                  required
-                />
-                <button
-                  type="button"
-                  class="password-toggle"
-                  onclick="togglePassword()"
-                >
-                  <i class="bi bi-eye-fill"></i>
-                </button>
-              </div>
-
-              <button type="submit" class="btn btn-login mt-3">
-                Iniciar sesión
-              </button>
-            </form>
-
-            <div class="extra-links mt-3">
-              <a href="/recuperar-contraseña">¿Olvidaste tu contraseña?</a> |
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
->>>>>>> 2026e05a0d8d5c250c9b1a879a1b11d663c1b9cb
->>>>>>> productos
 
     <!-- jQuery (necesario para Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -882,14 +750,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Conexión JS -->
     {% if show_login_modal %}
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var loginModal = new bootstrap.Modal(
-          document.getElementById("loginModal")
-        );
-        loginModal.show();
-      });
-    </script>
+    
     {% endif %}
 
     <script>

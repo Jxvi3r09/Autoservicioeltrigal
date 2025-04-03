@@ -8,7 +8,6 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.contrib.auth.views import PasswordResetView
 
-from django.shortcuts import render
 from .models import Usuario
 
 def lista_usuarios(request):
@@ -27,21 +26,16 @@ def inventario(request):
 def administrador(request):
     return render(request, "sistema/administrador.html")
 
-<<<<<<< HEAD
 def proveedores(request):
     return render(request, "sistema/proveedores.html")
 
 def agregar_proveedor(request):
     return render(request, "sistema/agregar_proveedor.html")
 
-
-
 def modal_inicio(request):
-=======
-
+    return render(request, "paginas/modal_inicio.html")
 
 def inicio(request):
->>>>>>> productos
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "").strip()
@@ -78,8 +72,8 @@ def registro(request):
 
     return render(request, "paginas/registrate.html", {"form": form})
 
-<<<<<<< HEAD
-#Recuperacion de contraseña
+
+# Recuperación de contraseña
 class CustomPasswordResetView(auth_views.PasswordResetView):
     template_name = "contrasena/recuperar_contrasena.html"
     email_template_name = "contrasena/recuperar_contrasena_email.html"
@@ -108,9 +102,10 @@ password_reset_views = {
     'password_reset_confirm': CustomPasswordResetConfirmView.as_view(),
     'password_reset_complete': CustomPasswordResetCompleteView.as_view(),
 }
+
 def gestion(request):
-=======
+    return render(request, "sistema/gestion.html")
+
 def inicioinv(request):
->>>>>>> productos
     messages.success(request, f"¡Bienvenido, {request.user.username}!")
     return render(request, "sistema/inicioinv.html")
