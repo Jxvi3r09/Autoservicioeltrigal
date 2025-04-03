@@ -1,0 +1,30 @@
+{% extends 'contrasena/base.html' %}{% block title %}Recuperar Contraseña | Mi
+Sitio{%endblock %} {% block auth_content %}
+<div class="auth-header">
+  <h2>Recuperar Contraseña</h2>
+  <p class="text-muted">Ingresa tu email para recibir instrucciones</p>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="id_email" class="form-label">Correo electrónico:</label>
+    <input
+      type="email"
+      name="email"
+      class="form-control"
+      required
+      id="id_email"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary w-100">
+    Enviar Instrucciones
+  </button>
+</form>
+
+<div class="text-center mt-3">
+  <a href="{% url 'principal' %}" class="text-decoration-none"
+    >Volver al inicio de sesión</a
+  >
+</div>
+{% endblock %}

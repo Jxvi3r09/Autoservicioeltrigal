@@ -64,6 +64,8 @@ class RegistroUsuarioForm(forms.ModelForm):
             raise ValidationError("La contraseña debe tener al menos 8 caracteres y contener números y letras.")
         return password
 
+
+#Proveedores
 from django import forms
 from .models import Proveedor
 
@@ -72,12 +74,14 @@ class ProveedorForm(forms.ModelForm):
         model = Proveedor
         fields = ['nit_proveedor', 'empresa', 'correo', 'telefono', 'direccion']
         widgets = {
-            'direccion': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Ingrese la dirección completa'}),
+            'nit_proveedor': forms.TextInput(attrs={'class': 'form-control'}),
+            'empresa': forms.TextInput(attrs={'class': 'form-control'}),
+            'correo': forms.EmailInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-    # Validación adicional si es necesario (opcional)
-    def clean_telefono(self):
-        telefono = self.cleaned_data.get('telefono')
-        if len(str(telefono)) < 10:
-            raise forms.ValidationError("El teléfono debe tener al menos 10 dígitos.")
-        return telefono
+
+
+
+
