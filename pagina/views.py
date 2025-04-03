@@ -35,6 +35,9 @@ def agregar_proveedor(request):
 def modal_inicio(request):
     return render(request, "paginas/modal_inicio.html")
 
+def productos(request):
+    return render(request, "sistema/productos.html")
+
 def inicio(request):
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
