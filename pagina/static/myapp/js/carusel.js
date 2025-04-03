@@ -1,18 +1,18 @@
 let currentIndex = 0;
-    const images = document.querySelectorAll('.carousel-item');
+    const images = document.querySelectorAll('.imagenes img');
     const totalImages = images.length;
 
-    function moveSlide(direction) {
-        currentIndex += direction;
-        
-        if (currentIndex < 0) {
-            currentIndex = totalImages - 1;
-        } else if (currentIndex >= totalImages) {
-            currentIndex = 0;
+    function mostrarSiguienteImagen() {
+        index++;
+        if (index >= totalImages) {
+            index = 0; // Volver al principio cuando llegue al final
         }
-
-        const carouselImages = document.querySelector('.carousel-images');
-        carouselImages.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+        // Mover el carrusel a la imagen correspondiente
+        document.querySelector('.imagenes').style.transform = `translateX(-${index * 100}%)`;
     }
-
-    setInterval(() => moveSlide(1), 3000);  // Cambio automático de imagen cada 3 segundos
+    
+    // Cambiar imagen cada 3 segundos
+    setInterval(mostrarSiguienteImagen, 3000);
+        
+        
