@@ -3,15 +3,16 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <!-- Viewport para responsividad -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Administración</title>
 
-    <!-- jQuery -->
+    <!-- jQuery (requerido por AdminLTE) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Tu archivo JS para submenús (opcional) -->
+    <!-- Archivo JS para submenús (opcional) -->
     <script src="{% static 'myapp/js/submenu.js' %}"></script>
 
-    <!-- AdminLTE CSS -->
+    <!-- AdminLTE CSS (incluye Bootstrap) -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
@@ -21,12 +22,22 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <script src="{% static 'myapp/css/inicioinv.css' %}"></script>
+    <!-- Estilos personalizados (opcional) -->
+    <link href="{% static 'myapp/css/estilos.css' %}" rel="stylesheet" />
   </head>
-
   <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
       <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <!-- Botón para contraer/expandir el sidebar -->
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+              <i class="fas fa-bars"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
@@ -40,7 +51,7 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-          <!-- Opcional: Panel de usuario en la parte superior del sidebar  -->
+          <!-- Panel de usuario -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
@@ -49,18 +60,18 @@
                 alt="User Image"
               />
             </div>
-                <div class="info">
-                  <a href="#" class="d-block">
-                    {% if request.user.is_authenticated %}
-                      {{ request.user.username }}
-                    {% else %}
-                      Usuario
-                    {% endif %}
-                  </a>
-                </div>
+            <div class="info">
+              <a href="#" class="d-block">
+                {% if request.user.is_authenticated %}
+                  {{ request.user.username }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </a>
             </div>
-                
-          <!-- Menu principal -->
+          </div>
+
+          <!-- Menú principal -->
           <nav class="mt-2">
             <ul
               class="nav nav-pills nav-sidebar flex-column"
@@ -68,49 +79,20 @@
               role="menu"
               data-accordion="false"
             >
-              <!-- Ejemplo de sección "Dashboard" o "Inicio" -->
+              <!-- Sección Inicio -->
               <li class="nav-item">
                 <a href="{% url 'inicioinv' %}" class="nav-link">
                   <i class="nav-icon fas fa-home"></i>
                   <p>Inicio</p>
                 </a>
               </li>
-
               <!-- Sección Usuarios -->
               <li class="nav-item has-treeview">
                 <a href="{% url 'usuarios' %}" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
-                  <p>
-                    Usuarios
-                  </p>
+                  <p>Usuarios</p>
                 </a>
               </li>
-
-              <!-- Sección Empresas
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-city"></i>
-                  <p>
-                    Empresas
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Agregar Empresa</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Gestión de Empresas</p>
-                    </a>
-                  </li>
-                </ul>
-              </li> -->
-
               <!-- Sección Inventario -->
               <li class="nav-item">
                 <a href="{% url 'inventario' %}" class="nav-link">
@@ -118,23 +100,11 @@
                   <p>Inventario</p>
                 </a>
               </li>
-<<<<<<< HEAD
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'proveedores' %}" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
-                <p>Proveedores</p>
-              </a>
-            </li>
-=======
-
               <!-- Sección Productos -->
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-box"></i>
-                  <p>
-                    Productos
-                  </p>
+                  <p>Productos</p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
@@ -151,15 +121,13 @@
                   </li>
                 </ul>
               </li>
-
-              <!-- Sección Configuración (ejemplo) -->
+              <!-- Sección Configuraciones -->
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-cog"></i>
                   <p>Configuraciones</p>
                 </a>
               </li>
-
               <!-- Sección Cerrar Sesión -->
               <li class="nav-item">
                 <a href="{% url 'principal' %}" class="nav-link">
@@ -167,7 +135,6 @@
                   <p>Cerrar Sesión</p>
                 </a>
               </li>
->>>>>>> productos
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
