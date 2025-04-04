@@ -158,29 +158,42 @@
                 <!-- Tabla de usuarios -->
                 <table class="table table-bordered table-striped">
                   <thead>
-                    <tr>
-                      <td>{{ usuario.numero_documento}}</td>
-                      <td>{{ usuario.username }}</td>
-                      <td>{{ usuario.tipo_documento }}</td>
-                      <td>{{ usuario.contacto }}</td>
-                      <td>{{ usuario.get_rol_display }}</td>
-                      <td>{{ usuario.date_joined }}</td>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-sm">
-                          <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <a href="#" class="btn btn-danger btn-sm">
-                          <i class="fas fa-trash-alt"></i> Eliminar
-                        </a>
-                      </td>
-                    </tr>
-                  {% empty %}
-                    <tr>
-                      <td colspan="8" class="text-center">No hay usuarios registrados</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
+                      <tr>
+                          <th>Número de Documento</th>
+                          <th>Usuario</th>
+                          <th>Tipo de Documento</th>
+                          <th>Contacto</th>
+                          <th>Rol</th>
+                          <th>Fecha de Registro</th>
+                          <th>Acciones</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for usuario in usuario %}
+                      <tr>
+                          <td>{{ usuario.numero_documento }}</td>
+                          <td>{{ usuario.username }}</td>
+                          <td>{{ usuario.tipo_documento }}</td>
+                          <td>{{ usuario.contacto }}</td>
+                          <td>{{ usuario.get_rol_display }}</td>
+                          <td>{{ usuario.date_joined }}</td>
+                          <td>
+                              <a href="#" class="btn btn-warning btn-sm">
+                                  <i class="fas fa-edit"></i> Editar
+                              </a>
+                              <a href="#" class="btn btn-danger btn-sm">
+                                  <i class="fas fa-trash-alt"></i> Eliminar
+                              </a>
+                          </td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                          <td colspan="7" class="text-center">No hay usuarios registrados</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
               </table>
+              
             </div>
           </div>
         </div>

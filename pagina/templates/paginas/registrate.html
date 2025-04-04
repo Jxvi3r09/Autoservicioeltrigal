@@ -1,54 +1,98 @@
-<!-- registro_modal.html -->
 {% load static %}
-<div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="registroModalLabel">Crear Cuenta</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tu Página Principal</title>
 
-      <div class="modal-body">
-        <form method="post" autocomplete="off">
-          {% csrf_token %}
-          <p class="descripcion">
-            ¡Es muy fácil! Solo tienes que registrarte y en un par de pasos
-            estarás listo para aprovechar todos los beneficios.
-          </p>
-          <hr />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-          <div class="form-group">
-            {{ form.tipo_documento.label_tag }} {{ form.tipo_documento }}
-          </div>
-          <div class="form-group">
-            {{ form.numero_documento.label_tag }} {{ form.numero_documento }}
-          </div>
-          <div class="form-group">
-            {{ form.first_name.label_tag }} {{ form.first_name }}
-          </div>
-          <div class="form-group">
-            {{ form.last_name.label_tag }} {{ form.last_name }}
-          </div>
-          <div class="form-group">
-            {{ form.rol.label_tag }} {{ form.rol }}
-          </div>
-          <div class="form-group">
-            {{ form.contacto.label_tag }} {{ form.contacto }}
-          </div>
-          <div class="form-group">
-            {{ form.username.label_tag }} {{ form.username }}
-          </div>
-          <div class="form-group">
-            {{ form.password.label_tag }} {{ form.password }}
-          </div>
+  <!-- Tu CSS personalizado -->
+  <link href="{% static 'myapp/css/registrarse.css' %}" rel="stylesheet" />
 
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-        </form>
-      </div>
+  <!-- Fuente de Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+  <!-- Iconos de Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+</head>
+<body>
+  <!-- Contenido principal de tu página -->
+  <div class="contenedor">
+    <!-- Botón para abrir el modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal">
+      Registrarse
+    </button>
+  </div>
+
+  <!-- Modal de Registro -->
+  <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-0">
+          <div class="text-center mb-4">
+            <a href="{% url 'index' %}">
+              <img
+                src="{% static 'myapp/imagenes/logo.jpeg' %}"
+                alt="Logo de la empresa"
+                class="modal-logo"
+              />
+            </a>
+          </div>
+          
+          <form method="post" autocomplete="off">
+            {% csrf_token %}
+            <h2 class="text-center mb-3">Crear Cuenta</h2>
+            <p class="descripcion text-center">
+              ¡Es muy fácil! Solo tienes que registrarte y en un par de pasos
+              estarás listo para aprovechar todos los beneficios.
+            </p>
+            <hr />
+
+            <div class="form-group">
+              {{ form.tipo_documento.label_tag }} {{ form.tipo_documento }}
+            </div>
+            <div class="form-group">
+              {{ form.numero_documento.label_tag }} {{ form.numero_documento }}
+            </div>
+            <div class="form-group">
+              {{ form.first_name.label_tag }} {{ form.first_name }}
+            </div>
+            <div class="form-group">
+              {{ form.last_name.label_tag }} {{ form.last_name }}
+            </div>
+            <div class="form-group">{{ form.rol.label_tag }} {{ form.rol }}</div>
+            <div class="form-group">
+              {{ form.contacto.label_tag }} {{ form.contacto }}
+            </div>
+            <div class="form-group">
+              {{ form.username.label_tag }} {{ form.username }}
+            </div>
+            <div class="form-group">
+              {{ form.password.label_tag }} {{ form.password }}
+            </div>
+
+            <button type="submit" class="btn">Registrarse</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

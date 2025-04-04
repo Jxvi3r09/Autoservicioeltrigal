@@ -64,13 +64,20 @@
             <li class="nav-item">
               <a class="nav-link active" href="#">Inicio</a>
             </li>
+
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#mision-vision">Nosotros</a>
+          </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="#mision-vision">Nosotros</a>
-            
+              <a class="nav-link active" href="#productos">Productos </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#contacto">Contacto</a>
+              <a class="nav-link active" href="#contacto">Contacto</a>
             </li>
+
+
             <li class="nav-item ms-lg-3">
               <button
                 class="btn mi-boton"
@@ -229,22 +236,22 @@
               <div class="card-icon">
                 <i class="bi bi-truck"></i>
               </div>
-              <h3>Envíos Rápidos</h3>
+              <h3>Variedad de productos</h3>
               <p class="text-muted">
-                Entregamos tus productos en el menor tiempo posible para que no
-                tengas que esperar.
+                En el Autoservicio El Trigal, contamos con una extensa gama de productos de primera calidad, desde alimentos frescos hasta productos de limpieza y artículos de cuidado personal.
+                <i class="fas fa-shopping-cart"></i>
               </p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="card border-0 text-center p-4 h-100">
               <div class="card-icon">
-                <i class="bi bi-currency-dollar"></i>
-              </div>
-              <h3>Precios Competitivos</h3>
+              </div>            
+              <h3>Los Mejores Precios </h3>
               <p class="text-muted">
                 Ofrecemos los mejores precios del mercado con productos de alta
                 calidad.
+                <i class="fas fa-shopping-cart"></i>
               </p>
             </div>
           </div>
@@ -326,30 +333,39 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <section class="productos">
+    <section id="productos" class="productos">
         <h2>Nuestros Productos</h2>
         <div class="contenedor-productos">
             <div class="producto">
                 <img src={% static 'myapp/imagenes/pasta.jpg' %} alt="productos 1">
-                <h3>Viveres</h3>
-                <p class="descripcion">son fundamentales para cubir las necesidades nutricionales basicas.</p>
-                
+                <h3>Pasta</h3>
+                <p class="descripcion">¡Los espaguetis son uno de los tipos más populares de pasta!</p>
+                <p class="product-price">$5.000</p>
                 
             </div>
-
+            
+            <div class="producto">
+              <img src={% static 'myapp/imagenes/Arroz.jpg' %} alt="Producto 2">
+              <h3>Arroz</h3>
+              <p class="descripcion">El arroz es una fuente principal de carbohidratos y es un alimento básico en muchas culturas</p>
+              <p class="product-price">3.000</p>
+             
+          </div>
             <div class="producto">
                 <img src={% static 'myapp/imagenes/leche.jpg' %} alt="Producto 2">
-                <h3>Lacteos</h3>
-                <p class="descripcion">alimentos derivados de la leche, incluyendo leche fluida, productos fermentados como yogur y queso, y productos grasos como mantequilla y crema.</p>
-              
+                <h3>Leche </h3>
+                <p class="descripcion">La leche es rica en calcio, lo que es fundamental para la salud de los huesos y dientes.</p>
+                <p class="product-price">$3.000</p>
                
             </div>
+
+         
 
             <div class="producto">
                 <img src={% static 'myapp/imagenes/jabon1.jpg' %} alt="Producto 3">
                 <h3>Productos de aseo</h3>
-                <p class="descripcion">Descripción breve del producto 3.</p>
-                
+                <p class="descripcion">Están formulados con ingredientes que ayudan a disolver la grasa y la suciedad, lo que los hace más eficaces en ciertos tipos de limpieza.</p>
+                <p class="product-price">$7.000</p>
                 
             </div>
   </section>
