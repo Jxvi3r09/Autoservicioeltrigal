@@ -110,96 +110,54 @@
               </ul>
             </li> -->
 
-            <!-- Sección Inventario -->
-            <li class="nav-item">
-              <a href="/inventario/" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
-                <p>Inventario</p>
-              </a>
-            </li>
-          
-          <li class="nav-item">
-            <a href="/proveedores/" class="nav-link">
-              <i class="nav-icon fas fa-boxes"></i>
-              <p>Proveedores</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/productos" class="nav-link">
-              <i class="nav-icon fas fa-tag"></i>
-              <p>
-                Productos
-              </p>
-            </a>
-          </li>
-
-            <!-- Sección Configuración (ejemplo) -->
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-cog"></i>
-                <p>Configuraciones</p>
-              </a>
-            </li>
-
-            <!-- Sección Cerrar Sesión -->
-            <li class="nav-item">
-              <a href="/" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>Cerrar Sesión</p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-      </div>
-      <!-- /.sidebar -->
-    </aside>
-    <!-- /.Main Sidebar Container -->
-
-    <!-- Content Wrapper. Contiene el contenido principal -->
-    <div class="content-wrapper" style="min-height: 921px;">
-      <!-- Encabezado del contenido -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <h1 class="m-0">Usuarios</h1>
+              <!-- Sección Cerrar Sesión -->
+              <li class="nav-item">
+                <a href="{% url 'principal' %}" class="nav-link">
+                  <i class="nav-icon fas fa-sign-out-alt"></i>
+                  <p>Cerrar Sesión</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
-      </div>
-      <!-- /.content-header -->
+      </aside>
+      <!-- /.Main Sidebar Container -->
 
-      <!-- Contenido principal -->
-      <div class="content">
-        <div class="container-fluid">
-          <p>Bienvenido al panel de gestión de usuarios</p>
-          
-          <!-- Sección para gestionar usuarios -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Gestión de Usuarios</h3>
-            </div>
-              <!-- Botón para abrir el modal -->
-              <button 
-              type="button" 
-              class="btn btn-success" 
-              data-bs-toggle="modal" 
-              data-bs-target="#registroModal"
-          >
-              <i class="fas fa-plus me-2"></i>Agregar Usuario
-          </button>
-              <!-- Tabla de usuarios -->
-              <table class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Numero De Documento</th>
-                    <th>Nombre Usuario</th>
-                    <th>Tipo Documento</th>
-                    <th>Correo de Contacto</th>
-                    <th>Rol</th>
-                    <th>Fecha de Registro</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for usuario in usuarios %}
+      <!-- Content Wrapper. Contiene el contenido principal -->
+      <div class="content-wrapper">
+        <!-- Encabezado del contenido -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <h1 class="m-0">Usuarios</h1>
+          </div>
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Contenido principal -->
+        <div class="content">
+          <div class="container-fluid">
+            <p>Bienvenido al panel de gestión de usuarios</p>
+            
+            <!-- Sección para gestionar usuarios -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Gestión de Usuarios</h3>
+              </div>
+              <div class="card-body">
+                <!-- Botón para abrir el modal de agregar usuario -->
+
+    <div class="card">
+        <!-- Botón para abrir el modal -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal">
+            ➕ Agregar un nuevo Usuario
+        </button>
+
+                
+              
+
+                <!-- Tabla de usuarios -->
+                <table class="table table-bordered table-striped">
+                  <thead>
                     <tr>
                       <td>{{ usuario.numero_documento}}</td>
                       <td>{{ usuario.username }}</td>
