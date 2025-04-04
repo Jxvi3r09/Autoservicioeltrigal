@@ -33,12 +33,6 @@ def agregar_proveedor(request):
     return render(request, "sistema/agregar_proveedor.html")
 
 def modal_inicio(request):
-    return render(request, "paginas/modal_inicio.html")
-
-def productos(request):
-    return render(request, "sistema/productos.html")
-
-def inicio(request):
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "").strip()
@@ -57,6 +51,12 @@ def inicio(request):
         else:
             messages.error(request, "❌ Usuario o contraseña incorrectos.")
 
+    return render(request, "paginas/principal.html")
+
+def productos(request):
+    return render(request, "sistema/productos.html")
+
+def inicio(request):
     return render(request, "paginas/principal.html")
 
 def registro(request):
