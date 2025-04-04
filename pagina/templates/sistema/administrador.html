@@ -161,9 +161,7 @@
               </li>
             </ul>
           </nav>
-          <!-- /.sidebar-menu -->
         </div>
-        <!-- /.sidebar -->
       </aside>
       <!-- /.Main Sidebar Container -->
 
@@ -189,50 +187,15 @@
               </div>
               <div class="card-body">
                 <!-- Botón para abrir el modal de agregar usuario -->
-                <button id="btnAbrirModal" class="btn btn-success mb-3">
-                  <i class="fas fa-plus"></i> Agregar Usuario
-                </button>
-                <!-- Modal -->
-                <div id="modalRegistro" class="modal" aria-hidden="true">
-                  <div class="modal-fondo"></div>
-                  <div class="modal-contenido">
-                    <div class="modal-encabezado">
-                      <h5 class="modal-titulo">Crear Cuenta</h5>
-                      <button id="btnCerrarModal" class="btn-cerrar">&times;</button>
-                    </div>
-                    <div class="modal-cuerpo">
-                      <form method="post" autocomplete="off">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                          {{ form.tipo_documento.label_tag }} {{ form.tipo_documento }}
-                        </div>
-                        <div class="mb-3">
-                          {{ form.numero_documento.label_tag }} {{ form.numero_documento }}
-                        </div>
-                        <div class="mb-3">
-                          {{ form.first_name.label_tag }} {{ form.first_name }}
-                        </div>
-                        <div class="mb-3">
-                          {{ form.last_name.label_tag }} {{ form.last_name }}
-                        </div>
-                        <div class="mb-3">
-                          {{ form.rol.label_tag }} {{ form.rol }}
-                        </div>
-                        <div class="mb-3">
-                          {{ form.contacto.label_tag }} {{ form.contacto }}
-                        </div>
-                        <div class="mb-3">
-                          {{ form.username.label_tag }} {{ form.username }}
-                        </div>
-                        <div class="mb-3">
-                          {{ form.password.label_tag }} {{ form.password }}
-                        </div>
-                        <button type="submit" class="btn btn-primary">Registrarse</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                <!-- Fin del modal -->
+
+    <div class="card">
+        <!-- Botón para abrir el modal -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal">
+            ➕ Agregar un nuevo Usuario
+        </button>
+
+                
+              
 
                 <!-- Tabla de usuarios -->
                 <table class="table table-bordered table-striped">
