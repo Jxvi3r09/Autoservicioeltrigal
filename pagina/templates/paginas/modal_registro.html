@@ -1,0 +1,105 @@
+<!-- En tu archivo modal_registro.html -->
+<div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title">
+                  <i class="fas fa-user-plus me-2"></i>Registro de Nuevo Usuario
+              </h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          
+          <div class="modal-body">
+              <form method="post" autocomplete="off" class="row g-3">
+                  {% csrf_token %}
+                  
+                  <!-- Columna Izquierda -->
+                  <div class="col-md-6">
+                      <!-- Tipo de Documento -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.tipo_documento.label }}</label>
+                          {{ form.tipo_documento }}
+                          <div class="form-text text-danger">{{ form.tipo_documento.errors }}</div>
+                      </div>
+                      
+                      <!-- Número de Documento -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.numero_documento.label }}</label>
+                          {{ form.numero_documento }}
+                          <div class="form-text text-danger">{{ form.numero_documento.errors }}</div>
+                          <small class="form-text text-muted">Solo números</small>
+                      </div>
+                      
+                      <!-- Nombres -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.first_name.label }}</label>
+                          {{ form.first_name }}
+                          <div class="form-text text-danger">{{ form.first_name.errors }}</div>
+                      </div>
+                  </div>
+
+                  <!-- Columna Derecha -->
+                  <div class="col-md-6">
+                      <!-- Apellidos -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.last_name.label }}</label>
+                          {{ form.last_name }}
+                          <div class="form-text text-danger">{{ form.last_name.errors }}</div>
+                      </div>
+                      
+                      <!-- Rol -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.rol.label }}</label>
+                          {{ form.rol }}
+                          <div class="form-text text-danger">{{ form.rol.errors }}</div>
+                      </div>
+                      
+                      <!-- Contacto -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.contacto.label }}</label>
+                          {{ form.contacto }}
+                          <div class="form-text text-danger">{{ form.contacto.errors }}</div>
+                          <small class="form-text text-muted">{{ form.contacto.help_text }}</small>
+                      </div>
+                  </div>
+
+                  <!-- Campos full-width -->
+                  <div class="col-12">
+                      <!-- Usuario -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.username.label }}</label>
+                          {{ form.username }}
+                          <div class="form-text text-danger">{{ form.username.errors }}</div>
+                          <small class="form-text text-muted">Mínimo 6 caracteres</small>
+                      </div>
+                      
+                      <!-- Contraseña -->
+                      <div class="mb-3">
+                          <label class="form-label">{{ form.password.label }}</label>
+                          <div class="input-group">
+                              {{ form.password }}
+                              <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                  <i class="fas fa-eye"></i>
+                              </button>
+                          </div>
+                          <div class="form-text text-danger">{{ form.password.errors }}</div>
+                          <small class="form-text text-muted">{{ form.password.help_text }}</small>
+                      </div>
+                  </div>
+
+                  <!-- Botones -->
+                  <div class="col-12">
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                              <i class="fas fa-times me-2"></i>Cancelar
+                          </button>
+                          <button type="submit" class="btn btn-primary">
+                              <i class="fas fa-save me-2"></i>Registrar Usuario
+                          </button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

@@ -87,23 +87,23 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 # }
 # 
 # # desconecte la base de datos
-# DATABASES = {
-# 'default': {
-#     'ENGINE': 'django.db.backends.mysql',
-#     'NAME': 'proyecto',
-#     'USER': 'root',
-#     'PASSWORD':'',
-#     'HOST': 'localhost',  # Asegúrate de que solo sea la IP
-#     'PORT': '3306',  # Solo el número del puerto, sin IP
-# }
-# }
-# 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
-    }
+'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'proyecto',
+    'USER': 'root',
+    'PASSWORD':'',
+    'HOST': 'localhost',  # Asegúrate de que solo sea la IP
+    'PORT': '3306',  # Solo el número del puerto, sin IP
 }
+}
+# 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 AUTH_USER_MODEL = 'pagina.Usuario'
 
