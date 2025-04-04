@@ -28,7 +28,7 @@ urlpatterns = [
 
     path('inventario/', views.inventario, name='inventario'),
 
-    path('administrador/', views.administrador, name='administrador'),
+    path('administrador/', views.lista_usuarios, name='administrador'),
 
     path('proveedores/', views.proveedores, name='proveedores'),
 
@@ -37,6 +37,8 @@ urlpatterns = [
     path("inicioinv/", views.inicioinv, name="inicioinv"),
 
     path('productos', views.productos, name='productos'),
+
+    path('modal_inicio', views.modal_inicio, name='modal inicio'),
 
 
     # ✅ Nueva ruta para iniciar sesión

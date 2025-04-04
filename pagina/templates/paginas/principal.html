@@ -5,7 +5,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
     <meta
       name="description"
       content="Autoservicio el Trigal - Tu tienda de conveniencia con los mejores productos"
@@ -73,11 +72,14 @@
               <a class="nav-link" href="#contacto">Contacto</a>
             </li>
             <li class="nav-item ms-lg-3">
-              <button class="btn mi-boton" data-bs-toggle="modal" data-bs-target="#modal_inicio">
-                  <i class="bi bi-person-circle me-1"></i> Acceder
+              <button
+                class="btn mi-boton"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+              >
+                <i class="bi bi-person-circle me-1"></i> Acceder
               </button>
-          </li>
-          
+            </li>
           </ul>
         </div>
       </div>
@@ -96,7 +98,7 @@
     <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="4"></button>
     <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="5"></button>
   </div>
-  <script src="script.js"></script>   
+  <script src="script.js"></script>
   <!-- Slides -->
   <div class="carousel-inner">
     <!-- Slide 1 -->
@@ -684,12 +686,6 @@ document.addEventListener('DOMContentLoaded', function() {
               <li class="mb-2"><a href="#mision-vision">Nosotros</a></li>
               <li class="mb-2"><a href="#productos">Productos</a></li>
               <li class="mb-2"><a href="#contacto">Contacto</a></li>
-              <li class="nav-item ms-lg-3">
-                <button class="btn mi-boton" data-bs-toggle="modal" data-bs-target="#loginModal">
-                  
-                    <i class="bi bi-person-circle me-1"></i> Acceder
-                </button>
-            </li>
             
             </ul>
           </div>
@@ -738,17 +734,21 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </footer>
 
- <!--Boton de login-->
- <a href="#" class="back-to-top"><i class="bi bi-arrow-up"></i></a>
- {% include 'paginas/modal_inicio.html' %}
+    {% include 'paginas/modal_inicio.html' %}
 
- <button
-   type="button"
-   class="btn btn-primary"
-   data-toggle="modal"
-   data-target="#modalLogin"
- >
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'myapp/js/principal.js' %}"></script>
 
+    {% if show_login_modal %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+        loginModal.show();
+      });
+    </script>
+    {% endif %}
  
 
 
