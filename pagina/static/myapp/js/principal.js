@@ -90,3 +90,49 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Seleccionamos el carrusel
+  const carousel = document.getElementById('customCarousel');
+  
+  // Configuración del carrusel
+  const carouselInstance = new bootstrap.Carousel(carousel, {
+    interval: 5000, // Cambia cada 5 segundos
+    wrap: true, // Permite bucle infinito
+    pause: 'hover' // Pausa al pasar el mouse
+  });
+
+  // Opcional: Personalizar la altura del carrusel
+  function adjustCarouselHeight() {
+    const activeItem = document.querySelector('#customCarousel .carousel-item.active');
+    if (activeItem) {
+      const img = activeItem.querySelector('img');
+      if (img.complete) {
+        carousel.style.height = img.height + 'px';
+      } else {
+        img.onload = function() {
+          carousel.style.height = this.height + 'px';
+        };
+      }
+    }
+  }
+
+  // Ajustar altura al cargar y al cambiar de slide
+  window.addEventListener('load', adjustCarouselHeight);
+  carousel.addEventListener('slid.bs.carousel', adjustCarouselHeight);
+  
+  // Opcional: Ajustar altura al redimensionar la ventana
+  window.addEventListener('resize', adjustCarouselHeight);
+  
+  // Inicializar altura
+  adjustCarouselHeight();
+  
+  // Opcional: Navegación con teclado
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+      carouselInstance.prev();
+    } else if (e.key === 'ArrowRight') {
+      carouselInstance.next();
+    }
+  });
+});

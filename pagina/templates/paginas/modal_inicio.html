@@ -31,21 +31,17 @@
           <div class="modal-body">
             <!-- Mensajes de alerta -->
             {% if messages %}
-            <div class="mb-4">
-              {% for message in messages %}
-              <div
-                class="alert alert-dismissible {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}"
-              >
-                {{ message }}
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                ></button>
+              <div class="mb-4">
+                {% for message in messages %}
+                  <div class="alert alert-dismissible {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
               </div>
-              {% endfor %}
-            </div>
+            {% endif %}
+          </div>
+          
             <div class="modal-body">
                 {% if messages %}
                 <div class="mb-4">
@@ -90,9 +86,5 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
   </body>
 </html>
-=======
-</div>
->>>>>>> usuarios
