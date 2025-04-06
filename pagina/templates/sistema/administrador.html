@@ -169,29 +169,32 @@
                       </tr>
                   </thead>
                   <tbody>
-                      {% for usuario in usuario %}
+                    {% if usuarios %}
+                      {% for usuario in usuarios %}
                       <tr>
-                          <td>{{ usuario.numero_documento }}</td>
-                          <td>{{ usuario.username }}</td>
-                          <td>{{ usuario.tipo_documento }}</td>
-                          <td>{{ usuario.contacto }}</td>
-                          <td>{{ usuario.get_rol_display }}</td>
-                          <td>{{ usuario.date_joined }}</td>
-                          <td>
-                              <a href="#" class="btn btn-warning btn-sm">
-                                  <i class="fas fa-edit"></i> Editar
-                              </a>
-                              <a href="#" class="btn btn-danger btn-sm">
-                                  <i class="fas fa-trash-alt"></i> Eliminar
-                              </a>
-                          </td>
-                      </tr>
-                      {% empty %}
-                      <tr>
-                          <td colspan="7" class="text-center">No hay usuarios registrados</td>
+                        <td>{{ usuario.numero_documento }}</td>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.tipo_documento }}</td>
+                        <td>{{ usuario.contacto }}</td>
+                        <td>{{ usuario.rol }}</td>
+                        <td>{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
+                        <td>
+                          <a href="#" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Editar
+                          </a>
+                          <a href="#" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                          </a>
+                        </td>
                       </tr>
                       {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td colspan="7" class="text-center">No hay usuarios registrados</td>
+                      </tr>
+                    {% endif %}
                   </tbody>
+                  
               </table>
               
             </div>
@@ -205,7 +208,8 @@
   <!-- /.wrapper -->
 
   <!-- Incluir modal de registro -->
-{% include 'paginas/modal_registro.html' %}
+{% include 'paginas/registrate.html' %}
+
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

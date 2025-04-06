@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tu Página Principal</title>
+  <title>Registro de Usuario</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,13 +27,6 @@
   />
 </head>
 <body>
-  <!-- Contenido principal de tu página -->
-  <div class="contenedor">
-    <!-- Botón para abrir el modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal">
-      Registrarse
-    </button>
-  </div>
 
   <!-- Modal de Registro -->
   <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
@@ -44,7 +37,7 @@
         </div>
         <div class="modal-body pt-0">
           <div class="text-center mb-4">
-            <a href="{% url 'index' %}">
+
               <img
                 src="{% static 'myapp/imagenes/logo.jpeg' %}"
                 alt="Logo de la empresa"
@@ -53,7 +46,7 @@
             </a>
           </div>
           
-          <form method="post" autocomplete="off">
+          <form method="post" autocomplete="off" id="usuarioForm">
             {% csrf_token %}
             <h2 class="text-center mb-3">Crear Cuenta</h2>
             <p class="descripcion text-center">
@@ -62,30 +55,76 @@
             </p>
             <hr />
 
-            <div class="form-group">
-              {{ form.tipo_documento.label_tag }} {{ form.tipo_documento }}
-            </div>
-            <div class="form-group">
-              {{ form.numero_documento.label_tag }} {{ form.numero_documento }}
-            </div>
-            <div class="form-group">
-              {{ form.first_name.label_tag }} {{ form.first_name }}
-            </div>
-            <div class="form-group">
-              {{ form.last_name.label_tag }} {{ form.last_name }}
-            </div>
-            <div class="form-group">{{ form.rol.label_tag }} {{ form.rol }}</div>
-            <div class="form-group">
-              {{ form.contacto.label_tag }} {{ form.contacto }}
-            </div>
-            <div class="form-group">
-              {{ form.username.label_tag }} {{ form.username }}
-            </div>
-            <div class="form-group">
-              {{ form.password.label_tag }} {{ form.password }}
+            <!-- Campos del formulario organizados en dos columnas para pantallas grandes -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="tipo_documento" class="form-label">Tipo de Documento</label>
+                  <select class="form-select" id="tipo_documento" name="tipo_documento" required>
+                    <option value="CC" selected>Cédula de Ciudadanía</option>
+                    <option value="TI">Tarjeta de Identidad</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PP">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="numero_documento" class="form-label">Número de Documento</label>
+                  <input type="text" class="form-control" id="numero_documento" name="numero_documento" required>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="first_name" class="form-label">Nombres</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name" required>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="last_name" class="form-label">Apellidos</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="rol" class="form-label">Rol</label>
+                  <select class="form-select" id="rol" name="rol" required>
+                    <option value="empleado" selected>Empleado</option>
+                    <option value="administrador">Administrador</option>
+                  </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="username" class="form-label">Nombre de Usuario</label>
+                  <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="email" class="form-label">Correo  o Numero de celular</label>
+                  <input type="text" class="form-control" id="contacto" name="contacto" required>
+
+
+                </div>
+              </div>
             </div>
 
-            <button type="submit" class="btn">Registrarse</button>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+                  <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary py-2">Registrarse</button>
+            </div>
           </form>
         </div>
       </div>
@@ -94,5 +133,21 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para validación del formulario -->
+  <script>
+    document.getElementById('usuarioForm').addEventListener('submit', function(e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+      
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Las contraseñas no coinciden');
+        document.getElementById('password').focus();
+      }
+      
+      // Aquí puedes agregar más validaciones si es necesario
+    });
+  </script>
 </body>
 </html>

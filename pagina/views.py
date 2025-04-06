@@ -10,6 +10,7 @@ from django.contrib.auth.views import PasswordResetView
 
 from .models import Usuario
 
+#mostrar todos los usuarios
 def lista_usuarios(request):
     usuarios = Usuario.objects.all()  # Obtiene todos los usuarios de la base de datos
     return render(request, 'sistema/administrador.html', {'usuarios': usuarios})
@@ -59,21 +60,38 @@ def productos(request):
 def inicio(request):
     return render(request, "paginas/principal.html")
 
+# def registro(request):
+#     if request.method == 'POST':
+#         form = RegistroUsuarioForm(request.POST)
+#         if form.is_valid():
+#             # Guarda el usuario pero no lo loguea automáticamente
+#             user = form.save(commit=False)
+#             user.set_password(form.cleaned_data['password'])  # Encripta la contraseña
+#             user.save()
+#             return redirect('exito')  # Redirige a una página de éxito
+#     else:
+#         form = RegistroUsuarioForm()
+    
+#     return render(request, 'paginas/registrate.html', {'form': form})
+
 def registro(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
-            usuario = form.save(commit=False)  # No guardamos aún
-            usuario.set_password(form.cleaned_data["password"])  # Encriptamos la contraseña
-            usuario.save()  # Ahora sí guardamos
+            usuario = form.save(commit=False)
+            usuario.set_password(form.cleaned_data["password"])
+            usuario.save()
             login(request, usuario)
 
-            form = RegistroUsuarioForm()  # Limpia los campos estableciendo un nuevo formulario vacío
-            return render(request, "paginas/registrate.html", {"form": form})  # Recarga con el formulario vacío
+            form = RegistroUsuarioForm()  # Limpia el formulario
+            return render(request, "paginas/registrate.html", {"form": form})
+        else:
+            print(form.errors)  # ⬅️ Aquí ves los errores en la consola
     else:
-        form = RegistroUsuarioForm()  # Se ejecuta solo si el método NO es POST
+        form = RegistroUsuarioForm()
 
     return render(request, "paginas/registrate.html", {"form": form})
+
 
 
 # Recuperación de contraseña
