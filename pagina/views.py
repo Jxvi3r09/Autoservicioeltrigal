@@ -7,6 +7,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.contrib.auth.views import PasswordResetView
+from django.shortcuts import render, get_object_or_404
 
 from .models import Usuario
 
@@ -15,6 +16,42 @@ def lista_usuarios(request):
     usuarios = Usuario.objects.all()  # Obtiene todos los usuarios de la base de datos
     return render(request, 'sistema/administrador.html', {'usuarios': usuarios})
 
+def editar_usuario(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+
+    if request.method == 'POST':
+        usuario.tipo_documento = request.POST.get('tipo_documento')
+        usuario.numero_documento = request.POST.get('numero_documento')
+        usuario.first_name = request.POST.get('first_name')
+        usuario.last_name = request.POST.get('last_name')
+        usuario.rol = request.POST.get('rol')
+        usuario.contacto = request.POST.get('contacto')
+        usuario.username = request.POST.get('username')
+
+        # Validar que ningún campo esté vacío (opcional pero recomendado)
+        if all([
+            usuario.tipo_documento, usuario.numero_documento,
+            usuario.first_name, usuario.last_name,
+            usuario.rol, usuario.contacto, usuario.username
+        ]):
+            usuario.save()
+            messages.success(request, 'Usuario actualizado correctamente.')
+        else:
+            messages.error(request, 'Todos los campos son obligatorios.')
+
+        return redirect('usuarios')  # Redirige a la vista de gestión/listado
+
+    return redirect('usuarios')  # Previene accesos por GET no permitidos
+
+def eliminar_usuario(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+
+    if request.method == 'POST':
+        usuario.delete()
+        return redirect('lista_usuarios')  # Cambialo por el nombre de tu vista principal
+
+    return render(request, 'sistema/administrador.html', {'usuario': usuario})
+    
 def principal(request):
     return render(request, "paginas/principal.html")
 

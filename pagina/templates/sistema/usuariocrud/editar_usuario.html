@@ -1,0 +1,56 @@
+<!-- Modal de Editar Usuario -->
+<div class="modal fade" id="editarUsuarioModal{{ usuario.id }}" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" action="{% url 'editar_usuario' usuario.id %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label class="form-label">Tipo de Documento</label>
+            <input type="text" name="tipo_documento" class="form-control" value="{{ usuario.tipo_documento }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Número de Documento</label>
+            <input type="text" name="numero_documento" class="form-control" value="{{ usuario.numero_documento }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nombres</label>
+            <input type="text" name="first_name" class="form-control" value="{{ usuario.first_name }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Apellidos</label>
+            <input type="text" name="last_name" class="form-control" value="{{ usuario.last_name }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <input type="text" name="rol" class="form-control" value="{{ usuario.rol }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contacto</label>
+            <input type="text" name="contacto" class="form-control" value="{{ usuario.contacto }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input type="text" name="username" class="form-control" value="{{ usuario.username }}">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar Cambios</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

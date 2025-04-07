@@ -179,14 +179,18 @@
                         <td>{{ usuario.rol }}</td>
                         <td>{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
                         <td>
-                          <a href="#" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i> Editar
-                          </a>
-                          <a href="#" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i> Eliminar
-                          </a>
+                          <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}">
+                            Editar
+                          </button>
+                          <!-- Botón para abrir el modal de eliminación -->
+                           <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal{{ usuario.id }}">
+                          Eliminar
+                          </button>
                         </td>
                       </tr>
+                      <!-- Modal para cada usuario -->
+                      {% include 'sistema/usuariocrud/editar_usuario.html' %}
+                      {% include 'sistema/usuariocrud/eliminar_usuario.html' %}
                       {% endfor %}
                     {% else %}
                       <tr>
