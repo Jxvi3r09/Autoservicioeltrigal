@@ -17,9 +17,17 @@ class RegistroUsuarioForm(forms.ModelForm):
         help_text="Debe contener al menos 8 caracteres, incluyendo números y letras."
     )
 
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        label="Confirmar Contraseña"
+    )
+
     class Meta:
-        model = Usuario  # Usa tu modelo de usuario personalizado
-        fields = ["tipo_documento", "numero_documento", "first_name", "last_name", "rol", "contacto", "username", "password"]
+        model = Usuario
+        fields = [
+            "tipo_documento", "numero_documento", "first_name", "last_name",
+            "rol", "contacto", "username", "password"
+        ]
         labels = {
             "first_name": "Nombres",
             "last_name": "Apellidos",
@@ -54,7 +62,7 @@ class RegistroUsuarioForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        if Usuario.objects.filter(username=username).exists():  # Se cambió User por Usuario
+        if Usuario.objects.filter(username=username).exists():
             raise ValidationError("El nombre de usuario ya está en uso.")
         return username
 
@@ -63,6 +71,14 @@ class RegistroUsuarioForm(forms.ModelForm):
         if len(password) < 8 or not any(char.isdigit() for char in password) or not any(char.isalpha() for char in password):
             raise ValidationError("La contraseña debe tener al menos 8 caracteres y contener números y letras.")
         return password
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password and confirm_password and password != confirm_password:
+            self.add_error("confirm_password", "Las contraseñas no coinciden.")
 
 
 #Proveedores

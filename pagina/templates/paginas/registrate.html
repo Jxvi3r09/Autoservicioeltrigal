@@ -46,86 +46,12 @@
             </a>
           </div>
           
-          <form method="post" autocomplete="off" id="usuarioForm">
+          <form method="post" action="{% url 'registro' %}">
             {% csrf_token %}
-            <h2 class="text-center mb-3">Crear Cuenta</h2>
-            <p class="descripcion text-center">
-              ¡Es muy fácil! Solo tienes que registrarte y en un par de pasos
-              estarás listo para aprovechar todos los beneficios.
-            </p>
-            <hr />
-
-            <!-- Campos del formulario organizados en dos columnas para pantallas grandes -->
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group mb-3">
-                  <label for="tipo_documento" class="form-label">Tipo de Documento</label>
-                  <select class="form-select" id="tipo_documento" name="tipo_documento" required>
-                    <option value="CC" selected>Cédula de Ciudadanía</option>
-                    <option value="TI">Tarjeta de Identidad</option>
-                    <option value="CE">Cédula de Extranjería</option>
-                    <option value="PP">Pasaporte</option>
-                  </select>
-                </div>
-
-                <div class="form-group mb-3">
-                  <label for="numero_documento" class="form-label">Número de Documento</label>
-                  <input type="text" class="form-control" id="numero_documento" name="numero_documento" required>
-                </div>
-
-                <div class="form-group mb-3">
-                  <label for="first_name" class="form-label">Nombres</label>
-                  <input type="text" class="form-control" id="first_name" name="first_name" required>
-                </div>
-
-                <div class="form-group mb-3">
-                  <label for="last_name" class="form-label">Apellidos</label>
-                  <input type="text" class="form-control" id="last_name" name="last_name" required>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group mb-3">
-                  <label for="rol" class="form-label">Rol</label>
-                  <select class="form-select" id="rol" name="rol" required>
-                    <option value="empleado" selected>Empleado</option>
-                    <option value="administrador">Administrador</option>
-                  </select>
-                </div>
-
-                <div class="form-group mb-3">
-                  <label for="username" class="form-label">Nombre de Usuario</label>
-                  <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-
-                <div class="form-group mb-3">
-                  <label for="email" class="form-label">Correo  o Numero de celular</label>
-                  <input type="text" class="form-control" id="contacto" name="contacto" required>
-
-
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group mb-3">
-                  <label for="password" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group mb-3">
-                  <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
-                  <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary py-2">Registrarse</button>
-            </div>
-          </form>
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success w-100">Registrarse</button>
+        </form>
+        
         </div>
       </div>
     </div>

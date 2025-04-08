@@ -8,13 +8,19 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import login
+
 
 from .models import Usuario
 
 #mostrar todos los usuarios
 def lista_usuarios(request):
-    usuarios = Usuario.objects.all()  # Obtiene todos los usuarios de la base de datos
-    return render(request, 'sistema/administrador.html', {'usuarios': usuarios})
+    usuarios = Usuario.objects.all()
+    form = RegistroUsuarioForm()  # ✅ Añade esta línea
+    return render(request, 'sistema/administrador.html', {
+        'usuarios': usuarios,
+        'form': form  # ✅ Y esta línea para pasarlo al template
+    })
 
 def editar_usuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
@@ -48,7 +54,7 @@ def eliminar_usuario(request, id):
 
     if request.method == 'POST':
         usuario.delete()
-        return redirect('lista_usuarios')  # Cambialo por el nombre de tu vista principal
+        return redirect('usuarios')  # Cambialo por el nombre de tu vista principal
 
     return render(request, 'sistema/administrador.html', {'usuario': usuario})
     
@@ -119,15 +125,31 @@ def registro(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
-            usuario = form.save(commit=False)
-            usuario.set_password(form.cleaned_data["password"])
-            usuario.save()
-            login(request, usuario)
+            password = form.cleaned_data["password"]
+            confirm_password = form.cleaned_data["confirm_password"]
 
-            form = RegistroUsuarioForm()  # Limpia el formulario
-            return render(request, "paginas/registrate.html", {"form": form})
+            if password != confirm_password:
+                form.add_error("confirm_password", "Las contraseñas no coinciden.")
+            else:
+                usuario = form.save(commit=False)
+                usuario.set_password(password)
+
+                # Obtener contacto y asignarlo a correo o teléfono
+                contacto = form.cleaned_data["contacto"]
+                if "@" in contacto:
+                    usuario.correo = contacto
+                else:
+                    usuario.telefono = contacto
+
+                usuario.save()
+                login(request, usuario)
+
+                form = RegistroUsuarioForm()  # Limpia el formulario
+                return redirect('usuarios')  # Este sí existe
+
         else:
-            print(form.errors)  # ⬅️ Aquí ves los errores en la consola
+            print(form.errors)  # Para ver errores en consola si hay
+
     else:
         form = RegistroUsuarioForm()
 

@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import login
+from django.shortcuts import render
 
-# Creación del usuario
+
+
 class Usuario(AbstractUser):
     TIPOS_DOCUMENTO = [
         ('CC', 'Cédula de Ciudadanía'),
@@ -9,14 +12,13 @@ class Usuario(AbstractUser):
         ('CE', 'Cédula de Extranjería'),
         ('PP', 'Pasaporte'),
     ]
-    
+
     ROLES = [
         ('administrador', 'Administrador'),
         ('empleado', 'Empleado'),
     ]
 
-    # Datos de la base de datos
-    id = models.AutoField(primary_key=True)  # ID automático
+    id = models.AutoField(primary_key=True)
     tipo_documento = models.CharField(max_length=2, choices=TIPOS_DOCUMENTO, default='CC')
     numero_documento = models.CharField(max_length=20, unique=True, blank=True, null=True)
     rol = models.CharField(max_length=20, choices=ROLES, default='empleado')
