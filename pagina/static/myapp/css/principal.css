@@ -225,3 +225,58 @@ body {
 .producto button:hover {
   background-color: #2980b9;
 }
+  /* Estilo base del carrusel */
+  #customCarousel {
+    background: #000; /* Fondo negro para mejor contraste */
+    margin-bottom: 20px;
+    transition: height 0.3s ease; /* Transición suave para cambios de altura */
+  }
+  
+  /* Imágenes del carrusel */
+  #customCarousel .carousel-item img {
+    object-fit: cover;
+    max-height: 800px; /* Altura máxima */
+    width: 100%;
+  }
+  
+  /* Títulos del carrusel */
+  #customCarousel .carousel-caption {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 5px;
+    bottom: 20px;
+  }
+  
+  #customCarousel .carousel-caption h5 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+  
+  /* Indicadores */
+  #customCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 5px;
+  }
+  
+  /* Efecto hover para controles */
+  #customCarousel .carousel-control-prev,
+  #customCarousel .carousel-control-next {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    width: 5%;
+  }
+  
+  #customCarousel .carousel-control-prev:hover,
+  #customCarousel .carousel-control-next:hover {
+    opacity: 1;
+  }
+  
+  /* Responsive: Ocultar controles en móviles muy pequeños */
+  @media (max-width: 400px) {
+    #customCarousel .carousel-control-prev,
+    #customCarousel .carousel-control-next {
+      display: none;
+    }
+  }

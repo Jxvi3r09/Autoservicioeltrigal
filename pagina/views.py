@@ -75,17 +75,21 @@ def modal_inicio(request):
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "").strip()
 
-        # Verificar si los campos están vacíos
+        # Validación: campos vacíos
         if not username or not password:
             messages.error(request, "⚠️ Todos los campos son obligatorios.")
             return redirect("inicio")
 
+        # Intentar autenticar al usuario
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            messages.success(request, f"✅ Bienvenido {user.first_name} {user.last_name}!")
-            return redirect("inventario")  # Redirige a inicio_inventario
+            if user.is_active:
+                login(request, user)
+                messages.success(request, f"✅ ¡Bienvenido al sistema, {user.first_name} {user.last_name}!")
+                return redirect("inventario")
+            else:
+                messages.error(request, "⚠️ Tu cuenta está inactiva. Contacta al administrador.")
         else:
             messages.error(request, "❌ Usuario o contraseña incorrectos.")
 

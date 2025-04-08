@@ -69,13 +69,14 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
                             <input type="password" class="form-control" id="contraseña" name="password" placeholder="Contraseña" required>
-                            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">
-                                <i class="bi bi-eye-fill"></i>
+                            <button type="button" class="btn btn-outline-secondary password-toggle">
+                              <i class="bi bi-eye-fill"></i>
                             </button>
+                            
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                    <button type="submit" class="btn w-100 btn-iniciar-sesion">Iniciar sesión</button>
                 </form>
 
                 <div class="text-center mt-3">
@@ -86,5 +87,7 @@
         </div>
       </div>
     </div>
+    <script src="{% static 'myapp/js/iniciarsesion.js' %}"></script>
+
   </body>
 </html>

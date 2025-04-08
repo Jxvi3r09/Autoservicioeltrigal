@@ -360,3 +360,14 @@ body {
   padding: 10px 15px;
   margin-bottom: 1.5rem;
 }
+.btn-iniciar-sesion {
+  background-color: rgb(27, 140, 25)!important; /* verde ejemplo */
+  border-color: #28a745 !important;
+  color: white !important;
+}
+
+.btn-iniciar-sesion:hover {
+  background-color:rgb(27, 140, 25)!important;
+  border-color: #1e7e34 !important;
+}
+

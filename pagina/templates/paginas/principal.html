@@ -46,6 +46,7 @@
             alt="Autoservicio el Trigal"
             width="180"
             class="logo-hover"
+            title="Logo Autoservicio el trigal"
           />
         </a>
         <button
@@ -95,7 +96,7 @@
 <section>
       <!--Carrusel de imagenes-->
 <!-- Reemplaza tu sección de carrusel actual con este código -->
-<div id="customCarousel" class="carousel slide" data-bs-ride="false">
+<div id="customCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
   <!-- Indicadores -->
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="0" class="active"></button>
@@ -159,78 +160,24 @@
   </button>
 </div>
 </section>
-<!-- JavaScript personalizado para el carrusel -->
-
-<!-- CSS adicional para personalizar -->
-<style>
-  /* Estilo base del carrusel */
-  #customCarousel {
-    background: #000; /* Fondo negro para mejor contraste */
-    margin-bottom: 20px;
-    transition: height 0.3s ease; /* Transición suave para cambios de altura */
-  }
-  
-  /* Imágenes del carrusel */
-  #customCarousel .carousel-item img {
-    object-fit: cover;
-    max-height: 800px; /* Altura máxima */
-    width: 100%;
-  }
-  
-  /* Títulos del carrusel */
-  #customCarousel .carousel-caption {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 15px;
-    border-radius: 5px;
-    bottom: 20px;
-  }
-  
-  #customCarousel .carousel-caption h5 {
-    font-size: 1.5rem;
-    margin-bottom: 0;
-  }
-  
-  /* Indicadores */
-  #customCarousel .carousel-indicators button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin: 0 5px;
-  }
-  
-  /* Efecto hover para controles */
-  #customCarousel .carousel-control-prev,
-  #customCarousel .carousel-control-next {
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-    width: 5%;
-  }
-  
-  #customCarousel .carousel-control-prev:hover,
-  #customCarousel .carousel-control-next:hover {
-    opacity: 1;
-  }
-  
-  /* Responsive: Ocultar controles en móviles muy pequeños */
-  @media (max-width: 400px) {
-    #customCarousel .carousel-control-prev,
-    #customCarousel .carousel-control-next {
-      display: none;
-    }
-  }
-
-
-</style>
-
-
-
-
-
 
     <!-- Features Section -->
     <section class="py-5 bg-white">
       <div class="container">
         <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card border-0 text-center p-4 h-100">
+              <div class="card-icon">
+                <i class="bi bi-cart-check"></i>
+              </div>            
+              <h3>Los Mejores Precios </h3>
+              <p class="text-muted">
+                Ofrecemos los mejores precios del mercado con productos de alta
+                calidad.
+                <i class="fas fa-shopping-cart"></i>
+              </p>
+            </div>
+          </div>
           <div class="col-md-4">
             <div class="card border-0 text-center p-4 h-100">
               <div class="card-icon">
@@ -246,24 +193,11 @@
           <div class="col-md-4">
             <div class="card border-0 text-center p-4 h-100">
               <div class="card-icon">
-              </div>            
-              <h3>Los Mejores Precios </h3>
-              <p class="text-muted">
-                Ofrecemos los mejores precios del mercado con productos de alta
-                calidad.
-                <i class="fas fa-shopping-cart"></i>
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-0 text-center p-4 h-100">
-              <div class="card-icon">
-                <i class="bi bi-headset"></i>
+                <i class="bi bi-person-check"></i>
               </div>
-              <h3>Atención 24/7</h3>
+              <h3>Estamos para ayudarte</h3>
               <p class="text-muted">
-                Nuestro equipo está disponible para atenderte en cualquier
-                momento del día.
+                Recibe la mejor atención de parte de nuestro equipo durante tu visita al supermercado.
               </p>
             </div>
           </div>
@@ -337,224 +271,192 @@
         <h2>Nuestros Productos</h2>
         <div class="contenedor-productos">
             <div class="producto">
-                <img src={% static 'myapp/imagenes/pasta.jpg' %} alt="productos 1">
-                <h3>Pasta</h3>
-                <p class="descripcion">¡Los espaguetis son uno de los tipos más populares de pasta!</p>
-                <p class="product-price">$5.000</p>
+              <div>
+                <img src={% static 'myapp/imagenes/lacteo.jpg' %} alt="productos 1">
+              </div>
+                <h3>Alimentos frescos</h3>
+                <p class="descripcion">Productos naturales como frutas, verduras, carnes y lácteos que se caracterizan por su frescura, 
+                  sabor auténtico y alto valor nutricional, ideales para una alimentación saludable.</p>
+                
                 
             </div>
             
             <div class="producto">
-              <img src={% static 'myapp/imagenes/Arroz.jpg' %} alt="Producto 2">
-              <h3>Arroz</h3>
-              <p class="descripcion">El arroz es una fuente principal de carbohidratos y es un alimento básico en muchas culturas</p>
-              <p class="product-price">3.000</p>
+              <img src={% static 'myapp/imagenes/cereal.jpg' %} alt="Producto 2">
+              <h3>Alimentos envasados y procesados</h3>
+              <p class="descripcion">Productos listos para consumir o preparar, como pastas, enlatados, galletas y conservas, 
+                que ofrecen practicidad y una larga duración sin perder su sabor y calidad.</p>
              
           </div>
             <div class="producto">
-                <img src={% static 'myapp/imagenes/leche.jpg' %} alt="Producto 2">
-                <h3>Leche </h3>
-                <p class="descripcion">La leche es rica en calcio, lo que es fundamental para la salud de los huesos y dientes.</p>
-                <p class="product-price">$3.000</p>
+                <img src={% static 'myapp/imagenes/cerveza.jpg' %} alt="Producto 3">
+                <h3>Bebidas </h3>
+                <p class="descripcion">Refresca tu día con nuestra variedad de bebidas: desde aguas y jugos naturales hasta gaseosas,
+                   leches y bebidas energéticas para todos los gustos y ocasiones.</p>
                
             </div>
 
          
 
             <div class="producto">
-                <img src={% static 'myapp/imagenes/jabon1.jpg' %} alt="Producto 3">
-                <h3>Productos de aseo</h3>
-                <p class="descripcion">Están formulados con ingredientes que ayudan a disolver la grasa y la suciedad, lo que los hace más eficaces en ciertos tipos de limpieza.</p>
-                <p class="product-price">$7.000</p>
+                <img src={% static 'myapp/imagenes/limpieza.jpg' %} alt="Producto 4">
+                <h3>Limpieza del hogar</h3>
+                <p class="descripcion">Todo lo que necesitas para mantener tu hogar impecable: detergentes, desinfectantes, limpiadores multiusos y más,
+                   con fórmulas eficaces contra la suciedad y los gérmenes.</p>
                 
             </div>
+
+            <div class="producto">
+              <img src={% static 'myapp/imagenes/lpersonal.jpg' %} alt="Producto 5">
+              <h3>Cuidado personal y aseo</h3>
+              <p class="descripcion">Productos pensados para tu bienestar diario: shampoos, jabones, desodorantes, 
+                papel higiénico y más, para que te sientas fresco, limpio y cómodo en todo momento.</p>   
+          </div>
+
+          <div class="producto">
+            <img src={% static 'myapp/imagenes/bateria.jpg' %} alt="Producto 4">
+            <h3>Otros productos</h3>
+            <p class="descripcion">Encuentra artículos complementarios para tu día a día: útiles escolares, 
+              utensilios de cocina, baterías, productos de temporada y mucho más, todo en un solo lugar.</p>
+        </div>
   </section>
     
 
-    <!-- Contact Section -->
-    <section id="contacto" class="py-5 bg-light">
-      <div class="container">
-        <h2
-          class="text-center section-title animate__animated animate__fadeInUp"
-        >
-          Contáctanos
-        </h2>
-        <p class="text-center mb-5 animate__animated animate__fadeInUp">
-          Estamos aquí para atenderte. Visítanos o escríbenos.
-        </p>
+<!-- Contact Section -->
+<section id="contacto" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center section-title animate__animated animate__fadeInUp">
+      Contáctanos
+    </h2>
+    <p class="text-center mb-5 animate__animated animate__fadeInUp">
+      Estamos aquí para atenderte. Visítanos o escríbenos.
+    </p>
 
-        <div class="row g-5">
-          <div class="col-lg-6 animate__animated animate__fadeInLeft">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-body p-4">
-                <h3 class="card-title mb-4">Información de Contacto</h3>
-                <ul class="list-unstyled">
-                  <li class="mb-3">
-                    <i class="bi bi-geo-alt-fill me-2 text-primary"></i> Av.
-                    Principal #123, Ciudad, País
-                  </li>
-                  <li class="mb-3">
-                    <i class="bi bi-telephone-fill me-2 text-primary"></i> +123
-                    456 7890
-                  </li>
-                  <li class="mb-3">
-                    <i class="bi bi-envelope-fill me-2 text-primary"></i>
-                    info@autoserviciotrigal.com
-                  </li>
-                  <li class="mb-3">
-                    <i class="bi bi-clock-fill me-2 text-primary"></i> Lunes a
-                    Domingo: 9:00 AM - 5:00 PM
-                  </li>
-                </ul>
-                <div class="mt-4">
-                  <h4>Síguenos</h4>
-                  <div class="social-icons mt-3">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-instagram"></i></a>
-                    <a href="#"><i class="bi bi-whatsapp"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 animate__animated animate__fadeInRight">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-body p-4">
-                <h3 class="card-title mb-4">Envíanos un mensaje</h3>
-                <form>
-                  <div class="mb-3">
-                    <label for="name" class="form-label">Nombre</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="name"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="email"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="message" class="form-label">Mensaje</label>
-                    <textarea
-                      class="form-control"
-                      id="message"
-                      rows="4"
-                      required
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">
-                    Enviar mensaje
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Map Section -->
-    <div class="map-container">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.086374780033!2d-72.8351789!3d5.7672438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e6a49a36d9c6389%3A0x4be4bdbbd3bb0340!2sAutoservicio%20El%20Trigal!5e0!3m2!1ses!2sco!4v1614321001000!5m2!1ses!2sco"
-        width="100%"
-        height="450"
-        style="border: 0"
-        allowfullscreen=""
-        loading="lazy"
-      ></iframe>
-    </div>
-    
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white">
-      <div class="container py-5">
-        <div class="row g-4">
-          <div class="col-lg-4">
-            <img
-              src="{% static 'myapp/imagenes/logosinfondo.png' %}"
-              alt="Autoservicio el Trigal"
-              width="150"
-              class="mb-3"
-            />
-            <p>
-              Tu tienda de conveniencia con los mejores productos y atención
-              personalizada desde 2010.
-            </p>
-            <div class="social-icons mt-3">
-              <a href="#"><i class="bi bi-facebook"></i></a>
-              <a href="#"><i class="bi bi-instagram"></i></a>
-              <a href="#"><i class="bi bi-whatsapp"></i></a>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-6">
-            <h5 class="mb-4">Enlaces</h5>
-            <ul class="list-unstyled footer-links">
-              <li class="mb-2"><a href="#">Inicio</a></li>
-              <li class="mb-2"><a href="#mision-vision">Nosotros</a></li>
-              <li class="mb-2"><a href="#productos">Productos</a></li>
-              <li class="mb-2"><a href="#contacto">Contacto</a></li>
-            
-            </ul>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <h5 class="mb-4">Horario</h5>
+    <div class="row g-5 justify-content-center text-center">
+      <div class="col-lg-6 animate__animated animate__fadeInLeft">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <h3 class="card-title mb-4">Información de Contacto</h3>
             <ul class="list-unstyled">
-              <li class="mb-2">Lunes a Viernes: 8:00 AM - 7:00 PM</li>
-              <li class="mb-2">Sábados: 8:00 AM - 7:00 PM</li>
-              <li class="mb-2">Domingos: 9:00 AM - 5:00 PM</li>
+              <li class="mb-3">
+                <i class="bi bi-geo-alt-fill me-2 text-primary"></i> Av.
+                Principal #123, Ciudad, País
+              </li>
+              <li class="mb-3">
+                <i class="bi bi-telephone-fill me-2 text-primary"></i> +123
+                456 7890
+              </li>
+              <li class="mb-3">
+                <i class="bi bi-envelope-fill me-2 text-primary"></i>
+                info@example.com
+              </li>
+              <li class="mb-3">
+                <i class="bi bi-clock-fill me-2 text-primary"></i> Lunes a
+                Domingo: 9:00 AM - 5:00 PM
+              </li>
             </ul>
-          </div>
-          <div class="col-lg-3">
-            <h5 class="mb-4">Newsletter</h5>
-            <p>Suscríbete para recibir ofertas especiales y novedades.</p>
-            <form class="mt-3">
-              <div class="input-group mb-3">
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="Tu email"
-                  aria-label="Tu email"
-                />
-                <button class="btn btn-primary" type="button">Suscribir</button>
+            <div class="mt-4">
+              <h4>Síguenos</h4>
+              <div class="social-icons mt-3">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-whatsapp"></i></a>
               </div>
-            </form>
-          </div>
-        </div>
-        <hr class="my-4" />
-        <div class="row">
-          <div class="col-md-6 text-center text-md-start">
-            <p class="mb-0">
-              © 2025 Autoservicio el Trigal. Todos los derechos reservados.
-            </p>
-          </div>
-          <div class="col-md-6 text-center text-md-end">
-            <p class="mb-0">
-              Diseñado con <i class="bi bi-heart-fill text-danger"></i>
-               por: Carol Stefany Cepeda  <br>
-               Cristian Andres Meneses <br>
-               Yeisson Francisco Gonzalez  <br>
-               Oscar Javier Gomez Tamaral
-          
-            </p>
+            </div>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </div>
+</section> <!-- ✅ Cierre correcto del section de contacto -->
+
+<!-- Map Section -->
+<section>
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.086374780033!2d-72.8351789!3d5.7672438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e6a49a36d9c6389%3A0x4be4bdbbd3bb0340!2sAutoservicio%20El%20Trigal!5e0!3m2!1ses!2sco!4v1614321001000!5m2!1ses!2sco"
+      width="100%"
+      height="450"
+      style="border: 0"
+      allowfullscreen=""
+      loading="lazy"
+    ></iframe>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white w-100 m-0 p-0">
+  <div class="container-fluid py-5 px-5">
+    <div class="row g-4">
+      <!-- Columna 1 -->
+      <div class="col-lg-4">
+        <img
+          src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+          alt="Autoservicio el Trigal"
+          width="150"
+          class="mb-3"
+        />
+        <p>
+          Tu tienda de conveniencia con los mejores productos y atención
+          personalizada desde 2010.
+        </p>
+        <div class="social-icons mt-3">
+          <a href="#"><i class="bi bi-facebook text-white me-2"></i></a>
+          <a href="#"><i class="bi bi-instagram text-white me-2"></i></a>
+          <a href="#"><i class="bi bi-whatsapp text-white"></i></a>
+        </div>
+      </div>
+
+      <!-- Columna 2 -->
+      <div class="col-lg-2 col-md-6">
+        <h5 class="mb-4">Enlaces</h5>
+        <ul class="list-unstyled footer-links">
+          <li class="mb-2"><a class="text-white text-decoration-none" href="#">Inicio</a></li>
+          <li class="mb-2"><a class="text-white text-decoration-none" href="#mision-vision">Nosotros</a></li>
+          <li class="mb-2"><a class="text-white text-decoration-none" href="#productos">Productos</a></li>
+          <li class="mb-2"><a class="text-white text-decoration-none" href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 3 -->
+      <div class="col-lg-3 col-md-6">
+        <h5 class="mb-4">Horario</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2">Lunes a Viernes: 8:00 AM - 7:00 PM</li>
+          <li class="mb-2">Sábados: 8:00 AM - 7:00 PM</li>
+          <li class="mb-2">Domingos: 9:00 AM - 5:00 PM</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="my-4 bg-white" />
+
+    <div class="row">
+      <div class="col-md-6 text-center text-md-start">
+        <p class="mb-0">
+          © 2025 Autoservicio el Trigal. Todos los derechos reservados.
+        </p>
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        <p class="mb-0">
+          Diseñado con <i class="bi bi-heart-fill text-danger"></i>
+          por: Carol Stefany Cepeda <br />
+          Cristian Andres Meneses <br />
+          Yeisson Francisco Gonzalez <br />
+          Oscar Javier Gomez Tamaral
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    
 
     {% include 'paginas/modal_inicio.html' %}
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'myapp/js/principal.js' %}"></script>
 
     {% if show_login_modal %}
     <script>
@@ -585,6 +487,7 @@
     </script>
     {% endif %} {% endfor %}
     <script src="{% static 'myapp/js/principal.js' %}"></script>
+
 
   </body>
 </html>
