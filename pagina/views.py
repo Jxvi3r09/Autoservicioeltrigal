@@ -54,7 +54,7 @@ def eliminar_usuario(request, id):
 
     if request.method == 'POST':
         usuario.delete()
-        return redirect('usuarios')  # Cambialo por el nombre de tu vista principal
+        return redirect('lista_usuarios')  # Cambialo por el nombre de tu vista principal
 
     return render(request, 'sistema/administrador.html', {'usuario': usuario})
     
@@ -120,7 +120,6 @@ def inicio(request):
 #         form = RegistroUsuarioForm()
     
 #     return render(request, 'paginas/registrate.html', {'form': form})
-
 def registro(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
@@ -134,7 +133,6 @@ def registro(request):
                 usuario = form.save(commit=False)
                 usuario.set_password(password)
 
-                # Obtener contacto y asignarlo a correo o teléfono
                 contacto = form.cleaned_data["contacto"]
                 if "@" in contacto:
                     usuario.correo = contacto
@@ -143,18 +141,18 @@ def registro(request):
 
                 usuario.save()
                 login(request, usuario)
+                return redirect("usuarios")  # Redirige correctamente
 
-                form = RegistroUsuarioForm()  # Limpia el formulario
-                return redirect('usuarios')  # Este sí existe
-
-        else:
-            print(form.errors)  # Para ver errores en consola si hay
+        # Si hay errores:
+        return render(request, "paginas/registrate.html", {
+            "form": form,
+            "mostrar_modal": True  # Para que el modal se abra
+        })
 
     else:
         form = RegistroUsuarioForm()
 
-    return render(request, "paginas/registrate.html", {"form": form})
-
+    return render(request, "sistema/inicioinv.htm", {"form": form})
 
 
 # Recuperación de contraseña

@@ -5,6 +5,9 @@ from django.shortcuts import render
 
 
 
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
 class Usuario(AbstractUser):
     TIPOS_DOCUMENTO = [
         ('CC', 'Cédula de Ciudadanía'),
@@ -23,6 +26,10 @@ class Usuario(AbstractUser):
     numero_documento = models.CharField(max_length=20, unique=True, blank=True, null=True)
     rol = models.CharField(max_length=20, choices=ROLES, default='empleado')
     contacto = models.CharField(max_length=50, help_text="Ingrese su correo electrónico o número de teléfono")
+
+    # Configuración para el modelo personalizado
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['numero_documento', 'rol', 'contacto']
 
     def __str__(self):
         return f"{self.username} - {self.rol}"

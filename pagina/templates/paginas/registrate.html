@@ -47,11 +47,11 @@
           </div>
           
           <form method="post" action="{% url 'registro' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-success w-100">Registrarse</button>
-        </form>
-        
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success w-100">Registrarse</button>
+</form>
+
         </div>
       </div>
     </div>
@@ -75,5 +75,12 @@
       // Aquí puedes agregar más validaciones si es necesario
     });
   </script>
+  {% if mostrar_modal %}
+<script>
+  var registroModal = new bootstrap.Modal(document.getElementById('registroModal'));
+  registroModal.show();
+</script>
+{% endif %}
+
 </body>
 </html>

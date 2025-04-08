@@ -12,13 +12,13 @@ class RegistroUsuarioForm(forms.ModelForm):
     )
 
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "id": "password"}),
         label="Contraseña",
         help_text="Debe contener al menos 8 caracteres, incluyendo números y letras."
     )
 
     confirm_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "id": "confirm_password"}),
         label="Confirmar Contraseña"
     )
 
@@ -42,23 +42,30 @@ class RegistroUsuarioForm(forms.ModelForm):
             "first_name": forms.TextInput(attrs={"autocomplete": "off"}),
             "last_name": forms.TextInput(attrs={"autocomplete": "off"}),
             "numero_documento": forms.TextInput(attrs={"autocomplete": "off"}),
-            "contacto": forms.TextInput(attrs={"autocomplete": "off"}),
+            "contacto": forms.TextInput(attrs={"autocomplete": "off", "id": "contacto"}),
         }
 
     def clean_numero_documento(self):
         numero_documento = self.cleaned_data.get("numero_documento")
+        if not numero_documento:
+            raise ValidationError("Este campo es obligatorio.")
         if not numero_documento.isdigit():
             raise ValidationError("El número de documento solo puede contener números.")
         return numero_documento
 
     def clean_contacto(self):
-        contacto = self.cleaned_data.get("contacto")
-        email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+        contacto = self.cleaned_data.get("contacto", "").strip()
+        contacto_normalizado = re.sub(r"[()\s\-]", "", contacto)
+
+        email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
         phone_regex = r"^\+?[0-9]{7,15}$"
 
-        if not re.match(email_regex, contacto) and not re.match(phone_regex, contacto):
-            raise ValidationError("Ingrese un correo electrónico válido o un número de teléfono válido.")
-        return contacto
+        if re.fullmatch(email_regex, contacto):
+            return contacto  # Correo válido
+        if re.fullmatch(phone_regex, contacto_normalizado):
+            return contacto_normalizado  # Teléfono válido (normalizado)
+        
+        raise ValidationError("Ingrese un correo electrónico válido o un número de teléfono válido.")
 
     def clean_username(self):
         username = self.cleaned_data.get("username")

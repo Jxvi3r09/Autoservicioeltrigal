@@ -193,5 +193,12 @@
 
     <!-- AdminLTE JS (requerido para menú y plantillas) -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+  </script>
+  {% if mostrar_modal %}
+<script>
+  var registroModal = new bootstrap.Modal(document.getElementById('registroModal'));
+  registroModal.show();
+</script>
+{% endif %}
   </body>
 </html>
