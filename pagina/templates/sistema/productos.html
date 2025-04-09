@@ -191,41 +191,33 @@
                           </div>
                           
                           <!-- Cuerpo del modal -->
-                          <div class="modal-body">
-                              <form action="#" method="POST">
-                                  <div class="mb-3">
-                                      <label for="codigo_producto" class="form-label">Código Producto</label>
-                                      <input type="text" class="form-control" id="codigo_producto" name="codigo_producto" required maxlength="20">
-                                  </div>
-  
-                                  <div class="mb-3">
-                                      <label for="nombre_producto" class="form-label">Nombre del Producto</label>
-                                      <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" required maxlength="100">
-                                  </div>
-                                  
-                                  <div class="mb-3">
-                                      <label for="precio_producto" class="form-label">Precio</label>
-                                      <input type="number" class="form-control" id="precio_producto" name="precio_producto" required step="0.01">
-                                  </div>
-                                  
-                                  <div class="mb-3">
-                                      <label for="cantidad_stock" class="form-label">Cantidad en Stock</label>
-                                      <input type="number" class="form-control" id="cantidad_stock" name="cantidad_stock" required min="0">
-                                  </div>
-                                  
-                                  <div class="mb-3">
-                                      <label for="fecha_vencimiento" class="form-label">Fecha de Vencimiento</label>
-                                      <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" required>
-                                  </div>
+                          <!-- Modal para Registrar Producto -->
+<div class="modal fade" id="registroProductoModal" tabindex="-1" aria-labelledby="registroProductoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="registroProductoLabel">
+          <i class="bi bi-box-seam"></i> Registrar Producto
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
 
-                                  <div class="mb-3">
-                                    <label for="categoria" class="form-label">Categoria</label>
-                                    <input class="form-control" id="categoria" name="categoria" required>
-                                  </div>
-                                  
-                                  <button type="submit" class="btn btn-primary">Guardar Producto</button>
-                              </form>
-                          </div>
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
                           
                           <!-- Pie del modal -->
                           <div class="modal-footer">

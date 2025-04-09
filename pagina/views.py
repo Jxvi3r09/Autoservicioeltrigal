@@ -9,6 +9,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import login
+from .forms import ProductoForm
+from .models import Producto
 
 
 from .models import Usuario
@@ -54,7 +56,7 @@ def eliminar_usuario(request, id):
 
     if request.method == 'POST':
         usuario.delete()
-        return redirect('lista_usuarios')  # Cambialo por el nombre de tu vista principal
+        return redirect('usuarios')  
 
     return render(request, 'sistema/administrador.html', {'usuario': usuario})
     
@@ -101,8 +103,21 @@ def modal_inicio(request):
 
     return render(request, "paginas/principal.html")
 
+#gestion de productos
 def productos(request):
-    return render(request, "sistema/productos.html")
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('productos')  # Cambia a tu URL name si es diferente
+    else:
+        form = ProductoForm()
+
+    productos = Producto.objects.all()
+    return render(request, 'sistema/productos.html', {
+        'form': form,
+        'productos': productos
+    })
 
 def inicio(request):
     return render(request, "paginas/principal.html")

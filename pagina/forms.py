@@ -2,7 +2,10 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import Usuario  # Asegúrate de importar el modelo correcto
 import re
+from .models import Producto
 
+
+#Registro de usuarios
 class RegistroUsuarioForm(forms.ModelForm):
     contacto = forms.CharField(
         max_length=50,
@@ -103,8 +106,55 @@ class ProveedorForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
         }
-
-
+#productos
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = [
+            'codigo_barras',
+            'nombre',
+            'categoria',
+            'precio',
+            'iva',
+            'cantidad_entrada',
+            'cantidad_salida',
+            'fecha_vencimiento',
+            'imagen',
+        ]
+        widgets = {
+            'codigo_barras': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Escanea o ingresa el código'
+            }),
+            'nombre': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nombre del Producto'
+            }),
+            'categoria': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'precio': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '0.00'
+            }),
+            'iva': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '19'
+            }),
+            'cantidad_entrada': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cantidad_salida': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'fecha_vencimiento': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date'
+            }),
+            'imagen': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
+        }
 
 
 

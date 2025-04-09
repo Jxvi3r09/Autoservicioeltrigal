@@ -53,3 +53,24 @@ class Proveedor(models.Model):
         ordering = ['empresa']
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
+        
+#Creacion de productos
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
+class Producto(models.Model):
+    codigo_barras = models.CharField(max_length=50, unique=True)
+    nombre = models.CharField(max_length=200)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    iva = models.DecimalField(max_digits=5, decimal_places=2)
+    cantidad_entrada = models.IntegerField(default=0)
+    cantidad_salida = models.IntegerField(default=0)
+    fecha_vencimiento = models.DateField(null=True, blank=True)
+    imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.nombre
