@@ -32,7 +32,7 @@ urlpatterns = [
 
     path('proveedores/', views.proveedores, name='proveedores'),
 
-    path('usuarios', views.lista_usuarios, name='usuarios'),
+    path('usuarios/', views.lista_usuarios, name='usuarios'),
     
     path('usuarios/editar/<int:id>/', views.editar_usuario, name='editar_usuario'),
     
