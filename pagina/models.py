@@ -26,6 +26,7 @@ class Usuario(AbstractUser):
     numero_documento = models.CharField(max_length=20, unique=True, blank=True, null=True)
     rol = models.CharField(max_length=20, choices=ROLES, default='empleado')
     contacto = models.CharField(max_length=50, help_text="Ingrese su correo electrónico o número de teléfono")
+    fecha_registro = models.DateTimeField(auto_now_add=True)
 
     # Configuración para el modelo personalizado
     USERNAME_FIELD = 'username'

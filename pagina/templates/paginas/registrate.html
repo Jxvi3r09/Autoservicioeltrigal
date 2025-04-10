@@ -168,26 +168,24 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Script para mejorar el formulario -->
   <script>
-    // Añadir toggle para contraseña después de que se cargue el formulario
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Agregar toggle a los campos de contraseña
       const passwordFields = [
         document.getElementById('password'),
         document.getElementById('confirm_password')
       ];
-      
+  
       passwordFields.forEach(field => {
         if (field) {
           const wrapper = document.createElement('div');
           wrapper.className = 'password-wrapper';
           field.parentNode.insertBefore(wrapper, field);
           wrapper.appendChild(field);
-          
+  
           const toggle = document.createElement('i');
           toggle.className = 'password-toggle fas fa-eye';
-          toggle.onclick = function() {
+          toggle.onclick = function () {
             if (field.type === 'password') {
               field.type = 'text';
               this.classList.remove('fa-eye');
@@ -201,30 +199,35 @@
           wrapper.appendChild(toggle);
         }
       });
-      
+  
       // Validación del formulario
       const form = document.getElementById('usuarioForm');
       if (form) {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function (e) {
           const password = document.getElementById('password');
           const confirmPassword = document.getElementById('confirm_password');
-          
+          const submitBtn = form.querySelector('button[type="submit"]');
+  
+          // Mostrar spinner de carga
+          if (submitBtn) {
+            submitBtn.classList.add('loading');
+          }
+  
+          // Verificar que las contraseñas coincidan
           if (password && confirmPassword && password.value !== confirmPassword.value) {
             e.preventDefault();
+  
+            if (submitBtn) {
+              submitBtn.classList.remove('loading');
+            }
+  
             alert('Las contraseñas no coinciden');
             password.focus();
           }
         });
-         // Mostrar spinner de carga
-         submitBtn.classList.add('loading');
-          
-         if (password1 && password2 && password1.value !== password2.value) {
-           e.preventDefault();
-           submitBtn.classList.remove('loading');
-           alert('Las contraseñas no coinciden');
-           password1.focus();
-         }
-
+      }
+    });
   </script>
+  
 </body>
 </html>
