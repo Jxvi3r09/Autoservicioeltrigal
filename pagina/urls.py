@@ -52,14 +52,19 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(next_page='index'), name="logout"),
 
     # Recuperación de contraseña 
-   path('recuperar_contrasena/', CustomPasswordResetView.as_view(), name='password_reset'),
-   
-   path('recuperar_contrasena/enviado/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
-   
-   path('restablecer/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-   
-   path('restablecer/completado/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('recuperar_contrasena/', CustomPasswordResetView.as_view(), name='password_reset'),
+    
+    path('recuperar_contrasena/enviado/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
+    
+    path('restablecer/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    
+    path('restablecer/completado/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    
 
+    path('productos/', views.productos, name='productos'),
+    path('productos/crear/', views.crear_producto, name='crear_producto'),  # NUEVA
+    path('productos/editar/<int:pk>/', views.editar_producto, name='editar_producto'),
+    path('productos/eliminar/<int:pk>/', views.eliminar_producto, name='eliminar_producto'),
 
 ]
 # Archivos estáticos

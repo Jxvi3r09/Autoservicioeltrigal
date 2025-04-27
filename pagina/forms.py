@@ -106,55 +106,35 @@ class ProveedorForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
         }
-#productos
+
+# inventario/forms.py
+from django import forms
+from .models import Producto
+
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = [
-            'codigo_barras',
-            'nombre',
-            'categoria',
-            'precio',
-            'iva',
-            'cantidad_entrada',
-            'cantidad_salida',
-            'fecha_vencimiento',
-            'imagen',
-        ]
+        fields = ['nombre','precio','cantidad_entrada','fecha_vencimiento']
         widgets = {
-            'codigo_barras': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Escanea o ingresa el código'
-            }),
             'nombre': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Nombre del Producto'
-            }),
-            'categoria': forms.Select(attrs={
-                'class': 'form-select'
+                'id': 'id_nombre',
+                'placeholder': 'Nombre del producto',
             }),
             'precio': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'placeholder': '0.00'
-            }),
-            'iva': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '19'
+                'id': 'id_precio',
+                'step': '0.01',
+                'placeholder': '0.00',
             }),
             'cantidad_entrada': forms.NumberInput(attrs={
-                'class': 'form-control'
-            }),
-            'cantidad_salida': forms.NumberInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'id_cantidad_entrada',
+                'placeholder': '0',
             }),
             'fecha_vencimiento': forms.DateInput(attrs={
                 'class': 'form-control',
-                'type': 'date'
-            }),
-            'imagen': forms.ClearableFileInput(attrs={
-                'class': 'form-control'
+                'id': 'id_fecha_vencimiento',
+                'type': 'date',
             }),
         }
-
-
-

@@ -103,21 +103,6 @@ def modal_inicio(request):
 
     return render(request, "paginas/principal.html")
 
-#gestion de productos
-def productos(request):
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('productos')  # Cambia a tu URL name si es diferente
-    else:
-        form = ProductoForm()
-
-    productos = Producto.objects.all()
-    return render(request, 'sistema/productos.html', {
-        'form': form,
-        'productos': productos
-    })
 
 def inicio(request):
     return render(request, "paginas/principal.html")
@@ -206,3 +191,48 @@ def gestion(request):
 def inicioinv(request):
     messages.success(request, f"¡Bienvenido, {request.user.username}!")
     return render(request, "sistema/inicioinv.html")
+
+
+#gestion de productos
+def productos(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('productos')  # Cambia a tu URL name si es diferente
+    else:
+        form = ProductoForm()
+
+    productos = Producto.objects.all()
+    return render(request, 'sistema/crud_productos/productos.html', {
+        'form': form,
+        'productos': productos
+    })
+def crear_producto(request):
+    form = ProductoForm(request.POST or None, request.FILES or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('productos')
+    return render(request, 'crud_productos/form_productos.html', {'form': form})
+
+def editar_producto(request, pk):
+    prod = get_object_or_404(Producto, pk=pk)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES, instance=prod)
+        if form.is_valid():
+            form.save()
+            return redirect('productos')
+    else:
+        form = ProductoForm(instance=prod)
+    return render(request, 'sistema/crud_productos/editar_producto.html', {
+        'form': form,
+    })
+
+def eliminar_producto(request, pk):
+    prod = get_object_or_404(Producto, pk=pk)
+    if request.method == 'POST':
+        prod.delete()
+        return redirect('productos')
+    return render(request, 'sistema/crud_productos/eliminar_producto.html', {
+        'producto': prod,
+    })
