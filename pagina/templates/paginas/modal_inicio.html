@@ -43,7 +43,8 @@
           </div>
           
             <div class="modal-body">
-                {% if messages %}
+              <!-- Mensajes de acceso -->
+                <!-- {% if messages %}
                 <div class="mb-4">
                     {% for message in messages %}
                     <div class="alert alert-dismissible {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
@@ -52,9 +53,9 @@
                     </div>
                     {% endfor %}
                 </div>
-                {% endif %}
+                {% endif %} -->
 
-                <img src="{% static 'myapp/imagenes/logosinfondo.png' %}" alt="Logo" class="logo-modal mb-4" />
+                <img src="{% static 'myapp/imagenes/logosinfondo.png' %}" alt="Logo" class="logo-modal mb-5" />
 
                 <form action="{% url 'inicioinv' %}" method="POST">
                     {% csrf_token %}

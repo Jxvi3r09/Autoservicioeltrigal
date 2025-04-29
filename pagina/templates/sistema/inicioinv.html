@@ -23,8 +23,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <!-- Estilos personalizados (opcional) -->
-    <link href="{% static 'myapp/css/estilos.css' %}" rel="stylesheet" />
+    <link href="{% static 'myapp/css/inicioinv.css' %}" rel="stylesheet" />
   </head>
+
+
   <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
       <!-- Navbar -->
@@ -37,14 +39,21 @@
             </a>
           </li>
         </ul>
+        <img
+        src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+        alt="Autoservicio el Trigal"
+        width="180"
+        class="logo-hover d-block mx-auto"
+        title="Logo Autoservicio el trigal"
+      />
       </nav>
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
-      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <aside class="main-sidebar bg-warning elevation-4 ">
         <!-- Brand Logo -->
         <a href="#" class="brand-link text-center">
-          <span class="brand-text font-weight-light">
+          <span class="text-white brand-text font-weight-light">
             <strong>Sistema Inventario</strong>
           </span>
         </a>
@@ -61,7 +70,7 @@
               />
             </div>
                 <div class="info">
-                  <a href="#" class="d-block">
+                  <a href="#" class="text-white d-block">
                     {% if request.user.is_authenticated %}
                       {{ request.user.username }}
                     {% else %}
@@ -81,7 +90,7 @@
             >
               <!-- Ejemplo de sección "Dashboard" o "Inicio" -->
               <li class="nav-item">
-                <a href="{% url 'inicioinv' %}" class="nav-link">
+                <a href="{% url 'inicioinv' %}" class="text-white nav-link">
                   <i class="nav-icon fas fa-home"></i>
                   <p>Inicio</p>
                 </a>
@@ -89,7 +98,7 @@
 
               <!-- Sección Usuarios -->
               <li class="nav-item has-treeview">
-                <a href="{% url 'usuarios' %}" class="nav-link">
+                <a href="{% url 'usuarios' %}" class="text-white nav-link">
                   <i class="nav-icon fas fa-users"></i>
                   <p>
                     Usuarios
@@ -124,20 +133,22 @@
 
               <!-- Sección Inventario -->
               <li class="nav-item">
-                <a href="{% url 'inventario' %}" class="nav-link">
+                <a href="{% url 'inventario' %}" class="text-white nav-link">
                   <i class="nav-icon fas fa-boxes"></i>
                   <p>Inventario</p>
                 </a>
               </li>
             </li>
+            <!-- Seccion de proveedores -->
             <li class="nav-item">
-              <a href="{% url 'proveedores' %}" class="nav-link">
+              <a href="{% url 'proveedores' %}" class="text-white nav-link">
                 <i class="nav-icon fas fa-boxes"></i>
                 <p>Proveedores</p>
               </a>
             </li>
+            <!-- Seccion de productos -->
             <li class="nav-item">
-              <a href="{% url 'productos' %}" class="nav-link">
+              <a href="{% url 'productos' %}" class="text-white nav-link">
                 <i class="nav-icon fas fa-tag"></i>
                 <p>
                   Productos
@@ -145,17 +156,9 @@
               </a>
             </li>
 
-              <!-- Sección Configuración (ejemplo) -->
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-cog"></i>
-                  <p>Configuraciones</p>
-                </a>
-              </li>
-
               <!-- Sección Cerrar Sesión -->
               <li class="nav-item">
-                <a href="{% url 'principal' %}" class="nav-link">
+                <a href="{% url 'principal' %}" class="text-white nav-link">
                   <i class="nav-icon fas fa-sign-out-alt"></i>
                   <p>Cerrar Sesión</p>
                 </a>
@@ -169,19 +172,30 @@
       <!-- /.Main Sidebar Container -->
 
       <!-- Content Wrapper. Contiene el contenido principal -->
-      <div class="content-wrapper">
+      <div class=" content-wrapper">
         <!-- Encabezado del contenido -->
         <div class="content-header">
+
+          <!-- Breadcrumb o migaja de pan -->
           <div class="container-fluid">
-            <h1 class="m-0">Panel de Administración</h1>
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
+                        <li class="breadcrumb-item active">Panel de Administración</li>
+                    </ol>
+                </div>
+            </div>
           </div>
-        </div>
+          <div class="container-fluid">
+            <h1 class="text-center m-0">Panel de Administración Inventario Autoservicio el Trigal</h1>
+          </div>
         <!-- /.content-header -->
 
         <!-- Contenido principal -->
         <div class="content">
-          <div class="container-fluid">
-            <p>Bienvenido al panel de administración con AdminLTE.</p>
+          <div class="container-fluid text-center">
+            <p>Bienvenido al panel de administración.</p>
             <!-- Aquí va el contenido dinámico de tu app -->
           </div>
         </div>

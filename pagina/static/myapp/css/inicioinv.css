@@ -1,0 +1,16 @@
+.main-sidebar {
+  background-color: rgb(34, 132, 33) !important;
+}
+/* .content-wrapper {
+  background-color: rgb(243, 154, 4, 0.3) !important;
+} */
+.logo-hover {
+  transition: transform 0.3s ease; /* Suaviza el cambio */
+}
+
+.logo-hover:hover {
+  transform: scale(1.1); /* Hace un zoom del 10% */
+}
+.btn-usuario {
+  background-color: rgb(34, 132, 33) !important;
+}

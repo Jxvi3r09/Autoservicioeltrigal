@@ -83,43 +83,12 @@ window.addEventListener("load", function () {
         }
       });
     }
+  // Login modal
+  document.addEventListener("DOMContentLoaded", function () {
+    var loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+    loginModal.show();
+  });
   
-    // ========== CARRUSEL AUTOMÁTICO ==========
-    const carousel = document.getElementById('customCarousel');
-    if (carousel) {
-      const carouselInstance = new bootstrap.Carousel(carousel, {
-        interval: 5000,
-        wrap: true,
-        pause: 'hover'
-      });
-  
-      function adjustCarouselHeight() {
-        const activeItem = document.querySelector('#customCarousel .carousel-item.active');
-        if (activeItem) {
-          const img = activeItem.querySelector('img');
-          if (img.complete) {
-            carousel.style.height = img.height + 'px';
-          } else {
-            img.onload = function () {
-              carousel.style.height = this.height + 'px';
-            };
-          }
-        }
-      }
-  
-      window.addEventListener('resize', adjustCarouselHeight);
-      carousel.addEventListener('slid.bs.carousel', adjustCarouselHeight);
-      adjustCarouselHeight();
-  
-      // Navegación con teclado
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowLeft') {
-          carouselInstance.prev();
-        } else if (e.key === 'ArrowRight') {
-          carouselInstance.next();
-        }
-      });
-    }
-  
+    
   });
   

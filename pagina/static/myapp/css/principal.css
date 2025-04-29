@@ -5,8 +5,30 @@ body {
   padding: 0;
   background-color: #f4f4f4;
 }
+/* #id
+.clase */
+
+/* ==================== SECCIONES==================== */
+/* Seccion de promocion */
+#promocion,
+#mision-vision,
+#productos,
+#contacto,
+#map-container {
+  background-color: rgb(34, 132, 33) !important;
+}
+
+/* ==================== TITULOS==================== */
+#nuestraempresa,
+#nuestrsoproductos,
+#contacto {
+  color: rgb(255, 255, 255) !important;
+}
 
 /* ==================== NAVBAR ==================== */
+#navbar {
+  background-color: rgb(255, 255, 255) !important;
+}
 .navbar {
   background-color: #cb2222 !important;
   padding: 15px 20px;
@@ -24,6 +46,7 @@ body {
 
 .navbar-dark .navbar-nav .nav-link:hover {
   color: rgb(243, 154, 49) !important;
+  /* color: rgb(34, 132, 33) !important;; */
 }
 
 .navbar-brand {
@@ -70,7 +93,7 @@ body {
   transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
 }
 
-/* ==================== BOTÓN VOLVER ARRIBA ==================== */
+/*==================== BOTÓN VOLVER ARRIBA ====================*/
 .back-to-top {
   position: fixed;
   bottom: 20px;
@@ -94,89 +117,6 @@ body {
   opacity: 1;
   visibility: visible;
 }
-
-/* ==================== CARRUSEL ==================== */
-#customCarousel {
-  background-color: #ffffff !important;/* Naranja pastel */
-  margin-bottom: 20px;
-  transition: height 0.3s ease;
-}
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  filter: invert(53%) sepia(79%) saturate(741%) hue-rotate(354deg) brightness(99%) contrast(102%);
-}
-
-
-#customCarousel .carousel-item {
-  height: 80vh;
-  min-height: 500px;
-}
-
-#customCarousel .carousel-item img {
-  object-fit: cover;
-  max-height: 800px;
-  width: 100%;
-  filter: brightness(0.7);
-}
-
-#customCarousel .carousel-caption {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 15px;
-  border-radius: 10px;
-  bottom: 20%;
-  color: rgb(243, 154, 49) !important;
-  text-align: left;
-}
-
-#customCarousel .carousel-caption h5 {
-  font-size: 1.5rem;
-  margin-bottom: 0;
-}
-
-#customCarousel .carousel-indicators button {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin: 0 5px;
-}
-
-#customCarousel .carousel-control-prev,
-#customCarousel .carousel-control-next {
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-  width: 5%;
-}
-
-#customCarousel .carousel-control-prev:hover,
-#customCarousel .carousel-control-next:hover {
-  opacity: 1;
-}
-
-@media (max-width: 768px) {
-  #customCarousel .carousel-caption {
-    bottom: 20%;
-  }
-
-  #customCarousel .carousel-caption h1 {
-    font-size: 2rem;
-  }
-
-  #customCarousel .carousel-caption p {
-    font-size: 1rem;
-  }
-
-  #customCarousel .carousel-item {
-    height: 60vh;
-  }
-}
-
-@media (max-width: 400px) {
-  #customCarousel .carousel-control-prev,
-  #customCarousel .carousel-control-next {
-    display: none;
-  }
-}
-
 /* ==================== PRODUCTOS ==================== */
 .productos {
   text-align: center;
@@ -250,4 +190,8 @@ body {
 
 .producto button:hover {
   background-color: #2980b9;
+}
+/* ==================== FOOTER ==================== */
+#footer {
+  background-color: rgb(255, 255, 255) !important;
 }
