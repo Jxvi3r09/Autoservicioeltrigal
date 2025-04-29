@@ -15,7 +15,7 @@ body {
 #productos,
 #contacto,
 #map-container {
-  background-color: rgb(27, 140, 25) !important;
+  background-color: rgb(34, 132, 33) !important;
 }
 
 /* ==================== TITULOS==================== */
@@ -46,6 +46,7 @@ body {
 
 .navbar-dark .navbar-nav .nav-link:hover {
   color: rgb(243, 154, 49) !important;
+  /* color: rgb(34, 132, 33) !important;; */
 }
 
 .navbar-brand {
