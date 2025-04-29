@@ -165,12 +165,33 @@
         <!-- /.sidebar -->
       </aside>
         <!-- Content Wrapper -->
-      <div class="content-wrapper">
-        <div class="content-header">
-          <div class="container-fluid">
-            <h2 class="text-center mb-4">Panel de Productos</h2>
+        <div class="content-wrapper">
+          <div class="content-header">
+              <div class="container-fluid">
+                  <!-- Breadcrumb para Productos -->
+                  <div class="row mb-2">
+                      <div class="col-sm-6">
+                          <ol class="breadcrumb float-sm-left">
+                              <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
+                              <li class="breadcrumb-item active"><i class="fas fa-tag"></i> Productos</li>
+                          </ol>
+                      </div>
+                      <div class="col-sm-6 text-right">
+                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productoModal">
+                              <i class="fas fa-plus"></i> Nuevo Producto
+                          </button>
+                      </div>
+                  </div>
+                  
+                  <h2 class="text-center mb-4">Panel de Productos</h2>
+              </div>
           </div>
-        </div>
+
+  <!-- Resto de tu contenido actual... -->
+  <section class="container mt-4">
+      <!-- ... -->
+  </section>
+</div>
 
         <section class="container mt-4">
     

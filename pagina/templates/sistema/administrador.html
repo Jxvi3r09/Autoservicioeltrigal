@@ -1,4 +1,5 @@
 {% load static %}
+<!-- Pagina donde estan los usuarios -->
 <!DOCTYPE html>
 <html lang="es" style="height: auto;"><head>
   <meta charset="UTF-8">
@@ -10,6 +11,8 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Archivo JS para submenús (opcional) -->
   <script src="/static/myapp/js/submenu.js"></script>
+  <!-- Conexion archivo css -->
+  <script src="{% static 'myapp/css/inicioinv.css' %}"></script>
 
   <!-- AdminLTE CSS (incluye Bootstrap) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
@@ -126,11 +129,24 @@
       <!-- Content Wrapper. Contiene el contenido principal -->
       <div class="content-wrapper">
         <!-- Encabezado del contenido -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <h1 class="m-0">Usuarios</h1>
+<!-- Content Wrapper. Contiene el contenido principal -->
+<div class="content-wrapper">
+  <!-- Encabezado del contenido -->
+  <div class="content-header">
+      <div class="container-fluid">
+          <!-- Breadcrumb para Usuarios -->
+          <div class="row mb-2">
+              <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                      <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
+                      <li class="breadcrumb-item active"><i class="fas fa-users"></i> Usuarios</li>
+                  </ol>
+              </div>
           </div>
-        </div>
+          
+          <h1 class="m-0">Usuarios</h1>
+      </div>
+  </div>
         <!-- /.content-header -->
 
         <!-- Contenido principal -->
@@ -146,15 +162,11 @@
               <div class="card-body">
                 <!-- Botón para abrir el modal de agregar usuario -->
 
-    <div class="card">
-        <!-- Botón para abrir el modal -->
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal">
-            🙍🏻‍♂️ Agregar un nuevo Usuario
-        </button>
-
-                
-              
-
+              <div class="card">
+                  <!-- Botón para abrir el modal -->
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal">
+                    <i class="fas fa-user-plus"></i> Nuevo Usuario
+                  </button>
                 <!-- Tabla de usuarios -->
                 <table class="table table-bordered table-striped">
                   <thead>
