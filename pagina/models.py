@@ -65,7 +65,7 @@ class Categoria(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    iva = models.DecimalField(max_digits=5, decimal_places=2)
+    iva = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     cantidad_entrada = models.IntegerField(default=0)
     cantidad_salida = models.IntegerField(default=0)
     fecha_vencimiento = models.DateField(null=True, blank=True)
