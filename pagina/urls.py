@@ -30,7 +30,7 @@ urlpatterns = [
 
     path('administrador/', views.lista_usuarios, name='administrador'),
 
-    path('proveedores/', views.proveedores, name='proveedores'),
+    path('proveedores/', views.listar_proveedores, name='proveedores'),
 
     path('usuarios/', views.lista_usuarios, name='usuarios'),
     
@@ -44,6 +44,8 @@ urlpatterns = [
 
     path('modal_inicio', views.modal_inicio, name='modal inicio'),
 
+    path('proveedores/', views.listar_proveedores, name='listar_proveedores'),
+    path('agregar-proveedor/', views.agregar_proveedor, name='agregar_proveedor'),
 
     # ✅ Nueva ruta para iniciar sesión
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
@@ -65,6 +67,10 @@ urlpatterns = [
     path('productos/crear/', views.crear_producto, name='crear_producto'),  # NUEVA
     path('productos/editar/<int:pk>/', views.editar_producto, name='editar_producto'),
     path('productos/eliminar/<int:pk>/', views.eliminar_producto, name='eliminar_producto'),
+
+
+    path('proveedores/eliminar/<int:id>/', views.eliminar_proveedor, name='eliminar_proveedor'),
+    path('proveedores/editar/<int:id>/', views.editar_proveedor, name='editar_proveedor'),
 
 ]
 # Archivos estáticos

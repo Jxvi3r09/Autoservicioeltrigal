@@ -236,3 +236,42 @@ def eliminar_producto(request, pk):
     return render(request, 'sistema/crud_productos/eliminar_producto.html', {
         'producto': prod,
     })
+
+
+from .models import Proveedor
+from .forms import ProveedorForm
+
+def listar_proveedores(request):
+    proveedores = Proveedor.objects.all().order_by('-fecha_registro')
+    form = ProveedorForm()
+    return render(request, 'sistema/proveedores.html', {'proveedores': proveedores, 'form': form})
+
+
+def agregar_proveedor(request):
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_proveedores')  
+    else:
+        form = ProveedorForm()
+    return render(request, 'sistema/proveedores.html', {'form': form})
+
+
+def editar_proveedor(request, id):
+    proveedor = get_object_or_404(Proveedor, id=id)
+
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST, instance=proveedor)
+        if form.is_valid():
+            form.save()
+            return redirect('proveedores')  # Usa el nombre correcto del URL de la lista
+    return redirect('proveedores')  # Evita renderizar otra plantilla
+
+
+def eliminar_proveedor(request, id):
+    proveedor = get_object_or_404(Proveedor, id=id)
+    if request.method == 'POST':
+        proveedor.delete()
+        return redirect('listar_proveedores')
+    return render(request, 'sistema/crud_proveedores/confirmar_eliminar.html', {'proveedor': proveedor})

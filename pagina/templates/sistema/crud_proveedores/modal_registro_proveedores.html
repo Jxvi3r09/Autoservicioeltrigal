@@ -1,0 +1,71 @@
+<!-- Modal Registrar Proveedor -->
+<div class="modal fade" id="registroProveedorModal" tabindex="-1" aria-labelledby="registroProveedorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+          <!-- Cabecera -->
+          <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title">
+                  <i class="fas fa-truck me-2"></i>Registro de Nuevo Proveedor
+              </h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <!-- Cuerpo -->
+          <div class="modal-body">
+              <form method="post" action="{% url 'agregar_proveedor' %}" autocomplete="off" class="row g-3">
+                  {% csrf_token %}
+
+                  <!-- Columna Izquierda -->
+                  <div class="col-md-6">
+                      <!-- NIT Proveedor -->
+                      <div class="mb-3">
+                          <label class="form-label">NIT Proveedor</label>
+                          <input type="text" name="nit_proveedor" id="input_nit" class="form-control" placeholder="NIT del proveedor" required>
+                      </div>
+
+                      <!-- Empresa -->
+                      <div class="mb-3">
+                          <label class="form-label">Empresa</label>
+                          <input type="text" name="empresa" id="input_empresa" class="form-control" placeholder="Nombre de la empresa" required>
+                      </div>
+
+                      <!-- Correo -->
+                      <div class="mb-3">
+                          <label class="form-label">Correo</label>
+                          <input type="email" name="correo" id="input_correo" class="form-control" placeholder="Correo electrónico" required>
+                      </div>
+                  </div>
+
+                  <!-- Columna Derecha -->
+                  <div class="col-md-6">
+                      <!-- Teléfono -->
+                      <div class="mb-3">
+                          <label class="form-label">Teléfono</label>
+                          <input type="text" name="telefono" id="input_telefono" class="form-control" placeholder="Teléfono de contacto" required>
+                      </div>
+
+                      <!-- Dirección -->
+                      <div class="mb-3">
+                          <label class="form-label">Dirección</label>
+                          <input type="text" name="direccion" id="input_direccion" class="form-control" placeholder="Dirección del proveedor" required>
+                      </div>
+                  </div>
+
+                  <!-- Botones -->
+                  <div class="col-12">
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                              <i class="fas fa-times me-2"></i>Cancelar
+                          </button>
+                          <button type="submit" class="btn btn-primary">
+                              <i class="fas fa-save me-2"></i>Guardar Proveedor
+                          </button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+
+      </div>
+  </div>
+</div>

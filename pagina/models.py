@@ -36,24 +36,19 @@ class Usuario(AbstractUser):
         return f"{self.username} - {self.rol}"
 
 
-# Creación de proveedor
+from django.db import models
+
 class Proveedor(models.Model):
-    nit_proveedor = models.CharField(max_length=20, unique=True, verbose_name="NIT Proveedor")
-    empresa = models.CharField(max_length=100, verbose_name="Empresa")
-    correo = models.EmailField(max_length=100, verbose_name="Correo Electrónico")
-    telefono = models.BigIntegerField(verbose_name="Teléfono")
-    direccion = models.CharField(max_length=255, verbose_name="Dirección")
+    nit_proveedor = models.CharField(max_length=20, unique=True)
+    empresa = models.CharField(max_length=100)
+    correo = models.EmailField()
+    telefono = models.CharField(max_length=20)
+    direccion = models.CharField(max_length=255)
+
+    fecha_registro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        # Representación en formato string del proveedor
-        return self.empresa
-
-    class Meta:
-        # Nombre de la tabla en la base de datos y ordenamiento
-        db_table = 'proveedores'
-        ordering = ['empresa']
-        verbose_name = 'Proveedor'
-        verbose_name_plural = 'Proveedores'
+        return f"{self.empresa} ({self.nit_proveedor})"
         
 #Creacion de productos
 class Categoria(models.Model):
