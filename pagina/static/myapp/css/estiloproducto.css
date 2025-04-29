@@ -1,0 +1,57 @@
+.content-wrapper{
+    background-image: url('../imagenes/2.png'); /* ajusta la ruta según tu estructura */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#tablapro {
+    border: 2px solid #000;
+    border-collapse: collapse;
+    width: 100%; /* Ancho total de la tabla */
+}
+
+#tablapro th, #tablapro td {
+border: 1px solid #dee2e6; /* Borde más suave para celdas */
+padding: 10px;
+text-align: center; /* Centra el texto en las celdas */
+}
+
+#tablapro th {
+background-color: #ffc107; /* Fondo amarillo para los encabezados */
+color: #fff; /* Texto blanco en los encabezados */
+}
+
+#tablapro tbody tr:nth-child(even) {
+background-color: #f2f2f2; /* Color de fondo alterno en filas */
+}
+
+#tablapro tbody tr:hover {
+background-color: #dcdcdc; /* Efecto de hover */
+}
+
+#tablapro .btn {
+margin: 2px;
+}
+
+#tablapro .btn:hover {
+    transform: scale(1.05);
+}
+
+.navbar-white {
+    width: 30px !important;
+}
+.nav-link{
+    color: white;
+    width: 30px;
+}
+.btn-primary{
+    background-color: #178f18;
+    border-color: #fff;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover{
+    background-color: #0d640e;
+    border-color: #fff;
+    transform: scale(1.05);
+}

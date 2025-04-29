@@ -1,5 +1,34 @@
-<h2>¿Eliminar “{{ producto.nombre }}”?</h2>
-<form method="post">{% csrf_token %}
-  <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-  <a href="{% url 'productos' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+{# sistema/crud_productos/eliminar_producto.html #}
+<div class="modal fade"
+     id="eliminarProductoModal{{ producto.id }}"
+     tabindex="-1"
+     aria-labelledby="eliminarProductoModalLabel{{ producto.id }}"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarProductoModalLabel{{ producto.id }}">
+          Confirmar Eliminación
+        </h5>
+        <button type="button" class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cancelar"></button>
+      </div>
+
+      <div class="modal-body">
+        <h5 class="text-danger">¿Seguro que quieres Eliminar “{{ producto.nombre }}”?</h5>
+      </div>
+
+      <div class="modal-footer">
+        <form method="post" action="{% url 'eliminar_producto' producto.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        </form>
+        <button type="button" class="btn btn-secondary"
+                data-bs-dismiss="modal">Cancelar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
