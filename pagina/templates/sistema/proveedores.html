@@ -25,6 +25,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link rel="stylesheet" href="{% static 'myapp/css/proveedores.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   </head>
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -166,138 +173,87 @@
         <!-- /.sidebar -->
       </aside>
 
-        <!-- Content Wrapper -->
+       <!-- Contenido principal -->
       <div class="content-wrapper">
-          <div class="content-header">
-              <div class="container-fluid">
-                  <!-- Breadcrumb para Proveedores -->
-                  <div class="row mb-2">
-                      <div class="col-sm-6">
-                          <ol class="breadcrumb float-sm-left">
-                              <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
-                              <li class="breadcrumb-item active"><i class="fas fa-truck"></i> Proveedores</li>
-                          </ol>
-                      </div>
-                      <div class="col-sm-6 text-right">
-                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                              <i class="fas fa-plus"></i> Nuevo Proveedor
+        <div class="content-header">
+          <div class="container-fluid">
+            <h2 class="text-center mb-4">Panel de Proveedores</h2>
+          </div>
+        </div>
+
+        <section class="container mt-4">
+          <p>Bienvenido al panel de gestión de proveedores</p>
+
+          <!-- Sección para gestionar proveedores -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Gestión de Proveedores</h3>
+            </div>
+            <div class="card-body">
+              <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#registroProveedorModal">
+                🏢 Agregar un nuevo Proveedor
+              </button>
+
+              <!-- Modal -->
+              {% include 'sistema/crud_proveedores/modal_registro_proveedores.html' with form=form %}
+
+              <!-- Tabla de proveedores -->
+              <table class="table table-striped">
+                <thead class="table-dark">
+                  <tr>
+                    <th>NIT</th>
+                    <th>Empresa</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Fecha Registro</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for proveedor in proveedores %}
+                    <tr>
+                      <td>{{ proveedor.nit_proveedor }}</td>
+                      <td>{{ proveedor.empresa }}</td>
+                      <td>{{ proveedor.correo }}</td>
+                      <td>{{ proveedor.telefono }}</td>
+                      <td>{{ proveedor.direccion }}</td>
+                      <td>{{ proveedor.fecha_registro }}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-warning btn-sm"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editarProveedorModal{{ proveedor.id }}">
+                          ✏️ Editar
+                        </button>
+
+                        <!-- MODAL DE EDICIÓN -->
+                        {% include 'sistema/crud_proveedores/editar_proveedor.html' %}
+
+                        <form action="{% url 'eliminar_proveedor' proveedor.id %}" method="post" style="display:inline;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este proveedor?')">
+                            <i class="fas fa-trash"></i> Eliminar
                           </button>
-                      </div>
-                  </div>
-                  
-                  <h1 class="m-0">Proveedores</h1>
-              </div>
+                        </form>
+                      </td>
+                    </tr>
+                  {% empty %}
+                    <tr>
+                      <td colspan="7" class="text-center">No hay proveedores registrados.</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
           </div>
-          
-      </div>
-        <div class="container-fluid">
-          <div class="row mb-3">
-  
-              <div class="col-md-12 mt-3"> 
-                  <div class="card">
-                      <div class="card-header">
-                          <h3 class="card-title">Proveedores Registrados</h3>
-                      </div>
-
-                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        ➕ Agregar un nuevo Proveedor 
-                      </button>
-                      
-                      <!-- Estructura del Modal -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <!-- Encabezado del modal -->
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Registro de Proveedor</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            
-                            <!-- Cuerpo del modal -->
-                            <div class="modal-body">
-                                <form action="#" method="POST">
-                                    <div class="mb-3">
-                                      <label for="nit_proveedor" class="form-label">NIT Proveedor</label>
-                                      <input type="text" class="form-control" id="nit_proveedor" name="nit_proveedor" required maxlength="20">
-                                    </div>
-
-                                    <div class="mb-3">
-                                      <label for="empresa" class="form-label">Empresa</label>
-                                      <input type="text" class="form-control" id="empresa" name="empresa" required maxlength="100">
-                                    </div>
-                                  
-                                    <div class="mb-3">
-                                      <label for="correo" class="form-label">Correo Electrónico</label>
-                                      <input type="email" class="form-control" id="correo" name="correo" required maxlength="100">
-                                    </div>
-                                  
-                                    <div class="mb-3">
-                                      <label for="telefono" class="form-label">Teléfono</label>
-                                      <input type="tel" class="form-control" id="telefono" name="telefono" required pattern="\d+" maxlength="15">
-                                    </div>
-                                  
-                                    <div class="mb-3">
-                                      <label for="direccion" class="form-label">Dirección</label>
-                                      <input type="text" class="form-control" id="direccion" name="direccion" required maxlength="255">
-                                    </div>
-                                  
-                                    <button type="submit" class="btn btn-primary">Guardar Proveedor</button>
-                                  </form>
-                                  
-                            </div>
-                            <!-- Pie del modal -->
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="card-body">
-                        <form method="GET" action="#" class="mb-3">
-                          <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Buscar proveedor" name="buscar" value="{{ request.GET.buscar }}">
-                              <div class="input-group-append">
-                                  <button class="btn btn-primary" type="submit">
-                                      <i class="fa fa-search"></i> Buscar
-                                  </button>
-                              </div>
-                          </div>
-                        </form>                      
-                      <table class="table table-bordered table-striped">
-                          <thead>
-                              <tr>
-                                  <th>Nombre</th>
-                                  <th>Municipio</th>
-                                  <th>NIT</th>
-                                  <th>Acciones</th> <!-- Columna para los botones de acciones -->
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {% for proveedor in proveedores %}
-                              <tr>
-                                  <td>{{ proveedor.nombre }}</td>
-                                  <td>{{ proveedor.municipio }}</td>
-                                  <td>{{ proveedor.nit }}</td>
-                                  <td>
-                                      <!-- Botones de editar y eliminar -->
-                                      <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                                      <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este proveedor?');">Eliminar</a>
-                                  </td>
-                              </tr>
-                              {% empty %}
-                              <tr>
-                                  <td colspan="4">No hay proveedores registrados</td>
-                              </tr>
-                              {% endfor %}
-                          </tbody>
-                      </table>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      </div>
+        </section>
+      </div>    
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+    
   </body>
 </html>

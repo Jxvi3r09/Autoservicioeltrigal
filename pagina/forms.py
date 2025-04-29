@@ -91,8 +91,8 @@ class RegistroUsuarioForm(forms.ModelForm):
             self.add_error("confirm_password", "Las contraseñas no coinciden.")
 
 
-#Proveedores
-from django import forms
+
+
 from .models import Proveedor
 
 class ProveedorForm(forms.ModelForm):
@@ -100,12 +100,14 @@ class ProveedorForm(forms.ModelForm):
         model = Proveedor
         fields = ['nit_proveedor', 'empresa', 'correo', 'telefono', 'direccion']
         widgets = {
-            'nit_proveedor': forms.TextInput(attrs={'class': 'form-control'}),
-            'empresa': forms.TextInput(attrs={'class': 'form-control'}),
-            'correo': forms.EmailInput(attrs={'class': 'form-control'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'nit_proveedor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'NIT del proveedor'}),
+            'empresa': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de la empresa'}),
+            'correo': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo electrónico'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono de contacto'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dirección'}),
         }
+
+
 
 # inventario/forms.py
 from django import forms
