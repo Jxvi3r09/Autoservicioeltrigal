@@ -71,6 +71,7 @@ class Producto(models.Model):
     fecha_vencimiento = models.DateField(null=True, blank=True)
     imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
-
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
         return self.nombre
