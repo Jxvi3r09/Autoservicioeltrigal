@@ -11,18 +11,54 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import login
 from .forms import ProductoForm
 from .models import Producto
+from django.utils import timezone
+from datetime import timedelta
 
 
 from .models import Usuario
 
 #mostrar todos los usuarios
 def lista_usuarios(request):
+    # Obtener todos los usuarios
     usuarios = Usuario.objects.all()
-    form = RegistroUsuarioForm()  # ✅ Añade esta línea
-    return render(request, 'sistema/administrador.html', {
+    
+    # Obtener el formulario
+    form = RegistroUsuarioForm()
+    
+    # Calcular métricas estadísticas
+    total_usuarios = usuarios.count()
+    
+    # Usuarios activos (últimos 30 días)
+    usuarios_activos = usuarios.filter(
+        last_login__gte=timezone.now() - timedelta(days=30)
+    ).count()
+    
+    # Administradores (asumiendo que hay un campo 'rol' en tu modelo)
+    administradores = usuarios.filter(rol='Admin').count()
+    
+    # Usuarios inactivos (más de 30 días sin login)
+    inactivos_30dias = usuarios.filter(
+        last_login__lt=timezone.now() - timedelta(days=30)
+    ).count()
+    
+    # Porcentaje de cambio (puedes ajustar esta lógica según tus necesidades)
+    # Esto es un ejemplo - deberías implementar tu propia lógica de comparación
+    try:
+        cambio_activos = round((usuarios_activos / total_usuarios) * 100, 1)
+    except ZeroDivisionError:
+        cambio_activos = 0
+    
+    context = {
         'usuarios': usuarios,
-        'form': form  # ✅ Y esta línea para pasarlo al template
-    })
+        'form': form,
+        'total_usuarios': total_usuarios,
+        'usuarios_activos': usuarios_activos,
+        'administradores': administradores,
+        'inactivos_30dias': inactivos_30dias,
+        'cambio_activos': cambio_activos,
+    }
+    
+    return render(request, 'sistema/administrador.html', context)
 
 def editar_usuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)

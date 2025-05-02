@@ -1,5 +1,4 @@
 {% load static %}
-<!-- seccion de usuarios -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Panel de Administración de Usuarios del Sistema de Inventario">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Previene ataques XSS -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:;">
   
   <title>Panel de Administración - Usuarios</title>
@@ -15,81 +13,37 @@
   <!-- Favicon -->
   <link rel="icon" href="{% static 'myapp/imagenes/favicon.ico' %}" type="image/x-icon">
   
-  <!-- CSS: Optimizado cargando primero los estilos críticos -->
+  <!-- CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="{% static 'myapp/css/inicioinv.css' %}">
 
-  <style>
-    /* Estilos optimizados */
+  <!-- <style>
     :root {
       --primary-color: #007bff;
+      --primary-light: #e6f0ff;
       --danger-color: #dc3545;
+      --danger-light: #f8d7da;
       --warning-color: #ffc107;
+      --warning-light: #fff3cd;
+      --success-color: #28a745;
       --light-gray: #f8f9fa;
+      --medium-gray: #e9ecef;
+      --dark-gray: #343a40;
       --border-color: #dee2e6;
       --table-header-bg: #f1f1f1;
+      --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     }
     
-    .user-actions .btn {
-      margin-right: 5px;
-    }
-    
-    .card-header {
-      background-color: var(--light-gray);
-      border-bottom: 1px solid var(--border-color);
-    }
-    
-    .table th {
-      background-color: var(--table-header-bg);
-    }
-    
-    .breadcrumb {
-      background-color: transparent;
-      padding: 0.5rem 0;
-    }
-    
-    .sidebar-toggle-btn {
-      margin-left: 10px;
-      cursor: pointer;
-      color: #fff;
-      background-color: transparent;
-      border: none;
-      font-size: 1.5rem;
-    }
-    
-    /* Mejoras de accesibilidad */
-    .btn:focus, 
-    .nav-link:focus {
-      outline: 2px solid var(--primary-color);
-      outline-offset: 2px;
-    }
-    
-    /* Transiciones suaves */
-    .btn, .nav-link {
-      transition: all 0.2s ease-in-out;
-    }
+    /* Estructura mejorada */
 
-    /* Mejoras para móviles */
-    @media (max-width: 768px) {
-      .user-actions {
-        display: flex;
-        flex-direction: column;
-      }
-      
-      .user-actions .btn {
-        margin-bottom: 5px;
-        width: 100%;
-      }
-    }
-  </style>
+  </style> -->
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
   <div class="wrapper">
-    <!-- Navbar -->
+    <!-- Navbar mejorado -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Botón para contraer/expandir el sidebar -->
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button" aria-label="Expandir/Contraer Menú">
@@ -98,16 +52,13 @@
         </li>
       </ul>
       
-      <!-- Título del panel -->
       <div class="ml-3">
         <h1 class="mb-0 text-dark h4">
           <i class="fas fa-users mr-2" aria-hidden="true"></i>Panel de Usuarios
         </h1>
       </div>
 
-      <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <!-- Usuario actual -->
         <li class="nav-item dropdown user-menu">
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="user-image img-circle elevation-1" alt="Usuario">
@@ -138,18 +89,15 @@
       </ul>
     </nav>
 
-    <!-- Sidebar -->
+    <!-- Sidebar mejorado -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
       <a href="{% url 'inicioinv' %}" class="brand-link text-center">
         <span class="brand-text font-weight-light">
           <strong>Sistema Inventario</strong>
         </span>
       </a>
 
-      <!-- Sidebar -->
       <div class="sidebar">
-        <!-- Menu principal -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
@@ -167,6 +115,27 @@
             </li>
 
             <li class="nav-item">
+              <a href="{% url 'inventario' %}" class="nav-link">
+                <i class="nav-icon fas fa-boxes"></i>
+                <p>Inventario</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="{% url 'proveedores' %}" class="nav-link">
+                <i class="nav-icon fas fa-truck"></i>
+                <p>Proveedores</p>
+              </a>
+            </li> 
+            
+            <li class="nav-item">
+              <a href="{% url 'productos' %}" class="nav-link">
+                <i class="nav-icon fas fa-tag"></i>
+                <p>Productos</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
               <a href="{% url 'principal' %}" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
                 <p>Cerrar Sesión</p>
@@ -177,23 +146,68 @@
       </div>
     </aside>
 
-    <!-- Content Wrapper -->
+    <!-- Content Wrapper mejorado -->
     <div class="content-wrapper">
-      <!-- Content Header -->
       <section class="content-header">
         <div class="container-fluid">
+                    <!-- Nueva sección de estadísticas -->
+          <div class="stats-container">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-value">{{ total_usuarios }}</div>
+              <div class="stat-label">Usuarios Totales</div>
+              <div class="stat-change positive">
+                <i class="fas fa-arrow-up mr-1"></i> 5% este mes
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-user-check"></i>
+              </div>
+              <div class="stat-value">{{ usuarios_activos }}</div>
+              <div class="stat-label">Usuarios Activos</div>
+              <div class="stat-change positive">
+                <i class="fas fa-arrow-up mr-1"></i> 12% este mes
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-user-shield"></i>
+              </div>
+              <div class="stat-value">{{ administradores }}</div>
+              <div class="stat-label">Administradores</div>
+              <div class="stat-change">
+                <i class="fas fa-equals mr-1"></i> Sin cambios
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-user-clock"></i>
+              </div>
+              <div class="stat-value">{{ inactivos_30dias }}</div>
+              <div class="stat-label">Inactivos (30 días)</div>
+              <div class="stat-change negative">
+                <i class="fas fa-arrow-down mr-1"></i> 3% este mes
+              </div>
+            </div>
+          </div>
           <div class="row mb-2">
-            <!-- <div class="col-sm-6 text-center">
-              <h2 class="m-0">
-                <i class="fas fa-users mr-2" aria-hidden="true"></i>Gestión de Usuarios
-              </h2>
+            <!-- <div class="col-sm-6">
+              <h1 class="m-0 text-dark">
+                <i class="fas fa-users mr-2"></i>Gestión de Usuarios
+              </h1>
             </div> -->
             
             <div class="col-sm-6">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home" aria-hidden="true"></i> Inicio</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+                  <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
+                  <li class="breadcrumb-item active">Usuarios</li>
                 </ol>
               </nav>
             </div>
@@ -201,90 +215,98 @@
         </div>
       </section>
 
-      <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header">
               <h3 class="card-title">Listado de Usuarios</h3>
               <div class="card-tools">
-                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#registroModal" aria-label="Crear Nuevo Usuario">
-                  <i class="fas fa-user-plus mr-1" aria-hidden="true"></i> Nuevo Usuario
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal" aria-label="Crear Nuevo Usuario">
+                  <i class="fas fa-user-plus mr-1"></i> Nuevo Usuario
                 </button>
               </div>
             </div>
             
             <div class="card-body">
-              <!-- Mensajes del sistema -->
               {% if messages %}
                 <div id="mensajes-sistema">
                   {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                      <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
                       {{ message }}
                     </div>
                   {% endfor %}
                 </div>
               {% endif %}
 
-              <!-- Filtros de búsqueda -->
-              <div class="row mb-3">
-                <div class="col-md-6">
+              <!-- Filtros mejorados -->
+              <div class="row mb-4">
+                <div class="col-md-6 mb-2 mb-md-0">
                   <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar usuario...">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar por nombre o documento...">
                     <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="button" aria-label="Buscar">
-                        <i class="fas fa-search" aria-hidden="true"></i>
+                      <button class="btn btn-outline-secondary" type="button" id="searchButton" aria-label="Buscar">
+                        <i class="fas fa-search"></i>
                       </button>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 mb-2 mb-md-0">
                   <select class="form-select" id="rolFilter" aria-label="Filtrar por rol">
                     <option value="">Todos los roles</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Usuario">Usuario</option>
+                    <option value="Admin">Administrador</option>
+                    <option value="Empleado">Empleado</option>
                   </select>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-outline-secondary w-100" id="resetFilters">
+                    <i class="fas fa-sync-alt mr-1"></i> Limpiar filtros
+                  </button>
                 </div>
               </div>
 
+              <!-- Tabla mejorada -->
               <div class="table-responsive">
                 <table class="table table-bordered table-hover" id="usersTable">
                   <caption>Listado de usuarios del sistema</caption>
-                  <thead class="thead-light">
+                  <thead>
                     <tr>
-                      <th scope="col">Documento</th>
-                      <th scope="col">Usuario</th>
-                      <th scope="col">Tipo Doc.</th>
-                      <th scope="col">Contacto</th>
-                      <th scope="col">Rol</th>
-                      <th scope="col">Registro</th>
-                      <th scope="col">Acciones</th>
+                      <th scope="col" width="15%">Documento</th>
+                      <th scope="col" width="20%">Usuario</th>
+                      <th scope="col" width="10%">Tipo Doc.</th>
+                      <th scope="col" width="15%">Contacto</th>
+                      <th scope="col" width="10%">Rol</th>
+                      <th scope="col" width="15%">Registro</th>
+                      <th scope="col" width="15%">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% if usuarios %}
                       {% for usuario in usuarios %}
                       <tr>
-                        <td>{{ usuario.numero_documento }}</td>
-                        <td>{{ usuario.username }}</td>
-                        <td>{{ usuario.tipo_documento }}</td>
-                        <td>{{ usuario.contacto }}</td>
-                        <td><span class="badge bg-primary">{{ usuario.rol }}</span></td>
-                        <td>{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
-                        <td class="user-actions">
+                        <td data-label="Documento">{{ usuario.numero_documento }}</td>
+                        <td data-label="Usuario">{{ usuario.username }}</td>
+                        <td data-label="Tipo Doc.">{{ usuario.tipo_documento }}</td>
+                        <td data-label="Contacto">{{ usuario.contacto }}</td>
+                        <td data-label="Rol"><span class="badge bg-primary">{{ usuario.rol }}</span></td>
+                        <td data-label="Registro">{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
+                        <td data-label="Acciones" class="user-actions">
                           <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}" aria-label="Editar Usuario">
-                            <i class="fas fa-edit" aria-hidden="true"></i> Editar
+                            <i class="fas fa-edit"></i> Editar
                           </button>
                           <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal{{ usuario.id }}" aria-label="Eliminar Usuario">
-                            <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
+                            <i class="fas fa-trash"></i> Eliminar
                           </button>
                         </td>
                       </tr>
                       {% endfor %}
                     {% else %}
                       <tr>
-                        <td colspan="7" class="text-center text-muted">No hay usuarios registrados</td>
+                        <td colspan="7" class="text-center text-muted py-4">
+                          <i class="fas fa-users-slash fa-2x mb-2"></i><br>
+                          No hay usuarios registrados
+                        </td>
                       </tr>
                     {% endif %}
                   </tbody>
@@ -292,20 +314,19 @@
               </div>
             </div>
             
-            <div class="card-footer clearfix">
-              <!-- Paginación -->
+            <div class="card-footer">
               {% if usuarios.has_other_pages %}
               <nav aria-label="Paginación de usuarios">
-                <ul class="pagination justify-content-center">
+                <ul class="pagination justify-content-center mb-0">
                   {% if usuarios.has_previous %}
                     <li class="page-item">
                       <a class="page-link" href="?page={{ usuarios.previous_page_number }}" aria-label="Anterior">
-                        <span aria-hidden="true">&laquo;</span>
+                        <span aria-hidden="true">«</span>
                       </a>
                     </li>
                   {% else %}
                     <li class="page-item disabled">
-                      <span class="page-link" aria-label="Anterior">&laquo;</span>
+                      <span class="page-link">«</span>
                     </li>
                   {% endif %}
                   
@@ -324,12 +345,12 @@
                   {% if usuarios.has_next %}
                     <li class="page-item">
                       <a class="page-link" href="?page={{ usuarios.next_page_number }}" aria-label="Siguiente">
-                        <span aria-hidden="true">&raquo;</span>
+                        <span aria-hidden="true">»</span>
                       </a>
                     </li>
                   {% else %}
                     <li class="page-item disabled">
-                      <span class="page-link" aria-label="Siguiente">&raquo;</span>
+                      <span class="page-link">»</span>
                     </li>
                   {% endif %}
                 </ul>
@@ -341,12 +362,12 @@
       </section>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer mejorado -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
         <b>Versión</b> 1.0.0
       </div>
-      <strong>Copyright &copy; {% now "Y" %} <a href="#">Sistema de Inventario</a>.</strong> Todos los derechos reservados.
+      <strong>Copyright &copy; {% now "Y" %} <a href="{% url 'inicioinv' %}">Autoservicio El Trigal</a>.</strong> Todos los derechos reservados.
     </footer>
 
     <!-- Incluir modal de registro -->
@@ -361,20 +382,14 @@
     {% endif %}
   </div>
 
-  <!-- Scripts cargados al final para mejorar rendimiento -->
-  <!-- jQuery -->
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
-  
-  <!-- Bootstrap 5 Bundle (incluye Popper) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-  
-  <!-- AdminLTE JS -->
   <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
 
-  <!-- Scripts personalizados -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Script para mostrar/ocultar contraseña
+      // Mostrar/ocultar contraseña
       const togglePassword = document.querySelector('#togglePassword');
       if (togglePassword) {
         const passwordField = document.querySelector('#id_password');
@@ -385,31 +400,22 @@
         });
       }
       
-      // Cierra automáticamente las alertas después de 5 segundos
+      // Cerrar alertas automáticamente
       const alerts = document.querySelectorAll('.alert');
       alerts.forEach(alert => {
-        setTimeout(function() {
+        setTimeout(() => {
           const bsAlert = new bootstrap.Alert(alert);
           bsAlert.close();
         }, 5000);
       });
 
-      // Filtro de búsqueda
+      // Elementos de filtrado
       const searchInput = document.getElementById('searchInput');
-      if (searchInput) {
-        searchInput.addEventListener('keyup', function() {
-          filterTable();
-        });
-      }
-
+      const searchButton = document.getElementById('searchButton');
       const rolFilter = document.getElementById('rolFilter');
-      if (rolFilter) {
-        rolFilter.addEventListener('change', function() {
-          filterTable();
-        });
-      }
-
-      // Función para filtrar tabla
+      const resetFilters = document.getElementById('resetFilters');
+      
+      // Función para filtrar la tabla
       function filterTable() {
         const searchText = searchInput.value.toLowerCase();
         const rolValue = rolFilter.value.toLowerCase();
@@ -421,38 +427,63 @@
           const cells = row.getElementsByTagName('td');
           if (cells.length === 0) continue;
           
-          let rowVisible = false;
-          
-          // Check if all filter conditions match
           const username = cells[1].textContent.toLowerCase();
           const document = cells[0].textContent.toLowerCase();
           const rol = cells[4].textContent.toLowerCase();
           
-          // Check text search
-          const textMatch = username.includes(searchText) || 
-                            document.includes(searchText);
-          
-          // Check role filter
+          const textMatch = username.includes(searchText) || document.includes(searchText);
           const rolMatch = rolValue === '' || rol.includes(rolValue);
           
-          rowVisible = textMatch && rolMatch;
-          
-          // Show/Hide row
-          row.style.display = rowVisible ? '' : 'none';
+          row.style.display = textMatch && rolMatch ? '' : 'none';
         }
       }
-
-      // Prevenir ataques XSS en los formularios
+      
+      // Event listeners para filtros
+      if (searchInput) {
+        searchInput.addEventListener('keyup', filterTable);
+      }
+      
+      if (searchButton) {
+        searchButton.addEventListener('click', filterTable);
+      }
+      
+      if (rolFilter) {
+        rolFilter.addEventListener('change', filterTable);
+      }
+      
+      if (resetFilters) {
+        resetFilters.addEventListener('click', function() {
+          searchInput.value = '';
+          rolFilter.value = '';
+          filterTable();
+        });
+      }
+      
+      // Sanitización de inputs para prevenir XSS
       const forms = document.querySelectorAll('form');
       forms.forEach(form => {
         form.addEventListener('submit', function(e) {
           const inputs = form.querySelectorAll('input, textarea');
           inputs.forEach(input => {
-            // Sanitizar valores
             input.value = input.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
           });
         });
       });
+      
+      // Mejorar accesibilidad de tablas en móviles
+      if (window.innerWidth <= 768) {
+        const tableHeaders = document.querySelectorAll('thead th');
+        const tableCells = document.querySelectorAll('tbody td');
+        
+        tableHeaders.forEach((header, index) => {
+          const headerText = header.textContent;
+          tableCells.forEach(cell => {
+            if (cell.cellIndex === index) {
+              cell.setAttribute('data-label', headerText);
+            }
+          });
+        });
+      }
     });
   </script>
 </body>
