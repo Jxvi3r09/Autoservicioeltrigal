@@ -1,50 +1,147 @@
 {% load static %}
-<!-- Pagina donde estan los usuarios -->
+<!-- seccion de usuarios -->
 <!DOCTYPE html>
-<html lang="es" style="height: auto;"><head>
+<html lang="es">
+<head>
   <meta charset="UTF-8">
-  <!-- Viewport para responsividad -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Administración</title>
+  <meta name="description" content="Panel de Administración de Usuarios del Sistema de Inventario">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Previene ataques XSS -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:;">
+  
+  <title>Panel de Administración - Usuarios</title>
 
-  <!-- jQuery (requerido por AdminLTE) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Archivo JS para submenús (opcional) -->
-  <script src="/static/myapp/js/submenu.js"></script>
-  <!-- Conexion archivo css -->
-  <script src="{% static 'myapp/css/inicioinv.css' %}"></script>
-
-  <!-- AdminLTE CSS (incluye Bootstrap) -->
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'myapp/imagenes/favicon.ico' %}" type="image/x-icon">
+  
+  <!-- CSS: Optimizado cargando primero los estilos críticos -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Bootstrap 5 CSS (para otros estilos si se requiere) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'myapp/css/inicioinv.css' %}">
 
-<style type="text/css"></style><style type="text/css" id="operaUserStyle"></style></head>
-<body class="sidebar-mini sidebar-collapse" style="height: auto;">
+  <style>
+    /* Estilos optimizados */
+    :root {
+      --primary-color: #007bff;
+      --danger-color: #dc3545;
+      --warning-color: #ffc107;
+      --light-gray: #f8f9fa;
+      --border-color: #dee2e6;
+      --table-header-bg: #f1f1f1;
+    }
+    
+    .user-actions .btn {
+      margin-right: 5px;
+    }
+    
+    .card-header {
+      background-color: var(--light-gray);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .table th {
+      background-color: var(--table-header-bg);
+    }
+    
+    .breadcrumb {
+      background-color: transparent;
+      padding: 0.5rem 0;
+    }
+    
+    .sidebar-toggle-btn {
+      margin-left: 10px;
+      cursor: pointer;
+      color: #fff;
+      background-color: transparent;
+      border: none;
+      font-size: 1.5rem;
+    }
+    
+    /* Mejoras de accesibilidad */
+    .btn:focus, 
+    .nav-link:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+    
+    /* Transiciones suaves */
+    .btn, .nav-link {
+      transition: all 0.2s ease-in-out;
+    }
+
+    /* Mejoras para móviles */
+    @media (max-width: 768px) {
+      .user-actions {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .user-actions .btn {
+        margin-bottom: 5px;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Botón para contraer/expandir el sidebar -->
       <ul class="navbar-nav">
         <li class="nav-item">
-
-          
-<!--conflicto -->
-          <!-- Botón para contraer/expandir el sidebar -->
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-            <i class="fas fa-bars"></i>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button" aria-label="Expandir/Contraer Menú">
+            <i class="fas fa-bars" aria-hidden="true"></i>
           </a>
+        </li>
+      </ul>
+      
+      <!-- Título del panel -->
+      <div class="ml-3">
+        <h1 class="mb-0 text-dark h4">
+          <i class="fas fa-users mr-2" aria-hidden="true"></i>Panel de Usuarios
+        </h1>
+      </div>
 
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Usuario actual -->
+        <li class="nav-item dropdown user-menu">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="user-image img-circle elevation-1" alt="Usuario">
+            <span class="d-none d-md-inline">
+              {% if request.user.is_authenticated %}
+                {{ request.user.username }}
+              {% else %}
+                Usuario
+              {% endif %}
+            </span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <li class="user-header bg-primary">
+              <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2" alt="Imagen de usuario">
+              <p>
+                {% if request.user.is_authenticated %}
+                  {{ request.user.username }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </p>
+            </li>
+            <li class="user-footer">
+              <a href="{% url 'principal' %}" class="btn btn-default btn-flat">Cerrar Sesión</a>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>
-    <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
+    <!-- Sidebar -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="#" class="brand-link text-center">
+      <a href="{% url 'inicioinv' %}" class="brand-link text-center">
         <span class="brand-text font-weight-light">
           <strong>Sistema Inventario</strong>
         </span>
@@ -52,133 +149,118 @@
 
       <!-- Sidebar -->
       <div class="sidebar">
-        <!-- Opcional: Panel de usuario en la parte superior del sidebar  -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="/static/myapp/imagenes/usuariodefault.png" class="img-circle elevation-2" alt="User Image">
-          </div>
-              <div class="info">
-                  <a href="#" class="d-block">
-                    {% if request.user.is_authenticated %}
-                      {{ request.user.username }}
-                    {% else %}
-                      Usuario
-                    {% endif %}
-              </div>
-          </div>
-              
         <!-- Menu principal -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Ejemplo de sección "Dashboard" o "Inicio" -->
             <li class="nav-item">
-              <a href="/inicioinv/" class="nav-link">
-                <i class="nav-icon fas fa-home"></i>
+              <a href="{% url 'inicioinv' %}" class="nav-link">
+                <i class="nav-icon fas fa-home" aria-hidden="true"></i>
                 <p>Inicio</p>
               </a>
             </li>
 
-            <!-- Sección Usuarios -->
-            <li class="nav-item has-treeview">
-              <a href="/usuarios" class="nav-link">
-                <i class="nav-icon fas fa-users"></i>
-                <p>
-                  Usuarios
-                </p>
+            <li class="nav-item">
+              <a href="{% url 'usuarios' %}" class="nav-link active">
+                <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+                <p>Usuarios</p>
               </a>
             </li>
 
-            <!-- Sección Empresas
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-city"></i>
-                <p>
-                  Empresas
-                  <i class="right fas fa-angle-left"></i>
-                </p>
+            <li class="nav-item">
+              <a href="{% url 'principal' %}" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+                <p>Cerrar Sesión</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Agregar Empresa</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Gestión de Empresas</p>
-                  </a>
-                </li>
-              </ul>
-            </li> -->
-
-              <!-- Sección Cerrar Sesión -->
-              <li class="nav-item">
-                <a href="{% url 'principal' %}" class="nav-link">
-                  <i class="nav-icon fas fa-sign-out-alt"></i>
-                  <p>Cerrar Sesión</p>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </aside>
-      <!-- /.Main Sidebar Container -->
-
-      <!-- Content Wrapper. Contiene el contenido principal -->
-      <div class="content-wrapper">
-        <!-- Encabezado del contenido -->
-<!-- Content Wrapper. Contiene el contenido principal -->
-<div class="content-wrapper">
-  <!-- Encabezado del contenido -->
-  <div class="content-header">
-      <div class="container-fluid">
-          <!-- Breadcrumb para Usuarios -->
-          <div class="row mb-2">
-              <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
-                      <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
-                      <li class="breadcrumb-item active"><i class="fas fa-users"></i> Usuarios</li>
-                  </ol>
-              </div>
-          </div>
-          
-          <h1 class="m-0">Usuarios</h1>
+            </li>
+          </ul>
+        </nav>
       </div>
-  </div>
-        <!-- /.content-header -->
+    </aside>
 
-        <!-- Contenido principal -->
-        <div class="content">
-          <div class="container-fluid">
-            <p>Bienvenido al panel de gestión de usuarios</p>
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <!-- Content Header -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <!-- <div class="col-sm-6 text-center">
+              <h2 class="m-0">
+                <i class="fas fa-users mr-2" aria-hidden="true"></i>Gestión de Usuarios
+              </h2>
+            </div> -->
             
-            <!-- Sección para gestionar usuarios -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Gestión de Usuarios</h3>
-              </div>
-              <div class="card-body">
-                <!-- Botón para abrir el modal de agregar usuario -->
+            <div class="col-sm-6">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home" aria-hidden="true"></i> Inicio</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div class="card">
-                  <!-- Botón para abrir el modal -->
-                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal">
-                    <i class="fas fa-user-plus"></i> Nuevo Usuario
-                  </button>
-                <!-- Tabla de usuarios -->
-                <table class="table table-bordered table-striped">
-                  <thead>
-                      <tr>
-                          <th>Número de Documento</th>
-                          <th>Usuario</th>
-                          <th>Tipo de Documento</th>
-                          <th>Contacto</th>
-                          <th>Rol</th>
-                          <th>Fecha de Registro</th>
-                          <th>Acciones</th>
-                      </tr>
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="card-title">Listado de Usuarios</h3>
+              <div class="card-tools">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#registroModal" aria-label="Crear Nuevo Usuario">
+                  <i class="fas fa-user-plus mr-1" aria-hidden="true"></i> Nuevo Usuario
+                </button>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <!-- Mensajes del sistema -->
+              {% if messages %}
+                <div id="mensajes-sistema">
+                  {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <!-- Filtros de búsqueda -->
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar usuario...">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" aria-label="Buscar">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <select class="form-select" id="rolFilter" aria-label="Filtrar por rol">
+                    <option value="">Todos los roles</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Usuario">Usuario</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="usersTable">
+                  <caption>Listado de usuarios del sistema</caption>
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Documento</th>
+                      <th scope="col">Usuario</th>
+                      <th scope="col">Tipo Doc.</th>
+                      <th scope="col">Contacto</th>
+                      <th scope="col">Rol</th>
+                      <th scope="col">Registro</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
                   </thead>
                   <tbody>
                     {% if usuarios %}
@@ -188,68 +270,190 @@
                         <td>{{ usuario.username }}</td>
                         <td>{{ usuario.tipo_documento }}</td>
                         <td>{{ usuario.contacto }}</td>
-                        <td>{{ usuario.rol }}</td>
+                        <td><span class="badge bg-primary">{{ usuario.rol }}</span></td>
                         <td>{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
-                        <td>
-                          <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}">
-                            Editar
+                        <td class="user-actions">
+                          <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}" aria-label="Editar Usuario">
+                            <i class="fas fa-edit" aria-hidden="true"></i> Editar
                           </button>
-                          <!-- Botón para abrir el modal de eliminación -->
-                          <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal{{ usuario.id }}">
-                          Eliminar
+                          <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal{{ usuario.id }}" aria-label="Eliminar Usuario">
+                            <i class="fas fa-trash" aria-hidden="true"></i> Eliminar
                           </button>
                         </td>
                       </tr>
-                      <!-- Modal para cada usuario -->
-                      {% include 'sistema/usuariocrud/editar_usuario.html' %}
-                      {% include 'sistema/usuariocrud/eliminar_usuario.html' %}
                       {% endfor %}
                     {% else %}
                       <tr>
-                        <td colspan="7" class="text-center">No hay usuarios registrados</td>
+                        <td colspan="7" class="text-center text-muted">No hay usuarios registrados</td>
                       </tr>
                     {% endif %}
                   </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="card-footer clearfix">
+              <!-- Paginación -->
+              {% if usuarios.has_other_pages %}
+              <nav aria-label="Paginación de usuarios">
+                <ul class="pagination justify-content-center">
+                  {% if usuarios.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ usuarios.previous_page_number }}" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <span class="page-link" aria-label="Anterior">&laquo;</span>
+                    </li>
+                  {% endif %}
                   
-              </table>
-              
+                  {% for i in usuarios.paginator.page_range %}
+                    {% if usuarios.number == i %}
+                      <li class="page-item active">
+                        <span class="page-link">{{ i }}</span>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                  
+                  {% if usuarios.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ usuarios.next_page_number }}" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <span class="page-link" aria-label="Siguiente">&raquo;</span>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+              {% endif %}
             </div>
           </div>
         </div>
-      </div>
-      <!-- /.content -->
+      </section>
     </div>
-    <!-- /.content-wrapper -->
-  <div id="sidebar-overlay"></div></div>
-  <!-- /.wrapper -->
 
-  <!-- Incluir modal de registro -->
-{% include 'paginas/registrate.html' %}
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Versión</b> 1.0.0
+      </div>
+      <strong>Copyright &copy; {% now "Y" %} <a href="#">Sistema de Inventario</a>.</strong> Todos los derechos reservados.
+    </footer>
 
-
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Script para mostrar contraseña -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const togglePassword = document.querySelector('#togglePassword');
-    const passwordField = document.querySelector('#id_password');
+    <!-- Incluir modal de registro -->
+    {% include 'paginas/registrate.html' %}
     
-    togglePassword.addEventListener('click', function() {
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        this.querySelector('i').classList.toggle('fa-eye-slash');
-    });
-});
-</script>
+    <!-- Incluir modales para editar/eliminar usuarios -->
+    {% if usuarios %}
+      {% for usuario in usuarios %}
+        {% include 'sistema/usuariocrud/editar_usuario.html' %}
+        {% include 'sistema/usuariocrud/eliminar_usuario.html' %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- Scripts cargados al final para mejorar rendimiento -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+  
   <!-- Bootstrap 5 Bundle (incluye Popper) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  
   <!-- AdminLTE JS -->
-  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
 
+  <!-- Scripts personalizados -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Script para mostrar/ocultar contraseña
+      const togglePassword = document.querySelector('#togglePassword');
+      if (togglePassword) {
+        const passwordField = document.querySelector('#id_password');
+        togglePassword.addEventListener('click', function() {
+          const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordField.setAttribute('type', type);
+          this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+      }
+      
+      // Cierra automáticamente las alertas después de 5 segundos
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(alert => {
+        setTimeout(function() {
+          const bsAlert = new bootstrap.Alert(alert);
+          bsAlert.close();
+        }, 5000);
+      });
 
+      // Filtro de búsqueda
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+          filterTable();
+        });
+      }
 
+      const rolFilter = document.getElementById('rolFilter');
+      if (rolFilter) {
+        rolFilter.addEventListener('change', function() {
+          filterTable();
+        });
+      }
 
-</body></html>
+      // Función para filtrar tabla
+      function filterTable() {
+        const searchText = searchInput.value.toLowerCase();
+        const rolValue = rolFilter.value.toLowerCase();
+        const table = document.getElementById('usersTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          const cells = row.getElementsByTagName('td');
+          if (cells.length === 0) continue;
+          
+          let rowVisible = false;
+          
+          // Check if all filter conditions match
+          const username = cells[1].textContent.toLowerCase();
+          const document = cells[0].textContent.toLowerCase();
+          const rol = cells[4].textContent.toLowerCase();
+          
+          // Check text search
+          const textMatch = username.includes(searchText) || 
+                            document.includes(searchText);
+          
+          // Check role filter
+          const rolMatch = rolValue === '' || rol.includes(rolValue);
+          
+          rowVisible = textMatch && rolMatch;
+          
+          // Show/Hide row
+          row.style.display = rowVisible ? '' : 'none';
+        }
+      }
+
+      // Prevenir ataques XSS en los formularios
+      const forms = document.querySelectorAll('form');
+      forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+          const inputs = form.querySelectorAll('input, textarea');
+          inputs.forEach(input => {
+            // Sanitizar valores
+            input.value = input.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

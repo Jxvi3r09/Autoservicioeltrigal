@@ -1,3 +1,19 @@
+.content-wrapper {
+  background-image: url("../imagenes/2.png"); /* ajusta la ruta según tu estructura */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh; /* altura mínima igual a la altura visible del navegador */
+}
+
+.container-fluid {
+  color: white !important;
+}
+#textoinicio {
+  background-color: white;
+  color: rgb(34, 132, 33) !important;
+}
+
 .main-sidebar {
   background-color: rgb(34, 132, 33) !important;
 }
