@@ -429,7 +429,7 @@ textarea:focus {
 
 /* Hasta aqui css de administrador */
 .content-wrapper {
-  background-image: url("../imagenes/2.png"); /* ajusta la ruta según tu estructura */
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -459,4 +459,9 @@ textarea:focus {
 }
 .btn-usuario {
   background-color: rgb(34, 132, 33) !important;
+}
+
+.content-header{
+  max-height: 100px;
+  background-color: white !important;
 }
