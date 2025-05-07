@@ -17,7 +17,7 @@
       /* Mejoras para el sidebar */
       .main-sidebar {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        background: linear-gradient(180deg, var(--dark-color) 0%, #000000 100%);
+        background-color: rgb(34, 132, 33) !important;
       }
       
       .sidebar .nav-link {
@@ -39,7 +39,7 @@
       
       .brand-link {
         box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
-        background-color: var(--primary-color);
+        background-color: rgb(34, 132, 33) !important;
         transition: all 0.3s;
         color: white !important;
       }
@@ -337,3 +337,10 @@
       .fade-in {
         animation: fadeIn 0.5s ease-out forwards;
       }
+
+      .active-link {
+        border: 2px solid #00cc66; /* cambia el color según lo que quieras */
+        border-radius: 5px;
+        background-color: #e6fff0; /* opcional */
+      }
+      
