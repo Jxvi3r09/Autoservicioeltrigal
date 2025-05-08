@@ -72,6 +72,7 @@ urlpatterns = [
     path('proveedores/eliminar/<int:id>/', views.eliminar_proveedor, name='eliminar_proveedor'),
     path('proveedores/editar/<int:id>/', views.editar_proveedor, name='editar_proveedor'),
 
+    path('perfil', views.perfil_usuario, name='perfil_usuario'),
 ]
 # Archivos estáticos
 if settings.DEBUG:

@@ -29,10 +29,11 @@
         </ul>
       </nav>
 
-      <!-- Sidebar -->
+       <!-- Sidebar -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link text-center">
+          <i class="fas fa-boxes mr-2"></i>
           <span class="brand-text font-weight-light">
             <strong>Sistema Inventario</strong>
           </span>
@@ -42,23 +43,19 @@
         <div class="sidebar">
           <!-- Opcional: Panel de usuario en la parte superior del sidebar  -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img
-                src="{% static 'myapp/imagenes/usuariodefault.png' %}"
-                class="img-circle elevation-2"
-                alt="User Image"
-              />
-            </div>
-                <div class="info">
-                  <a href="#" class="d-block">
-                    {% if request.user.is_authenticated %}
-                      {{ request.user.username }}
-                    {% else %}
-                      Usuario
-                    {% endif %}
-                  </a>
+            <a href="{% url 'perfil_usuario' %}" class="d-flex align-items-center text-white text-decoration-none">
+              <div class="image">
+                <img
+                  src="{% static 'myapp/imagenes/usuariodefault.png' %}"
+                  class="img-circle elevation-2"
+                  alt="User Image"
+                  style="width: 35px; height: 35px;" />
+              </div>
+                <div class="info ml-2">
+                  <span>Mi perfil</span>
                 </div>
-            </div>
+            </a>
+          </div>
                 
           <!-- Menu principal -->
           <nav class="mt-2">
@@ -86,31 +83,6 @@
                 </a>
               </li>
 
-              <!-- Sección Empresas
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-city"></i>
-                  <p>
-                    Empresas
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Agregar Empresa</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Gestión de Empresas</p>
-                    </a>
-                  </li>
-                </ul>
-              </li> -->
-
               <!-- Sección Inventario -->
               <li class="nav-item">
                 <a href="{% url 'inventario' %}" class="nav-link">
@@ -118,21 +90,24 @@
                   <p>Inventario</p>
                 </a>
               </li>
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'proveedores' %}" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
-                <p>Proveedores</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'productos' %}" class="nav-link">
-                <i class="nav-icon fas fa-tag"></i>
-                <p>
-                  Productos
-                </p>
-              </a>
-            </li>
+              
+              <!-- Sección Proveedores (activa) -->
+              <li class="nav-item">
+                <a href="{% url 'proveedores' %}" class="nav-link active">
+                  <i class="nav-icon fas fa-truck"></i>
+                  <p>Proveedores</p>
+                </a>
+              </li>
+              
+              <!-- Sección Productos -->
+              <li class="nav-item">
+                <a href="{% url 'productos' %}" class="nav-link">
+                  <i class="nav-icon fas fa-tag"></i>
+                  <p>
+                    Productos
+                  </p>
+                </a>
+              </li>
 
               <!-- Sección Configuración (ejemplo) -->
               <li class="nav-item">

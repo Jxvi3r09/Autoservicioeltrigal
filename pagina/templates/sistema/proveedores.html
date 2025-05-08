@@ -55,8 +55,8 @@
             </a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="fas fa-user-circle"></i>
+            <a class="nav-link" href="{% url 'perfil_usuario' %}">
+            <i class="fas fa-user-circle"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               <span class="dropdown-item dropdown-header">Opciones de usuario</span>
@@ -91,22 +91,18 @@
         <div class="sidebar">
           <!-- Opcional: Panel de usuario en la parte superior del sidebar  -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img
-                src="{% static 'myapp/imagenes/usuariodefault.png' %}"
-                class="img-circle elevation-2"
-                alt="User Image"
-              />
-            </div>
-            <div class="info">
-              <a href="#" class="d-block">
-                {% if request.user.is_authenticated %}
-                  {{ request.user.username }}
-                {% else %}
-                  Usuario
-                {% endif %}
-              </a>
-            </div>
+            <a href="{% url 'perfil_usuario' %}" class="d-flex align-items-center text-white text-decoration-none">
+              <div class="image">
+                <img
+                  src="{% static 'myapp/imagenes/usuariodefault.png' %}"
+                  class="img-circle elevation-2"
+                  alt="User Image"
+                  style="width: 35px; height: 35px;" />
+              </div>
+                <div class="info ml-2">
+                  <span>Mi perfil</span>
+                </div>
+            </a>
           </div>
                 
           <!-- Menu principal -->
