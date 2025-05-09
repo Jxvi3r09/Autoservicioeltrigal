@@ -13,6 +13,10 @@ from .forms import ProductoForm
 from .models import Producto
 from django.utils import timezone
 from datetime import timedelta
+from .forms import CustomPasswordResetForm
+from django.core.mail import send_mail
+
+
 
 
 from .models import Usuario
@@ -160,35 +164,20 @@ def registro(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
-            password = form.cleaned_data["password"]
-            confirm_password = form.cleaned_data["confirm_password"]
-
-            if password != confirm_password:
-                form.add_error("confirm_password", "Las contraseñas no coinciden.")
-            else:
-                usuario = form.save(commit=False)
-                usuario.set_password(password)
-
-                contacto = form.cleaned_data["contacto"]
-                if "@" in contacto:
-                    usuario.correo = contacto
-                else:
-                    usuario.telefono = contacto
-
-                usuario.save()
-                login(request, usuario)
-                return redirect("usuarios")  # Redirige correctamente
-
-        # Si hay errores:
-        return render(request, "paginas/registrate.html", {
-            "form": form,
-            "mostrar_modal": True  # Para que el modal se abra
-        })
-
+            usuario = form.save(commit=False)
+            usuario.set_password(form.cleaned_data["password1"])
+            usuario.save()
+            login(request, usuario)
+            return redirect("usuarios")
+        else:
+            return render(request, "paginas/registrate.html", {
+                "form": form,
+                "mostrar_modal": True
+            })
     else:
         form = RegistroUsuarioForm()
 
-    return render(request, "sistema/inicioinv.htm", {"form": form})
+    return render(request, "paginas/registrate.html", {"form": form})
 
 
 # Recuperación de contraseña
@@ -198,10 +187,12 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
     subject_template_name = "contrasena/recuperar_contrasena_asunto.txt"
     html_email_template_name = "contrasena/recuperar_contrasena_email.html"
     success_url = reverse_lazy('password_reset_done')
+    form_class = CustomPasswordResetForm
 
     def form_valid(self, form):
-        # Opcional: puedes añadir lógica adicional aquí
+        messages.success(self.request, "Se han enviado las instrucciones a tu correo.")
         return super().form_valid(form)
+    
 
 class CustomPasswordResetDoneView(auth_views.PasswordResetDoneView):
     template_name = "contrasena/recuperar_contrasena_enviado.html"
