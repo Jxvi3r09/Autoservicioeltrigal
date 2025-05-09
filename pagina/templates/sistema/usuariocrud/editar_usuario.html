@@ -1,54 +1,81 @@
 <!-- Modal de Editar Usuario -->
 <div class="modal fade" id="editarUsuarioModal{{ usuario.id }}" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0" style="box-shadow: 0 0 15px rgba(0,0,0,0.3);">
       <form method="POST" action="{% url 'editar_usuario' usuario.id %}">
         {% csrf_token %}
-        <div class="modal-header">
-          <h5 class="modal-title">Editar Usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <div class="modal-header" style="background-color: #212529; color: white;">
+          <h5 class="modal-title fw-bold" style="color: #ffc107;">
+            <i class="bi bi-person-gear me-2"></i>Editar Usuario
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <div class="modal-body">
-
-          <div class="mb-3">
-            <label class="form-label">Tipo de Documento</label>
-            <input type="text" name="tipo_documento" class="form-control" value="{{ usuario.tipo_documento }}">
+        <div class="modal-body p-4" style="background-color: #f8f9fa;">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold" style="color: #212529;">Tipo de Documento</label>
+              <div class="input-group">
+                <span class="input-group-text" style="background-color: #198754; color: white;"><i class="bi bi-card-text"></i></span>
+                <input type="text" name="tipo_documento" class="form-control border-success" value="{{ usuario.tipo_documento }}">
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold" style="color: #212529;">Número de Documento</label>
+              <div class="input-group">
+                <span class="input-group-text" style="background-color: #198754; color: white;"><i class="bi bi-hash"></i></span>
+                <input type="text" name="numero_documento" class="form-control border-success" value="{{ usuario.numero_documento }}">
+              </div>
+            </div>
           </div>
-
-          <div class="mb-3">
-            <label class="form-label">Número de Documento</label>
-            <input type="text" name="numero_documento" class="form-control" value="{{ usuario.numero_documento }}">
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold" style="color: #212529;">Nombres</label>
+              <div class="input-group">
+                <span class="input-group-text" style="background-color: #fd7e14; color: white;"><i class="bi bi-person"></i></span>
+                <input type="text" name="first_name" class="form-control border-warning" value="{{ usuario.first_name }}">
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold" style="color: #212529;">Apellidos</label>
+              <div class="input-group">
+                <span class="input-group-text" style="background-color: #fd7e14; color: white;"><i class="bi bi-person"></i></span>
+                <input type="text" name="last_name" class="form-control border-warning" value="{{ usuario.last_name }}">
+              </div>
+            </div>
           </div>
-
+          
           <div class="mb-3">
-            <label class="form-label">Nombres</label>
-            <input type="text" name="first_name" class="form-control" value="{{ usuario.first_name }}">
+            <label class="form-label fw-semibold" style="color: #212529;">Rol</label>
+            <div class="input-group">
+              <span class="input-group-text" style="background-color: #212529; color: white;"><i class="bi bi-person-badge"></i></span>
+              <input type="text" name="rol" class="form-control border-dark" value="{{ usuario.rol }}">
+            </div>
           </div>
-
+          
           <div class="mb-3">
-            <label class="form-label">Apellidos</label>
-            <input type="text" name="last_name" class="form-control" value="{{ usuario.last_name }}">
+            <label class="form-label fw-semibold" style="color: #212529;">Contacto</label>
+            <div class="input-group">
+              <span class="input-group-text" style="background-color: #fd7e14; color: white;"><i class="bi bi-telephone"></i></span>
+              <input type="text" name="contacto" class="form-control border-warning" value="{{ usuario.contacto }}">
+            </div>
           </div>
-
+          
           <div class="mb-3">
-            <label class="form-label">Rol</label>
-            <input type="text" name="rol" class="form-control" value="{{ usuario.rol }}">
+            <label class="form-label fw-semibold" style="color: #212529;">Usuario</label>
+            <div class="input-group">
+              <span class="input-group-text" style="background-color: #198754; color: white;"><i class="bi bi-person-circle"></i></span>
+              <input type="text" name="username" class="form-control border-success" value="{{ usuario.username }}">
+            </div>
           </div>
-
-          <div class="mb-3">
-            <label class="form-label">Contacto</label>
-            <input type="text" name="contacto" class="form-control" value="{{ usuario.contacto }}">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Usuario</label>
-            <input type="text" name="username" class="form-control" value="{{ usuario.username }}">
-          </div>
-
         </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Guardar Cambios</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <div class="modal-footer" style="background-color: #212529;">
+          <button type="button" class="btn" style="background-color: #fd7e14; color: white;" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-1"></i>Cancelar
+          </button>
+          <button type="submit" class="btn" style="background-color: #198754; color: white;">
+            <i class="bi bi-check-circle me-1"></i>Guardar Cambios
+          </button>
         </div>
       </form>
     </div>

@@ -1,0 +1,238 @@
+:root {
+      --primary-color: #2e7d32; /* Verde oscuro */
+      --secondary-color: #ff9800; /* Naranja */
+      --dark-color: #212121; /* Negro/Gris muy oscuro */
+      --success-color: #4caf50; /* Verde claro */
+      --accent-color: #ff6d00; /* Naranja oscuro */
+    }
+    
+.profile-container {
+  padding: 2rem;
+}
+
+/* Fix sidebar to stay static */
+.main-sidebar {
+  position: fixed !important;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.content-wrapper, .main-header, .main-footer {
+  margin-left: 250px;
+}
+
+/* Para dispositivos móviles - sidebar collapse */
+@media (max-width: 992px) {
+  .sidebar-collapse .main-sidebar {
+    margin-left: -250px;
+  }
+  .sidebar-collapse .content-wrapper, 
+  .sidebar-collapse .main-header, 
+  .sidebar-collapse .main-footer {
+    margin-left: 0;
+  }
+}
+
+.profile-header {
+  background: linear-gradient(135deg, var(--dark-color) 0%, #000000 100%);
+  color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-left: 5px solid var(--secondary-color);
+}
+
+.profile-img-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1rem;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--secondary-color);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.img-upload-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid white;
+}
+
+.img-upload-btn:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.1);
+}
+
+.profile-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.profile-role {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+
+.profile-stats {
+  background-color: var(--dark-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.stat-item {
+  padding: 1rem;
+  text-align: center;
+  border-right: 1px solid #333;
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.profile-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  transition: all 0.3s;
+  border-left: 3px solid var(--primary-color);
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.card-header {
+  padding: 1rem 1.5rem;
+}
+
+.card-header.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.card-header.bg-success {
+  background-color: var(--success-color) !important;
+}
+
+.card-header.bg-warning {
+  background-color: var(--secondary-color) !important;
+}
+
+.info-item {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f4f4f4;
+  display: flex;
+  align-items: center;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: bold;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+}
+
+.info-label i {
+  margin-right: 10px;
+  color: var(--primary-color);
+}
+
+.info-value {
+  flex-grow: 1;
+}
+
+.btn-edit-profile {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s;
+}
+
+.btn-edit-profile:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+/* Modificamos colores de progreso */
+.progress-bar.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.progress-bar.bg-success {
+  background-color: var(--success-color) !important;
+}
+
+.progress-bar.bg-warning {
+  background-color: var(--secondary-color) !important;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-header, .profile-stats, .profile-card {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Ajustes para modo móvil */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .info-label {
+    margin-bottom: 0.5rem;
+  }
+  
+  .content-wrapper, .main-header, .main-footer {
+    margin-left: 0;
+  }
+}

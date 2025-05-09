@@ -315,3 +315,4 @@ def eliminar_proveedor(request, id):
 
 def perfil_usuario(request):
     return render(request, 'sistema/perfil_usuario.html', {'usuario': request.user})
+
