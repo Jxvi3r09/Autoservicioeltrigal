@@ -103,11 +103,6 @@ body {
   margin-right: 8px;
 }
 
-/* Sidebar mejorado */
-.main-sidebar {
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-}
-
 .nav-sidebar .nav-item {
   margin-bottom: 2px;
 }
@@ -446,6 +441,7 @@ textarea:focus {
 
 .main-sidebar {
   background-color: rgb(34, 132, 33) !important;
+  position: fixed !important;
 }
 /* .content-wrapper {
   background-color: rgb(243, 154, 4, 0.3) !important;
@@ -465,3 +461,328 @@ textarea:focus {
   max-height: 100px;
   background-color: white !important;
 }
+<<<<<<< HEAD
+=======
+
+
+a{
+  color: #0d640e;
+}
+a:hover{
+  color:#ff9f43 ;
+}
+.breadcrumb{
+  margin-left: 30px;
+}
+.fas:hover, .fa:hover{
+  color: #ff9f43 !important;
+}
+
+.fa-solid{
+  color: #0d640e;
+}
+
+  /* Ajusta el espaciado vertical del encabezado */
+.content-header {
+  padding-top: 5px; /* Reducido desde su valor por defecto */
+  padding-bottom: 5px;
+  background-color: white !important;
+}
+
+/* Ajusta el espaciado del contenido interno */
+#conte {
+  align-items: flex-start; /* Alinea al inicio verticalmente */
+  padding-top: 0;
+}
+
+/* Puedes reducir el tamaño del logo también si es necesario */
+.logo-container img {
+  max-height: 80px; /* Ajusta según lo que necesites */
+  margin-top: 0;
+}
+
+.logo-hover {
+  transition: transform 0.3s ease; /* Suaviza el cambio */
+}
+
+.logo-hover:hover {
+  transform: scale(1.1); /* Hace un zoom del 10% */
+}
+
+#menu{
+  color: #0d640e;
+}
+.sidebar-toggle-btn {
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+:root {
+  --primary-color: #228421;
+  --secondary-color: #f39a04;
+  --accent-color: #1e6618;
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.sidebar .nav-link {
+  border-radius: var(--border-radius);
+  margin: 5px 10px;
+  transition: var(--transition);
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.sidebar .nav-link i {
+  margin-right: 8px;
+}
+
+.brand-link {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Contenido principal */
+.content-wrapper {
+  background-image: url("../imagenes/2.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+}
+
+/* Overlay para mejorar legibilidad */
+.content-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Tarjeta de bienvenida */
+.welcome-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 30px;
+  margin-top: 50px;
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.welcome-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--secondary-color);
+}
+
+/* Accesos rápidos */
+.quick-access {
+  margin-top: 40px;
+}
+
+.feature-box {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: var(--transition);
+  text-align: center;
+  height: 100%;
+  border-top: 3px solid var(--primary-color);
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  transition: var(--transition);
+}
+
+.feature-box:hover .feature-icon {
+  transform: scale(1.1);
+  color: var(--secondary-color);
+}
+
+.feature-title {
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.feature-description {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Logo personalizado */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+}
+
+.logo-hover {
+  max-height: 80px;
+}
+
+.logo-hover:hover {
+  transform: scale(1.1);
+}
+
+.breadcrumb {
+  background-color: transparent;
+  padding: 10px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.breadcrumb-item a {
+  transition: var(--transition);
+}
+
+.breadcrumb-item a:hover {
+  color: var(--secondary-color) !important;
+  text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Estadísticas */
+.stats-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  text-align: center;
+  transition: var(--transition);
+  margin-bottom: 20px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.stats-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.stats-title {
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Footer */
+.footer {
+  position: relative;
+  z-index: 1;
+  color: var(--text-light);
+  padding: 15px 0;
+  margin-top: 50px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .welcome-title {
+    font-size: 1.8rem;
+  }
+  
+  .welcome-card {
+    margin-top: 30px;
+    padding: 20px;
+  }
+  
+  .feature-icon {
+    font-size: 2rem;
+  }
+}
+
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active{
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.main-sidebar {
+  background-color: rgb(34, 132, 33) !important;
+  border-right: none;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active {
+  color: var(--negro-principal);
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 159, 67, 0.3);
+}
+
+.nav-sidebar .nav-link {
+  border-radius: 8px;
+  margin: 5px 10px;
+  transition: all 0.3s ease;
+}
+
+.nav-sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.brand-link {
+  border-bottom: 2px solid var(--naranja-principal) !important;
+  text-align: center;
+  font-weight: 700 !important;
+  padding: 15px 0;
+}
+>>>>>>> estilos
