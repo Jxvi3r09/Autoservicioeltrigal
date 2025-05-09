@@ -311,3 +311,8 @@ def eliminar_proveedor(request, id):
         proveedor.delete()
         return redirect('listar_proveedores')
     return render(request, 'sistema/crud_proveedores/confirmar_eliminar.html', {'proveedor': proveedor})
+
+
+def perfil_usuario(request):
+    return render(request, 'sistema/perfil_usuario.html', {'usuario': request.user})
+

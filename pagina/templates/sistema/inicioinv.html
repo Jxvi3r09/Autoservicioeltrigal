@@ -277,97 +277,106 @@
         <i class="fas fa-bars"></i>
       </button>
 
-      <!-- Main Sidebar Container -->
-      <aside class="main-sidebar elevation-4">
-        <!-- Brand Logo -->
-        <a href="#" class="brand-link text-center">
-          <span class="text-white brand-text font-weight-light">
-            <strong>Sistema Inventario</strong>
-          </span>
-        </a>
+       <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link text-center" style="background-color: #212121; border-bottom: 1px solid #ff9800;">
+      <i class="fas fa-boxes mr-2" style="color: #ff9800;"></i>
+      <span class="brand-text font-weight-light">
+        <strong>Sistema Inventario</strong>
+      </span>
+    </a>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-          <!-- Panel de usuario -->
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img
-                src="{% static 'myapp/imagenes/usuariodefault.png' %}"
-                class="img-circle elevation-2"
-                alt="User Image"
-              />
-            </div>
-            <div class="info">
-              <a href="#" class="text-white d-block">
-                {% if request.user.is_authenticated %}
-                  {{ request.user.username }}
-                {% else %}
-                  Usuario
-                {% endif %}
-              </a>
-            </div>
-          </div>
-                
-          <!-- Menu principal -->
-          <nav class="mt-2">
-            <ul
-              class="nav nav-pills nav-sidebar flex-column"
-              data-widget="treeview"
-              role="menu"
-              data-accordion="false"
-            >
-              <!-- Inicio -->
-              <li class="nav-item">
-                <a href="{% url 'inicioinv' %}" class="text-black nav-link active">
-                  <i class="nav-icon fas fa-home"></i>
-                  <p>Inicio</p>
-                </a>
-              </li>
-
-              <!-- Usuarios -->
-              <li class="nav-item">
-                <a href="{% url 'usuarios' %}" class="text-white nav-link">
-                  <i class="nav-icon fas fa-users"></i>
-                  <p>Usuarios</p>
-                </a>
-              </li>
-
-              <!-- Inventario -->
-              <li class="nav-item">
-                <a href="{% url 'inventario' %}" class="text-white nav-link">
-                  <i class="nav-icon fas fa-boxes"></i>
-                  <p>Inventario</p>
-                </a>
-              </li>
-              
-              <!-- Proveedores -->
-              <li class="nav-item">
-                <a href="{% url 'proveedores' %}" class="text-white nav-link">
-                  <i class="nav-icon fas fa-truck"></i>
-                  <p>Proveedores</p>
-                </a>
-              </li>
-              
-              <!-- Productos -->
-              <li class="nav-item">
-                <a href="{% url 'productos' %}" class="text-white nav-link">
-                  <i class="nav-icon fas fa-tag"></i>
-                  <p>Productos</p>
-                </a>
-              </li>
-
-              <!-- Cerrar Sesión -->
-              <li class="nav-item">
-                <a href="{% url 'principal' %}" class="text-white nav-link">
-                  <i class="nav-icon fas fa-sign-out-alt"></i>
-                  <p>Cerrar Sesión</p>
-                </a>
-              </li>
-            </ul>
-          </nav>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Panel de usuario en sidebar -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ usuario.imagen_perfil.url|default:'static/myapp/imagenes/usuariodefault.png' }}" class="img-circle elevation-2" alt="Usuario">
         </div>
-      </aside>
+        
+        <div class="info">
+          <a href="{% url 'perfil_usuario' %}" class="d-block">
+            {% if request.user.is_authenticated %}
+              {{ request.user.username }}
+            {% else %}
+              Usuario
+            {% endif %}
+          </a>
+        </div>
+      </div>
+            
+      <!-- Menu principal -->
+      <nav class="mt-2">
+        <ul
+          class="nav nav-pills nav-sidebar flex-column"
+          data-widget="treeview"
+          role="menu"
+          data-accordion="false"
+        >
+          <!-- Ejemplo de sección "Dashboard" o "Inicio" -->
+          <li class="nav-item">
+            <a href="{% url 'inicioinv' %}" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+              <p>Inicio</p>
+            </a>
+          </li>
 
+          <!-- Sección Usuarios -->
+          <li class="nav-item has-treeview">
+            <a href="{% url 'usuarios' %}" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Usuarios
+              </p>
+            </a>
+          </li>
+
+          <!-- Sección Inventario -->
+          <li class="nav-item">
+            <a href="{% url 'inventario' %}" class="nav-link">
+              <i class="nav-icon fas fa-boxes"></i>
+              <p>Inventario</p>
+            </a>
+          </li>
+          
+          <!-- Sección Proveedores -->
+          <li class="nav-item">
+            <a href="{% url 'proveedores' %}" class="nav-link">
+              <i class="nav-icon fas fa-truck"></i>
+              <p>Proveedores</p>
+            </a>
+          </li>
+          
+          <!-- Sección Productos -->
+          <li class="nav-item">
+            <a href="{% url 'productos' %}" class="nav-link">
+              <i class="nav-icon fas fa-tag"></i>
+              <p>
+                Productos
+              </p>
+            </a>
+          </li>
+
+          <!-- Sección Configuración -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>Configuraciones</p>
+            </a>
+          </li>
+
+          <!-- Sección Cerrar Sesión -->
+          <li class="nav-item">
+            <a href="{% url 'principal' %}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Cerrar Sesión</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
       <!-- Content Wrapper -->
       <div class="content-wrapper">
         <!-- Content Header -->
