@@ -41,41 +41,141 @@
           </li>
         </ul>
         
-        <!-- Navbar derecho -->
-        <ul class="navbar-nav ml-auto">
+    <!-- Navbar derecho -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#" title="Ayuda">
+          <i class="fas fa-question-circle"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" title="Notificaciones">
+          <i class="fas fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">3</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="{% url 'perfil_usuario' %}">
+          <i class="fas fa-user-circle"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">Opciones de usuario</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-user mr-2"></i> Mi perfil
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-cog mr-2"></i> Configuración
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'principal' %}" class="dropdown-item">
+            <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+          </a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link text-center" style="background-color: #212121; border-bottom: 1px solid #ff9800;">
+      <i class="fas fa-boxes mr-2" style="color: #ff9800;"></i>
+      <span class="brand-text font-weight-light">
+        <strong>Sistema Inventario</strong>
+      </span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Panel de usuario en sidebar -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ usuario.imagen_perfil.url|default:'static/myapp/imagenes/usuariodefault.png' }}" class="img-circle elevation-2" alt="Usuario">
+        </div>
+        
+        <div class="info">
+          <a href="{% url 'perfil_usuario' %}" class="d-block">
+            {% if request.user.is_authenticated %}
+              {{ request.user.username }}
+            {% else %}
+              Usuario
+            {% endif %}
+          </a>
+        </div>
+      </div>
+            
+      <!-- Menu principal -->
+      <nav class="mt-2">
+        <ul
+          class="nav nav-pills nav-sidebar flex-column"
+          data-widget="treeview"
+          role="menu"
+          data-accordion="false"
+        >
+          <!-- Ejemplo de sección "Dashboard" o "Inicio" -->
           <li class="nav-item">
-            <a class="nav-link" href="#" title="Ayuda">
-              <i class="fas fa-question-circle"></i>
+            <a href="{% url 'inicioinv' %}" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+              <p>Inicio</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" title="Notificaciones">
-              <i class="fas fa-bell"></i>
-              <span class="badge badge-warning navbar-badge">3</span>
+
+          <!-- Sección Usuarios -->
+          <li class="nav-item has-treeview">
+            <a href="{% url 'usuarios' %}" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Usuarios
+              </p>
             </a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="fas fa-user-circle"></i>
+
+          <!-- Sección Inventario -->
+          <li class="nav-item">
+            <a href="{% url 'inventario' %}" class="nav-link">
+              <i class="nav-icon fas fa-boxes"></i>
+              <p>Inventario</p>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <span class="dropdown-item dropdown-header">Opciones de usuario</span>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="fas fa-user mr-2"></i> Mi perfil
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="fas fa-cog mr-2"></i> Configuración
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="{% url 'principal' %}" class="dropdown-item">
-                <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
-              </a>
-            </div>
+          </li>
+          
+          <!-- Sección Proveedores -->
+          <li class="nav-item">
+            <a href="{% url 'proveedores' %}" class="nav-link">
+              <i class="nav-icon fas fa-truck"></i>
+              <p>Proveedores</p>
+            </a>
+          </li>
+          
+          <!-- Sección Productos -->
+          <li class="nav-item">
+            <a href="{% url 'productos' %}" class="nav-link">
+              <i class="nav-icon fas fa-tag"></i>
+              <p>
+                Productos
+              </p>
+            </a>
+          </li>
+
+          <!-- Sección Configuración -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>Configuraciones</p>
+            </a>
+          </li>
+
+          <!-- Sección Cerrar Sesión -->
+          <li class="nav-item">
+            <a href="{% url 'principal' %}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Cerrar Sesión</p>
+            </a>
           </li>
         </ul>
       </nav>
+<<<<<<< HEAD
 
       <!-- Sidebar -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -174,6 +274,10 @@
         </div>
         <!-- /.sidebar -->
       </aside>
+=======
+    </div>
+  </aside>
+>>>>>>> 8c5746751fc6fbe80f09c61aa7c2b0834ecac47a
 
       <!-- Contenido principal -->
       <div class="content-wrapper">

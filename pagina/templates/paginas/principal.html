@@ -99,123 +99,179 @@
     </nav>
 
 <section>
-      <!--Carrusel de imagenes-->
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrusel con Bootstrap</title>
+  <!-- Enlace al CSS de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ3Qd9fR9v7VuTnH7IN9kWwH5W6U6iXrO2g2daUrG9n66gdaDsw3wnIba9s4" crossorigin="anonymous">
+  <style>
+    .custom-carousel {
+      max-width: 90%; /* Ajusta el ancho al 90% */
+      margin: 0 auto; /* Centra el carrusel */
+    }
 
-      <div id="carouselExampleAutoplaying" class="carousel slide  " data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active position-relative">
-            <img src="{% static 'myapp/imagenes/imagen1.jpeg' %}" class=" d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 id="textocarrusel" class=" bg-opacity-50 text-white p-3 rounded ">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
-            </div>
-          </div>
+    .custom-carousel img {
+      max-height: 500px; /* Ajusta la altura a 500px */
+      object-fit: cover; /* Asegura que las imágenes se ajusten */
+    }
+  </style>
+</head>
+<body>
 
-          <div class="carousel-item">
-            <img src="{% static 'myapp/imagenes/imagen2.jpeg' %}" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 id="textocarrusel" class=" bg-opacity-50 text-white p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
-            </div>
-          </div>
-
-          <div class="carousel-item">
-            <img src="{% static 'myapp/imagenes/imagen3.jpeg' %}" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 id="textocarrusel" class=" bg-opacity-50 text-white p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'myapp/imagenes/imagen4.jpeg' %}" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 id="textocarrusel" class=" bg-opacity-50 text-white p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
-            </div>
-          </div>
-
-          <div class="carousel-item">
-            <img src="{% static 'myapp/imagenes/imagen6.jpeg' %}" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 id="textocarrusel" class=" bg-opacity-50 text-white p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
-            </div>
-          </div>
-
-          <div class="carousel-item">
-            <img src="{% static 'myapp/imagenes/imagen8.jpeg' %}" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 id="textocarrusel" class=" bg-opacity-50 text-white p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
-            </div>
-          </div>
-          
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-       </div>
+  <div class="container my-5">
+    <div id="carouselExampleAutoplaying" class="carousel slide custom-carousel" data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="5" aria-label="Slide 6"></button>
       </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{% static 'myapp/imagenes/imagen1.jpeg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="{% static 'myapp/imagenes/imagen2.jpeg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Productos de la mas alta calidad </h1>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="{% static 'myapp/imagenes/imagen3.jpeg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Cada producto, una garantía. Cada visita, una experiencia de calidad.</h1>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="{% static 'myapp/imagenes/imagen4.jpeg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Autoservicio con estándares altos y precios bajos</h1>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="{% static 'myapp/imagenes/imagen6.jpeg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Lo bueno se nota y aquí, se encuentra.</h1>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="{% static 'myapp/imagenes/imagen8.jpeg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded"></h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles del carrusel -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-         
+  </div>
+
+  <!-- Enlace al JS de Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0IorYoxqVsOMjRXj1DRaWi4MIspKg00yvmL8LZTfrpDbzWWr" crossorigin="anonymous"></script>
+</body>
+</html>
+
+</section>
+<section id="promocion" class="py-5" style="background: linear-gradient(to right, #2b7a3e, #1f5c2f);">
+  <div class="container">
+    <h2 class="text-center fw-bold display-5 text-dark mb-4 animate__animated animate__fadeInDown">
+    <span class="text-light">   SOMOS TU MEJOR OPCION</span>
+    </h2>
+    <p class="text-center text-dark mb-5 animate__animated animate__fadeInUp">
+      Un lugar donde tu economía, tu tiempo y tu comodidad son prioridad.
+    </p>
+
+    <div class="row g-5">
+
+      <!-- Tarjeta 1 con ícono rojo -->
+      <div class="col-lg-4">
+        <div class="card h-100 shadow-lg p-4 text-center rounded-4 animate__animated animate__flipInY effect-card borde-difuminado">
+          <div class="mb-3">
+            <i class="bi bi-tags-fill fs-1 text-danger"></i>
+          </div>
+          <h5 class="fw-bold text-dark">Los Mejores Precios</h5>
+          <p class="text-dark">
+            Ofrecemos los mejores precios del mercado con productos de alta calidad.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2 -->
+     <div class="col-lg-4">
+        <div class="card h-100 shadow-lg p-4 text-center rounded-4 animate__animated animate__flipInY animate__delay-1s effect-card borde-difuminado">
+          <div class="mb-3">
+            <i class="bi bi-basket2-fill fs-1 text-dark"></i>
+          </div>
+          <h5 class="fw-bold text-dark">Variedad de productos</h5>
+          <p class="text-dark">
+            En el Autoservicio El Trigal, contamos con una extensa gama de productos de primera calidad, desde alimentos frescos hasta productos de limpieza y artículos de cuidado personal.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3 con carita amarilla -->
+      <div class="col-lg-4">
+        <div class="card h-100 shadow-lg p-4 text-center rounded-4 animate__animated animate__flipInY animate__delay-2s effect-card borde-difuminado">
+          <div class="mb-3">
+            <i class="bi bi-emoji-smile-fill fs-1 text-warning"></i>
+          </div>
+          <h5 class="fw-bold text-dark">Estamos para ayudarte</h5>
+          <p class="text-dark">
+            Recibe la mejor atención de parte de nuestro equipo durante tu visita al supermercado.
+          </p>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
 </section>
 
-    <!-- Features Section -->
-    <section id="promocion" class="py-5 bg-white">
-      <div class="container">
-        <h2
-        id="nuestraempresa" class="text-center section-title animate__animated animate__fadeInUp"
-      >
-      <hr>
-      Somos tu mejor opción
+<!-- Agregar CSS para el efecto de iluminación -->
+<style>
+  /* Efecto de iluminación en la sección cuando se pasa el mouse */
+  #promocion:hover {
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3); /* Añade sombra a toda la sección */
+    filter: brightness(1.05); /* Ilumina la sección */
+    transition: all 0.3s ease; /* Transición suave */
+  }
 
-      
-      </h2>
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="card border-0 text-center p-4 h-100">
-              <div class="card-icon">
-                <i class="bi bi-cart-check"></i>
-              </div>            
-              <h3>Los Mejores Precios </h3>
-              <p class="text-muted">
-                Ofrecemos los mejores precios del mercado con productos de alta
-                calidad.
-                <i class="fas fa-shopping-cart"></i>
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-0 text-center p-4 h-100">
-              <div class="card-icon">
-                <i class="bi bi-truck"></i>
-              </div>
-              <h3>Variedad de productos</h3>
-              <p class="text-muted">
-                En el Autoservicio El Trigal, contamos con una extensa gama de productos de primera calidad, desde alimentos frescos hasta productos de limpieza y artículos de cuidado personal.
-                <i class="fas fa-shopping-cart"></i>
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-0 text-center p-4 h-100">
-              <div class="card-icon">
-                <i class="bi bi-person-check"></i>
-              </div>
-              <h3>Estamos para ayudarte</h3>
-              <p class="text-muted">
-                Recibe la mejor atención de parte de nuestro equipo durante tu visita al supermercado.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+  /* Efecto de iluminación en las tarjetas */
+  .effect-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  }
+
+  .effect-card:hover,
+  .effect-card:active {
+    transform: scale(1.05); /* Aumenta el tamaño de la tarjeta */
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+    filter: brightness(1.2); /* Ilumina la tarjeta */
+  }
+</style>
+
+   
     </section>
 
     <!-- Mission & Vision Section -->
@@ -485,7 +541,7 @@
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Conexión JS -->
-    {% if show_login_modal %}
+    <!-- {% if show_login_modal %}
     
     {% endif %}
 
@@ -495,7 +551,7 @@
           {% if "error" in message.tags %}
               hasErrorMessages = true;
     </script>
-    {% endif %} {% endfor %}
+    {% endif %} {% endfor %} -->
     <!-- <script>
     window.addEventListener("load", function () {
       const preloader = document.getElementById("preloader");
