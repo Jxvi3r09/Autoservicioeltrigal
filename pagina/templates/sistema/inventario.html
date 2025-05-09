@@ -32,20 +32,25 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Panel de usuario en sidebar -->
+        <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2" alt="Usuario">
+            <img
+              src="{% static 'myapp/imagenes/usuariodefault.png' %}"
+              class="img-circle elevation-2"
+              alt="User Image"
+            />
           </div>
           <div class="info">
-            <a href="{% url 'perfil_usuario' %}" class="d-block">
-              {% if request.user.is_authenticated %}
-                {{ request.user.username }}
-              {% else %}
-                Usuario
-              {% endif %}
-            </a>
+              <a href="{% url 'perfil_usuario' %}" class="d-block">
+                {% if request.user.is_authenticated %}
+                  {{ request.user.username }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </a>
+            </div>
           </div>
-        </div>
 
         <!-- Menú principal -->
         <nav class="mt-2">
