@@ -1,184 +1,145 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de Administración</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración</title>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Tu archivo JS para submenús (opcional) -->
-    <script src="{% static 'myapp/js/submenu.js' %}"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Tu archivo JS para submenús (opcional) -->
+  <script src="{% static 'myapp/js/submenu.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'myapp/css/inventario.css' %}">
 
-    <!-- AdminLTE CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
-    />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <script src="{% static 'myapp/css/inicioinv.css' %}"></script>
-  </head>
+  <!-- AdminLTE CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'myapp/css/inicioinv.css' %}">
+</head>
 
-  <body class="hold-transition sidebar-mini sidebar-collapse">
-    <div class="wrapper">
-      <!-- Navbar -->
-      <!-- /.navbar -->
+<body class="hold-transition sidebar-mini sidebar-collapse">
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-link text-center" style="background-color: #212121; border-bottom: 1px solid #ff9800;">
+        <i class="fas fa-boxes mr-2" style="color: #ff9800;"></i>
+        <span class="brand-text font-weight-light"><strong>Sistema Inventario</strong></span>
+      </a>
 
-      <!-- Main Sidebar Container -->
-      <aside id="aside" class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="#" class="brand-link text-center">
-          <span class="brand-text font-weight-light">
-            <strong>Sistema Inventario</strong>
-          </span>
-        </a>
-
-        <!-- Sidebar -->
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Panel de usuario en sidebar -->
         <div class="sidebar">
-          <!-- Opcional: Panel de usuario en la parte superior del sidebar  -->
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img
-                src="{% static 'myapp/imagenes/usuariodefault.png' %}"
-                class="img-circle elevation-2"
-                alt="User Image"
-              />
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img
+              src="{% static 'myapp/imagenes/usuariodefault.png' %}"
+              class="img-circle elevation-2"
+              alt="User Image"
+            />
+          </div>
+          <div class="info">
+              <a href="{% url 'perfil_usuario' %}" class="d-block">
+                {% if request.user.is_authenticated %}
+                  {{ request.user.username }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </a>
             </div>
-                <div class="info">
-                  <a href="#" class="d-block">
-                    {% if request.user.is_authenticated %}
-                      {{ request.user.username }}
-                    {% else %}
-                      Usuario
-                    {% endif %}
-                  </a>
-                </div>
-            </div>
-                
-          <!-- Menu principal -->
-          <nav class="mt-2">
-            <ul
-              class="nav nav-pills nav-sidebar flex-column"
-              data-widget="treeview"
-              role="menu"
-              data-accordion="false"
-            >
-              <!-- Ejemplo de sección "Dashboard" o "Inicio" -->
-              <li class="nav-item">
-                <a href="{% url 'inicioinv' %}" class="nav-link">
-                  <i class="nav-icon fas fa-home"></i>
-                  <p>Inicio</p>
-                </a>
-              </li>
+          </div>
 
-              <!-- Sección Usuarios -->
-              <li class="nav-item">
-                <a href="{% url 'administrador' %}" class="nav-link">
-                  <i class="nav-icon fas fa-users"></i>
-                  <p>
-                    Usuarios
-                  </p>
-                </a>
-              </li>
-
-              <!-- Sección Empresas
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-city"></i>
-                  <p>
-                    Empresas
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Agregar Empresa</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Gestión de Empresas</p>
-                    </a>
-                  </li>
-                </ul>
-              </li> -->
-
-              <!-- Sección Inventario -->
-              <li class="nav-item">
-                <a href="{% url 'inventario' %}" class="nav-link">
-                  <i class="nav-icon fas fa-boxes"></i>
-                  <p>Inventario</p>
-                </a>
-              </li>
+        <!-- Menú principal -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a href="{% url 'inicioinv' %}" class="nav-link">
+                <i class="nav-icon fas fa-home"></i>
+                <p>Inicio</p>
+              </a>
             </li>
+
+            <li class="nav-item has-treeview">
+              <a href="{% url 'usuarios' %}" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Usuarios</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'inventario' %}" class="nav-link active">
+                <i class="nav-icon fas fa-boxes"></i>
+                <p>Inventario</p>
+              </a>
+            </li>
+
             <li class="nav-item">
               <a href="{% url 'proveedores' %}" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
+                <i class="nav-icon fas fa-truck"></i>
                 <p>Proveedores</p>
               </a>
             </li>
+
             <li class="nav-item">
               <a href="{% url 'productos' %}" class="nav-link">
                 <i class="nav-icon fas fa-tag"></i>
-                <p>
-                  Productos
-                </p>
+                <p>Productos</p>
               </a>
             </li>
 
-              <!-- Sección Configuración (ejemplo) -->
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-cog"></i>
-                  <p>Configuraciones</p>
-                </a>
-              </li>
-
-              <!-- Sección Cerrar Sesión -->
-              <li class="nav-item">
-                <a href="{% url 'principal' %}" class="nav-link">
-                  <i class="nav-icon fas fa-sign-out-alt"></i>
-                  <p>Cerrar Sesión</p>
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-      </aside>
-
-      <!-- Content Wrapper. Contiene el contenido principal -->
-      <div class="content-wrapper">
-        <!-- Encabezado del contenido -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <h1 class="m-0">Panel de Administración</h1>
-          </div>
-        </div>
-
-        <!-- Contenido principal -->
-        <div class="content">
-          <div class="container-fluid">
-            <p>Bienvenido al panel de administración con AdminLTE.</p>
-            <!-- Aquí va el contenido dinámico de tu app -->
-          </div>
-        </div>
-        <!-- /.content -->
+            <li class="nav-item">
+              <a href="{% url 'principal' %}" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>Cerrar Sesión</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <!-- /.content-wrapper -->
-    </div>
-    <!-- /.wrapper -->
+    </aside>
 
-    <!-- AdminLTE JS (requerido para menú y plantillas) -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-  </body>
+    <!-- Contenido principal -->
+    <div class="content-wrapper">
+      <!-- Encabezado -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+            <div class="d-flex align-items-center">
+              <button class="btn btn-link text-dark me-2 p-0" type="button" data-widget="pushmenu" aria-label="Toggle navigation">
+                <i class="fas fa-bars fa-lg"></i>
+              </button>
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'inicioinv' %}">
+                    <i class="fas fa-home"></i> Inicio
+                  </a>
+                </li>
+                <li class="breadcrumb-item active">Inventario</li>
+              </ol>
+            </div>
+            <div class="logo-container">
+              <img src="{% static 'myapp/imagenes/logosinfondo.png' %}" alt="Autoservicio El Trigal" class="logo-hover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="content">
+        <div class="container-fluid">
+          <p>Bienvenido al panel de administración con AdminLTE.</p>
+          <!-- Aquí va el contenido dinámico de tu app -->
+        </div>
+      </div>
+    </div>
+    <!-- /.content-wrapper -->
+  </div>
+  <!-- /.wrapper -->
+
+  <!-- AdminLTE JS -->
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
 </html>

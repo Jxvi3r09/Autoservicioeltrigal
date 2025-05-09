@@ -169,3 +169,4 @@ class ProductoForm(forms.ModelForm):
                 'type': 'date',
             }),
         }
+

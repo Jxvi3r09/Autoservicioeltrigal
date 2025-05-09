@@ -52,6 +52,7 @@
         </li>
       </ul>
       
+      
       <div class="ml-3">
         <div class="row mb-2">
           <!-- <div class="col-sm-6">
@@ -105,6 +106,7 @@
       </ul>
     </nav>
 
+
     <!-- Sidebar mejorado -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <a href="{% url 'inicioinv' %}" class="brand-link text-center">
@@ -112,6 +114,28 @@
           <strong>Sistema Inventario</strong>
         </span>
       </a>
+      <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Panel de usuario en sidebar -->
+      <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img
+              src="{% static 'myapp/imagenes/usuariodefault.png' %}"
+              class="img-circle elevation-2"
+              alt="User Image"
+            />
+          </div>
+          <div class="info">
+              <a href="{% url 'perfil_usuario' %}" class="d-block">
+                {% if request.user.is_authenticated %}
+                  {{ request.user.username }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </a>
+            </div>
+          </div>
 
       <div class="sidebar">
         <nav class="mt-2">

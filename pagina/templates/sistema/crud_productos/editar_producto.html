@@ -1,2 +1,40 @@
-<h2>Editar Producto</h2>
-{% include 'sistema/crud_productos/form_productos.html' %}
+<!-- Modal -->
+<div class="modal fade" id="editarProductoModal{{ producto.id }}" tabindex="-1" aria-labelledby="modalLabel{{ producto.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form method="post" action="{% url 'editar_producto' producto.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-header bg-warning">
+            <h5 class="modal-title" id="modalLabel{{ producto.id }}">Editar Producto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" name="nombre" value="{{ producto.nombre }}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Precio</label>
+                <input type="number" name="precio" value="{{ producto.precio }}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Cantidad Entrada</label>
+                <input type="number" name="cantidad_entrada" value="{{ producto.cantidad_entrada }}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Fecha Vencimiento</label>
+                <input type="date" name="fecha_vencimiento" value="{{ producto.fecha_vencimiento }}" class="form-control">
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+    
+    
+    
+    
