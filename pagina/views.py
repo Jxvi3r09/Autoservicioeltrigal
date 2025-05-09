@@ -13,6 +13,10 @@ from .forms import ProductoForm
 from .models import Producto
 from django.utils import timezone
 from datetime import timedelta
+from .forms import CustomPasswordResetForm
+from django.core.mail import send_mail
+
+
 
 
 from .models import Usuario
@@ -115,27 +119,27 @@ def agregar_proveedor(request):
     return render(request, "sistema/agregar_proveedor.html")
 
 def modal_inicio(request):
-    if request.method == "POST":
-        username = request.POST.get("username", "").strip()
-        password = request.POST.get("password", "").strip()
+    # if request.method == "POST":
+    #     username = request.POST.get("username", "").strip()
+    #     password = request.POST.get("password", "").strip()
 
-        # Validación: campos vacíos
-        if not username or not password:
-            messages.error(request, "⚠️ Todos los campos son obligatorios.")
-            return redirect("inicio")
+    #     # Validación: campos vacíos
+    #     if not username or not password:
+    #         messages.error(request, "⚠️ Todos los campos son obligatorios.")
+    #         return redirect("inicio")
 
-        # Intentar autenticar al usuario
-        user = authenticate(request, username=username, password=password)
+    #     # Intentar autenticar al usuario
+    #     user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                messages.success(request, f"✅ ¡Bienvenido al sistema, {user.first_name} {user.last_name}!")
-                return redirect("inventario")
-            else:
-                messages.error(request, "⚠️ Tu cuenta está inactiva. Contacta al administrador.")
-        else:
-            messages.error(request, "❌ Usuario o contraseña incorrectos.")
+    #     if user is not None:
+    #         if user.is_active:
+    #             login(request, user)
+    #             messages.success(request, f"✅ ¡Bienvenido al sistema, {user.first_name} {user.last_name}!")
+    #             return redirect("inventario")
+    #         else:
+    #             messages.error(request, "⚠️ Tu cuenta está inactiva. Contacta al administrador.")
+    #     else:
+    #         messages.error(request, "❌ Usuario o contraseña incorrectos.")
 
     return render(request, "paginas/principal.html")
 
@@ -160,35 +164,20 @@ def registro(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
-            password = form.cleaned_data["password"]
-            confirm_password = form.cleaned_data["confirm_password"]
-
-            if password != confirm_password:
-                form.add_error("confirm_password", "Las contraseñas no coinciden.")
-            else:
-                usuario = form.save(commit=False)
-                usuario.set_password(password)
-
-                contacto = form.cleaned_data["contacto"]
-                if "@" in contacto:
-                    usuario.correo = contacto
-                else:
-                    usuario.telefono = contacto
-
-                usuario.save()
-                login(request, usuario)
-                return redirect("usuarios")  # Redirige correctamente
-
-        # Si hay errores:
-        return render(request, "paginas/registrate.html", {
-            "form": form,
-            "mostrar_modal": True  # Para que el modal se abra
-        })
-
+            usuario = form.save(commit=False)
+            usuario.set_password(form.cleaned_data["password1"])
+            usuario.save()
+            login(request, usuario)
+            return redirect("usuarios")
+        else:
+            return render(request, "paginas/registrate.html", {
+                "form": form,
+                "mostrar_modal": True
+            })
     else:
         form = RegistroUsuarioForm()
 
-    return render(request, "sistema/inicioinv.htm", {"form": form})
+    return render(request, "paginas/registrate.html", {"form": form})
 
 
 # Recuperación de contraseña
@@ -198,10 +187,12 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
     subject_template_name = "contrasena/recuperar_contrasena_asunto.txt"
     html_email_template_name = "contrasena/recuperar_contrasena_email.html"
     success_url = reverse_lazy('password_reset_done')
+    form_class = CustomPasswordResetForm
 
     def form_valid(self, form):
-        # Opcional: puedes añadir lógica adicional aquí
+        messages.success(self.request, "Se han enviado las instrucciones a tu correo.")
         return super().form_valid(form)
+    
 
 class CustomPasswordResetDoneView(auth_views.PasswordResetDoneView):
     template_name = "contrasena/recuperar_contrasena_enviado.html"
@@ -224,8 +215,21 @@ password_reset_views = {
 def gestion(request):
     return render(request, "sistema/gestion.html")
 
+# Validacion del login
 def inicioinv(request):
-    messages.success(request, f"¡Bienvenido, {request.user.username}!")
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('inicioinv')  # Redirige al panel o inicio
+        else:
+            messages.error(request, "Usuario o contraseña incorrectos.")
+            return redirect('principal')  # Reemplaza por tu URL donde está el modal login
+
     return render(request, "sistema/inicioinv.html")
 
 

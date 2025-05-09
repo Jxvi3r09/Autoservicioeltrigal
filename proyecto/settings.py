@@ -83,7 +83,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'proyecto',
     'USER': 'root',
-    'PASSWORD':'1058038146',
+    'PASSWORD':'',
     'HOST': 'localhost',  # Asegúrate de que solo sea la IP
     'PORT': '3306',  # Solo el número del puerto, sin IP
 }
@@ -96,7 +96,7 @@ DATABASES = {
 #     }
 # }
 
-AUTH_USER_MODEL = 'pagina.Usuario'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -141,3 +141,65 @@ LOGIN_REDIRECT_URL = "inicio_inventario"  # ✅ Redirige a inicio_inventario tra
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'pagina.Usuario'
+
+# Recuperacion de contraseña
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'oscarjaviergomez12@gmail.com'
+EMAIL_HOST_PASSWORD = 'zqdcufpvbxxshkqf'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#         'django.core.mail': {
+#             'handlers': ['console'],
+#             'level': 'ERROR',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+
+
+# settings.py
+
+# 1. IDENTIDAD DEL SITIO
+# SITE_NAME = "Autoservicio El Trigal"  # Nombre oficial del negocio
+# SITE_DOMAIN = "autoservicioeltrigal.com"  # Dominio principal (sin http/https)
+# SITE_URL = "https://www.autoservicioeltrigal.com"  # URL completa
+
+# 2. CONFIGURACIÓN DE CORREOS (EMAILS)
+# # Emails genéricos
+# DEFAULT_FROM_EMAIL = 'no-reply@autoservicioeltrigal.com'  # Emisor automático
+# SERVER_EMAIL = 'errores@autoservicioeltrigal.com'  # Email para notificaciones de errores
+# CONTACT_EMAIL = 'contacto@autoservicioeltrigal.com'  # Email público de contacto
+# SUPPORT_EMAIL = 'soporte@autoservicioeltrigal.com'  # Soporte técnico
+
+# Personas que recibirán alertas (tu email personal)
+ADMINS = [('Oscar Gomez', 'oscarjaviergomez12@gmail.com')]
+MANAGERS = ADMINS  # Opcional: puedes definir distintos contactos para managers
+
+# Prefijo para asuntos de emails automáticos
+EMAIL_SUBJECT_PREFIX = '[Autoservicio] '
+# settings.py
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+# 4. TIEMPOS DE EXPIRACIÓN (OPCIONAL)
+PASSWORD_RESET_TIMEOUT = 86400  # 24 horas en segundos para links de recuperación

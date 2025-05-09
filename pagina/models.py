@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import login
 from django.shortcuts import render
-
+from django.core.validators import RegexValidator
+from django.db import models
 
 
 from django.contrib.auth.models import AbstractUser
@@ -21,22 +22,71 @@ class Usuario(AbstractUser):
         ('empleado', 'Empleado'),
     ]
 
-    id = models.AutoField(primary_key=True)
-    tipo_documento = models.CharField(max_length=2, choices=TIPOS_DOCUMENTO, default='CC')
-    numero_documento = models.CharField(max_length=20, unique=True, blank=True, null=True)
-    rol = models.CharField(max_length=20, choices=ROLES, default='empleado')
-    contacto = models.CharField(max_length=50, help_text="Ingrese su correo electrónico o número de teléfono")
+    # Campos personalizados
+    tipo_documento = models.CharField(
+        max_length=2,
+        choices=TIPOS_DOCUMENTO,
+        default='CC'
+    )
+    numero_documento = models.CharField(
+    max_length=20,
+    unique=True,
+    validators=[
+        RegexValidator(
+            regex='^[0-9]+$',
+            message='El número de documento solo puede contener dígitos'
+        )
+    ],
+    default='0000000000'  # Valor temporal por defecto
+    )
+    
+    rol = models.CharField(
+        max_length=20,
+        choices=ROLES,
+        default='empleado'
+    )
+    
+    # Campo principal para el email (reemplaza el email por defecto)
+    email = models.EmailField(
+    max_length=254,
+    unique=True,
+    verbose_name="Correo electrónico",
+    help_text="Ingrese su correo electrónico",
+    blank=False,  # No permite valores en blanco
+    null=False,   # No permite valores NULL
+    error_messages={
+        'unique': "Este correo electrónico ya está registrado.",
+        'blank': "El correo electrónico es obligatorio.",
+        'null': "El correo electrónico es obligatorio."
+    }
+)
+    
+    # # Mantenemos contacto como campo opcional si es necesario
+    # contacto = models.CharField(
+    #     max_length=50,
+    #     blank=True,
+    #     null=True,
+    #     help_text="Número telefónico o contacto adicional"
+    # )
+    
     fecha_registro = models.DateTimeField(auto_now_add=True)
 
-    # Configuración para el modelo personalizado
+    # Configuración para usar email como identificador
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['numero_documento', 'rol', 'contacto']
+    EMAIL_FIELD = 'email'  # Indica que este es el campo principal de email
+    REQUIRED_FIELDS = ['email', 'numero_documento', 'rol']
 
     def __str__(self):
-        return f"{self.username} - {self.rol}"
+        return f"{self.username} - {self.email}"
+
+    def save(self, *args, **kwargs):
+        """Normaliza el email antes de guardar"""
+        if self.email:
+            self.email = self.email.lower().strip()
+        super().save(*args, **kwargs)
 
 
-from django.db import models
+
 
 class Proveedor(models.Model):
     nit_proveedor = models.CharField(max_length=20, unique=True)

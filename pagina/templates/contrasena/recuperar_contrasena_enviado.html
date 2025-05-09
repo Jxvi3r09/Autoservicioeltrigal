@@ -1,15 +1,61 @@
-{% extends "contrasena/base.html" %} {% block title %}Correo Enviado | Mi Sitio{% endblock%} {% block auth_content %}
-<div class="auth-header">
-  <h2>Correo Enviado</h2>
-  <p class="text-muted">Revisa tu bandeja de entrada</p>
-</div>
+{% extends "contrasena/base.html" %} {% block title %}Correo Enviado | {{
+site_name }}{% endblock %} {% block auth_content %}
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header text-center mb-4">
+      <i class="bi bi-envelope-check auth-icon-success"></i>
+      <h1 class="h3 mb-3 fw-normal">Correo de recuperación enviado</h1>
+      <p class="text-muted">Por favor revisa tu bandeja de entrada</p>
+    </div>
 
-<div class="alert alert-success">
-  Hemos enviado un correo con las instrucciones para restablecer tu contraseña.
-  Si no lo recibes en unos minutos, revisa tu carpeta de spam.
-</div>
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <div>
+        <h4 class="alert-heading">¡Correo enviado con éxito!</h4>
+        <p class="mb-1">
+          Hemos enviado un correo con las instrucciones para restablecer tu
+          contraseña.
+        </p>
+        <p class="mb-0">
+          Si no lo recibes en unos minutos, revisa tu carpeta de
+          <strong>spam</strong> o <strong>correo no deseado</strong>.
+        </p>
+      </div>
+    </div>
 
-<div class="text-center">
-  <a href="{% url 'login' %}" class="btn btn-secondary">Volver al inicio</a>
+    <div class="d-grid gap-2 mt-4">
+      <!-- <a href="{% url 'principal' %}" class="btn btn-outline-primary">
+        <i class="bi bi-house-door"></i> Volver al inicio
+      </a> -->
+      <a id="btn" href="{% url 'principal' %}" class="btn btn-success">
+        <i class="bi bi-box-arrow-in-right"></i> Ir a Iniciar Sesión
+      </a>
+    </div>
+
+    <div class="text-center mt-4">
+      <small class="text-muted">
+        ¿No recibiste el correo?
+        <a href="{% url 'password_reset' %}">Reenviar instrucciones</a>
+      </small>
+    </div>
+  </div>
 </div>
+{% endblock %} {% block extra_css %}
+<style>
+  .auth-icon-success {
+    font-size: 3rem;
+    color: #28a745;
+    margin-bottom: 1rem;
+  }
+  .auth-card {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .alert {
+    border-left: 4px solid #28a745;
+  }
+</style>
 {% endblock %}

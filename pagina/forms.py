@@ -3,95 +3,124 @@ from django.core.exceptions import ValidationError
 from .models import Usuario  # Asegúrate de importar el modelo correcto
 import re
 from .models import Producto
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import validate_email
 
 
-#Registro de usuarios
-class RegistroUsuarioForm(forms.ModelForm):
-    contacto = forms.CharField(
-        max_length=50,
-        required=True,
-        label="Correo electrónico o Número de teléfono",
-        help_text="Ingrese su correo o número telefónico"
+# Recuperacion de contraseña
+class CustomPasswordResetForm(PasswordResetForm):
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '').strip().lower()
+        User = get_user_model()
+        
+        # Validación 1: Verificar que el email no esté vacío
+        if not email:
+            raise ValidationError("Por favor ingrese un correo electrónico.")
+        
+        # Validación 2: Verificar formato de email
+        if '@' not in email:
+            raise ValidationError("Ingrese una dirección de correo electrónico válida.")
+        
+        # Validación 3: Verificar existencia en la base de datos
+        if not User.objects.filter(email__iexact=email).exists():
+            raise ValidationError("No existe una cuenta asociada a este correo electrónico.")
+        
+        return email
+
+class RegistroUsuarioForm(UserCreationForm):
+    # Campos personalizados del modelo
+    tipo_documento = forms.ChoiceField(
+        choices=Usuario.TIPOS_DOCUMENTO,
+        label="Tipo de Documento",
+        initial='CC',
+        widget=forms.Select(attrs={'class': 'form-select'})
     )
-
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "id": "password"}),
-        label="Contraseña",
-        help_text="Debe contener al menos 8 caracteres, incluyendo números y letras."
+    
+    numero_documento = forms.CharField(
+        max_length=20,
+        label="Número de Documento",
+        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
+        help_text="Solo números, sin puntos ni espacios"
     )
-
-    confirm_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "id": "confirm_password"}),
-        label="Confirmar Contraseña"
+    
+    rol = forms.ChoiceField(
+        choices=Usuario.ROLES,
+        label="Rol",
+        initial='empleado',
+        widget=forms.Select(attrs={'class': 'form-select'})
     )
 
     class Meta:
         model = Usuario
         fields = [
-            "tipo_documento", "numero_documento", "first_name", "last_name",
-            "rol", "contacto", "username", "password"
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'tipo_documento',
+            'numero_documento',
+            'rol',
+            'password1',
+            'password2'
         ]
         labels = {
-            "first_name": "Nombres",
-            "last_name": "Apellidos",
-            "tipo_documento": "Tipo de Documento",
-            "numero_documento": "Número de Documento",
-            "rol": "Rol",
-            "username": "Usuario",
-            "password": "Contraseña",
+            'username': 'Nombre de usuario',
+            'email': 'Correo electrónico',
+            'first_name': 'Nombres',
+            'last_name': 'Apellidos',
         }
         widgets = {
-            "username": forms.TextInput(attrs={"autocomplete": "off"}),
-            "first_name": forms.TextInput(attrs={"autocomplete": "off"}),
-            "last_name": forms.TextInput(attrs={"autocomplete": "off"}),
-            "numero_documento": forms.TextInput(attrs={"autocomplete": "off"}),
-            "contacto": forms.TextInput(attrs={"autocomplete": "off", "id": "contacto"}),
+            'email': forms.EmailInput(attrs={'autocomplete': 'off'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Personalización de mensajes
+        self.fields['password1'].help_text = "Mínimo 8 caracteres con números y letras."
+        self.fields['password2'].help_text = "Repita la misma contraseña para verificación."
+        
+        # Estilo uniforme para campos
+        for field in self.fields.values():
+            if not isinstance(field.widget, forms.Select):
+                field.widget.attrs.update({'class': 'form-control'})
+
     def clean_numero_documento(self):
-        numero_documento = self.cleaned_data.get("numero_documento")
+        numero_documento = self.cleaned_data.get('numero_documento', '').strip()
         if not numero_documento:
-            raise ValidationError("Este campo es obligatorio.")
+            raise ValidationError("El número de documento es obligatorio.")
+        
         if not numero_documento.isdigit():
-            raise ValidationError("El número de documento solo puede contener números.")
+            raise ValidationError("Solo se permiten caracteres numéricos.")
+            
+        if Usuario.objects.filter(numero_documento=numero_documento).exists():
+            raise ValidationError("Este número de documento ya está registrado.")
+            
         return numero_documento
 
-    def clean_contacto(self):
-        contacto = self.cleaned_data.get("contacto", "").strip()
-        contacto_normalizado = re.sub(r"[()\s\-]", "", contacto)
-
-        email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-        phone_regex = r"^\+?[0-9]{7,15}$"
-
-        if re.fullmatch(email_regex, contacto):
-            return contacto  # Correo válido
-        if re.fullmatch(phone_regex, contacto_normalizado):
-            return contacto_normalizado  # Teléfono válido (normalizado)
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '').lower().strip()
         
-        raise ValidationError("Ingrese un correo electrónico válido o un número de teléfono válido.")
+        try:
+            validate_email(email)
+        except ValidationError:
+            raise ValidationError("Ingrese un correo electrónico válido.")
+        
+        if Usuario.objects.filter(email__iexact=email).exists():
+            raise ValidationError("Este correo electrónico ya está registrado.")
+            
+        return email
 
-    def clean_username(self):
-        username = self.cleaned_data.get("username")
-        if Usuario.objects.filter(username=username).exists():
-            raise ValidationError("El nombre de usuario ya está en uso.")
-        return username
-
-    def clean_password(self):
-        password = self.cleaned_data.get("password")
-        if len(password) < 8 or not any(char.isdigit() for char in password) or not any(char.isalpha() for char in password):
-            raise ValidationError("La contraseña debe tener al menos 8 caracteres y contener números y letras.")
-        return password
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
-
-        if password and confirm_password and password != confirm_password:
-            self.add_error("confirm_password", "Las contraseñas no coinciden.")
-
-
-
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = user.email.lower().strip()  # Normalización
+        
+        if commit:
+            user.save()
+            self.save_m2m()  # Para relaciones many-to-many si las hubiera
+            
+        return user
 
 from .models import Proveedor
 
