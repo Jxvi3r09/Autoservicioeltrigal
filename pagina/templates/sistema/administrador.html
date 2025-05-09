@@ -114,8 +114,6 @@
           <strong>Sistema Inventario</strong>
         </span>
       </a>
-      <!-- Sidebar -->
-    <div class="sidebar">
       <!-- Panel de usuario en sidebar -->
       <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -136,8 +134,6 @@
               </a>
             </div>
           </div>
-
-      <div class="sidebar">
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
@@ -299,7 +295,7 @@
                       <th scope="col" width="15%">Documento</th>
                       <th scope="col" width="20%">Usuario</th>
                       <th scope="col" width="10%">Tipo Doc.</th>
-                      <th scope="col" width="15%">Contacto</th>
+                      <th scope="col" width="15%">Correo</th>
                       <th scope="col" width="10%">Rol</th>
                       <th scope="col" width="15%">Registro</th>
                       <th scope="col" width="15%">Acciones</th>
@@ -312,7 +308,7 @@
                         <td data-label="Documento">{{ usuario.numero_documento }}</td>
                         <td data-label="Usuario">{{ usuario.username }}</td>
                         <td data-label="Tipo Doc.">{{ usuario.tipo_documento }}</td>
-                        <td data-label="Contacto">{{ usuario.contacto }}</td>
+                        <td data-label="Contacto">{{ usuario.email }}</td>
                         <td data-label="Rol"><span class="badge bg-primary">{{ usuario.rol }}</span></td>
                         <td data-label="Registro">{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
                         <td data-label="Acciones" class="user-actions">

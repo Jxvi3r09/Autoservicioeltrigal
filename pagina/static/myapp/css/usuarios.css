@@ -249,7 +249,12 @@ font-size: 0.9rem;
 }
 
 .breadcrumb-item a {
-color: var(--primary-color);
+color: #28a745;
+text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+color: #e67e22;
 text-decoration: none;
 }
 
@@ -464,4 +469,8 @@ background-color: rgb(34, 132, 33) !important;
 
 .content-header{
 max-height: 100px;
+}
+.nav-link.active{
+    background-color: #ffffff !important;
+    color: black !important;
 }
