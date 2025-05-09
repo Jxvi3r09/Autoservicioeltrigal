@@ -119,27 +119,27 @@ def agregar_proveedor(request):
     return render(request, "sistema/agregar_proveedor.html")
 
 def modal_inicio(request):
-    if request.method == "POST":
-        username = request.POST.get("username", "").strip()
-        password = request.POST.get("password", "").strip()
+    # if request.method == "POST":
+    #     username = request.POST.get("username", "").strip()
+    #     password = request.POST.get("password", "").strip()
 
-        # Validación: campos vacíos
-        if not username or not password:
-            messages.error(request, "⚠️ Todos los campos son obligatorios.")
-            return redirect("inicio")
+    #     # Validación: campos vacíos
+    #     if not username or not password:
+    #         messages.error(request, "⚠️ Todos los campos son obligatorios.")
+    #         return redirect("inicio")
 
-        # Intentar autenticar al usuario
-        user = authenticate(request, username=username, password=password)
+    #     # Intentar autenticar al usuario
+    #     user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                messages.success(request, f"✅ ¡Bienvenido al sistema, {user.first_name} {user.last_name}!")
-                return redirect("inventario")
-            else:
-                messages.error(request, "⚠️ Tu cuenta está inactiva. Contacta al administrador.")
-        else:
-            messages.error(request, "❌ Usuario o contraseña incorrectos.")
+    #     if user is not None:
+    #         if user.is_active:
+    #             login(request, user)
+    #             messages.success(request, f"✅ ¡Bienvenido al sistema, {user.first_name} {user.last_name}!")
+    #             return redirect("inventario")
+    #         else:
+    #             messages.error(request, "⚠️ Tu cuenta está inactiva. Contacta al administrador.")
+    #     else:
+    #         messages.error(request, "❌ Usuario o contraseña incorrectos.")
 
     return render(request, "paginas/principal.html")
 
@@ -215,8 +215,21 @@ password_reset_views = {
 def gestion(request):
     return render(request, "sistema/gestion.html")
 
+# Validacion del login
 def inicioinv(request):
-    messages.success(request, f"¡Bienvenido, {request.user.username}!")
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('inicioinv')  # Redirige al panel o inicio
+        else:
+            messages.error(request, "Usuario o contraseña incorrectos.")
+            return redirect('principal')  # Reemplaza por tu URL donde está el modal login
+
     return render(request, "sistema/inicioinv.html")
 
 
