@@ -15,6 +15,8 @@ from django.utils import timezone
 from datetime import timedelta
 from .forms import CustomPasswordResetForm
 from django.core.mail import send_mail
+from .models import Proveedor
+from .forms import ProveedorForm
 
 
 
@@ -119,47 +121,25 @@ def agregar_proveedor(request):
     return render(request, "sistema/agregar_proveedor.html")
 
 def modal_inicio(request):
-    # if request.method == "POST":
-    #     username = request.POST.get("username", "").strip()
-    #     password = request.POST.get("password", "").strip()
-
-    #     # Validación: campos vacíos
-    #     if not username or not password:
-    #         messages.error(request, "⚠️ Todos los campos son obligatorios.")
-    #         return redirect("inicio")
-
-    #     # Intentar autenticar al usuario
-    #     user = authenticate(request, username=username, password=password)
-
-    #     if user is not None:
-    #         if user.is_active:
-    #             login(request, user)
-    #             messages.success(request, f"✅ ¡Bienvenido al sistema, {user.first_name} {user.last_name}!")
-    #             return redirect("inventario")
-    #         else:
-    #             messages.error(request, "⚠️ Tu cuenta está inactiva. Contacta al administrador.")
-    #     else:
-    #         messages.error(request, "❌ Usuario o contraseña incorrectos.")
-
-    return render(request, "paginas/principal.html")
+    return render(request, "paginas/modal_inicio.html")
 
 
-def inicio(request):
-    return render(request, "paginas/principal.html")
+# def inicio(request):
+#     return render(request, "paginas/principal.html")
 
-# def registro(request):
-#     if request.method == 'POST':
-#         form = RegistroUsuarioForm(request.POST)
-#         if form.is_valid():
-#             # Guarda el usuario pero no lo loguea automáticamente
-#             user = form.save(commit=False)
-#             user.set_password(form.cleaned_data['password'])  # Encripta la contraseña
-#             user.save()
-#             return redirect('exito')  # Redirige a una página de éxito
-#     else:
-#         form = RegistroUsuarioForm()
+# # def registro(request):
+# #     if request.method == 'POST':
+# #         form = RegistroUsuarioForm(request.POST)
+# #         if form.is_valid():
+# #             # Guarda el usuario pero no lo loguea automáticamente
+# #             user = form.save(commit=False)
+# #             user.set_password(form.cleaned_data['password'])  # Encripta la contraseña
+# #             user.save()
+# #             return redirect('exito')  # Redirige a una página de éxito
+# #     else:
+# #         form = RegistroUsuarioForm()
     
-#     return render(request, 'paginas/registrate.html', {'form': form})
+# #     return render(request, 'paginas/registrate.html', {'form': form})
 def registro(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
@@ -167,7 +147,7 @@ def registro(request):
             usuario = form.save(commit=False)
             usuario.set_password(form.cleaned_data["password1"])
             usuario.save()
-            login(request, usuario)
+            # login(request, usuario)
             return redirect("usuarios")
         else:
             return render(request, "paginas/registrate.html", {
@@ -225,13 +205,14 @@ def inicioinv(request):
 
         if user is not None:
             login(request, user)
-            return redirect('inicioinv')  # Redirige al panel o inicio
+            return redirect('inicioinv')  # O la vista donde va tras loguearse
         else:
             messages.error(request, "Usuario o contraseña incorrectos.")
-            return redirect('principal')  # Reemplaza por tu URL donde está el modal login
+            return render(request, "paginas/principal.html", {
+                "mostrar_modal_login": True
+            })
 
-    return render(request, "sistema/inicioinv.html")
-
+    return render(request, "sistema/inicioinv.html")  # página después del login
 
 #gestion de productos
 def productos(request):
@@ -278,8 +259,6 @@ def eliminar_producto(request, pk):
     })
 
 
-from .models import Proveedor
-from .forms import ProveedorForm
 
 def listar_proveedores(request):
     proveedores = Proveedor.objects.all().order_by('-fecha_registro')

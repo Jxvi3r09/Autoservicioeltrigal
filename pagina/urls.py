@@ -16,7 +16,7 @@ from .views import CustomPasswordResetCompleteView
 urlpatterns = [
     path('',views.principal, name='principal'),
     
-    path('bienvenido', views.index, name='index'),
+    # path('bienvenido', views.index, name='index'),
     
     path('inicio/', views.modal_inicio, name='inicio'),
     
@@ -24,7 +24,7 @@ urlpatterns = [
 
     # path("register/", views.registro, name="registro"),  # Ruta para el registro
     
-    path("inicio/", views.inicio, name="inicio"),
+    # path("inicio/", views.inicio, name="inicio"),
 
     path('inventario/', views.inventario, name='inventario'),
 
