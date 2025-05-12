@@ -94,6 +94,7 @@ def editar_usuario(request, id):
     return redirect('usuarios')  # Previene accesos por GET no permitidos
 
 def eliminar_usuario(request, id):
+    messages.success(request, "¡Usuario eliminado exitosamente!")
     usuario = get_object_or_404(Usuario, id=id)
 
     if request.method == 'POST':
@@ -147,12 +148,14 @@ def registro(request):
             usuario = form.save(commit=False)
             usuario.set_password(form.cleaned_data["password1"])
             usuario.save()
+            messages.success(request, "¡Usuario registrado exitosamente!")
             # login(request, usuario)
             return redirect("usuarios")
         else:
+            # Al pasar el formulario con errores, mostramos el modal
             return render(request, "paginas/registrate.html", {
                 "form": form,
-                "mostrar_modal": True
+                "mostrar_modal": True  # Esto muestra el modal si hay errores
             })
     else:
         form = RegistroUsuarioForm()
