@@ -461,8 +461,6 @@ textarea:focus {
   max-height: 100px;
   background-color: white !important;
 }
-<<<<<<< HEAD
-=======
 
 
 a{
@@ -780,9 +778,9 @@ body {
 }
 
 .brand-link {
-  border-bottom: 2px solid var(--naranja-principal) !important;
+  border-bottom: 2px solid rgb(243, 154, 49) !important;
   text-align: center;
   font-weight: 700 !important;
   padding: 15px 0;
 }
->>>>>>> estilos
+

@@ -474,3 +474,14 @@ max-height: 100px;
     background-color: #ffffff !important;
     color: black !important;
 }
+
+a {
+    text-decoration: none !important;
+}
+
+.brand-link{
+    border-bottom: 2px solid #ff9f43 !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    padding: 15px 0 !important;
+}
