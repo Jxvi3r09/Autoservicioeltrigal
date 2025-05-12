@@ -1,51 +1,87 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Restablecer tu contraseña en {{ site_name }}</title>
     <style>
-        body { font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .content { background-color: #f9f9f9; padding: 25px; border-radius: 5px; }
-        .button { 
-            background-color: #2563eb; 
-            color: white !important; 
-            padding: 12px 24px; 
-            text-decoration: none; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            margin: 15px 0; 
-        }
-        .footer { margin-top: 20px; font-size: 12px; color: #666; text-align: center; }
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .content {
+        background-color: #f9f9f9;
+        padding: 25px;
+        border-radius: 5px;
+      }
+      .button {
+        background-color: #2563eb;
+        color: white !important;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        margin: 15px 0;
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="content">
-        <h3>Hola {{ user.get_username }},</h3>
-        
-        <p>Recibiste este correo porque solicitaste restablecer tu contraseña en {{ site_name }}.</p>
-        
-        <p>Por favor, haz clic en el siguiente botón para continuar con el proceso:</p>
-        
-        <p style="text-align: center;">
-            <a href="{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}" class="button">
-                Restablecer contraseña
-            </a>
-        </p>
-        
-        <p>Si el botón no funciona, copia y pega este enlace en tu navegador:</p>
-        <p>{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}</p>
-        
-        <p><strong>Este enlace expirará en {{ timeout|default:"24 horas" }}.</strong></p>
-        
-        <p>Si no solicitaste este cambio, por favor ignora este mensaje y tu contraseña permanecerá igual.</p>
+      <h3>Hola {{ user.get_username }},</h3>
+
+      <p>
+        Recibiste este correo porque solicitaste restablecer tu contraseña en {{
+        site_name }}.
+      </p>
+
+      <p>
+        Por favor, haz clic en el siguiente botón para continuar con el proceso:
+      </p>
+
+      <p style="text-align: center">
+        <a
+          href="{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}"
+          class="button btn-success"
+        >
+          Restablecer contraseña
+        </a>
+      </p>
+
+      <p>Si el botón no funciona, copia y pega este enlace en tu navegador:</p>
+      <p>
+        {{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid
+        token=token %}
+      </p>
+
+      <p>
+        <strong
+          >Este enlace expirará en {{ timeout|default:"24 horas" }}.</strong
+        >
+      </p>
+
+      <p>
+        Si no solicitaste este cambio, por favor ignora este mensaje y tu
+        contraseña permanecerá igual.
+      </p>
     </div>
 
     <div class="footer">
-        <p>© {% now "Y" %} {{ site_name }}. Todos los derechos reservados.</p>
-        <p>
-            <a href="{{ protocol }}://{{ domain }}/privacy">Política de privacidad</a> | 
-            <a href="{{ protocol }}://{{ domain }}/contact">Contacto</a>
-        </p>
+      <p>© {% now "Y" %} {{ site_name }}. Todos los derechos reservados.</p>
+      <p>
+        <a href="{{ protocol }}://{{ domain }}/privacy"
+          >Política de privacidad</a
+        >
+        |
+        <a href="{{ protocol }}://{{ domain }}/contact">Contacto</a>
+      </p>
     </div>
-</body>
+  </body>
 </html>
