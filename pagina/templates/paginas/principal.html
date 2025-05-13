@@ -32,6 +32,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ3Qd9fR9v7VuTnH7IN9kWwH5W6U6iXrO2g2daUrG9n66gdaDsw3wnIba9s4" crossorigin="anonymous">
     <title> Autoservicio el Trigal | Tienda de conveniencia </title>
   </head>
   <body>
@@ -98,29 +100,8 @@
       </div>
     </nav>
 
+    <!-- CARRUSEL DE IMAGENES -->
 <section>
-    <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrusel con Bootstrap</title>
-  <!-- Enlace al CSS de Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ3Qd9fR9v7VuTnH7IN9kWwH5W6U6iXrO2g2daUrG9n66gdaDsw3wnIba9s4" crossorigin="anonymous">
-  <style>
-    .custom-carousel {
-      max-width: 90%; /* Ajusta el ancho al 90% */
-      margin: 0 auto; /* Centra el carrusel */
-    }
-
-    .custom-carousel img {
-      max-height: 500px; /* Ajusta la altura a 500px */
-      object-fit: cover; /* Asegura que las imágenes se ajusten */
-    }
-  </style>
-</head>
-<body>
-
   <div class="container my-5">
     <div id="carouselExampleAutoplaying" class="carousel slide custom-carousel" data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true">
       <div class="carousel-indicators">
@@ -186,19 +167,16 @@
       </button>
     </div>
   </div>
-
-  <!-- Enlace al JS de Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0IorYoxqVsOMjRXj1DRaWi4MIspKg00yvmL8LZTfrpDbzWWr" crossorigin="anonymous"></script>
-</body>
-</html>
-
 </section>
-<section id="promocion" class="py-5" style="background: linear-gradient(to right, #2b7a3e, #1f5c2f);">
+
+<!-- SECCION DE PROMOCION -->
+<section id="promocion" class="py-5">
   <div class="container">
-    <h2 class="text-center fw-bold display-5 text-dark mb-4 animate__animated animate__fadeInDown">
-    <span class="text-light">   SOMOS TU MEJOR OPCION</span>
+    <h2 class="text-center section-title animate__animated animate__fadeInUp"
+      style="font-size: 2.8rem;">
+    <span class="text-light">   Somos tu mejor opcion </span>
     </h2>
-    <p class="text-center text-dark mb-5 animate__animated animate__fadeInUp">
+    <p class="text-center  text-white mb-5 animate__animated animate__fadeInUp">
       Un lugar donde tu economía, tu tiempo y tu comodidad son prioridad.
     </p>
 
@@ -210,7 +188,7 @@
           <div class="mb-3">
             <i class="bi bi-tags-fill fs-1 text-danger"></i>
           </div>
-          <h5 class="fw-bold text-dark">Los Mejores Precios</h5>
+          <h5 >Los Mejores Precios</h5>
           <p class="text-dark">
             Ofrecemos los mejores precios del mercado con productos de alta calidad.
           </p>
@@ -223,7 +201,7 @@
           <div class="mb-3">
             <i class="bi bi-basket2-fill fs-1 text-dark"></i>
           </div>
-          <h5 class="fw-bold text-dark">Variedad de productos</h5>
+          <h5 >Variedad de productos</h5>
           <p class="text-dark">
             En el Autoservicio El Trigal, contamos con una extensa gama de productos de primera calidad, desde alimentos frescos hasta productos de limpieza y artículos de cuidado personal.
           </p>
@@ -236,46 +214,19 @@
           <div class="mb-3">
             <i class="bi bi-emoji-smile-fill fs-1 text-warning"></i>
           </div>
-          <h5 class="fw-bold text-dark">Estamos para ayudarte</h5>
+          <h5> Estamos para ayudarte </h5>
           <p class="text-dark">
             Recibe la mejor atención de parte de nuestro equipo durante tu visita al supermercado.
           </p>
         </div>
       </div>
-
-
-
     </div>
   </div>
 </section>
 
-<!-- Agregar CSS para el efecto de iluminación -->
-<style>
-  /* Efecto de iluminación en la sección cuando se pasa el mouse */
-  #promocion:hover {
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3); /* Añade sombra a toda la sección */
-    filter: brightness(1.05); /* Ilumina la sección */
-    transition: all 0.3s ease; /* Transición suave */
-  }
 
-  /* Efecto de iluminación en las tarjetas */
-  .effect-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-  }
-
-  .effect-card:hover,
-  .effect-card:active {
-    transform: scale(1.05); /* Aumenta el tamaño de la tarjeta */
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
-    filter: brightness(1.2); /* Ilumina la tarjeta */
-  }
-</style>
-
-   
-    </section>
-
-    <!-- Mission & Vision Section -->
-    <section id="mision-vision" class="mission-vision" style="background: linear-gradient(to right, #2b7a3e, #1f5c2f);" >
+    <!-- SECCION MISION Y VISION -->
+    <section id="mision-vision" class="mission-vision">
       <div class="container position-relative">
         <h2 id="nuestraempresa" class="text-center section-title animate__animated animate__fadeInUp" 
         style="font-size: 2.8rem;">
@@ -328,92 +279,13 @@
         </div>
       </div>
     </section>
-  <section>
-    <!-- <title>Sección de Productos</title>
-    <link rel="stylesheet" href="styles.css"> -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-        }
 
-        .productos {
-            padding: 60px 20px;
-            background: linear-gradient(to right, #2b7a3e, #1f5c2f);
-            color: white;
-        }
 
-        .productos h2 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            position: relative;
-        }
 
-        .productos h2 hr {
-            border: 1px solid #fff;
-            width: 50px;
-            margin: 10px auto;
-        }
-
-        .contenedor-productos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .producto {
-            background-color: #fff;
-            color: #333;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            overflow: hidden;
-            width: 300px;
-            transition: transform 0.3s;
-        }
-
-        .producto:hover {
-            transform: translateY(-5px);
-        }
-
-        .producto img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .producto h3 {
-            margin: 15px;
-            font-size: 1.4em;
-        }
-
-        .producto .descripcion {
-            margin: 0 15px 20px;
-            font-size: 0.95em;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 768px) {
-            .producto {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
+<!-- SECCION DE PRODUCTOS -->
     <section id="productos" class="productos">
-        <h2><hr> Nuestros Productos</h2>
+      <hr>
+        <h2> Nuestros Productos</h2>
         <div class="contenedor-productos">
             <div class="producto">
                 <img src="{% static 'myapp/imagenes/lacteo.jpg' %}" alt="productos 1">
@@ -451,8 +323,8 @@
 </html>
 
 
-<!-- Contact Section -->
-<section id="contacto" style="background: linear-gradient(to right, #2b7a3e, #1f5c2f); color: white; padding: 60px 20px;">
+<!-- SECCION DE CONTACTO -->
+<section id="contacto">
   <div class="container">
     <h2 class="text-center section-title" style="font-size: 2.8rem;"><hr> Contáctanos</h2>
     <p class="text-center mb-5" style="font-size: 1.1rem;">
