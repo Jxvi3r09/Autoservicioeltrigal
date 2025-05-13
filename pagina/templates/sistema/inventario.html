@@ -101,36 +101,40 @@
     <!-- Contenido principal -->
     <div class="content-wrapper">
       <!-- Encabezado -->
-      <div class="content-header">
+            <div class="content-header">
         <div class="container-fluid">
           <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+      
+            <!-- Grupo: Botón + Inicio -->
             <div class="d-flex align-items-center">
-              <button class="btn btn-link text-dark me-2 p-0" type="button" data-widget="pushmenu" aria-label="Toggle navigation">
-                <i class="fas fa-bars fa-lg"></i>
-              </button>
+              <!-- Botón de menú -->
+                    <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                      <i class="fas fa-bars"></i>
+                    </button>
+      
+              <!-- Migas de pan -->
               <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
                   <a href="{% url 'inicioinv' %}">
                     <i class="fas fa-home"></i> Inicio
                   </a>
                 </li>
-                <li class="breadcrumb-item active">Inventario</li>
+                <li class="breadcrumb-item active">Gestión De Productos</li>
               </ol>
             </div>
+      
+            <!-- Logo -->
             <div class="logo-container">
-              <img src="{% static 'myapp/imagenes/logosinfondo.png' %}" alt="Autoservicio El Trigal" class="logo-hover" />
+              <img
+                src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                alt="Autoservicio El Trigal"
+                class="logo-hover"
+              />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Contenido -->
-      <div class="content">
-        <div class="container-fluid">
-          <p>Bienvenido al panel de administración con AdminLTE.</p>
-          <!-- Aquí va el contenido dinámico de tu app -->
-        </div>
-      </div>
     </div>
     <!-- /.content-wrapper -->
   </div>
