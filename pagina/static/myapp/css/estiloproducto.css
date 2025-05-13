@@ -485,3 +485,6 @@ body:not(.sidebar-collapse) .user-avatar,
     height: 40px;
     width: 40px;
 }
+#menu {
+    color: #0d640e !important;
+}
