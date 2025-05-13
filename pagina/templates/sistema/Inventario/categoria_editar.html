@@ -1,0 +1,25 @@
+<!-- Modal Editar Categoría -->
+<div class="modal fade" id="modalEditarCategoria" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form method="post" id="formEditarCategoria">
+      {% csrf_token %}
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Categoría</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="categoria_id" id="editarCategoriaId">
+          <div class="form-group">
+            <label for="nombreCategoria">Nombre</label>
+            <input type="text" name="nombre" id="nombreCategoria" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -110,7 +110,8 @@ def index(request):
     return render(request, "paginas/index.html")
 
 def inventario(request):
-    return render(request, "sistema/inventario.html")
+    categorias = Categoria.objects.all()  # obtiene todas las categorías
+    return render(request, "sistema/inventario.html", {'categorias': categorias})
 
 def administrador(request):
     return render(request, "sistema/administrador.html")
@@ -219,19 +220,23 @@ def inicioinv(request):
 
 #gestion de productos
 def productos(request):
+    categorias = Categoria.objects.all()  # Obtén las categorías
     if request.method == 'POST':
         form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('productos')  # Cambia a tu URL name si es diferente
+            return redirect('productos')
     else:
         form = ProductoForm()
 
     productos = Producto.objects.all()
     return render(request, 'sistema/crud_productos/productos.html', {
         'form': form,
-        'productos': productos
+        'productos': productos,
+        'categorias': categorias  # Pasa las categorías al template
     })
+
+
 def crear_producto(request):
     form = ProductoForm(request.POST or None, request.FILES or None)
     if request.method == 'POST' and form.is_valid():
@@ -328,3 +333,65 @@ def editar_foto_usuario(request):
             usuario.save()
 
     return redirect('perfil_usuario')
+
+
+from .models import Categoria, Producto
+from .forms import CategoriaForm
+
+
+
+from .forms import CategoriaForm
+
+
+def listar_categorias(request):
+    categorias = Categoria.objects.all()
+    form = CategoriaForm()
+    return render(request, 'sistema/inventario.html', {
+        'categorias': categorias,
+        'form': form,
+    })
+
+def registrar_categoria(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return redirect('listar_categorias')  
+
+
+def categoria_detalle(request, categoria_id):
+    categoria = Categoria.objects.get(id=categoria_id)
+    productos = Producto.objects.filter(categoria=categoria)
+    return render(request, 'sistema/inventario/categoria_detalle.html', {
+        'categoria': categoria,
+        'productos': productos,
+    })
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Categoria
+
+def categoria_editar(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+
+    if request.method == 'POST':
+        nuevo_nombre = request.POST.get('nombre')
+        if nuevo_nombre:
+            categoria.nombre = nuevo_nombre
+            categoria.save()
+        return redirect('inventario')
+
+    return redirect('inventario')
+
+def categoria_eliminar(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+
+    if request.method == 'POST':
+        categoria.delete()
+        messages.success(request, 'Categoría eliminada correctamente.')
+        return redirect('inventario')  # Asegúrate de tener esta URL definida
+
+    return render(request, 'sistema/inventario/categoria_confirmar_eliminar.html', {
+        'categoria': categoria
+    })
+

@@ -241,7 +241,8 @@
               <tr>
                 <th>Nombre</th>
                 <th>Precio</th>
-                <th>cantidad</th>
+                <th>Cantidad</th>
+                <th>Categoría</th> <!-- Nueva columna -->
                 <th>Vence</th>
                 <th>Registro</th>
                 <th>Acciones</th>
@@ -253,6 +254,7 @@
                 <td>{{ p.nombre }}</td>
                 <td>{{ p.precio }}</td>
                 <td>{{ p.cantidad_entrada }}</td>
+                <td>{{ p.categoria }}</td> <!-- Mostrar nombre de la categoría -->
                 <td>{{ p.fecha_vencimiento }}</td>
                 <td>{{ p.fecha_registro }}</td>
                 <td class="text-nowrap">
@@ -268,11 +270,12 @@
               {% include 'sistema/crud_productos/editar_producto.html' with producto=p %}
               {% empty %}
               <tr>
-                <td colspan="6" class="text-center">No hay productos registrados.</td>
+                <td colspan="7" class="text-center">No hay productos registrados.</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
+
         </div>
       </section>
     </div>
