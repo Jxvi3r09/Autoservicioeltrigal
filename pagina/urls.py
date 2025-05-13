@@ -76,6 +76,14 @@ urlpatterns = [
 
     path('perfil/editar-foto/', views.editar_foto_usuario, name='editar_foto_usuario'),
 
+    path('categorias/', views.listar_categorias, name='listar_categorias'),
+    path('categorias/registrar/', views.registrar_categoria, name='registrar_categoria'),
+
+    path('categorias/<int:categoria_id>/editar/', views.categoria_editar, name='categoria_editar'),
+    path('categorias/<int:categoria_id>/eliminar/', views.categoria_eliminar, name='categoria_eliminar'),
+
+    path('categoria/<int:categoria_id>/', views.categoria_detalle, name='categoria_detalle'),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos

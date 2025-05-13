@@ -4,143 +4,379 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel de Administración</title>
+  <title>Panel de Administración - Categorías</title>
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Tu archivo JS para submenús (opcional) -->
   <script src="{% static 'myapp/js/submenu.js' %}"></script>
-  <link rel="stylesheet" href="{% static 'myapp/css/inventario.css' %}">
 
   <!-- AdminLTE CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link rel="stylesheet" href="{% static 'myapp/css/inicioinv.css' %}">
+  <link rel="stylesheet" href="{% static 'myapp/css/estilos_inventario.css' %}">
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
   <div class="wrapper">
-        <!-- Sidebar mejorado -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <a href="{% url 'inicioinv' %}" class="brand-link text-center">
-    <span class="brand-text font-weight-light">
-      <strong>Sistema Inventario</strong>
-    </span>
-  </a>
-  
-  <div class="sidebar">
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
-      <div class="image">
-        {% if request.user.is_authenticated and request.user.imagen_perfil %}
-          <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% else %}
-          <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% endif %}
-      </div>
-      <div class="info mt-2 text-center">
-        <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
-          {% if request.user.is_authenticated %}
-            {{ request.user.first_name }} {{ request.user.last_name }}<br>
-            {{ request.user.rol }}
-          {% else %}
-            Usuario
-          {% endif %}
-        </a>
-      </div>
-    </div>
-
-    <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-dark bg-dark">
+      <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="{% url 'inicioinv' %}" class="nav-link">
-            <i class="nav-icon fas fa-home" aria-hidden="true"></i>
-            <p>Inicio</p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{% url 'usuarios' %}" class="nav-link">
-            <i class="nav-icon fas fa-users" aria-hidden="true"></i>
-            <p>Usuarios</p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{% url 'inventario' %}" class="nav-link active">
-            <i class="nav-icon fas fa-boxes"></i>
-            <p>Inventario</p>
-          </a>
-        </li>
-        
-        <li class="nav-item">
-          <a href="{% url 'proveedores' %}" class="nav-link">
-            <i class="nav-icon fas fa-truck"></i>
-            <p>Proveedores</p>
-          </a>
-        </li> 
-        
-        <li class="nav-item">
-          <a href="{% url 'productos' %}" class="nav-link">
-            <i class="nav-icon fas fa-tag"></i>
-            <p>Productos</p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
-            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-            <p>Cerrar Sesión</p>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+            <i class="fas fa-bars"></i>
           </a>
         </li>
       </ul>
+      
+      <!-- Navbar derecho -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" title="Ayuda">
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" title="Notificaciones">
+            <i class="fas fa-bell"></i>
+            <span class="badge badge-warning navbar-badge">3</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="{% url 'perfil_usuario' %}">
+            <i class="fas fa-user-circle"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-item dropdown-header">Opciones de usuario</span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-user mr-2"></i> Mi perfil
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-cog mr-2"></i> Configuración
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="{% url 'principal' %}" class="dropdown-item">
+              <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+            </a>
+          </div>
+        </li>
+      </ul>
     </nav>
-  </div>
-</aside>
 
-    <!-- Contenido principal -->
-    <div class="content-wrapper">
-      <!-- Encabezado -->
-            <div class="content-header">
-        <div class="container-fluid">
-          <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
-      
-            <!-- Grupo: Botón + Inicio -->
-            <div class="d-flex align-items-center">
-              <!-- Botón de menú -->
-                    <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
-                      <i class="fas fa-bars"></i>
-                    </button>
-      
-              <!-- Migas de pan -->
-              <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item">
-                  <a href="{% url 'inicioinv' %}">
-                    <i class="fas fa-home"></i> Inicio
-                  </a>
-                </li>
-                <li class="breadcrumb-item active">Gestión De Productos</li>
-              </ol>
-            </div>
-      
-            <!-- Logo -->
-            <div class="logo-container">
-              <img
-                src="{% static 'myapp/imagenes/logosinfondo.png' %}"
-                alt="Autoservicio El Trigal"
-                class="logo-hover"
-              />
-            </div>
+    <!-- Sidebar -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-link text-center" style="background-color: #212121; border-bottom: 1px solid #ff9800;">
+        <i class="fas fa-boxes mr-2" style="color: #ff9800;"></i>
+        <span class="brand-text font-weight-light">
+          <strong>Sistema Inventario</strong>
+        </span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Panel de usuario en sidebar -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+          <div class="image">
+            {% if request.user.is_authenticated and request.user.imagen_perfil %}
+              <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2" alt="Usuario"
+                  style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+            {% else %}
+              <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2" alt="Usuario"
+                  style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+            {% endif %}
+          </div>
+          <div class="info mt-2">
+            <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none; text-align: center;">
+              {% if request.user.is_authenticated %}
+                {{ request.user.first_name }} {{ request.user.last_name }} <br>
+                {{ request.user.rol }}
+              {% else %}
+                Usuario
+              {% endif %}
+            </a>
           </div>
         </div>
+          
+        <!-- Menu principal -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a href="{% url 'inicioinv' %}" class="nav-link">
+                <i class="nav-icon fas fa-home"></i>
+                <p>Inicio</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'usuarios' %}" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Usuarios</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'inventario' %}" class="nav-link active">
+                <i class="nav-icon fas fa-boxes"></i>
+                <p>Inventario</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'proveedores' %}" class="nav-link">
+                <i class="nav-icon fas fa-truck"></i>
+                <p>Proveedores</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'productos' %}" class="nav-link">
+                <i class="nav-icon fas fa-tag"></i>
+                <p>Productos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-cog"></i>
+                <p>Configuraciones</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'principal' %}" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>Cerrar Sesión</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
+    </aside>
 
+    <!-- Contenido principal -->
+    <div class="content-wrapper p-4">
+      <div class="section-card">
+        <div class="page-header">
+          <h2><i class="fas fa-layer-group mr-2" style="color: #ff9800;"></i>Categorías</h2>
+          <div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoriaModal">
+              <i class="fas fa-plus mr-1"></i> Registrar Categoría
+            </button>
+            <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#productoModal">
+              <i class="fas fa-plus mr-1"></i> Registrar Producto
+            </button>
+          </div>
+        </div>
+      
+        <!-- Selector de vistas -->
+        <div class="view-selector">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-secondary active" id="view-cards">
+              <i class="fas fa-th-large"></i> Tarjetas
+            </button>
+            <button type="button" class="btn btn-outline-secondary" id="view-list">
+              <i class="fas fa-list"></i> Lista
+            </button>
+            <button type="button" class="btn btn-outline-secondary" id="view-badges">
+              <i class="fas fa-tags"></i> Etiquetas
+            </button>
+            <button type="button" class="btn btn-outline-secondary" id="view-tabs">
+              <i class="fas fa-folder"></i> Pestañas
+            </button>
+          </div>
+        </div>
+      
+        <!-- Vista de Tarjetas (por defecto) -->
+        <div id="category-view-cards" class="category-grid">
+          {% for categoria in categorias %}
+            <div class="card category-card">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">{{ categoria.nombre }}</h5>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  <i class="fas fa-layer-group text-muted"></i>
+                  <a href="{% url 'categoria_detalle' categoria.id %}" style="text-decoration: none;">
+                    Ver productos
+                  </a>
+                </p>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
+                  <i class="fas fa-edit"></i> Editar
+                </button>
+                <form action="{% url 'categoria_eliminar' categoria.id %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"
+                         onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% empty %}
+            <div class="alert alert-info">No hay categorías registradas.</div>
+          {% endfor %}
+        </div>
+      
+        <!-- Vista de Lista (oculta por defecto) -->
+        <div id="category-view-list" class="category-list-container" style="display: none;">
+          {% for categoria in categorias %}
+            <div class="category-list p-3 d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="mb-0">{{ categoria.nombre }}</h5>
+                <small>
+                  <a href="{% url 'categoria_detalle' categoria.id %}" style="text-decoration: none;">
+                    Ver productos
+                  </a>
+                </small>
+              </div>
+              <div>
+                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <form action="{% url 'categoria_eliminar' categoria.id %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"
+                         onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% empty %}
+            <div class="alert alert-info">No hay categorías registradas.</div>
+          {% endfor %}
+        </div>
+      
+        <!-- Vista de Etiquetas (oculta por defecto) -->
+        <div id="category-view-badges" style="display: none; text-align: center;">
+          {% for categoria in categorias %}
+            <div class="category-badge position-relative">
+              {{ categoria.nombre }}
+              <div class="position-absolute" style="top: -8px; right: -8px;">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'categoria_detalle' categoria.id %}">
+                      <i class="fas fa-eye mr-2"></i> Ver detalles
+                    </a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
+                      <i class="fas fa-edit mr-2"></i> Editar
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <form action="{% url 'categoria_eliminar' categoria.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="dropdown-item text-danger" 
+                              onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
+                        <i class="fas fa-trash-alt mr-2"></i> Eliminar
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <div class="alert alert-info">No hay categorías registradas.</div>
+          {% endfor %}
+        </div>
+      
+        <!-- Vista de Pestañas (oculta por defecto) -->
+        <div id="category-view-tabs" style="display: none;">
+          {% for categoria in categorias %}
+            <div class="category-tab d-flex justify-content-between align-items-center">
+              <a href="{% url 'categoria_detalle' categoria.id %}" style="text-decoration: none; color: inherit; flex-grow: 1;">
+                <i class="fas fa-folder mr-2"></i> {{ categoria.nombre }}
+              </a>
+              <div>
+                <button class="btn btn-sm btn-outline-warning actions-btn" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <form action="{% url 'categoria_eliminar' categoria.id %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger actions-btn" title="Eliminar"
+                         onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% empty %}
+            <div class="alert alert-info">No hay categorías registradas.</div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
-    <!-- /.content-wrapper -->
-  </div>
-  <!-- /.wrapper -->
 
-  <!-- AdminLTE JS -->
-  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <!-- Modales para editar categorías -->
+    {% for categoria in categorias %}
+      <div class="modal fade" id="modalEditarCategoria{{ categoria.id }}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <form method="post" action="{% url 'categoria_editar' categoria.id %}">
+            {% csrf_token %}
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Editar Categoría</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="nombreCategoria{{ categoria.id }}">Nombre</label>
+                  <input type="text" name="nombre" id="nombreCategoria{{ categoria.id }}"
+                        class="form-control" required value="{{ categoria.nombre }}">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+
+    {% include 'sistema/inventario/modal_registro_categoria.html' %}
+    {% include 'sistema/crud_productos/form_productos.html' %}
+
+    <!-- AdminLTE JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+      $(document).ready(function() {
+        // Cambiar entre las diferentes vistas
+        $('#view-cards').click(function() {
+          $('.btn-outline-secondary').removeClass('active');
+          $(this).addClass('active');
+          $('#category-view-cards').show();
+          $('#category-view-list, #category-view-badges, #category-view-tabs').hide();
+        });
+        
+        $('#view-list').click(function() {
+          $('.btn-outline-secondary').removeClass('active');
+          $(this).addClass('active');
+          $('#category-view-list').show();
+          $('#category-view-cards, #category-view-badges, #category-view-tabs').hide();
+        });
+        
+        $('#view-badges').click(function() {
+          $('.btn-outline-secondary').removeClass('active');
+          $(this).addClass('active');
+          $('#category-view-badges').show();
+          $('#category-view-cards, #category-view-list, #category-view-tabs').hide();
+        });
+        
+        $('#view-tabs').click(function() {
+          $('.btn-outline-secondary').removeClass('active');
+          $(this).addClass('active');
+          $('#category-view-tabs').show();
+          $('#category-view-cards, #category-view-list, #category-view-badges').hide();
+        });
+      });
+    </script>
+  </div>
 </body>
 </html>

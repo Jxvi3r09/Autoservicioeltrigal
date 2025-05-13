@@ -140,33 +140,33 @@ class ProveedorForm(forms.ModelForm):
 
 # inventario/forms.py
 from django import forms
-from .models import Producto
+from .models import Producto, Categoria
+
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nombre']
+        widgets = {
+            'nombre': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nombre de la categoría'
+            }),
+        }
+
 
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['nombre','precio','cantidad_entrada','fecha_vencimiento']
+        fields = [
+            'nombre', 'precio', 'cantidad_entrada',
+            'fecha_vencimiento', 'imagen', 'categoria'
+        ]
         widgets = {
-            'nombre': forms.TextInput(attrs={
-                'class': 'form-control',
-                'id': 'id_nombre',
-                'placeholder': 'Nombre del producto',
-            }),
-            'precio': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'id': 'id_precio',
-                'step': '0.01',
-                'placeholder': '0.00',
-            }),
-            'cantidad_entrada': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'id': 'id_cantidad_entrada',
-                'placeholder': '0',
-            }),
-            'fecha_vencimiento': forms.DateInput(attrs={
-                'class': 'form-control',
-                'id': 'id_fecha_vencimiento',
-                'type': 'date',
-            }),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del producto'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'iva': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'cantidad_entrada': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantidad_salida': forms.NumberInput(attrs={'class': 'form-control'}),
+            'fecha_vencimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
         }
-

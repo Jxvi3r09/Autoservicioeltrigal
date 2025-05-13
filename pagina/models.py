@@ -125,4 +125,3 @@ class Producto(models.Model):
         return self.nombre
 
 
-
