@@ -456,8 +456,16 @@ background-color: rgb(34, 132, 33) !important;
 /* .content-wrapper {
 background-color: rgb(243, 154, 4, 0.3) !important;
 } */
+
+.logo-container{
+display: flex;
+justify-content: flex-end; /* Alinea a la derecha */
+align-items: center; /* Centra verticalmente si es necesario */
+
+}
 .logo-hover {
 transition: transform 0.3s ease; /* Suaviza el cambio */
+height: 100px;
 }
 
 .logo-hover:hover {

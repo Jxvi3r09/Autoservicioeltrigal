@@ -53,6 +53,7 @@
       </ul>
       
       
+      
       <div class="ml-3">
         <div class="row mb-2">
           <!-- <div class="col-sm-6">
@@ -61,9 +62,9 @@
             </h1>
           </div> -->
           
-          <div class="col-sm-6">
+          <div class="barra-superior d-flex align-items-center">
             <nav aria-label="breadcrumb">
-              <ol class="breadcrumb float-sm-right">
+              <ol class="breadcrumb float-sm-right m-0">
                 <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
                 <li class="breadcrumb-item active">Usuarios</li>
               </ol>
@@ -74,36 +75,15 @@
           <i class="fas fa-users mr-2" aria-hidden="true"></i>Panel de Usuarios
         </h1>
       </div>
-
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown user-menu">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="user-image img-circle elevation-1" alt="Usuario">
-            <span class="d-none d-md-inline">
-              {% if request.user.is_authenticated %}
-                {{ request.user.username }}
-              {% else %}
-                Usuario
-              {% endif %}
-            </span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <li class="user-header bg-primary">
-              <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2" alt="Imagen de usuario">
-              <p>
-                {% if request.user.is_authenticated %}
-                  {{ request.user.username }}
-                {% else %}
-                  Usuario
-                {% endif %}
-              </p>
-            </li>
-            <li class="user-footer">
-              <a href="{% url 'principal' %}" class="btn btn-default btn-flat">Cerrar Sesión</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      
+            <!-- Logo -->
+            <div class="logo-container">
+              <img
+                src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                alt="Autoservicio El Trigal"
+                class="logo-hover"
+              />
+            </div>
     </nav>
 
 
@@ -186,6 +166,7 @@
     <div class="content-wrapper">
       <section class="content-header">
         <div class="container-fluid">
+          
                     <!-- Nueva sección de estadísticas -->
           <div class="stats-container">
             <div class="stat-card">
