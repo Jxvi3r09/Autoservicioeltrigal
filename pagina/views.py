@@ -302,3 +302,29 @@ def eliminar_proveedor(request, id):
 def perfil_usuario(request):
     return render(request, 'sistema/perfil_usuario.html', {'usuario': request.user})
 
+
+def actualizar_imagen_perfil(request):
+    if request.method == 'POST':
+        usuario = request.user
+        imagen = request.FILES.get('imagen_perfil')
+        if imagen:
+            usuario.imagen_perfil = imagen
+            usuario.save()
+    return redirect('perfil_usuario')
+
+def editar_foto_usuario(request):
+    usuario = request.user
+
+    if request.method == 'POST':
+        accion = request.POST.get('accion')
+
+        if accion == 'eliminar' and usuario.imagen_perfil:
+            usuario.imagen_perfil.delete()
+            usuario.imagen_perfil = None
+            usuario.save()
+            # Puedes usar mensajes para confirmar al usuario
+        elif accion == 'cambiar' and 'imagen_perfil' in request.FILES:
+            usuario.imagen_perfil = request.FILES['imagen_perfil']
+            usuario.save()
+
+    return redirect('perfil_usuario')

@@ -72,7 +72,12 @@ urlpatterns = [
     path('proveedores/editar/<int:id>/', views.editar_proveedor, name='editar_proveedor'),
 
     path('perfil', views.perfil_usuario, name='perfil_usuario'),
-]
+    path('actualizar-imagen/', views.actualizar_imagen_perfil, name='actualizar_imagen_perfil'),
+
+    path('perfil/editar-foto/', views.editar_foto_usuario, name='editar_foto_usuario'),
+
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

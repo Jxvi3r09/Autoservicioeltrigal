@@ -59,7 +59,10 @@ class Usuario(AbstractUser):
         'blank': "El correo electrónico es obligatorio.",
         'null': "El correo electrónico es obligatorio."
     }
-)
+    )
+
+    imagen_perfil = models.ImageField(
+      upload_to='perfiles/', blank=True, null=True)
     
     # # Mantenemos contacto como campo opcional si es necesario
     # contacto = models.CharField(
