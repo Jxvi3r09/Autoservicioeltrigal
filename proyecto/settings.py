@@ -83,7 +83,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'proyecto',
     'USER': 'root',
-    'PASSWORD':'',
+    'PASSWORD':'1058038146',
     'HOST': 'localhost',  # Asegúrate de que solo sea la IP
     'PORT': '3306',  # Solo el número del puerto, sin IP
 }
@@ -203,3 +203,7 @@ EMAIL_SUBJECT_PREFIX = '[Autoservicio] '
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 # 4. TIEMPOS DE EXPIRACIÓN (OPCIONAL)
 PASSWORD_RESET_TIMEOUT = 86400  # 24 horas en segundos para links de recuperación
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

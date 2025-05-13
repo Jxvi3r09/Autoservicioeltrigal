@@ -86,21 +86,25 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Panel de usuario en sidebar -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{ usuario.imagen_perfil.url|default:'static/myapp/imagenes/usuariodefault.png' }}" class="img-circle elevation-2" alt="Usuario">
-        </div>
-        
-        <div class="info">
-          <a href="{% url 'perfil_usuario' %}" class="d-block">
-            {% if request.user.is_authenticated %}
-              {{ request.user.username }}
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+          <div class="image">
+            {% if usuario.imagen_perfil and usuario.imagen_perfil.url %}
+              <img src="{{ usuario.imagen_perfil.url }}" class="navbar-profile-img" alt="Usuario" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
             {% else %}
-              Usuario
+              <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2" alt="Usuario" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
             {% endif %}
-          </a>
+          </div>
+          <div class="info mt-2">
+            <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none; text-align: center;">
+              {% if request.user.is_authenticated %}
+                {{ request.user.first_name }} {{ request.user.last_name }} <br>
+                {{ request.user.rol }}
+              {% else %}
+                Usuario
+              {% endif %}
+            </a>
+          </div>
         </div>
-      </div>
             
       <!-- Menu principal -->
       <nav class="mt-2">
@@ -196,23 +200,38 @@
       <div class="container-fluid profile-container">
         <!-- Encabezado de perfil -->
         <div class="profile-header text-center">
-          <div class="profile-img-container">
-            <img src="{{ usuario.imagen_perfil.url|default:'static/myapp/imagenes/usuariodefault.png' }}" class="profile-img" alt="Imagen de perfil">
-            <label for="upload-profile-image" class="img-upload-btn">
+
+          <div class="profile-img-container position-relative text-center">
+            {% if usuario.imagen_perfil %}
+              <img src="{{ usuario.imagen_perfil.url }}" class="img-circle elevation-2 profile-img" alt="Usuario"
+                  style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
+            {% else %}
+              <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 profile-img" alt="Usuario"
+                  style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
+            {% endif %}
+
+            <!-- Botón de cámara --> 
+            <button type="button"
+                    class="btn btn-warning rounded-circle position-absolute"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editarFotoModal">
               <i class="fas fa-camera" style="color: white;"></i>
-            </label>
-            <!-- Formulario oculto para subir imagen -->
-            <form id="profile-image-form" method="POST" enctype="multipart/form-data" style="display: none;">
-              {% csrf_token %}
-              <input type="file" id="upload-profile-image" name="imagen_perfil" accept="image/*" onchange="document.getElementById('profile-image-form').submit();">
-            </form>
+            </button>
           </div>
+
+        <!-- Input oculto y form para cambiar imagen -->
+        <form id="profile-image-form" method="POST" enctype="multipart/form-data" action="{% url 'actualizar_imagen_perfil' %}" style="display: none;">
+          {% csrf_token %}
+          <input type="file" id="upload-profile-image" name="imagen_perfil" accept="image/*"
+                onchange="document.getElementById('profile-image-form').submit();">
+        </form>
+
           <div class="profile-name">{{ usuario.username }}</div>
           <div class="profile-role">{{ usuario.get_rol_display }}</div>
 
 
           <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}" aria-label="Editar Usuario">
-            <i class="fas fa-edit"></i> Editar
+            <i class="fas fa-edit"></i> Editar Informacion
           </button>
   
         </div>
@@ -237,7 +256,7 @@
                     <i class="fas fa-envelope"></i>
                     Correo Electrónico
                   </div>
-                  <div class="info-value">{{ usuario.contacto }}</div>
+                  <div class="info-value">{{ usuario.email }}</div>
                 </div>
                 <div class="info-item">
                   <div class="info-label">
@@ -363,7 +382,7 @@
 </div>
 
 {% include 'sistema/usuariocrud/editar_usuario.html' %}
-
+{% include 'sistema/usuariocrud/editar_foto_usuario.html' %}
 
 
 <!-- Scripts -->

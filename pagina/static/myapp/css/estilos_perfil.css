@@ -19,6 +19,13 @@
   z-index: 1000;
 }
 
+.profile-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .content-wrapper, .main-header, .main-footer {
   margin-left: 250px;
 }
