@@ -1,0 +1,22 @@
+<!-- Modal para editar foto -->
+<div class="modal fade" id="editarFotoModal" tabindex="-1" aria-labelledby="editarFotoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content text-center">
+        <div class="modal-header">
+        <h5 class="modal-title" id="editarFotoLabel">Foto de perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+        <!-- Botón cambiar: activa input file oculto -->
+        <label for="upload-profile-image" class="btn btn-primary w-100 mb-2">Agregar/Cambiar foto</label>
+
+        <!-- Botón eliminar: redirige o manda POST -->
+        <form method="POST" action="{% url 'editar_foto_usuario' %}">
+            {% csrf_token %}
+            <input type="hidden" name="accion" value="eliminar">
+            <button type="submit" class="btn btn-danger w-100">Eliminar foto</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
