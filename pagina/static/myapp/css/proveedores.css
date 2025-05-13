@@ -360,3 +360,24 @@ text-decoration: none;
 .content-header {
   margin-left: 60px;
 }
+
+/* Imagen del usuario por defecto: pequeña */
+.user-avatar {
+  width: 40px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+/* Cuando el sidebar NO está colapsado, o se pasa el mouse por encima */
+body:not(.sidebar-collapse) .user-avatar,
+.sidebar-mini.sidebar-collapse .main-sidebar:hover .user-avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.user-panel img{
+    height: 40px;
+    width: 40px;
+}

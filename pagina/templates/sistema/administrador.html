@@ -17,360 +17,325 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="{% static 'myapp/css/usuarios.css' %}">
-
-  <!-- <style>
-    :root {
-      --primary-color: #007bff;
-      --primary-light: #e6f0ff;
-      --danger-color: #dc3545;
-      --danger-light: #f8d7da;
-      --warning-color: #ffc107;
-      --warning-light: #fff3cd;
-      --success-color: #28a745;
-      --light-gray: #f8f9fa;
-      --medium-gray: #e9ecef;
-      --dark-gray: #343a40;
-      --border-color: #dee2e6;
-      --table-header-bg: #f1f1f1;
-      --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    }
-    
-    /* Estructura mejorada */
-
-  </style> -->
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
-  <div class="wrapper">
-    <!-- Navbar mejorado -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button" aria-label="Expandir/Contraer Menú">
-            <i class="fas fa-bars" aria-hidden="true"></i>
-          </a>
-        </li>
-      </ul>
-      
-      
-      <div class="ml-3">
-        <div class="row mb-2">
-          <!-- <div class="col-sm-6">
-            <h1 class="m-0 text-dark">
-              <i class="fas fa-users mr-2"></i>Gestión de Usuarios
-            </h1>
-          </div> -->
-          
-          <div class="col-sm-6">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}"><i class="fas fa-home"></i> Inicio</a></li>
-                <li class="breadcrumb-item active">Usuarios</li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-        <h1 class="mb-0 text-dark h4 text-center">
-          <i class="fas fa-users mr-2" aria-hidden="true"></i>Panel de Usuarios
-        </h1>
-      </div>
-
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown user-menu">
-          <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <li class="user-footer">
-              <a href="{% url 'principal' %}" class="btn btn-default btn-flat">Cerrar Sesión</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-
-
-    <!-- Sidebar mejorado -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <a href="{% url 'inicioinv' %}" class="brand-link text-center">
-        <span class="brand-text font-weight-light">
-          <strong>Sistema Inventario</strong>
-        </span>
-      </a>
-      <!-- Panel de usuario en sidebar -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
-        <div class="image">
-          {% if request.user.is_authenticated and request.user.imagen_perfil %}
-            <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2" alt="Usuario"
-                style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
-          {% else %}
-            <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2" alt="Usuario"
-                style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
-          {% endif %}
-        </div>
-          <div class="info mt-2">
-            <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none; text-align: center;">
-              {% if request.user.is_authenticated %}
-                {{ request.user.first_name }} {{ request.user.last_name }} <br>
-                {{ request.user.rol }}
+    <div class="wrapper">
+      <!-- Sidebar mejorado -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="{% url 'inicioinv' %}" class="brand-link text-center">
+          <span class="brand-text font-weight-light">
+            <strong>Sistema Inventario</strong>
+          </span>
+        </a>
+        
+        <div class="sidebar">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+            <div class="image">
+              {% if request.user.is_authenticated and request.user.imagen_perfil %}
+                <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
               {% else %}
-                Usuario
+                <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
               {% endif %}
-            </a>
-          </div>
-        </div>
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-              <a href="{% url 'inicioinv' %}" class="nav-link">
-                <i class="nav-icon fas fa-home" aria-hidden="true"></i>
-                <p>Inicio</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="{% url 'usuarios' %}" class="nav-link active">
-                <i class="nav-icon fas fa-users" aria-hidden="true"></i>
-                <p>Usuarios</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="{% url 'inventario' %}" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
-                <p>Inventario</p>
-              </a>
-            </li>
-            
-            <li class="nav-item">
-              <a href="{% url 'proveedores' %}" class="nav-link">
-                <i class="nav-icon fas fa-truck"></i>
-                <p>Proveedores</p>
-              </a>
-            </li> 
-            
-            <li class="nav-item">
-              <a href="{% url 'productos' %}" class="nav-link">
-                <i class="nav-icon fas fa-tag"></i>
-                <p>Productos</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="{% url 'principal' %}" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-                <p>Cerrar Sesión</p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </aside>
-
-    <!-- Content Wrapper mejorado -->
-    <div class="content-wrapper">
-      <section class="content-header">
-        <div class="container-fluid">
-                    <!-- Nueva sección de estadísticas -->
-          <div class="stats-container">
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="stat-value">{{ total_usuarios }}</div>
-              <div class="stat-label">Usuarios Totales</div>
-              <div class="stat-change positive">
-                <i class="fas fa-arrow-up mr-1"></i> 5% este mes
-              </div>
             </div>
-
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-user-check"></i>
-              </div>
-              <div class="stat-value">{{ usuarios_activos }}</div>
-              <div class="stat-label">Usuarios Activos</div>
-              <div class="stat-change positive">
-                <i class="fas fa-arrow-up mr-1"></i> 12% este mes
-              </div>
-            </div>
-
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-user-shield"></i>
-              </div>
-              <div class="stat-value">{{ administradores }}</div>
-              <div class="stat-label">Administradores</div>
-              <div class="stat-change">
-                <i class="fas fa-equals mr-1"></i> Sin cambios
-              </div>
-            </div>
-
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-user-clock"></i>
-              </div>
-              <div class="stat-value">{{ inactivos_30dias }}</div>
-              <div class="stat-label">Inactivos (30 días)</div>
-              <div class="stat-change negative">
-                <i class="fas fa-arrow-down mr-1"></i> 3% este mes
-              </div>
+            <div class="info mt-2 text-center">
+              <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
+                {% if request.user.is_authenticated %}
+                  {{ request.user.first_name }} {{ request.user.last_name }}<br>
+                  {{ request.user.rol }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="content">
-        <div class="container-fluid">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Listado de Usuarios</h3>
-              <div class="card-tools">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal" aria-label="Crear Nuevo Usuario">
-                  <i class="fas fa-user-plus mr-1"></i> Nuevo Usuario
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <li class="nav-item">
+                <a href="{% url 'inicioinv' %}" class="nav-link">
+                  <i class="nav-icon fas fa-home" aria-hidden="true"></i>
+                  <p>Inicio</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'usuarios' %}" class="nav-link active">
+                  <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+                  <p>Usuarios</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'inventario' %}" class="nav-link">
+                  <i class="nav-icon fas fa-boxes"></i>
+                  <p>Inventario</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="{% url 'proveedores' %}" class="nav-link">
+                  <i class="nav-icon fas fa-truck"></i>
+                  <p>Proveedores</p>
+                </a>
+              </li> 
+              
+              <li class="nav-item">
+                <a href="{% url 'productos' %}" class="nav-link">
+                  <i class="nav-icon fas fa-tag"></i>
+                  <p>Productos</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'principal' %}" class="nav-link">
+                  <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+                  <p>Cerrar Sesión</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <!-- Content Header -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+              <!-- Grupo: Botón + Inicio -->
+              <div class="d-flex align-items-center">
+                <!-- Botón de menú -->
+                <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                  <i class="fas fa-bars"></i>
                 </button>
+                
+      
+                <!-- Migas de pan -->
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item">
+                    <a href="{% url 'inicioinv' %}">
+                      <i class="fas fa-home"></i> Inicio
+                    </a>
+                  </li>
+                  <li class="breadcrumb-item active">Usuarios</li>
+                </ol>
+              </div>
+      
+              <!-- Logo -->
+              <div class="logo-container">
+                <img
+                  src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                  alt="Autoservicio El Trigal"
+                  class="logo-hover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="content">
+          <div class="container-fluid">
+            <!-- Tarjeta de bienvenida -->
+            <div class="row justify-content-center">
+              <div class="col-lg-10">
+                <div class="welcome-card text-center">
+                  <h1 class="welcome-title">Panel de Administración de Usuarios</h1>
+                  <p style="color: rgb(0, 0, 0);">
+                    Gestión completa de usuarios del sistema de inventario
+                  </p>
+                </div>
               </div>
             </div>
             
-            <div class="card-body">
-              {% if messages %}
-                <div id="mensajes-sistema">
-                  {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                      <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
-                      {{ message }}
-                    </div>
-                  {% endfor %}
+            <!-- Estadísticas rápidas -->
+            <div class="row mt-4">
+              <div class="col-md-3">
+                <div class="stats-card">
+                  <i class="fas fa-users feature-icon"></i>
+                  <div class="stats-number">{{ total_usuarios }}</div>
+                  <div class="stats-title">Usuarios Totales</div>
                 </div>
-              {% endif %}
-
-              <!-- Filtros mejorados -->
-              <div class="row mb-4">
-                <div class="col-md-6 mb-2 mb-md-0">
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar por nombre o documento...">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="button" id="searchButton" aria-label="Buscar">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="stats-card">
+                  <i class="fas fa-user-check feature-icon"></i>
+                  <div class="stats-number">{{ usuarios_activos }}</div>
+                  <div class="stats-title">Usuarios Activos</div>
                 </div>
-                <div class="col-md-3 mb-2 mb-md-0">
-                  <select class="form-select" id="rolFilter" aria-label="Filtrar por rol">
-                    <option value="">Todos los roles</option>
-                    <option value="Admin">Administrador</option>
-                    <option value="Empleado">Empleado</option>
-                  </select>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="stats-card">
+                  <i class="fas fa-user-shield feature-icon"></i>
+                  <div class="stats-number">{{ administradores }}</div>
+                  <div class="stats-title">Administradores</div>
                 </div>
-                <div class="col-md-3">
-                  <button class="btn btn-outline-secondary w-100" id="resetFilters">
-                    <i class="fas fa-sync-alt mr-1"></i> Limpiar filtros
+              </div>
+              
+              <div class="col-md-3">
+                <div class="stats-card">
+                  <i class="fas fa-user-clock feature-icon"></i>
+                  <div class="stats-number">{{ inactivos_30dias }}</div>
+                  <div class="stats-title">Inactivos (30 días)</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Contenido principal -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Listado de Usuarios</h3>
+                <div class="card-tools">
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal" aria-label="Crear Nuevo Usuario">
+                    <i class="fas fa-user-plus mr-1"></i> Nuevo Usuario
                   </button>
                 </div>
               </div>
+              
+              <div class="card-body">
+                {% if messages %}
+                  <div id="mensajes-sistema">
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                        <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
 
-              <!-- Tabla mejorada -->
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="usersTable">
-                  <caption>Listado de usuarios del sistema</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col" width="15%">Documento</th>
-                      <th scope="col" width="20%">Usuario</th>
-                      <th scope="col" width="10%">Tipo Doc.</th>
-                      <th scope="col" width="15%">Correo</th>
-                      <th scope="col" width="10%">Rol</th>
-                      <th scope="col" width="15%">Registro</th>
-                      <th scope="col" width="15%">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% if usuarios %}
-                      {% for usuario in usuarios %}
+                <!-- Filtros mejorados -->
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-2 mb-md-0">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="searchInput" placeholder="Buscar por nombre o documento...">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="searchButton" aria-label="Buscar">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 mb-2 mb-md-0">
+                    <select class="form-select" id="rolFilter" aria-label="Filtrar por rol">
+                      <option value="">Todos los roles</option>
+                      <option value="Admin">Administrador</option>
+                      <option value="Empleado">Empleado</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <button class="btn btn-outline-secondary w-100" id="resetFilters">
+                      <i class="fas fa-sync-alt mr-1"></i> Limpiar filtros
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tabla mejorada -->
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover" id="usersTable">
+                    <caption>Listado de usuarios del sistema</caption>
+                    <thead>
                       <tr>
-                        <td data-label="Documento">{{ usuario.numero_documento }}</td>
-                        <td data-label="Usuario">{{ usuario.username }}</td>
-                        <td data-label="Tipo Doc.">{{ usuario.tipo_documento }}</td>
-                        <td data-label="Contacto">{{ usuario.email }}</td>
-                        <td data-label="Rol"><span class="badge bg-primary">{{ usuario.rol }}</span></td>
-                        <td data-label="Registro">{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
-                        <td data-label="Acciones" class="user-actions">
-                          <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}" aria-label="Editar Usuario">
-                            <i class="fas fa-edit"></i> Editar
-                          </button>
-                          <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal{{ usuario.id }}" aria-label="Eliminar Usuario">
-                            <i class="fas fa-trash"></i> Eliminar
-                          </button>
-                        </td>
+                        <th scope="col" width="15%">Documento</th>
+                        <th scope="col" width="20%">Usuario</th>
+                        <th scope="col" width="10%">Tipo Doc.</th>
+                        <th scope="col" width="15%">Correo</th>
+                        <th scope="col" width="10%">Rol</th>
+                        <th scope="col" width="15%">Registro</th>
+                        <th scope="col" width="15%">Acciones</th>
                       </tr>
-                      {% endfor %}
+                    </thead>
+                    <tbody>
+                      {% if usuarios %}
+                        {% for usuario in usuarios %}
+                        <tr>
+                          <td data-label="Documento">{{ usuario.numero_documento }}</td>
+                          <td data-label="Usuario">{{ usuario.username }}</td>
+                          <td data-label="Tipo Doc.">{{ usuario.tipo_documento }}</td>
+                          <td data-label="Contacto">{{ usuario.email }}</td>
+                          <td data-label="Rol"><span class="badge bg-primary">{{ usuario.rol }}</span></td>
+                          <td data-label="Registro">{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
+                          <td data-label="Acciones" class="user-actions">
+                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}" aria-label="Editar Usuario">
+                              <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal{{ usuario.id }}" aria-label="Eliminar Usuario">
+                              <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      {% else %}
+                        <tr>
+                          <td colspan="7" class="text-center text-muted py-4">
+                            <i class="fas fa-users-slash fa-2x mb-2"></i><br>
+                            No hay usuarios registrados
+                          </td>
+                        </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="card-footer">
+                {% if usuarios.has_other_pages %}
+                <nav aria-label="Paginación de usuarios">
+                  <ul class="pagination justify-content-center mb-0">
+                    {% if usuarios.has_previous %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ usuarios.previous_page_number }}" aria-label="Anterior">
+                          <span aria-hidden="true">«</span>
+                        </a>
+                      </li>
                     {% else %}
-                      <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
-                          <i class="fas fa-users-slash fa-2x mb-2"></i><br>
-                          No hay usuarios registrados
-                        </td>
-                      </tr>
+                      <li class="page-item disabled">
+                        <span class="page-link">«</span>
+                      </li>
                     {% endif %}
-                  </tbody>
-                </table>
+                    
+                    {% for i in usuarios.paginator.page_range %}
+                      {% if usuarios.number == i %}
+                        <li class="page-item active">
+                          <span class="page-link">{{ i }}</span>
+                        </li>
+                      {% else %}
+                        <li class="page-item">
+                          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+                    
+                    {% if usuarios.has_next %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ usuarios.next_page_number }}" aria-label="Siguiente">
+                          <span aria-hidden="true">»</span>
+                        </a>
+                      </li>
+                    {% else %}
+                      <li class="page-item disabled">
+                        <span class="page-link">»</span>
+                      </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+                {% endif %}
               </div>
             </div>
             
-            <div class="card-footer">
-              {% if usuarios.has_other_pages %}
-              <nav aria-label="Paginación de usuarios">
-                <ul class="pagination justify-content-center mb-0">
-                  {% if usuarios.has_previous %}
-                    <li class="page-item">
-                      <a class="page-link" href="?page={{ usuarios.previous_page_number }}" aria-label="Anterior">
-                        <span aria-hidden="true">«</span>
-                      </a>
-                    </li>
-                  {% else %}
-                    <li class="page-item disabled">
-                      <span class="page-link">«</span>
-                    </li>
-                  {% endif %}
-                  
-                  {% for i in usuarios.paginator.page_range %}
-                    {% if usuarios.number == i %}
-                      <li class="page-item active">
-                        <span class="page-link">{{ i }}</span>
-                      </li>
-                    {% else %}
-                      <li class="page-item">
-                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                      </li>
-                    {% endif %}
-                  {% endfor %}
-                  
-                  {% if usuarios.has_next %}
-                    <li class="page-item">
-                      <a class="page-link" href="?page={{ usuarios.next_page_number }}" aria-label="Siguiente">
-                        <span aria-hidden="true">»</span>
-                      </a>
-                    </li>
-                  {% else %}
-                    <li class="page-item disabled">
-                      <span class="page-link">»</span>
-                    </li>
-                  {% endif %}
-                </ul>
-              </nav>
-              {% endif %}
+            <!-- Footer -->
+            <div class="footer">
+              <p>© {% now "Y" %} Autoservicio El Trigal - Sistema de Inventario</p>
             </div>
           </div>
         </div>
-      </section>
-    </div>
-
-    <!-- Footer mejorado -->
-    <footer class="main-footer">
-      <div class="float-right d-none d-sm-block">
-        <b>Versión</b> 1.0.0
       </div>
-      <strong>Copyright &copy; {% now "Y" %} <a href="{% url 'inicioinv' %}">Autoservicio El Trigal</a>.</strong> Todos los derechos reservados.
-    </footer>
+    </div>
 
     <!-- Incluir modal de registro -->
     {% include 'paginas/registrate.html' %}
@@ -382,111 +347,132 @@
         {% include 'sistema/usuariocrud/eliminar_usuario.html' %}
       {% endfor %}
     {% endif %}
-  </div>
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
+    <script src="{% static 'myapp/js/submenu.js' %}"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Mostrar/ocultar contraseña
-      const togglePassword = document.querySelector('#togglePassword');
-      if (togglePassword) {
-        const passwordField = document.querySelector('#id_password');
-        togglePassword.addEventListener('click', function() {
-          const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-          passwordField.setAttribute('type', type);
-          this.querySelector('i').classList.toggle('fa-eye-slash');
-        });
-      }
-      
-      // Cerrar alertas automáticamente
-      const alerts = document.querySelectorAll('.alert');
-      alerts.forEach(alert => {
-        setTimeout(() => {
-          const bsAlert = new bootstrap.Alert(alert);
-          bsAlert.close();
-        }, 5000);
-      });
-
-      // Elementos de filtrado
-      const searchInput = document.getElementById('searchInput');
-      const searchButton = document.getElementById('searchButton');
-      const rolFilter = document.getElementById('rolFilter');
-      const resetFilters = document.getElementById('resetFilters');
-      
-      // Función para filtrar la tabla
-      function filterTable() {
-        const searchText = searchInput.value.toLowerCase();
-        const rolValue = rolFilter.value.toLowerCase();
-        const table = document.getElementById('usersTable');
-        const rows = table.getElementsByTagName('tr');
-
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          const cells = row.getElementsByTagName('td');
-          if (cells.length === 0) continue;
-          
-          const username = cells[1].textContent.toLowerCase();
-          const document = cells[0].textContent.toLowerCase();
-          const rol = cells[4].textContent.toLowerCase();
-          
-          const textMatch = username.includes(searchText) || document.includes(searchText);
-          const rolMatch = rolValue === '' || rol.includes(rolValue);
-          
-          row.style.display = textMatch && rolMatch ? '' : 'none';
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Mostrar/ocultar contraseña
+        const togglePassword = document.querySelector('#togglePassword');
+        if (togglePassword) {
+          const passwordField = document.querySelector('#id_password');
+          togglePassword.addEventListener('click', function() {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+          });
         }
-      }
-      
-      // Event listeners para filtros
-      if (searchInput) {
-        searchInput.addEventListener('keyup', filterTable);
-      }
-      
-      if (searchButton) {
-        searchButton.addEventListener('click', filterTable);
-      }
-      
-      if (rolFilter) {
-        rolFilter.addEventListener('change', filterTable);
-      }
-      
-      if (resetFilters) {
-        resetFilters.addEventListener('click', function() {
-          searchInput.value = '';
-          rolFilter.value = '';
-          filterTable();
+        
+        // Cerrar alertas automáticamente
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+          setTimeout(() => {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+          }, 5000);
         });
-      }
-      
-      // Sanitización de inputs para prevenir XSS
-      const forms = document.querySelectorAll('form');
-      forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-          const inputs = form.querySelectorAll('input, textarea');
-          inputs.forEach(input => {
-            input.value = input.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // Elementos de filtrado
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const rolFilter = document.getElementById('rolFilter');
+        const resetFilters = document.getElementById('resetFilters');
+        
+        // Función para filtrar la tabla
+        function filterTable() {
+          const searchText = searchInput.value.toLowerCase();
+          const rolValue = rolFilter.value.toLowerCase();
+          const table = document.getElementById('usersTable');
+          const rows = table.getElementsByTagName('tr');
+
+          for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            const cells = row.getElementsByTagName('td');
+            if (cells.length === 0) continue;
+            
+            const username = cells[1].textContent.toLowerCase();
+            const document = cells[0].textContent.toLowerCase();
+            const rol = cells[4].textContent.toLowerCase();
+            
+            const textMatch = username.includes(searchText) || document.includes(searchText);
+            const rolMatch = rolValue === '' || rol.includes(rolValue);
+            
+            row.style.display = textMatch && rolMatch ? '' : 'none';
+          }
+        }
+        
+        // Event listeners para filtros
+        if (searchInput) {
+          searchInput.addEventListener('keyup', filterTable);
+        }
+        
+        if (searchButton) {
+          searchButton.addEventListener('click', filterTable);
+        }
+        
+        if (rolFilter) {
+          rolFilter.addEventListener('change', filterTable);
+        }
+        
+        if (resetFilters) {
+          resetFilters.addEventListener('click', function() {
+            searchInput.value = '';
+            rolFilter.value = '';
+            filterTable();
           });
+        }
+        
+        // Sanitización de inputs para prevenir XSS
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+            const inputs = form.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+              input.value = input.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            });
+          });
+        });
+        
+        // Mejorar accesibilidad de tablas en móviles
+        if (window.innerWidth <= 768) {
+          const tableHeaders = document.querySelectorAll('thead th');
+          const tableCells = document.querySelectorAll('tbody td');
+          
+          tableHeaders.forEach((header, index) => {
+            const headerText = header.textContent;
+            tableCells.forEach(cell => {
+              if (cell.cellIndex === index) {
+                cell.setAttribute('data-label', headerText);
+              }
+            });
+          });
+        }
+
+        // Animación para contar números en estadísticas
+        const statsNumbers = document.querySelectorAll('.stats-number');
+        statsNumbers.forEach(number => {
+          const finalValue = parseInt(number.textContent);
+          let currentValue = 0;
+          const duration = 1500;
+          const increment = finalValue / (duration / 16);
+          
+          function updateCounter() {
+            if (currentValue < finalValue) {
+              currentValue += increment;
+              number.textContent = Math.ceil(currentValue);
+              requestAnimationFrame(updateCounter);
+            } else {
+              number.textContent = finalValue;
+            }
+          }
+          
+          updateCounter();
         });
       });
-      
-      // Mejorar accesibilidad de tablas en móviles
-      if (window.innerWidth <= 768) {
-        const tableHeaders = document.querySelectorAll('thead th');
-        const tableCells = document.querySelectorAll('tbody td');
-        
-        tableHeaders.forEach((header, index) => {
-          const headerText = header.textContent;
-          tableCells.forEach(cell => {
-            if (cell.cellIndex === index) {
-              cell.setAttribute('data-label', headerText);
-            }
-          });
-        });
-      }
-    });
-  </script>
+    </script>
 </body>
 </html>
