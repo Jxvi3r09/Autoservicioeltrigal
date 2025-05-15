@@ -539,7 +539,6 @@ button:focus, a:focus, input:focus, textarea:focus, select:focus {
 
 
 .btn.mi-boton {
-    font-weight: bold;
     padding: 8px 16px;
 }
 

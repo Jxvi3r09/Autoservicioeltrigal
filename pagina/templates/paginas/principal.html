@@ -8,8 +8,8 @@
     <meta
       name="description"
       content="Autoservicio el Trigal - Tu tienda de conveniencia con los mejores productos"
+    />
 
-    <link>
     <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
 
     <!-- Conexión CSS -->
@@ -457,6 +457,12 @@
 
 <script src="{% static 'myapp/js/custom.js' %}"></script>
 <script src="{% static 'myapp/js/sienna.js' %}"></script>
-
+<script>
+  $(document).ready(function () {
+    {% if mostrar_modal_login %}
+      $('#loginModal').modal('show');
+    {% endif %}
+  });
+</script>
 </body>
 </html>

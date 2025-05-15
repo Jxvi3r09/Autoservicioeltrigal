@@ -302,6 +302,7 @@ body:not(.sidebar-collapse) .user-avatar,
   background-color: var(--verde-principal);
   border: none;
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+  text-align: right;
 }
 
 .btn-primary:hover, .btn-primary:focus,
@@ -562,6 +563,7 @@ body:not(.sidebar-collapse) .user-avatar,
   .card-header {
     flex-direction: column;
     align-items: flex-start;
+    float: right;
   }
 
   .card-tools {

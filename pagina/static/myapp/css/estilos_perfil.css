@@ -1,5 +1,5 @@
 :root {
-      --primary-color: #2e7d32; /* Verde oscuro */
+      --primary-color: rgb(34, 132, 33) !important;; /* Verde oscuro */
       --secondary-color: #ff9800; /* Naranja */
       --dark-color: #212121; /* Negro/Gris muy oscuro */
       --success-color: #4caf50; /* Verde claro */
@@ -14,7 +14,6 @@
 .main-sidebar {
   position: fixed !important;
   height: 100%;
-  overflow-y: auto;
   box-shadow: 2px 0 5px rgba(0,0,0,0.2);
   z-index: 1000;
 }
@@ -149,11 +148,11 @@
 }
 
 .card-header.bg-primary {
-  background-color: var(--primary-color) !important;
+  background-color: rgb(34, 132, 33) !important;
 }
 
 .card-header.bg-success {
-  background-color: var(--success-color) !important;
+  background-color: var(--primary-color) !important;
 }
 
 .card-header.bg-warning {
@@ -242,4 +241,120 @@
   .content-wrapper, .main-header, .main-footer {
     margin-left: 0;
   }
+}
+
+/* Estilos generales */
+:root {
+  --verde-principal: #228421;
+  --naranja-principal: #ff9f43;
+  --blanco: #ffffff;
+  --negro: #000000;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar */
+.main-sidebar {
+  background-color: rgb(34, 132, 33) !important;
+}
+
+.nav-link.active {
+  background-color: var(--blanco) !important;
+  color: var(--negro) !important;
+}
+
+.nav-sidebar .nav-link {
+  border-radius: 8px;
+  margin: 5px 10px;
+  transition: all 0.3s ease;
+  color: var(--blanco);
+}
+
+.nav-sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.brand-link {
+  border-bottom: 2px solid var(--naranja-principal) !important;
+  text-align: center;
+  font-weight: 700 !important;
+  padding: 15px 0;
+  color: var(--blanco) !important;
+}
+
+/* Content Header */
+.content-header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: var(--blanco) !important;
+}
+
+#conte {
+  align-items: flex-start;
+  padding-top: 0;
+}
+
+/* Logo */
+.logo-container img {
+  max-height: 80px;
+  margin-top: 0;
+}
+
+.logo-hover {
+  transition: transform 0.3s ease;
+}
+
+.logo-hover:hover {
+  transform: scale(1.1);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  margin-left: 30px;
+}
+
+.breadcrumb-item a {
+  color: var(--verde-principal);
+}
+
+.breadcrumb-item a:hover {
+  color: var(--naranja-principal);
+}
+
+/* Iconos */
+.fas:hover, .fa:hover {
+  color: var(--naranja-principal) !important;
+}
+
+/* Botón de menú */
+.btn-link {
+  color: var(--negro);
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 100px);
+}
+/* Imagen del usuario por defecto: pequeña */
+.user-avatar {
+  width: 40px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+/* Cuando el sidebar NO está colapsado, o se pasa el mouse por encima */
+body:not(.sidebar-collapse) .user-avatar,
+.sidebar-mini.sidebar-collapse .main-sidebar:hover .user-avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.user-panel img{
+    height: 40px;
+    width: 40px;
 }
