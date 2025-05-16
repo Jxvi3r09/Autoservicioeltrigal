@@ -52,7 +52,7 @@ body {
 
 /* Content */
 .content-wrapper {
-  background-color: #f8f9fa;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
   padding: 20px;
 }
 

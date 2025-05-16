@@ -428,12 +428,11 @@ a:hover{
   }
   
   ::-webkit-scrollbar-thumb {
-    background: var(--verde-claro);
     border-radius: 10px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--verde-principal);
+    background: var(--naranja-principal);
   }
 
 

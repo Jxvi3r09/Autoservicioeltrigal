@@ -437,9 +437,7 @@ textarea:focus {
   background-color: rgb(34, 132, 33) !important;
   position: fixed !important;
 }
-/* .content-wrapper {
-  background-color: rgb(243, 154, 4, 0.3) !important;
-} */
+
 .logo-hover {
   transition: transform 0.3s ease; /* Suaviza el cambio */
 }

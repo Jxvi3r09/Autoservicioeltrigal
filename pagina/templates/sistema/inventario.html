@@ -23,6 +23,7 @@
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
   <div class="wrapper">
+   <!-- Sidebar mejorado -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <a href="{% url 'inicioinv' %}" class="brand-link text-center">
     <span class="brand-text font-weight-light">
@@ -98,9 +99,43 @@
     </nav>
   </div>
 </aside>
-
-    <!-- Contenido principal -->
-    <div class="content-wrapper p-4">
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+      <!-- Content Header -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+      
+            <!-- Grupo: Botón + Inicio -->
+            <div class="d-flex align-items-center">
+              <!-- Botón de menú -->
+                    <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                      <i class="fas fa-bars"></i>
+                    </button>
+      
+              <!-- Migas de pan -->
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'inicioinv' %}">
+                    <i class="fas fa-home"></i> Inicio
+                  </a>
+                </li>
+                <li class="breadcrumb-item active">Gestión De Productos</li>
+              </ol>
+            </div>
+      
+            <!-- Logo -->
+            <div class="logo-container">
+              <img
+                src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                alt="Autoservicio El Trigal"
+                class="logo-hover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div class="section-card">
         <div class="page-header">
           <h2><i class="fas fa-layer-group mr-2" style="color: #ff9800;"></i>Categorías</h2>
@@ -290,6 +325,8 @@
     <!-- AdminLTE JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
     
     <script>
       $(document).ready(function() {

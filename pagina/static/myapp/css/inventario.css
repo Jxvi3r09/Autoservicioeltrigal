@@ -72,6 +72,7 @@ body {
 
 .breadcrumb-item a {
   color: var(--verde-principal);
+  text-decoration: none;
 }
 
 .breadcrumb-item a:hover {
@@ -112,4 +113,8 @@ body:not(.sidebar-collapse) .user-avatar,
 .user-panel img{
     height: 40px;
     width: 40px;
+}
+
+.section-card{
+  margin-top: 5%;
 }
