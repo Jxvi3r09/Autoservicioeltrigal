@@ -275,10 +275,11 @@
                                                         </td>
                                                         <td>
                                                             <div class="btn-group">
-                                                                <a href="#" onclick="return confirmarDescarga('{{ backup.id }}')" class="btn btn-sm btn-primary">
+                                                                <a href="{% url 'descargar_backup' backup.id %}" onclick="return confirmarDescarga('{{ backup.id }}')" class="btn btn-sm btn-primary">
                                                                     <i class="fas fa-download"></i>
                                                                 </a>
-                                                                <a href="#" onclick="return confirmarEliminacion('{{ backup.id }}')" class="btn btn-sm btn-danger">
+                                                                <a href="#" onclick="return confirmarEliminacion('{{ backup.id }}')" class="btn btn-sm btn-danger" >
+                                                                     <i class="fas fa-trash"></i>
                                                             </a>
                                                             <a href="{% url 'restaurar_backup' backup.id %}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Restaurar">
                                                                 <i class="fas fa-undo"></i>
@@ -441,7 +442,7 @@
     function confirmarEliminacion(id) {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: "No podrás revertir esta acción",
+            text: "Esta acción eliminará la copia de seguridad permanentemente",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -450,7 +451,20 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = `/backup/eliminar/${id}/`;
+                // Crear un formulario oculto para enviar la petición POST
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/backup/eliminar/${id}/`;
+                
+                // Agregar CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = 'csrfmiddlewaretoken';
+                csrfToken.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                
+                form.appendChild(csrfToken);
+                document.body.appendChild(form);
+                form.submit();
             }
         });
         return false;

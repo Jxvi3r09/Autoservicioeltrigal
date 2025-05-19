@@ -21,6 +21,8 @@
   <!-- jsPDF para generar PDFs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -90,6 +92,13 @@
                   <p>Productos</p>
                 </a>
               </li>
+
+            <li class="nav-item">
+            <a href="{% url 'copias_bd' %}" class="nav-link">
+                <i class="nav-icon fas fa-database"></i>
+                <p>Copias de seguridad</p>
+            </a>
+            </li>
 
               <li class="nav-item">
                 <a href="{% url 'principal' %}" class="nav-link">
@@ -204,18 +213,7 @@
               </div>
               
               <div class="card-body">
-                {% if messages %}
-                  <div id="mensajes-sistema">
-                    {% for message in messages %}
-                      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                        <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
-                        {{ message }}
-                      </div>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-
+                <!-- Mantener el resto del contenido -->
                 <!-- Filtros mejorados -->
                 <div class="row mb-4">
                   <div class="col-md-6 mb-2 mb-md-0">
@@ -268,12 +266,18 @@
                           <td data-label="Rol"><span class="badge bg-primary">{{ usuario.rol }}</span></td>
                           <td data-label="Registro">{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
                           <td data-label="Acciones" class="user-actions">
-                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}" aria-label="Editar Usuario">
-                              <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal{{ usuario.id }}" aria-label="Eliminar Usuario">
-                              <i class="fas fa-trash"></i> Eliminar
-                            </button>
+                            <form id="formEditar{{ usuario.id }}" action="{% url 'editar_usuario' usuario.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-sm btn-warning" onclick="confirmarEdicion('{{ usuario.id }}', '{{ usuario.username }}')" aria-label="Editar Usuario">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                            </form>
+                            <form id="formEliminar{{ usuario.id }}" action="{% url 'eliminar_usuario' usuario.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-sm btn-danger" onclick="confirmarEliminacion('{{ usuario.id }}', '{{ usuario.username }}')" aria-label="Eliminar Usuario">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </form>
                           </td>
                         </tr>
                         {% endfor %}
@@ -356,6 +360,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
     <script src="{% static 'myapp/js/reportes.js' %}"></script>
+    <script src="{% static 'myapp/js/alertas.js' %}"></script>
 
+    <!-- Script para inicializar mensajes -->
+    <script>
+        {% if messages %}
+            mostrarMensajes([
+                {% for message in messages %}
+                    {
+                        tags: '{{ message.tags }}',
+                        text: '{{ message }}'
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]);
+        {% endif %}
+    </script>
 </body>
 </html>
