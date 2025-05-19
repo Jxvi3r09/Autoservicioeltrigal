@@ -11,7 +11,7 @@ text-align: center; /* Centra el texto en las celdas */
 }
 
 #tablapro th {
-background-color: #ffc107; /* Fondo amarillo para los encabezados */
+background-color:rgb(243, 154, 49) ; /* Fondo amarillo para los encabezados */
 color: #fff; /* Texto blanco en los encabezados */
 }
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import RegistroUsuarioForm  # Asegúrate de importar el formulario
@@ -10,7 +10,7 @@ from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import login
 from .forms import ProductoForm
-from .models import Producto
+from .models import Producto, Categoria
 from django.utils import timezone
 from datetime import timedelta
 from .forms import CustomPasswordResetForm
@@ -110,8 +110,28 @@ def index(request):
     return render(request, "paginas/index.html")
 
 def inventario(request):
-    categorias = Categoria.objects.all()  # obtiene todas las categorías
-    return render(request, "sistema/inventario.html", {'categorias': categorias})
+    productos = Producto.objects.all().select_related('categoria')
+    categorias = Categoria.objects.all()
+    return render(request, 'sistema/inventario.html', {
+        'productos': productos,
+        'categorias': categorias,
+    })
+
+def agregar_categoria(request):
+    if request.method == 'POST':
+        try:
+            nombre = request.POST.get('nombre')
+            categoria = Categoria.objects.create(nombre=nombre)
+            return JsonResponse({
+                'success': True,
+                'categoria': {
+                    'id': categoria.id,
+                    'nombre': categoria.nombre
+                }
+            })
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
 def administrador(request):
     return render(request, "sistema/administrador.html")
@@ -394,4 +414,85 @@ def categoria_eliminar(request, categoria_id):
     return render(request, 'sistema/inventario/categoria_confirmar_eliminar.html', {
         'categoria': categoria
     })
+
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from .models import Categoria
+
+def editar_categoria(request, categoria_id):
+    if request.method == 'POST':
+        try:
+            categoria = get_object_or_404(Categoria, id=categoria_id)
+            categoria.nombre = request.POST['nombre']
+            categoria.descripcion = request.POST.get('descripcion', '')
+            categoria.save()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+
+def eliminar_categoria(request, categoria_id):
+    if request.method == 'DELETE':
+        try:
+            categoria = get_object_or_404(Categoria, id=categoria_id)
+            categoria.delete()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Categoria
+
+def modal_registro_categoria(request):
+    return render(request, 'sistema/modal_registro_categoria.html')
+
+def guardar_categoria(request):
+    if request.method == 'POST':
+        try:
+            categoria = Categoria.objects.create(
+                nombre=request.POST['nombre'],
+                descripcion=request.POST.get('descripcion', '')
+            )
+            messages.success(request, 'Categoría guardada correctamente')
+            return redirect('inventario')
+        except Exception as e:
+            messages.error(request, f'Error al guardar la categoría: {str(e)}')
+            return redirect('modal_registro_categoria')
+    return redirect('modal_registro_categoria')
+
+from django.http import JsonResponse
+from .models import Producto
+
+def agregar_producto(request):
+    if request.method == 'POST':
+        try:
+            producto = Producto.objects.create(
+                nombre=request.POST['nombre'],
+                categoria_id=request.POST['categoria'],
+                precio=request.POST['precio']
+            )
+            if 'imagen' in request.FILES:
+                producto.imagen = request.FILES['imagen']
+                producto.save()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+
+from django.http import JsonResponse
+from .models import Producto
+
+def eliminar_producto(request, pk):
+    if request.method == 'DELETE':
+        try:
+            producto = Producto.objects.get(id=pk)
+            producto.delete()
+            return JsonResponse({'success': True})
+        except Producto.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Producto no encontrado'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
 

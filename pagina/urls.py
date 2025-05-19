@@ -66,7 +66,7 @@ urlpatterns = [
     path('productos/crear/', views.crear_producto, name='crear_producto'),  # NUEVA
     path('productos/editar/<int:pk>/', views.editar_producto, name='editar_producto'),
     path('productos/eliminar/<int:pk>/', views.eliminar_producto, name='eliminar_producto'),
-
+    path('agregar-producto/', views.agregar_producto, name='agregar_producto'),
 
     path('proveedores/eliminar/<int:id>/', views.eliminar_proveedor, name='eliminar_proveedor'),
     path('proveedores/editar/<int:id>/', views.editar_proveedor, name='editar_proveedor'),
@@ -76,15 +76,17 @@ urlpatterns = [
 
     path('perfil/editar-foto/', views.editar_foto_usuario, name='editar_foto_usuario'),
 
-    path('categorias/', views.listar_categorias, name='listar_categorias'),
-    path('categorias/registrar/', views.registrar_categoria, name='registrar_categoria'),
+    # path('categorias/', views.listar_categorias, name='listar_categorias'),
+    # path('categorias/registrar/', views.registrar_categoria, name='registrar_categoria'),
 
-    path('categorias/<int:categoria_id>/editar/', views.categoria_editar, name='categoria_editar'),
-    path('categorias/<int:categoria_id>/eliminar/', views.categoria_eliminar, name='categoria_eliminar'),
+    # path('categorias/<int:categoria_id>/editar/', views.categoria_editar, name='categoria_editar'),
+    # path('categorias/<int:categoria_id>/eliminar/', views.categoria_eliminar, name='categoria_eliminar'),
 
-    path('categoria/<int:categoria_id>/', views.categoria_detalle, name='categoria_detalle'),
+    # path('categoria/<int:categoria_id>/', views.categoria_detalle, name='categoria_detalle'),
 
-
+    path('agregar-categoria/', views.agregar_categoria, name='agregar_categoria'),
+    path('editar-categoria/<int:categoria_id>/', views.editar_categoria, name='editar_categoria'),
+    path('eliminar-categoria/<int:categoria_id>/', views.eliminar_categoria, name='eliminar_categoria'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos
 if settings.DEBUG:

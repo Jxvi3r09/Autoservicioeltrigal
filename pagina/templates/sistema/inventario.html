@@ -1,365 +1,732 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel de Administración - Categorías</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Autoservicio de Inventario</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #e5e7eb;
+            --text: #1f2937;
+            --light: #f9fafb;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f3f4f6;
+            color: var(--text);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .search-container {
+            flex-grow: 1;
+            max-width: 600px;
+            margin: 0 20px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--secondary);
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .main-content {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .sidebar h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-item {
+            padding: 8px 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .category-item:hover {
+            background-color: var(--secondary);
+        }
+        
+        .category-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .add-category {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .content {
+            flex-grow: 1;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-select {
+            padding: 8px;
+            border: 1px solid var(--secondary);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 150px;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .product-category {
+            color: var(--primary);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .product-specs {
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+        
+        .product-spec {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        
+        .spec-label {
+            font-weight: 500;
+            width: 60px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--secondary);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--secondary);
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: var(--primary);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-cancel {
+            background-color: var(--secondary);
+            color: var(--text);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 5px;
+        }
+        
+        .page-item {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .page-item:hover {
+            background-color: var(--secondary);
+        }
+        
+        .page-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
 
-   <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
-
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Tu archivo JS para submenús (opcional) -->
-  <script src="{% static 'myapp/js/submenu.js' %}"></script>
-
-  <!-- AdminLTE CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link rel="stylesheet" href="{% static 'myapp/css/estilos_inventario.css' %}">
+        .category-actions {
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .category-item:hover .category-actions {
+            opacity: 1;
+        }
+        
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px;
+            font-size: 16px;
+            border-radius: 3px;
+        }
+        
+        .btn-icon:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
-
-<body class="hold-transition sidebar-mini sidebar-collapse">
-  <div class="wrapper">
-   <!-- Sidebar mejorado -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <a href="{% url 'inicioinv' %}" class="brand-link text-center">
-    <span class="brand-text font-weight-light">
-      <strong>Sistema Inventario</strong>
-    </span>
-  </a>
-  
-  <div class="sidebar">
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
-      <div class="image">
-        {% if request.user.is_authenticated and request.user.imagen_perfil %}
-          <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% else %}
-          <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% endif %}
-      </div>
-      <div class="info mt-2 text-center">
-        <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
-          {% if request.user.is_authenticated %}
-            {{ request.user.first_name }} {{ request.user.last_name }}<br>
-            {{ request.user.rol }}
-          {% else %}
-            Usuario
-          {% endif %}
-        </a>
-      </div>
-    </div>
-
-    <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item">
-          <a href="{% url 'inicioinv' %}" class="nav-link">
-            <i class="nav-icon fas fa-home" aria-hidden="true"></i>
-            <p>Inicio</p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{% url 'usuarios' %}" class="nav-link">
-            <i class="nav-icon fas fa-users" aria-hidden="true"></i>
-            <p>Usuarios</p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{% url 'inventario' %}" class="nav-link active">
-            <i class="nav-icon fas fa-boxes"></i>
-            <p>Inventario</p>
-          </a>
-        </li>
-        
-        <li class="nav-item">
-          <a href="{% url 'proveedores' %}" class="nav-link">
-            <i class="nav-icon fas fa-truck"></i>
-            <p>Proveedores</p>
-          </a>
-        </li> 
-        
-        <li class="nav-item">
-          <a href="{% url 'productos' %}" class="nav-link">
-            <i class="nav-icon fas fa-tag"></i>
-            <p>Productos</p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
-            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-            <p>Cerrar Sesión</p>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</aside>
-      <!-- Content Wrapper -->
-      <div class="content-wrapper">
-      <!-- Content Header -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
-      
-            <!-- Grupo: Botón + Inicio -->
-            <div class="d-flex align-items-center">
-              <!-- Botón de menú -->
-                    <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
-                      <i class="fas fa-bars"></i>
-                    </button>
-      
-              <!-- Migas de pan -->
-              <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item">
-                  <a href="{% url 'inicioinv' %}">
-                    <i class="fas fa-home"></i> Inicio
-                  </a>
-                </li>
-                <li class="breadcrumb-item active">Gestión De Productos</li>
-              </ol>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">InventarioApp</div>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar productos..." class="search-input">
             </div>
-      
-            <!-- Logo -->
-            <div class="logo-container">
-              <img
-                src="{% static 'myapp/imagenes/logosinfondo.png' %}"
-                alt="Autoservicio El Trigal"
-                class="logo-hover"
-              />
-            </div>
-          </div>
+            <button class="btn" id="addProductBtn">Agregar Producto</button>
         </div>
-      </div>
-      
-      <div class="section-card">
-        <div class="page-header">
-          <h2><i class="fas fa-layer-group mr-2" style="color: #ff9800;"></i>Categorías</h2>
-          <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoriaModal">
-              <i class="fas fa-plus mr-1"></i> Registrar Categoría
-            </button>
-            <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#productoModal">
-              <i class="fas fa-plus mr-1"></i> Registrar Producto
-            </button>
-          </div>
-        </div>
-      
-        <!-- Selector de vistas -->
-        <div class="view-selector">
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-secondary active" id="view-cards">
-              <i class="fas fa-th-large"></i> Tarjetas
-            </button>
-            <button type="button" class="btn btn-outline-secondary" id="view-list">
-              <i class="fas fa-list"></i> Lista
-            </button>
-            <button type="button" class="btn btn-outline-secondary" id="view-badges">
-              <i class="fas fa-tags"></i> Etiquetas
-            </button>
-            <button type="button" class="btn btn-outline-secondary" id="view-tabs">
-              <i class="fas fa-folder"></i> Pestañas
-            </button>
-          </div>
-        </div>
-      
-        <!-- Vista de Tarjetas (por defecto) -->
-        <div id="category-view-cards" class="category-grid">
-          {% for categoria in categorias %}
-            <div class="card category-card">
-              <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">{{ categoria.nombre }}</h5>
-              </div>
-              <div class="card-body">
-                <p class="card-text">
-                  <i class="fas fa-layer-group text-muted"></i>
-                  <a href="{% url 'categoria_detalle' categoria.id %}" style="text-decoration: none;">
-                    Ver productos
-                  </a>
-                </p>
-              </div>
-              <div class="card-footer">
-                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
-                  <i class="fas fa-edit"></i> Editar
-                </button>
-                <form action="{% url 'categoria_eliminar' categoria.id %}" method="post" style="display:inline;">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"
-                         onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
-                    <i class="fas fa-trash-alt"></i> Eliminar
-                  </button>
-                </form>
-              </div>
-            </div>
-          {% empty %}
-            <div class="alert alert-info">No hay categorías registradas.</div>
-          {% endfor %}
-        </div>
-      
-        <!-- Vista de Lista (oculta por defecto) -->
-        <div id="category-view-list" class="category-list-container" style="display: none;">
-          {% for categoria in categorias %}
-            <div class="category-list p-3 d-flex justify-content-between align-items-center">
-              <div>
-                <h5 class="mb-0">{{ categoria.nombre }}</h5>
-                <small>
-                  <a href="{% url 'categoria_detalle' categoria.id %}" style="text-decoration: none;">
-                    Ver productos
-                  </a>
-                </small>
-              </div>
-              <div>
-                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <form action="{% url 'categoria_eliminar' categoria.id %}" method="post" style="display:inline;">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"
-                         onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </form>
-              </div>
-            </div>
-          {% empty %}
-            <div class="alert alert-info">No hay categorías registradas.</div>
-          {% endfor %}
-        </div>
-      
-        <!-- Vista de Etiquetas (oculta por defecto) -->
-        <div id="category-view-badges" style="display: none; text-align: center;">
-          {% for categoria in categorias %}
-            <div class="category-badge position-relative">
-              {{ categoria.nombre }}
-              <div class="position-absolute" style="top: -8px; right: -8px;">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-ellipsis-v"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{% url 'categoria_detalle' categoria.id %}">
-                      <i class="fas fa-eye mr-2"></i> Ver detalles
-                    </a>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
-                      <i class="fas fa-edit mr-2"></i> Editar
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <form action="{% url 'categoria_eliminar' categoria.id %}" method="post">
-                      {% csrf_token %}
-                      <button type="submit" class="dropdown-item text-danger" 
-                              onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
-                        <i class="fas fa-trash-alt mr-2"></i> Eliminar
-                      </button>
-                    </form>
-                  </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <h3>Categorías</h3>
+                <ul class="category-list">
+                    <li class="category-item active">Todas las categorías <span>({{ productos.count }})</span></li>
+                    {% for categoria in categorias %}
+                    <li class="category-item">
+                        <div>{{ categoria.nombre }} <span>({{ categoria.producto_set.count }})</span></div>
+                        <div class="category-actions">
+                            <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
+                            <button class="btn-icon" onclick="eliminarCategoria({{ categoria.id }})">🗑️</button>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="add-category">
+                    <button class="btn" id="addCategoryBtn">Agregar Categoría</button>
                 </div>
-              </div>
-            </div>
-          {% empty %}
-            <div class="alert alert-info">No hay categorías registradas.</div>
-          {% endfor %}
+            </aside>
+            
+            <main class="content">
+                <div class="products-header">
+                    <h2>Productos</h2>
+                    <div class="filters">
+                        <select class="filter-select">
+                            <option>Ordenar por: Relevancia</option>
+                            <option>Precio: Menor a Mayor</option>
+                            <option>Precio: Mayor a Menor</option>
+                            <option>A-Z</option>
+                            <option>Z-A</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Mostrar: 20</option>
+                            <option>Mostrar: 50</option>
+                            <option>Mostrar: 100</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-grid">
+                    {% for producto in productos %}
+                    <div class="product-card">
+                        <div class="product-image">
+                            {% if producto.imagen %}
+                                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                            {% else %}
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">{{ producto.nombre }}</div>
+                            <div class="product-category">{{ producto.categoria.nombre }}</div>
+                            <div class="product-specs">
+                                <div class="product-spec">
+                                    <span class="spec-label">Código:</span>
+                                    <span>{{ producto.codigo }}</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Stock:</span>
+                                    <span>{{ producto.stock }}</span>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <div class="product-price">${{ producto.precio }}</div>
+                                <div>
+                                    <button class="btn" onclick="editarProducto({{ producto.id }})">Editar</button>
+                                    <button class="btn btn-danger" onclick="eliminarProducto({{ producto.id }})">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="no-products">
+                        <p>No hay productos disponibles</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="pagination">
+                    <div class="page-item">«</div>
+                    <div class="page-item active">1</div>
+                    <div class="page-item">2</div>
+                    <div class="page-item">3</div>
+                    <div class="page-item">4</div>
+                    <div class="page-item">5</div>
+                    <div class="page-item">»</div>
+                </div>
+            </main>
         </div>
-      
-        <!-- Vista de Pestañas (oculta por defecto) -->
-        <div id="category-view-tabs" style="display: none;">
-          {% for categoria in categorias %}
-            <div class="category-tab d-flex justify-content-between align-items-center">
-              <a href="{% url 'categoria_detalle' categoria.id %}" style="text-decoration: none; color: inherit; flex-grow: 1;">
-                <i class="fas fa-folder mr-2"></i> {{ categoria.nombre }}
-              </a>
-              <div>
-                <button class="btn btn-sm btn-outline-warning actions-btn" data-toggle="modal" data-target="#modalEditarCategoria{{ categoria.id }}">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <form action="{% url 'categoria_eliminar' categoria.id %}" method="post" style="display:inline;">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-outline-danger actions-btn" title="Eliminar"
-                         onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </form>
-              </div>
-            </div>
-          {% empty %}
-            <div class="alert alert-info">No hay categorías registradas.</div>
-          {% endfor %}
-        </div>
-      </div>
     </div>
 
-    <!-- Modales para editar categorías -->
-    {% for categoria in categorias %}
-      <div class="modal fade" id="modalEditarCategoria{{ categoria.id }}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <form method="post" action="{% url 'categoria_editar' categoria.id %}">
-            {% csrf_token %}
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Editar Categoría</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body">
+    <!-- Modal para agregar producto -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Agregar Nuevo Producto</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="addProductForm" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-group">
-                  <label for="nombreCategoria{{ categoria.id }}">Nombre</label>
-                  <input type="text" name="nombre" id="nombreCategoria{{ categoria.id }}"
-                        class="form-control" required value="{{ categoria.nombre }}">
+                    <label class="form-label">Nombre del Producto</label>
+                    <input type="text" name="nombre" class="form-input" required>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              </div>
-            </div>
-          </form>
+                <div class="form-group">
+                    <label class="form-label">Categoría</label>
+                    <select name="categoria" class="form-select" required>
+                        <option value="">Seleccionar categoría</option>
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Precio</label>
+                    <input type="number" name="precio" step="0.01" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Imagen del Producto</label>
+                    <input type="file" name="imagen" class="form-input">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" id="cancelAddProduct">Cancelar</button>
+                    <button type="submit" class="btn">Guardar Producto</button>
+                </div>
+            </form>
         </div>
-      </div>
-    {% endfor %}
+    </div>
 
-    {% include 'sistema/inventario/modal_registro_categoria.html' %}
-    {% include 'sistema/crud_productos/form_productos.html' %}
+    <!-- Modal para agregar categoría -->
+    <div class="modal" id="addCategoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Agregar Nueva Categoría</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="addCategoryForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Nombre de la Categoría</label>
+                    <input type="text" name="nombre" class="form-input" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" id="cancelAddCategory">Cancelar</button>
+                    <button type="submit" class="btn">Guardar Categoría</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <!-- AdminLTE JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <!-- Modal para editar categoría -->
+    <div class="modal" id="editCategoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Categoría</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="editCategoryForm" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="categoria_id" id="edit_categoria_id">
+                <div class="form-group">
+                    <label class="form-label">Nombre de la Categoría</label>
+                    <input type="text" name="nombre" id="edit_categoria_nombre" class="form-input" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" onclick="closeEditModal()">Cancelar</button>
+                    <button type="submit" class="btn">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    
     <script>
-      $(document).ready(function() {
-        // Cambiar entre las diferentes vistas
-        $('#view-cards').click(function() {
-          $('.btn-outline-secondary').removeClass('active');
-          $(this).addClass('active');
-          $('#category-view-cards').show();
-          $('#category-view-list, #category-view-badges, #category-view-tabs').hide();
+        // Mostrar/ocultar modales
+        const addProductBtn = document.getElementById('addProductBtn');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const addProductModal = document.getElementById('addProductModal');
+        const addCategoryModal = document.getElementById('addCategoryModal');
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+        const cancelAddProduct = document.getElementById('cancelAddProduct');
+        const cancelAddCategory = document.getElementById('cancelAddCategory');
+
+        addProductBtn.addEventListener('click', () => {
+            addProductModal.style.display = 'block';
         });
+
+        addCategoryBtn.addEventListener('click', () => {
+            addCategoryModal.style.display = 'block';
+        });
+
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                addProductModal.style.display = 'none';
+                addCategoryModal.style.display = 'none';
+                editCategoryModal.style.display = 'none';
+            });
+        });
+
+        cancelAddProduct.addEventListener('click', () => {
+            addProductModal.style.display = 'none';
+        });
+
+        cancelAddCategory.addEventListener('click', () => {
+            addCategoryModal.style.display = 'none';
+        });
+
+        // Cerrar modal al hacer clic fuera
+        window.addEventListener('click', (event) => {
+            if (event.target === addProductModal) {
+                addProductModal.style.display = 'none';
+            }
+            if (event.target === addCategoryModal) {
+                addCategoryModal.style.display = 'none';
+            }
+            if (event.target === editCategoryModal) {
+                editCategoryModal.style.display = 'none';
+            }
+        });
+
+        // Funcionalidad para las categorías
+        const categoryItems = document.querySelectorAll('.category-item');
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                categoryItems.forEach(cat => cat.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Manejo de formularios
+        const addProductForm = document.getElementById('addProductForm');
+        addProductForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(addProductForm);
+            
+            fetch('/agregar-producto/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    addProductModal.style.display = 'none';
+                    addProductForm.reset();
+                    location.reload();
+                } else {
+                    alert('Error al agregar el producto: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar el producto');
+            });
+        });
+
+        const addCategoryForm = document.getElementById('addCategoryForm');
+        addCategoryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(addCategoryForm);
+            
+            fetch('/agregar-categoria/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    addCategoryModal.style.display = 'none';
+                    addCategoryForm.reset();
+                    // Recargar la página para mostrar la nueva categoría
+                    location.reload();
+                } else {
+                    alert('Error al agregar la categoría: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar la categoría');
+            });
+        });
+
+        const editCategoryModal = document.getElementById('editCategoryModal');
         
-        $('#view-list').click(function() {
-          $('.btn-outline-secondary').removeClass('active');
-          $(this).addClass('active');
-          $('#category-view-list').show();
-          $('#category-view-cards, #category-view-badges, #category-view-tabs').hide();
-        });
+        function editarCategoria(id, nombre) {
+            document.getElementById('edit_categoria_id').value = id;
+            document.getElementById('edit_categoria_nombre').value = nombre;
+            editCategoryModal.style.display = 'block';
+        }
         
-        $('#view-badges').click(function() {
-          $('.btn-outline-secondary').removeClass('active');
-          $(this).addClass('active');
-          $('#category-view-badges').show();
-          $('#category-view-cards, #category-view-list, #category-view-tabs').hide();
-        });
+        function closeEditModal() {
+            editCategoryModal.style.display = 'none';
+        }
         
-        $('#view-tabs').click(function() {
-          $('.btn-outline-secondary').removeClass('active');
-          $(this).addClass('active');
-          $('#category-view-tabs').show();
-          $('#category-view-cards, #category-view-list, #category-view-badges').hide();
+        function eliminarCategoria(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
+                fetch(`/eliminar-categoria/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error al eliminar la categoría: ' + data.error);
+                    }
+                });
+            }
+        }
+        
+        document.getElementById('editCategoryForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const categoriaId = formData.get('categoria_id');
+            
+            fetch(`/editar-categoria/${categoriaId}/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error al editar la categoría: ' + data.error);
+                }
+            });
         });
-      });
+
+        function eliminarProducto(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                fetch(`/productos/eliminar/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error al eliminar el producto: ' + data.error);
+                    }
+                });
+            }
+        }
     </script>
-  </div>
 </body>
 </html>

@@ -83,6 +83,8 @@ body {
   background-color: rgb(34, 132, 33) !important;
   border-right: none;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  position: fixed !important;
+  
 }
 
 .nav-sidebar .nav-item {
@@ -240,7 +242,7 @@ body:not(.sidebar-collapse) .user-avatar,
 .feature-icon, .stat-icon {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: var(--primary-color);
+  color: var(--verde-oscuro);
 }
 
 .stats-number, .stat-value {
@@ -564,11 +566,13 @@ body:not(.sidebar-collapse) .user-avatar,
     flex-direction: column;
     align-items: flex-start;
     float: right;
+    margin-left: auto !important;
   }
 
   .card-tools {
     margin-top: 0.5rem;
     width: 100%;
+    margin-left: auto !important;
   }
 
   .user-actions {
@@ -630,4 +634,20 @@ select:focus,
 textarea:focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
+}
+
+.justify-content-center{
+  margin-top: 5% !important;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030; /* Asegura que esté por encima de otros elementos */
+  background-color: #f8f9fa; /* Fondo blanco o el que uses */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Opcional: sombra para dar efecto de profundidad */
+}
+
+#botones{
+  margin-left: auto;
 }
