@@ -1,0 +1,473 @@
+{% load static %}
+<!-- Eliminar esta línea: {% load custom_filters %} -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Respaldos</title>
+
+    <!-- Favicon -->
+     <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AdminLTE CSS (incluye Bootstrap) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
+
+        <!-- Estilos personalizados -->
+    <link href="{% static 'myapp/css/stilosbd.css' %}" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse">
+    <!-- Botón móvil para mostrar/ocultar sidebar -->
+    <button class="toggle-sidebar-btn d-lg-none" id="sidebarToggler">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="wrapper">
+        <!-- Sidebar -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{% url 'inicioinv' %}" class="brand-link text-center">
+        <span class="brand-text font-weight-light">
+        <strong>Sistema Inventario</strong>
+        </span>
+    </a>
+    
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+        <div class="image">
+            {% if request.user.is_authenticated and request.user.imagen_perfil %}
+            <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+            {% else %}
+            <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+            {% endif %}
+        </div>
+        <div class="info mt-2 text-center">
+            <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
+            {% if request.user.is_authenticated %}
+                {{ request.user.first_name }} {{ request.user.last_name }}<br>
+                {{ request.user.rol }}
+            {% else %}
+                Usuario
+            {% endif %}
+            </a>
+        </div>
+        </div>
+
+        <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+            <a href="{% url 'inicioinv' %}" class="nav-link">
+                <i class="nav-icon fas fa-home" aria-hidden="true"></i>
+                <p>Inicio</p>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a href="{% url 'usuarios' %}" class="nav-link">
+                <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+                <p>Usuarios</p>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a href="{% url 'inventario' %}" class="nav-link">
+                <i class="nav-icon fas fa-boxes"></i>
+                <p>Inventario</p>
+            </a>
+            </li>
+            
+            <li class="nav-item">
+            <a href="{% url 'proveedores' %}" class="nav-link">
+                <i class="nav-icon fas fa-truck"></i>
+                <p>Proveedores</p>
+            </a>
+            </li> 
+            
+            <li class="nav-item">
+            <a href="{% url 'productos' %}" class="nav-link">
+                <i class="nav-icon fas fa-tag"></i>
+                <p>Productos</p>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a href="{% url 'copias_bd' %}" class="nav-link active">
+                <i class="nav-icon fas fa-database"></i>
+                <p>Copias de seguridad</p>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a href="{% url 'principal' %}" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+                <p>Cerrar Sesión</p>
+            </a>
+            </li>
+        </ul>
+        </nav>
+    </div>
+    </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+                            <li class="breadcrumb-item active">Respaldos de Base de Datos</li>
+                        </ol>
+                        <div>
+                            <span class="badge bg-success p-2">
+                                <i class="fas fa-calendar me-1"></i> <span id="current-date-display"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="card-title">
+                                <i class="fas fa-database me-2"></i> Sistema de Respaldos
+                            </h3>
+                        </div>
+
+                        <!-- Generar respaldos manualmente  -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card manual-backup">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <i class="fas fa-download me-2"></i>
+                                                Generar Respaldo Manual
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="lead">Genera una copia de seguridad manualmente en cualquier momento.</p>
+                                            <form method="post" action="{% url 'generar_backup' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-info mt-3">
+                                                    <i class="fas fa-download me-2"></i> Generar Respaldo
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <div class="card-footer bg-white">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-info-circle me-2 text-primary"></i>
+                                                <small>Incluye: Base de datos y archivos multimedia</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Respaldos automaticos -->
+                                {% block content %}
+                                <div class="col-md-6">
+                                    <div class="card auto-backup">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <i class="fas fa-calendar-alt me-2"></i>
+                                                Respaldos Automáticos
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Formulario -->
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <div class="mb-3">
+                                                    <label class="form-label">Frecuencia de respaldo</label>
+                                                    {{ form.frecuencia }}
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Hora del respaldo</label>
+                                                    {{ form.hora }}
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Cantidad de respaldos a mantener</label>
+                                                    {{ form.cantidad }}
+                                                </div>
+                                                <button type="submit" class="btn btn-warning w-100">
+                                                    <i class="fas fa-save me-2"></i> Guardar Configuración
+                                                </button>
+                                            </form>
+
+
+                                        </div>
+                                        <div class="card-footer bg-white">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-info-circle me-2 text-warning"></i>
+                                                <small>Próximo respaldo programado: <strong id="next-backup">{{ config.hora|default:"02:00" }}</strong></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endblock %}
+
+                                {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Hay errores en el formulario:</strong>
+                                    <ul>
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h3 class="card-title">
+                                                <i class="fas fa-history me-2"></i> Historial de Respaldos
+                                            </h3>
+                                            <div class="card-tools">
+                                                <div class="input-group input-group-sm" style="width: 250px;">
+                                                    <input type="text" class="form-control" placeholder="Buscar respaldo...">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary">
+                                                            <i class="fas fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body table-responsive p-0">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="25%">Fecha y Hora</th>
+                                                        <th width="15%">Tipo</th>
+                                                        <th width="15%">Tamaño</th>
+                                                        <th width="25%">Estado</th>
+                                                        <th width="20%">Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for backup in backups %}
+                                                    <tr>
+                                                        <td>{{ backup.fecha|date:"d/m/Y H:i" }}</td>
+                                                        <td><span class="badge {% if backup.tipo == 'Manual' %}bg-success{% else %}bg-warning{% endif %}">{{ backup.tipo }}</span></td>
+                                                        <td>{{ backup.tamano }}</td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="progress flex-grow-1" style="height: 6px;">
+                                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
+                                                                </div>
+                                                                <span class="ms-2">{{ backup.estado }}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <a href="#" onclick="return confirmarDescarga('{{ backup.id }}')" class="btn btn-sm btn-primary">
+                                                                    <i class="fas fa-download"></i>
+                                                                </a>
+                                                                <a href="#" onclick="return confirmarEliminacion('{{ backup.id }}')" class="btn btn-sm btn-danger">
+                                                            </a>
+                                                            <a href="{% url 'restaurar_backup' backup.id %}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Restaurar">
+                                                                <i class="fas fa-undo"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    {% empty %}
+                                                    <tr>
+                                                        <td colspan="5" class="text-center">No hay respaldos disponibles</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="text-muted">Mostrando 3 de 24 respaldos</span>
+                                            </div>
+                                            <ul class="pagination pagination-sm m-0">
+                                                <li class="page-item"><a class="page-link" href="#">«</a></li>
+                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">»</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Nueva sección de estadísticas -->
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <i class="fas fa-chart-line me-2"></i> Estadísticas de Respaldos
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="info-box bg-light">
+                                                        <span class="info-box-icon bg-success"><i class="fas fa-database"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">Total Respaldos</span>
+                                                            <span class="info-box-number">{{ estadisticas.total_backups }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="info-box bg-light">
+                                                        <span class="info-box-icon" style="background-color: var(--verde-logo);color: white"><i class="fas fa-hdd"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">Espacio Utilizado</span>
+                                                            <span class="info-box-number">{{ estadisticas.espacio_usado }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="info-box bg-light">
+                                                        <span class="info-box-icon" style="background-color: var(--naranja-logo);color: white"><i class="fas fa-calendar-check"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">Últ. Respaldo Auto.</span>
+                                                            <span class="info-box-number">{{ estadisticas.ultimo_auto }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="info-box bg-light">
+                                                        <span class="info-box-icon bg-info"><i class="fas fa-cog"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">Config. Actual</span>
+                                                            <span class="info-box-number">{{ estadisticas.config_actual }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                                            <div class="col-md-6">
+                                    <div class="card manual-backup">
+                                </div>
+
+
+                            </div>
+
+                            <div class="card mt-4">
+                                <div class="card-header">
+                                    <i class="fas fa-history me-2"></i> Historial de Respaldos
+                                </div>
+                                <div class="card-body table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Hora</th>
+                                                <th>Tipo</th>
+                                                <th>Archivo</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for backup in backups %}
+                                            <tr>
+                                                <td>{{ backup.fecha|date:"d/m/Y" }}</td>
+                                                <td>{{ backup.fecha|date:"H:i" }}</td>
+                                                <td><span class="badge {% if backup.tipo == 'Manual' %}bg-success{% else %}bg-warning{% endif %}">{{ backup.tipo }}</span></td>
+                                                <td>{{ backup.archivo }}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <a href="{% url 'descargar_backup' backup.id %}" class="btn btn-sm btn-primary">
+                                                            <i class="fas fa-download"></i>
+                                                        </a>
+                                                        <a href="{% url 'eliminar_backup' backup.id %}" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        <a href="{% url 'restaurar_backup' backup.id %}" class="btn btn-sm btn-info">
+                                                            <i class="fas fa-undo"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="5" class="text-center">No hay respaldos disponibles</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (si lo usas para otros scripts) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+      <script src="{% static 'myapp/js/scriptbd.js' %}"></script>
+      <script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'success' in message.tags %}
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ message }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    // Función para confirmar eliminación
+    function confirmarEliminacion(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esta acción",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/backup/eliminar/${id}/`;
+            }
+        });
+        return false;
+    }
+
+    // Función para confirmar respaldo
+    document.querySelector('form[action="{% url "generar_backup" %}"]').addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Generando respaldo',
+            text: 'Por favor espera...',
+            icon: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false
+        });
+        this.submit();
+    });
+</script>
+</body>
+</html>

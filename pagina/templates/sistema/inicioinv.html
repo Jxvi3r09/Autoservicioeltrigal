@@ -95,6 +95,13 @@
         </li>
 
         <li class="nav-item">
+          <a href="{% url 'copias_bd' %}" class="nav-link">
+            <i class="nav-icon fas fa-database"></i>
+            <p>Copias de seguridad</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a href="{% url 'principal' %}" class="nav-link">
             <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
             <p>Cerrar Sesión</p>
@@ -238,6 +245,7 @@
 
     <!-- AdminLTE JS -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <!-- Javascript -->
     <script src="{% static 'myapp/js/submenu.js' %}"></script>
     
     <script>

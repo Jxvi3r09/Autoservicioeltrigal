@@ -1,7 +1,14 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate  # Agregar este import
+from django.http import FileResponse, HttpResponse  # Agregar HttpResponse aquí
+from django.utils import timezone
+from django.conf import settings
+import os
+import subprocess
+import zipfile
+import shutil
+from .models import Backup
 from .forms import RegistroUsuarioForm  # Asegúrate de importar el formulario
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
@@ -11,12 +18,15 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import login
 from .forms import ProductoForm
 from .models import Producto
-from django.utils import timezone
 from datetime import timedelta
 from .forms import CustomPasswordResetForm
 from django.core.mail import send_mail
 from .models import Proveedor
 from .forms import ProveedorForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+from .models import ConfiguracionRespaldo
+from .forms import ConfiguracionRespaldoForm
 
 
 
@@ -395,3 +405,236 @@ def categoria_eliminar(request, categoria_id):
         'categoria': categoria
     })
 
+
+# COPIAS DE SEGURIDAD 
+class CopiasBDView(LoginRequiredMixin, View):
+    """Vista para el panel de respaldos"""
+    def get(self, request):
+        context = {
+            'title': 'Gestión de Respaldos',
+            'backups': []  # Aquí puedes agregar backups existentes si los tienes
+        }
+        return render(request, 'sistema/copiasbd.html', context)
+    
+    
+class GenerarBackupView(LoginRequiredMixin, View):
+    """Vista para generar y descargar el backup"""
+    def post(self, request):
+        # Nombre del archivo con fecha/hora
+        filename = f"backup_{timezone.now().strftime('%Y-%m-%d_%H-%M-%S')}.sql"
+        filepath = os.path.join(settings.BASE_DIR, 'respaldos', filename)
+
+        # Crear carpeta de respaldos si no existe
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+        # Datos de conexión (ajusta según tu configuración)
+        db_name = settings.DATABASES['default']['NAME']
+        db_user = settings.DATABASES['default']['USER']
+        db_password = settings.DATABASES['default']['PASSWORD']
+        db_host = settings.DATABASES['default']['HOST'] or 'localhost'
+        db_port = settings.DATABASES['default']['PORT'] or '3306'
+
+        # Comando para realizar el backup (MySQL)
+        command = f"mysqldump -u {db_user} -p{db_password} -h {db_host} -P {db_port} {db_name} > {filepath}"
+
+        # Ejecutar el comando
+        result = subprocess.run(command, shell=True)
+
+        if result.returncode == 0 and os.path.exists(filepath):
+            # Devolver el archivo como descarga
+            return FileResponse(open(filepath, 'rb'), as_attachment=True, filename=filename)
+        else:
+            return HttpResponse("Error al generar el respaldo.", status=500)
+        
+# COPIAS DE SEGURIDAD AUTOMATICA def configurar_respaldo(request):
+def configurar_respaldo(request):
+    print("¡La vista configurar_respaldo fue llamada!")  # Este mensaje debe aparecer en la consola
+
+    # Obtener la configuración de respaldo, o crearla si no existe
+    config, created = ConfiguracionRespaldo.objects.get_or_create(id=1)
+    print(f"Configuración cargada: {config}")  # Verifica que la configuración se cargue correctamente
+
+    if request.method == 'POST':
+        form = ConfiguracionRespaldoForm(request.POST, instance=config)
+        if form.is_valid():
+            form.save()
+            print("Formulario guardado correctamente")  # Mensaje cuando el formulario se guarda
+            return redirect('configurar_respaldo')
+    else:
+        form = ConfiguracionRespaldoForm(instance=config)
+
+    # Verifica si el formulario tiene campos
+    print("Campos del formulario:", form.fields)  # Esto debería mostrar los campos del formulario
+
+    return render(request, 'sistema/copiasbd.html', {'form': form, 'config': config})
+
+from .forms import RespaldoForm  # Agregar este import al inicio del archivo
+from .models import Backup
+
+def generar_backup(request):
+    try:
+        # Crear carpeta de respaldos si no existe
+        backup_dir = os.path.join(settings.BASE_DIR, 'respaldos')
+        os.makedirs(backup_dir, exist_ok=True)
+
+        # Generar nombres de archivos con timestamp
+        timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
+        sql_filename = f"backup_{timestamp}.sql"
+        media_filename = f"backup_{timestamp}_media.zip"
+        
+        sql_filepath = os.path.join(backup_dir, sql_filename)
+        media_filepath = os.path.join(backup_dir, media_filename)
+
+        # 1. Respaldo de base de datos
+        db = settings.DATABASES['default']
+        command = [
+            'mysqldump',
+            f'-u{db["USER"]}',
+            f'-p{db["PASSWORD"]}',
+            f'-h{db.get("HOST", "localhost")}',
+            f'-P{db.get("PORT", "3306")}',
+            db['NAME'],
+            f'--result-file={sql_filepath}'
+        ]
+        subprocess.run(command, check=True)
+
+        # 2. Respaldo de archivos multimedia
+        media_dir = os.path.join(settings.BASE_DIR, 'media')
+        if os.path.exists(media_dir):
+            with zipfile.ZipFile(media_filepath, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                for root, _, files in os.walk(media_dir):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        arc_name = os.path.relpath(file_path, settings.BASE_DIR)
+                        zipf.write(file_path, arc_name)
+
+        # Calcular tamaño total
+        total_size = os.path.getsize(sql_filepath)
+        if os.path.exists(media_filepath):
+            total_size += os.path.getsize(media_filepath)
+
+        # Crear registro en la base de datos
+        Backup.objects.create(
+            fecha=timezone.now(),
+            tipo='Manual',
+            tamano=f"{total_size / (1024 * 1024):.2f} MB",
+            estado='Completado',
+            archivo=sql_filename
+        )
+
+        messages.success(request, "Respaldo generado correctamente")
+        print(f"Respaldo guardado en: {sql_filepath}")
+        if os.path.exists(media_filepath):
+            print(f"Archivos multimedia guardados en: {media_filepath}")
+
+    except Exception as e:
+        messages.error(request, f"Error al generar respaldo: {str(e)}")
+        print(f"Error detallado: {str(e)}")
+
+    return redirect('copias_bd')
+
+def copias_bd(request):
+    if request.method == 'POST':
+        form = RespaldoForm(request.POST)
+        if form.is_valid():
+            # Guardar configuración
+            messages.success(request, 'Configuración guardada correctamente')
+            return redirect('copias_bd')
+    else:
+        form = RespaldoForm()
+
+    backups = Backup.objects.all().order_by('-fecha')
+    
+    context = {
+        'form': form,
+        'backups': backups,
+        'estadisticas': {
+            'total_backups': backups.count(),
+            'espacio_usado': get_backups_size(),
+            'ultimo_auto': get_last_auto_backup(),
+            'config_actual': get_current_config()
+        }
+    }
+    return render(request, 'sistema/copiasbd.html', context)
+
+def descargar_backup(request, id):
+    backup = get_object_or_404(Backup, id=id)
+    filepath = os.path.join(settings.BASE_DIR, 'respaldos', backup.archivo)
+    if os.path.exists(filepath):
+        return FileResponse(open(filepath, 'rb'), as_attachment=True, filename=backup.archivo)
+    messages.error(request, "Archivo de respaldo no encontrado")
+    return redirect('copias_bd')
+
+def eliminar_backup(request, id):
+    backup = get_object_or_404(Backup, id=id)
+    try:
+        # Eliminar archivo físico
+        filepath = os.path.join(settings.BASE_DIR, 'respaldos', backup.archivo)
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        backup.delete()
+        messages.success(request, "Respaldo eliminado correctamente")
+    except Exception as e:
+        messages.error(request, f"Error al eliminar el respaldo: {str(e)}")
+    return redirect('copias_bd')
+
+def restaurar_backup(request, id):
+    backup = get_object_or_404(Backup, id=id)
+    try:
+        # 1. Restaurar base de datos
+        sql_filepath = os.path.join(settings.BASE_DIR, 'respaldos', backup.archivo)
+        media_backup = sql_filepath.replace('.sql', '_media.zip')
+
+        if not os.path.exists(sql_filepath):
+            raise FileNotFoundError("Archivo de respaldo SQL no encontrado")
+
+        # Restaurar SQL
+        db_settings = settings.DATABASES['default']
+        command = f"mysql -u {db_settings['USER']} -p{db_settings['PASSWORD']} {db_settings['NAME']} < {sql_filepath}"
+        subprocess.run(command, shell=True, check=True)
+
+        # 2. Restaurar imágenes de perfil
+        media_dir = os.path.join(settings.BASE_DIR, 'media')
+        if os.path.exists(media_backup):
+            # Limpiar directorio media actual
+            if os.path.exists(media_dir):
+                shutil.rmtree(media_dir)
+            os.makedirs(media_dir, exist_ok=True)
+
+            # Extraer archivos multimedia
+            with zipfile.ZipFile(media_backup, 'r') as zip_ref:
+                zip_ref.extractall(settings.BASE_DIR)
+
+            messages.success(request, "Respaldo y archivos multimedia restaurados correctamente")
+        else:
+            messages.warning(request, "SQL restaurado, pero no se encontró respaldo de archivos multimedia")
+
+    except Exception as e:
+        messages.error(request, f"Error durante la restauración: {str(e)}")
+        print(f"Error detallado: {str(e)}")  # Para debugging
+    
+    return redirect('copias_bd')
+
+import os
+from django.conf import settings
+from django.utils import timezone
+
+def get_backups_size():
+    total_size = 0
+    backup_dir = os.path.join(settings.BASE_DIR, 'respaldos')
+    
+    if os.path.exists(backup_dir):
+        for file in os.listdir(backup_dir):
+            file_path = os.path.join(backup_dir, file)
+            if os.path.isfile(file_path):
+                total_size += os.path.getsize(file_path)
+    
+    return f"{total_size / (1024 * 1024):.2f} MB"
+
+def get_last_auto_backup():
+    ultimo_backup = Backup.objects.filter(tipo='Automático').order_by('-fecha').first()
+    return ultimo_backup.fecha.strftime('%d/%m/%Y') if ultimo_backup else 'No hay'
+
+def get_current_config():
+    config = ConfiguracionRespaldo.objects.first()
+    return f"{config.frecuencia} - {config.hora}" if config else "No configurado"
