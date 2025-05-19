@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    
+    'backup',
     'pagina',
 ]
 
@@ -83,7 +86,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'proyecto',
     'USER': 'root',
-    'PASSWORD':'',
+    'PASSWORD':'Javier',
     'HOST': 'localhost',  # Asegúrate de que solo sea la IP
     'PORT': '3306',  # Solo el número del puerto, sin IP
 }
@@ -207,3 +210,11 @@ PASSWORD_RESET_TIMEOUT = 86400  # 24 horas en segundos para links de recuperaci�
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# COPIAS DE SEGURIDAD
+# Datos para backup de MySQL
+MYSQL_BACKUP = {
+    'USER': 'root', 
+    'PASSWORD': 'Javier',  
+    'NAME': 'Proyecto',
+}

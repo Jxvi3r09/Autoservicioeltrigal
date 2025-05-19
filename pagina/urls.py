@@ -10,6 +10,10 @@ from .views import CustomPasswordResetView
 from .views import CustomPasswordResetDoneView
 from .views import CustomPasswordResetConfirmView
 from .views import CustomPasswordResetCompleteView
+from django.contrib import admin
+from django.urls import path, include
+from .views import CopiasBDView, GenerarBackupView
+from .views import configurar_respaldo
 
 
 
@@ -79,8 +83,25 @@ urlpatterns = [
     # path('categorias/', views.listar_categorias, name='listar_categorias'),
     # path('categorias/registrar/', views.registrar_categoria, name='registrar_categoria'),
 
-    # path('categorias/<int:categoria_id>/editar/', views.categoria_editar, name='categoria_editar'),
-    # path('categorias/<int:categoria_id>/eliminar/', views.categoria_eliminar, name='categoria_eliminar'),
+    path('categorias/<int:categoria_id>/editar/', views.categoria_editar, name='categoria_editar'),
+    path('categorias/<int:categoria_id>/eliminar/', views.categoria_eliminar, name='categoria_eliminar'),
+
+    path('categoria/<int:categoria_id>/', views.categoria_detalle, name='categoria_detalle'),
+    
+    # COPIAS DE SEGURIDAD BD
+    path('respaldos/', CopiasBDView.as_view(), name='copias_bd'),
+    path('copias-bd/', views.copias_bd, name='copias_bd'),
+
+    path('admin/', admin.site.urls),
+    
+    path('backup/', include('backup.urls')),  # 👈 ¡IMPORTANTE!
+    
+    path('respaldos/', views.configurar_respaldo, name='configurar_respaldo'),
+
+    path('generar-backup/', views.generar_backup, name='generar_backup'),
+    path('backup/descargar/<int:id>/', views.descargar_backup, name='descargar_backup'),
+    path('backup/eliminar/<int:id>/', views.eliminar_backup, name='eliminar_backup'),
+    path('backup/restaurar/<int:id>/', views.restaurar_backup, name='restaurar_backup'),
 
     # path('categoria/<int:categoria_id>/', views.categoria_detalle, name='categoria_detalle'),
 

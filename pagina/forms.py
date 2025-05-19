@@ -7,6 +7,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import validate_email
+from .models import ConfiguracionRespaldo
 
 
 # Recuperacion de contraseña
@@ -170,3 +171,80 @@ class ProductoForm(forms.ModelForm):
             'fecha_vencimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'categoria': forms.Select(attrs={'class': 'form-control'}),
         }
+
+class ConfiguracionRespaldoForm(forms.Form):
+    FRECUENCIA_CHOICES = [
+        ('diario', 'Diario'),
+        ('semanal', 'Semanal'),
+        ('mensual', 'Mensual'),
+    ]
+    
+    frecuencia = forms.ChoiceField(
+        choices=FRECUENCIA_CHOICES,
+        label='Frecuencia'
+    )
+    
+    hora = forms.TimeField(
+        label='Hora',
+        widget=forms.TimeInput(attrs={'type': 'time'})
+    )
+    
+    cantidad = forms.IntegerField(
+        label='Cantidad de respaldos',
+        min_value=1,
+        max_value=30,
+        initial=7
+    )
+
+class RespaldosForm(forms.Form):
+    FRECUENCIAS = [
+        ('diario', 'Diario'),
+        ('semanal', 'Semanal'),
+        ('mensual', 'Mensual')
+    ]
+    
+    frecuencia = forms.ChoiceField(
+        choices=FRECUENCIAS,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    
+    hora = forms.TimeField(
+        widget=forms.TimeInput(attrs={
+            'class': 'form-control',
+            'type': 'time'
+        })
+    )
+    
+    cantidad = forms.IntegerField(
+        min_value=1,
+        max_value=30,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+
+class RespaldoForm(forms.Form):
+    FRECUENCIA_CHOICES = [
+        ('diario', 'Diario'),
+        ('semanal', 'Semanal'),
+        ('mensual', 'Mensual')
+    ]
+    
+    frecuencia = forms.ChoiceField(
+        choices=FRECUENCIA_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Frecuencia de respaldo'
+    )
+    
+    hora = forms.TimeField(
+        widget=forms.TimeInput(attrs={
+            'class': 'form-control',
+            'type': 'time'
+        }),
+        initial='02:00'
+    )
+    
+    cantidad = forms.IntegerField(
+        min_value=1,
+        max_value=30,
+        initial=7,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
