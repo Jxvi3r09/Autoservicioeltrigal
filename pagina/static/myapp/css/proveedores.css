@@ -1,9 +1,9 @@
 /* Estilos generales */
 :root {
-  --verde-principal: #00c210;
+  --verde-principal: rgb(34, 132, 33) !important;;
   --verde-claro: #00ff51;
   --verde-oscuro: #0d640e;
-  --naranja-principal: #ff9f43;
+  --naranja-principal: rgb(243, 154, 49) !important;;
   --naranja-claro: #feca57;
   --naranja-oscuro: #e67e22;
   --negro-principal: #2d3436;
@@ -52,7 +52,7 @@ body {
 
 /* Content */
 .content-wrapper {
-  background-color: #f8f9fa;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
   padding: 20px;
 }
 

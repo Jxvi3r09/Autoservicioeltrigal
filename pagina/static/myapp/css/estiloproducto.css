@@ -52,12 +52,12 @@ a:hover{
 }
 /* Estiloproducto.css - Diseño Alternativo */
 :root {
-    --verde-principal: #00c210;
+    --verde-principal:rgb(34, 132, 33) !important;
     --verde-claro: #00ff51;
     --verde-oscuro:#0d640e;
-    --naranja-principal: #ff9f43;
-    --naranja-claro: #feca57;
-    --naranja-oscuro: #e67e22;
+    --naranja-principal: rgb(243, 154, 49) !important;;
+    --naranja-claro: rgb(243, 154, 49) !important;;
+    --naranja-oscuro: rgb(243, 154, 49) !important;;
     --negro-principal: #2d3436;
     --negro-claro: #636e72;
     --blanco: #f5f6fa;
@@ -428,12 +428,11 @@ a:hover{
   }
   
   ::-webkit-scrollbar-thumb {
-    background: var(--verde-claro);
     border-radius: 10px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--verde-principal);
+    background: var(--naranja-principal);
   }
 
 
