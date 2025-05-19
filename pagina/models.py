@@ -124,4 +124,33 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
+# COPIAS DE SEGURIDAD
+class ConfiguracionRespaldo(models.Model):
+    FRECUENCIAS = [
+        ('diario', 'Diario'),
+        ('semanal', 'Semanal'),
+        ('mensual', 'Mensual'),
+    ]
+
+    frecuencia = models.CharField(max_length=10, choices=FRECUENCIAS, default='diario')
+    hora = models.TimeField(default='02:00')
+    cantidad = models.PositiveIntegerField(default=5)
+
+    actualizado = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.frecuencia} a las {self.hora} - mantener {self.cantidad}"
+
+class Backup(models.Model):
+    fecha = models.DateTimeField(auto_now_add=True)
+    tipo = models.CharField(max_length=50)
+    tamano = models.CharField(max_length=20)
+    estado = models.CharField(max_length=50, default='Completado')
+    archivo = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ['-fecha']
+
+    def __str__(self):
+        return f"Backup {self.fecha.strftime('%Y-%m-%d %H:%M')} - {self.tipo}"
 
