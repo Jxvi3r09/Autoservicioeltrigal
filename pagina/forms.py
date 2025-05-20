@@ -158,19 +158,26 @@ class CategoriaForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = [
-            'nombre', 'precio', 'cantidad_entrada',
-            'fecha_vencimiento', 'imagen', 'categoria'
-        ]
+        fields = ['nombre', 'categoria', 'precio', 'cantidad_producto', 'imagen']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del producto'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'categoria': forms.Select(attrs={'class': 'form-select'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
-            'iva': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
-            'cantidad_entrada': forms.NumberInput(attrs={'class': 'form-control'}),
-            'cantidad_salida': forms.NumberInput(attrs={'class': 'form-control'}),
-            'fecha_vencimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'cantidad_producto': forms.NumberInput(attrs={'class': 'form-control'}),
+            'imagen': forms.FileInput(attrs={'class': 'form-control'})
         }
+
+    def clean_precio(self):
+        precio = self.cleaned_data.get('precio')
+        if (precio <= 0):
+            raise forms.ValidationError('El precio debe ser mayor que 0')
+        return precio
+
+    def clean_cantidad_producto(self):
+        cantidad = self.cleaned_data.get('cantidad_producto')
+        if (cantidad < 0):
+            raise forms.ValidationError('La cantidad no puede ser negativa')
+        return cantidad
 
 class ConfiguracionRespaldoForm(forms.Form):
     FRECUENCIA_CHOICES = [

@@ -299,7 +299,36 @@ def eliminar_producto(request, pk):
         'producto': prod,
     })
 
+def obtener_producto(request, pk):
+    try:
+        producto = Producto.objects.get(id=pk)
+        return JsonResponse({
+            'id': producto.id,
+            'nombre': producto.nombre,
+            'categoria': producto.categoria.id,
+            'precio': float(producto.precio),
+            'cantidad': producto.cantidad
+        })
+    except Producto.DoesNotExist:
+        return JsonResponse({'error': 'Producto no encontrado'}, status=404)
 
+def editar_producto(request, pk):
+    if request.method == 'POST':
+        try:
+            producto = Producto.objects.get(id=pk)
+            producto.nombre = request.POST['nombre']
+            producto.categoria_id = request.POST['categoria']
+            producto.precio = request.POST['precio']
+            producto.cantidad = request.POST['cantidad']
+            
+            if 'imagen' in request.FILES:
+                producto.imagen = request.FILES['imagen']
+            
+            producto.save()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
 def listar_proveedores(request):
     proveedores = Proveedor.objects.all().order_by('-fecha_registro')
@@ -742,3 +771,79 @@ def get_last_auto_backup():
 def get_current_config():
     config = ConfiguracionRespaldo.objects.first()
     return f"{config.frecuencia} - {config.hora}" if config else "No configurado"
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Producto
+from .forms import ProductoForm
+
+def obtener_producto(request, id):
+    try:
+        producto = get_object_or_404(Producto, id=id)
+        data = {
+            'id': producto.id,
+            'nombre': producto.nombre,
+            'categoria': producto.categoria.id,
+            'precio': str(producto.precio),
+            'cantidad_producto': producto.cantidad_producto,
+            'imagen': producto.imagen.url if producto.imagen else None
+        }
+        return JsonResponse(data)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+def editar_producto(request, id):
+    if request.method == 'POST':
+        producto = get_object_or_404(Producto, id=id)
+        form_data = {
+            'nombre': request.POST.get('nombre'),
+            'categoria': request.POST.get('categoria'),
+            'precio': request.POST.get('precio'),
+            'cantidad_producto': request.POST.get('cantidad_producto'),
+        }
+        if 'imagen' in request.FILES:
+            form_data['imagen'] = request.FILES['imagen']
+            
+        form = ProductoForm(form_data, request.FILES, instance=producto)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'errors': form.errors})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Producto
+
+def obtener_producto(request, id):
+    producto = get_object_or_404(Producto, id=id)
+    data = {
+        'id': producto.id,
+        'nombre': producto.nombre,
+        'categoria': producto.categoria_id,
+        'precio': str(producto.precio),
+        'cantidad_producto': producto.cantidad_producto
+    }
+    return JsonResponse(data)
+
+def editar_producto(request, id):
+    if request.method == 'POST':
+        try:
+            producto = get_object_or_404(Producto, id=id)
+            producto.nombre = request.POST.get('nombre')
+            producto.categoria_id = request.POST.get('categoria')
+            producto.precio = request.POST.get('precio')
+            producto.cantidad_producto = request.POST.get('cantidad_producto')
+            
+            if 'imagen' in request.FILES:
+                producto.imagen = request.FILES['imagen']
+            
+            producto.save()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            print('Error:', str(e))  # Para debug
+            return JsonResponse({'success': False, 'error': str(e)})
+    
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+
+# ...existing code...

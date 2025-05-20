@@ -68,8 +68,9 @@ urlpatterns = [
 
     path('productos/', views.productos, name='productos'),
     path('productos/crear/', views.crear_producto, name='crear_producto'),  # NUEVA
-    path('productos/editar/<int:pk>/', views.editar_producto, name='editar_producto'),
-    path('productos/eliminar/<int:pk>/', views.eliminar_producto, name='eliminar_producto'),
+    path('productos/obtener/<int:id>/', views.obtener_producto, name='obtener_producto'),
+    path('productos/editar/<int:id>/', views.editar_producto, name='editar_producto'),
+    path('productos/eliminar/<int:id>/', views.eliminar_producto, name='eliminar_producto'),
     path('agregar-producto/', views.agregar_producto, name='agregar_producto'),
 
     path('proveedores/eliminar/<int:id>/', views.eliminar_proveedor, name='eliminar_proveedor'),
@@ -108,6 +109,10 @@ urlpatterns = [
     path('agregar-categoria/', views.agregar_categoria, name='agregar_categoria'),
     path('editar-categoria/<int:categoria_id>/', views.editar_categoria, name='editar_categoria'),
     path('eliminar-categoria/<int:categoria_id>/', views.eliminar_categoria, name='eliminar_categoria'),
+    
+    path('editar-producto/<int:id>/', views.obtener_producto, name='obtener_producto'),
+    path('productos/editar/<int:id>/', views.editar_producto, name='editar_producto'),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos
 if settings.DEBUG:

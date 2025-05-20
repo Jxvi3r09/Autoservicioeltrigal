@@ -252,9 +252,29 @@
             border-radius: 8px;
             width: 90%;
             max-width: 500px;
-            margin: 50px auto;
+            margin: 20px auto;
             padding: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-height: 90vh;  /* Altura máxima del 90% de la ventana */
+            overflow-y: auto;  /* Agregar barra de desplazamiento vertical */
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
         }
         
         .modal-header {
@@ -357,14 +377,46 @@
         .btn-icon:hover {
             background-color: rgba(0,0,0,0.1);
         }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin: 10px 0;
+        }
+        
+        .cropper-container {
+            margin: 10px 0;
+        }
+
+        .cropper-controls {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cropper-controls button {
+            padding: 5px 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cropper-controls button:hover {
+            background: var(--primary-dark);
+        }
     </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 </head>
 <body>
     <header>
         <div class="container header-content">
             <div class="logo">InventarioApp</div>
             <div class="search-container">
-                <input type="text" placeholder="Buscar productos..." class="search-input">
+                <input type="text" placeholder="Buscar productos..." class="search-input" id="searchInput" oninput="buscarProductos()">
             </div>
             <button class="btn" id="addProductBtn">Agregar Producto</button>
         </div>
@@ -375,9 +427,11 @@
             <aside class="sidebar">
                 <h3>Categorías</h3>
                 <ul class="category-list">
-                    <li class="category-item active">Todas las categorías <span>({{ productos.count }})</span></li>
+                    <li class="category-item" onclick="filtrarPorCategoria('todas')" id="categoria-todas">
+                        Todas las categorías <span>({{ productos.count }})</span>
+                    </li>
                     {% for categoria in categorias %}
-                    <li class="category-item">
+                    <li class="category-item" onclick="filtrarPorCategoria('{{ categoria.id }}')" id="categoria-{{ categoria.id }}">
                         <div>{{ categoria.nombre }} <span>({{ categoria.producto_set.count }})</span></div>
                         <div class="category-actions">
                             <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
@@ -395,24 +449,24 @@
                 <div class="products-header">
                     <h2>Productos</h2>
                     <div class="filters">
-                        <select class="filter-select">
-                            <option>Ordenar por: Relevancia</option>
-                            <option>Precio: Menor a Mayor</option>
-                            <option>Precio: Mayor a Menor</option>
-                            <option>A-Z</option>
-                            <option>Z-A</option>
+                        <select class="filter-select" id="sortSelect" onchange="ordenarProductos()">
+                            <option value="relevancia">Ordenar por: Relevancia</option>
+                            <option value="precio-asc">Precio: Menor a Mayor</option>
+                            <option value="precio-desc">Precio: Mayor a Menor</option>
+                            <option value="nombre-asc">A-Z</option>
+                            <option value="nombre-desc">Z-A</option>
                         </select>
-                        <select class="filter-select">
-                            <option>Mostrar: 20</option>
-                            <option>Mostrar: 50</option>
-                            <option>Mostrar: 100</option>
+                        <select class="filter-select" id="limitSelect" onchange="limitarProductos()">
+                            <option value="20">Mostrar: 20</option>
+                            <option value="50">Mostrar: 50</option>
+                            <option value="100">Mostrar: 100</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="product-grid">
                     {% for producto in productos %}
-                    <div class="product-card">
+                    <div class="product-card" data-categoria="{{ producto.categoria.id }}">
                         <div class="product-image">
                             {% if producto.imagen %}
                                 <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
@@ -425,11 +479,11 @@
                             <div class="product-specs">
                                 <div class="product-spec">
                                     <span class="spec-label">Código:</span>
-                                    <span>{{ producto.codigo }}</span>
+                                    <span>{{ producto.id }}</span>
                                 </div>
                                 <div class="product-spec">
                                     <span class="spec-label">Stock:</span>
-                                    <span>{{ producto.stock }}</span>
+                                    <span>{{ producto.cantidad_producto }}</span>
                                 </div>
                             </div>
                             <div class="product-actions">
@@ -462,7 +516,7 @@
     </div>
 
     <!-- Modal para agregar producto -->
-    <div class="modal" id="addProductModal">
+    <div class="modal" id="addProductModal" style="overflow-y: auto;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Agregar Nuevo Producto</h3>
@@ -488,8 +542,23 @@
                     <input type="number" name="precio" step="0.01" class="form-input" required>
                 </div>
                 <div class="form-group">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" name="cantidad_producto" min="0" class="form-input" required>
+                </div>
+                <div class="form-group">
                     <label class="form-label">Imagen del Producto</label>
-                    <input type="file" name="imagen" class="form-input">
+                    <input type="file" name="imagen" class="form-input" accept="image/*" onchange="previewImage(this)">
+                    <div class="image-preview-container">
+                        <img id="imagePreview" class="image-preview" style="display: none;">
+                    </div>
+                    <div class="cropper-controls">
+                        <button type="button" onclick="zoomIn()">Zoom +</button>
+                        <button type="button" onclick="zoomOut()">Zoom -</button>
+                        <button type="button" onclick="rotateLeft()">↶ Rotar</button>
+                        <button type="button" onclick="rotateRight()">↷ Rotar</button>
+                        <button type="button" onclick="resetCrop()">Resetear</button>
+                    </div>
+                    <input type="hidden" name="cropped_image" id="croppedImageData">
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-cancel" id="cancelAddProduct">Cancelar</button>
@@ -542,6 +611,62 @@
         </div>
     </div>
 
+    <!-- Modal para editar producto -->
+    <div class="modal" id="editProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Producto</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="editProductForm" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="producto_id" id="edit_producto_id">
+                <div class="form-group">
+                    <label class="form-label">Nombre del Producto</label>
+                    <input type="text" name="nombre" id="edit_producto_nombre" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Categoría</label>
+                    <select name="categoria" id="edit_producto_categoria" class="form-select" required>
+                        <option value="">Seleccionar categoría</option>
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Precio</label>
+                    <input type="number" name="precio" id="edit_producto_precio" step="0.01" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" name="cantidad_producto" id="edit_producto_cantidad_producto" min="0" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Imagen Actual</label>
+                    <img id="current_image" class="image-preview" style="display: none; max-height: 100px;">
+                    <label class="form-label mt-3">Nueva Imagen (opcional)</label>
+                    <input type="file" name="imagen" class="form-input" accept="image/*" onchange="previewImage(this)">
+                    <div class="image-preview-container">
+                        <img id="imagePreview" class="image-preview" style="display: none;">
+                    </div>
+                    <div class="cropper-controls">
+                        <button type="button" onclick="zoomIn()">Zoom +</button>
+                        <button type="button" onclick="zoomOut()">Zoom -</button>
+                        <button type="button" onclick="rotateLeft()">↶ Rotar</button>
+                        <button type="button" onclick="rotateRight()">↷ Rotar</button>
+                        <button type="button" onclick="resetCrop()">Resetear</button>
+                    </div>
+                    <input type="hidden" name="cropped_image" id="croppedImageData">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" onclick="closeEditProductModal()">Cancelar</button>
+                    <button type="submit" class="btn">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Mostrar/ocultar modales
         const addProductBtn = document.getElementById('addProductBtn');
@@ -565,6 +690,7 @@
                 addProductModal.style.display = 'none';
                 addCategoryModal.style.display = 'none';
                 editCategoryModal.style.display = 'none';
+                editProductModal.style.display = 'none';
             });
         });
 
@@ -587,6 +713,9 @@
             if (event.target === editCategoryModal) {
                 editCategoryModal.style.display = 'none';
             }
+            if (event.target === editProductModal) {
+                editProductModal.style.display = 'none';
+            }
         });
 
         // Funcionalidad para las categorías
@@ -602,36 +731,63 @@
         const addProductForm = document.getElementById('addProductForm');
         addProductForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const formData = new FormData(addProductForm);
-            
-            fetch('/agregar-producto/', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    addProductModal.style.display = 'none';
-                    addProductForm.reset();
-                    location.reload();
-                } else {
-                    alert('Error al agregar el producto: ' + data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al agregar el producto');
-            });
+            if (cropper) {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    const formData = new FormData(addProductForm);
+                    formData.delete('imagen'); // Eliminar la imagen original
+                    formData.append('imagen', blob, 'cropped.jpg'); // Agregar la imagen recortada
+                    fetch('/agregar-producto/', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            addProductModal.style.display = 'none';
+                            addProductForm.reset();
+                            location.reload();
+                        } else {
+                            alert('Error al agregar el producto: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error al agregar el producto');
+                    });
+                });
+            } else {
+                const formData = new FormData(addProductForm);
+                fetch('/agregar-producto/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        addProductModal.style.display = 'none';
+                        addProductForm.reset();
+                        location.reload();
+                    } else {
+                        alert('Error al agregar el producto: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al agregar el producto');
+                });
+            }
         });
 
         const addCategoryForm = document.getElementById('addCategoryForm');
         addCategoryForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(addCategoryForm);
-            
             fetch('/agregar-categoria/', {
                 method: 'POST',
                 body: formData,
@@ -657,17 +813,16 @@
         });
 
         const editCategoryModal = document.getElementById('editCategoryModal');
-        
         function editarCategoria(id, nombre) {
             document.getElementById('edit_categoria_id').value = id;
             document.getElementById('edit_categoria_nombre').value = nombre;
             editCategoryModal.style.display = 'block';
         }
-        
+
         function closeEditModal() {
             editCategoryModal.style.display = 'none';
         }
-        
+
         function eliminarCategoria(id) {
             if (confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
                 fetch(`/eliminar-categoria/${id}/`, {
@@ -686,12 +841,11 @@
                 });
             }
         }
-        
+
         document.getElementById('editCategoryForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const categoriaId = formData.get('categoria_id');
-            
             fetch(`/editar-categoria/${categoriaId}/`, {
                 method: 'POST',
                 body: formData,
@@ -726,6 +880,235 @@
                     }
                 });
             }
+        }
+
+        function filtrarPorCategoria(categoriaId) {
+            // Remover clase active de todas las categorías
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Agregar clase active a la categoría seleccionada
+            if (categoriaId === 'todas') {
+                document.getElementById('categoria-todas').classList.add('active');
+            } else {
+                document.getElementById(`categoria-${categoriaId}`).classList.add('active');
+            }
+            // Filtrar productos
+            const productos = document.querySelectorAll('.product-card');
+            productos.forEach(producto => {
+                if (categoriaId === 'todas') {
+                    producto.style.display = 'block';
+                } else {
+                    const productoCategoriaId = producto.getAttribute('data-categoria');
+                    producto.style.display = productoCategoriaId === categoriaId ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Activar "Todas las categorías" por defecto
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('categoria-todas').classList.add('active');
+        });
+
+        function buscarProductos() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const productos = document.querySelectorAll('.product-card');
+            let found = false;
+            productos.forEach(producto => {
+                const nombre = producto.querySelector('.product-title').textContent.toLowerCase();
+                const categoria = producto.querySelector('.product-category').textContent.toLowerCase();
+                const codigo = producto.querySelector('.spec-label + span').textContent.toLowerCase();
+                if (nombre.includes(searchText) || 
+                    categoria.includes(searchText) || 
+                    codigo.includes(searchText)) {
+                    producto.style.display = 'block';
+                    found = true;
+                } else {
+                    producto.style.display = 'none';
+                }
+            });
+            // Mostrar mensaje si no hay resultados
+            const noProducts = document.querySelector('.no-products');
+            if (!found && !noProducts) {
+                const message = document.createElement('div');
+                message.className = 'no-products';
+                message.innerHTML = '<p>No se encontraron productos</p>';
+                document.querySelector('.product-grid').appendChild(message);
+            } else if (found && noProducts) {
+                noProducts.remove();
+            }
+        }
+
+        function ordenarProductos() {
+            const sortBy = document.getElementById('sortSelect').value;
+            const productos = Array.from(document.querySelectorAll('.product-card'));
+            productos.sort((a, b) => {
+                switch(sortBy) {
+                    case 'precio-asc':
+                        return getPrecio(a) - getPrecio(b);
+                    case 'precio-desc':
+                        return getPrecio(b) - getPrecio(a);
+                    case 'nombre-asc':
+                        return getNombre(a).localeCompare(getNombre(b));
+                    case 'nombre-desc':
+                        return getNombre(b).localeCompare(getNombre(a));
+                    default:
+                        return 0;
+                }
+            });
+            const container = document.querySelector('.product-grid');
+            productos.forEach(producto => container.appendChild(producto));
+        }
+
+        function limitarProductos() {
+            const limit = parseInt(document.getElementById('limitSelect').value);
+            const productos = document.querySelectorAll('.product-card');
+            productos.forEach((producto, index) => {
+                producto.style.display = index < limit ? 'block' : 'none';
+            });
+        }
+
+        function getPrecio(producto) {
+            return parseFloat(producto.querySelector('.product-price').textContent.replace('$', ''));
+        }
+
+        function getNombre(producto) {
+            return producto.querySelector('.product-title').textContent;
+        }
+
+        // Inicializar los filtros
+        document.addEventListener('DOMContentLoaded', () => {
+            ordenarProductos();
+            limitarProductos();
+        });
+
+        function editarProducto(id) {
+            console.log('Editando producto:', id);
+            fetch(`/productos/obtener/${id}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener producto');
+                    }
+                    return response.json();
+                })
+                .then(producto => {
+                    console.log('Producto recibido:', producto);
+                    document.getElementById('edit_producto_id').value = producto.id;
+                    document.getElementById('edit_producto_nombre').value = producto.nombre;
+                    document.getElementById('edit_producto_categoria').value = producto.categoria;
+                    document.getElementById('edit_producto_precio').value = producto.precio;
+                    document.getElementById('edit_producto_cantidad_producto').value = producto.cantidad_producto;
+                    
+                    const editProductModal = document.getElementById('editProductModal');
+                    editProductModal.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al cargar el producto: ' + error.message);
+                });
+        }
+
+        document.getElementById('editProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const productoId = formData.get('producto_id');
+            // Si hay imagen nueva y está recortada
+            if (cropper && document.querySelector('[name="imagen"]').files.length > 0) {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    formData.delete('imagen');
+                    formData.append('imagen', blob, 'cropped.jpg');
+                    enviarFormularioEdicion(formData, productoId);
+                });
+            } else {
+                enviarFormularioEdicion(formData, productoId);
+            }
+        });
+
+        function enviarFormularioEdicion(formData, productoId) {
+            fetch(`/productos/editar/${productoId}/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error al editar el producto: ' + (data.error || 'Error desconocido'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al editar el producto');
+            });
+        }
+
+        function closeEditProductModal() {
+            document.getElementById('editProductModal').style.display = 'none';
+        }
+
+        let cropper = null;
+    
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    cropper = new Cropper(preview, {
+                        aspectRatio: NaN, // Permite cualquier relación de aspecto
+                        viewMode: 2,
+                        dragMode: 'move',
+                        autoCropArea: 0.8,
+                        restore: false,
+                        guides: true,
+                        center: true,
+                        highlight: false,
+                        cropBoxMovable: true,
+                        cropBoxResizable: true,
+                        toggleDragModeOnDblclick: true,
+                        zoomable: true,
+                        zoomOnWheel: true,
+                        scalable: true,
+                        rotatable: true
+                    });
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Funciones para controlar el cropper
+        function zoomIn() {
+            if (cropper) cropper.zoom(0.1);
+        }
+
+        function zoomOut() {
+            if (cropper) cropper.zoom(-0.1);
+        }
+
+        function rotateLeft() {
+            if (cropper) cropper.rotate(-90);
+        }
+
+        function rotateRight() {
+            if (cropper) cropper.rotate(90);
+        }
+
+        function resetCrop() {
+            if (cropper) cropper.reset();
         }
     </script>
 </body>
