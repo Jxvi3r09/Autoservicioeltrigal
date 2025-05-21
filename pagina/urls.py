@@ -112,6 +112,9 @@ urlpatterns = [
     
     path('editar-producto/<int:id>/', views.obtener_producto, name='obtener_producto'),
     path('productos/editar/<int:id>/', views.editar_producto, name='editar_producto'),
+
+    path('pedidos/', views.pedidos, name='pedidos'),
+    path('pedidos/detalle/<int:pedido_id>/', views.detalle_pedido, name='detalle_pedido'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos

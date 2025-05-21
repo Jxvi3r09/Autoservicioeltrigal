@@ -30,8 +30,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from .models import ConfiguracionRespaldo
 from .forms import ConfiguracionRespaldoForm
-
-
+from django.contrib.auth.decorators import login_required
+from django.db.models import F
+from .models import Pedido, DetallePedido
 
 
 from .models import Usuario
@@ -366,18 +367,22 @@ def eliminar_proveedor(request, id):
     return render(request, 'sistema/crud_proveedores/confirmar_eliminar.html', {'proveedor': proveedor})
 
 
+@login_required
 def perfil_usuario(request):
-    return render(request, 'sistema/perfil_usuario.html', {'usuario': request.user})
+    usuario = request.user
+    context = {
+        'usuario': usuario,
+    }
+    return render(request, 'sistema/perfil_usuario.html', context)
 
 
+@login_required
 def actualizar_imagen_perfil(request):
-    if request.method == 'POST':
-        usuario = request.user
-        imagen = request.FILES.get('imagen_perfil')
-        if imagen:
-            usuario.imagen_perfil = imagen
-            usuario.save()
+    if request.method == 'POST' and request.FILES.get('imagen_perfil'):
+        request.user.imagen_perfil = request.FILES['imagen_perfil']
+        request.user.save()
     return redirect('perfil_usuario')
+
 
 def editar_foto_usuario(request):
     usuario = request.user
@@ -846,4 +851,60 @@ def editar_producto(request, id):
     
     return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
-# ...existing code...
+@login_required
+def pedidos(request):
+    if request.method == 'POST':
+        try:
+            # Obtener los datos del formulario
+            proveedor_id = request.POST.get('proveedor')
+            fecha_entrega = request.POST.get('fecha_entrega')
+            productos = request.POST.getlist('producto[]')
+            cantidades = request.POST.getlist('cantidad[]')
+            
+            if not all([proveedor_id, fecha_entrega, productos, cantidades]):
+                raise ValueError("Todos los campos son requeridos")
+            
+            # Crear el pedido
+            pedido = Pedido.objects.create(
+                proveedor_id=proveedor_id,
+                fecha_entrega=fecha_entrega,
+                estado='pendiente'
+            )
+            
+            # Crear los detalles del pedido y actualizar stock
+            for producto_id, cantidad in zip(productos, cantidades):
+                if producto_id and cantidad:
+                    cantidad = int(cantidad)
+                    DetallePedido.objects.create(
+                        pedido=pedido,
+                        producto_id=producto_id,
+                        cantidad=cantidad
+                    )
+                    # Actualizar stock del producto
+                    Producto.objects.filter(id=producto_id).update(
+                        cantidad_producto=F('cantidad_producto') + cantidad
+                    )
+            
+            messages.success(request, 'Pedido creado exitosamente')
+            return redirect('pedidos')
+        
+        except Exception as e:
+            messages.error(request, f'Error al crear el pedido: {str(e)}')
+    
+    # Obtener datos para mostrar
+    pedidos = Pedido.objects.all().order_by('-fecha_pedido')
+    proveedores = Proveedor.objects.all()
+    productos = Producto.objects.all()
+    
+    return render(request, 'sistema/pedidos.html', {
+        'pedidos': pedidos,
+        'proveedores': proveedores,
+        'productos': productos,
+    })
+
+@login_required
+def detalle_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, id=pedido_id)
+    return render(request, 'sistema/detalle_pedido.html', {
+        'pedido': pedido
+    })

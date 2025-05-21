@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Pedidos</title>
+
+  <!-- AdminLTE CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="{% static 'myapp/css/estilos_perfil.css' %}">
+
+  <script src="{% static 'myapp/js/seccion_perfil.js' %}"></script>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <!-- Sidebar mejorado -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{% url 'inicioinv' %}" class="brand-link text-center">
+      <span class="brand-text font-weight-light">
+        <strong>Sistema Inventario</strong>
+      </span>
+    </a>
+    
+    <div class="sidebar">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+        <div class="image">
+          {% if request.user.is_authenticated and request.user.imagen_perfil %}
+            <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+          {% else %}
+            <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+          {% endif %}
+        </div>
+        <div class="info mt-2 text-center">
+          <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
+            {% if request.user.is_authenticated %}
+              {{ request.user.first_name }} {{ request.user.last_name }}<br>
+              {{ request.user.rol }}
+            {% else %}
+              Usuario
+            {% endif %}
+          </a>
+        </div>
+      </div>
+
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="{% url 'inicioinv' %}" class="nav-link active">
+              <i class="nav-icon fas fa-home" aria-hidden="true"></i>
+              <p>Inicio</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'usuarios' %}" class="nav-link">
+              <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+              <p>Usuarios</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'inventario' %}" class="nav-link">
+              <i class="nav-icon fas fa-boxes"></i>
+              <p>Inventario</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="{% url 'proveedores' %}" class="nav-link">
+              <i class="nav-icon fas fa-truck"></i>
+              <p>Proveedores</p>
+            </a>
+          </li> 
+          
+          <li class="nav-item">
+            <a href="{% url 'productos' %}" class="nav-link">
+              <i class="nav-icon fas fa-tag"></i>
+              <p>Productos</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'pedidos' %}" class="nav-link">
+              <i class="nav-icon fas fa-tag"></i>
+              <p>
+                Pedidos
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'principal' %}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+              <p>Cerrar Sesión</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <div class="content-wrapper">
+    <!-- Content Header -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Gestión de Pedidos</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Botones de acción -->
+        <div class="row mb-3">
+          <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevoPedido">
+              <i class="fas fa-plus"></i> Nuevo Pedido
+            </button>
+          </div>
+        </div>
+
+        <!-- Card de pedidos -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Lista de Pedidos</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Nro. Pedido</th>
+                  <th>Fecha Pedido</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for pedido in pedidos %}
+                <tr>
+                    <td>{{ pedido.id }}</td>
+                    <td>{{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'detalle_pedido' pedido.id %}" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i> Ver Detalle
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No hay pedidos registrados</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal Nuevo Pedido -->
+  <div class="modal fade" id="modalNuevoPedido" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Nuevo Pedido</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formNuevoPedido" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="proveedor" class="form-label">Proveedor</label>
+              <select class="form-select" id="proveedor" name="proveedor" required>
+                <option value="">Seleccione un proveedor</option>
+                {% for proveedor in proveedores %}
+                  <option value="{{ proveedor.id }}">{{ proveedor.empresa }} - {{ proveedor.nit_proveedor }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Productos</label>
+              <div id="productos-container">
+                <div class="producto-item row">
+                  <div class="col-md-8">
+                    <select class="form-select mb-2" name="producto[]" required>
+                      <option value="">Seleccione un producto</option>
+                      {% for producto in productos %}
+                        <option value="{{ producto.id }}">{{ producto.nombre }} - Stock: {{ producto.cantidad_producto }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="number" class="form-control mb-2" name="cantidad[]" placeholder="Cantidad" min="1" required>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn btn-danger btn-sm remove-producto">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm mt-2" id="agregar-producto">
+                <i class="fas fa-plus"></i> Agregar Producto
+              </button>
+            </div>
+            <div class="mb-3">
+              <label for="fecha_entrega" class="form-label">Fecha de Entrega</label>
+              <input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" form="formNuevoPedido" class="btn btn-primary">Guardar Pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script para manejar productos múltiples -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contenedorProductos = document.getElementById('productos-container');
+    const btnAgregar = document.getElementById('agregar-producto');
+
+    // Función para crear nuevo elemento de producto
+    function crearProductoItem() {
+        const productoTemplate = document.querySelector('.producto-item').cloneNode(true);
+        
+        // Limpiar valores
+        productoTemplate.querySelector('select').value = '';
+        productoTemplate.querySelector('input').value = '';
+        
+        // Agregar evento al botón de eliminar
+        productoTemplate.querySelector('.remove-producto').addEventListener('click', function() {
+            if (contenedorProductos.children.length > 1) {
+                this.closest('.producto-item').remove();
+            }
+        });
+        
+        return productoTemplate;
+    }
+
+    // Agregar evento al botón de agregar producto
+    btnAgregar.addEventListener('click', function() {
+        contenedorProductos.appendChild(crearProductoItem());
+    });
+
+    // Agregar evento de eliminar al primer elemento
+    document.querySelector('.remove-producto').addEventListener('click', function() {
+        if (contenedorProductos.children.length > 1) {
+            this.closest('.producto-item').remove();
+        }
+    });
+});
+</script>
+</body>
+</html>

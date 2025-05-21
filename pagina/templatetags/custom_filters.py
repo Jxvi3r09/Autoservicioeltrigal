@@ -10,3 +10,11 @@ def add_class(value, arg):
     else:
         css_classes = arg
     return value.as_widget(attrs={'class': css_classes})
+
+@register.filter
+def subtract(value, arg):
+    """Resta el argumento del valor"""
+    try:
+        return int(value) - int(arg)
+    except (ValueError, TypeError):
+        return value

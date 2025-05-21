@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import login
 from django.shortcuts import render
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator  
 from django.db import models
 
 
@@ -152,4 +152,28 @@ class Backup(models.Model):
 
     def __str__(self):
         return f"Backup {self.fecha.strftime('%Y-%m-%d %H:%M')} - {self.tipo}"
+
+class Pedido(models.Model):
+    ESTADO_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('recibido', 'Recibido'),
+        ('cancelado', 'Cancelado'),
+    ]
+    
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    fecha_pedido = models.DateTimeField(auto_now_add=True)
+    fecha_entrega = models.DateField()
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente')
+    
+    def __str__(self):
+        return f"Pedido {self.id} - {self.proveedor.empresa}"
+
+class DetallePedido(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    
+    def __str__(self):
+        return f"{self.pedido.id} - {self.producto.nombre}"
+
 
