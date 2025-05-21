@@ -95,10 +95,13 @@ class Proveedor(models.Model):
     nit_proveedor = models.CharField(max_length=20, unique=True)
     empresa = models.CharField(max_length=100)
     correo = models.EmailField()
-    telefono = models.CharField(max_length=20)
-    direccion = models.CharField(max_length=255)
-
+    telefono = models.CharField(max_length=15)
+    direccion = models.CharField(max_length=200)
     fecha_registro = models.DateTimeField(auto_now_add=True)
+    estado = models.BooleanField(default=True)  # Solo una definición del campo estado
+
+    class Meta:
+        db_table = 'pagina_proveedor'
 
     def __str__(self):
         return f"{self.empresa} ({self.nit_proveedor})"
@@ -176,4 +179,9 @@ class DetallePedido(models.Model):
     def __str__(self):
         return f"{self.pedido.id} - {self.producto.nombre}"
 
+    proveedor = models.ForeignKey(
+        'Proveedor',
+        on_delete=models.CASCADE,
+        related_name='pedidos'
+    )
 

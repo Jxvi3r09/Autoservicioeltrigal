@@ -359,12 +359,21 @@ def editar_proveedor(request, id):
     return redirect('proveedores')  # Evita renderizar otra plantilla
 
 
+from django.db import transaction
+
+@transaction.atomic
 def eliminar_proveedor(request, id):
-    proveedor = get_object_or_404(Proveedor, id=id)
     if request.method == 'POST':
-        proveedor.delete()
-        return redirect('listar_proveedores')
-    return render(request, 'sistema/crud_proveedores/confirmar_eliminar.html', {'proveedor': proveedor})
+        try:
+            proveedor = Proveedor.objects.get(id=id)
+            nombre_empresa = proveedor.empresa
+            proveedor.delete()
+            messages.success(request, f'El proveedor {nombre_empresa} ha sido eliminado correctamente.')
+            return redirect('proveedores')
+        except Exception as e:
+            messages.error(request, f'Error al eliminar el proveedor: {str(e)}')
+            return redirect('proveedores')
+    return redirect('proveedores')
 
 
 @login_required

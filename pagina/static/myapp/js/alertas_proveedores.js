@@ -1,61 +1,45 @@
 function confirmarEliminarProveedor(id, empresa) {
   Swal.fire({
     title: "¿Estás seguro?",
-    text: `¿Deseas eliminar al proveedor "${empresa}"?`,
+    text: `¿Deseas eliminar al proveedor "${empresa}"? Esta acción eliminará también todos los pedidos asociados.`,
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#22B408",
-    cancelButtonColor: "#dc3545",
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
     confirmButtonText: "Sí, eliminar",
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      const form = document.getElementById(`formEliminar${id}`);
-      form.submit();
-      Swal.fire({
-        title: "¡Eliminado!",
-        text: "El proveedor ha sido eliminado correctamente",
-        icon: "success",
-        confirmButtonColor: "#22B408",
-      });
+      document.getElementById(`formEliminar${id}`).submit();
     }
   });
 }
 
-// Escuchar el envío del formulario de registro
-document.addEventListener("DOMContentLoaded", function () {
-  const formRegistro = document.querySelector("#formRegistroProveedor");
-  if (formRegistro) {
-    formRegistro.addEventListener("submit", function (e) {
-      e.preventDefault();
-      Swal.fire({
-        title: "¡Éxito!",
-        text: "Proveedor registrado correctamente",
-        icon: "success",
-        confirmButtonColor: "#22B408",
-      }).then(() => {
-        formRegistro.submit();
-      });
-    });
-  }
-});
-
-// Función para confirmar edición
 function mostrarAlertaEdicion(id, empresa) {
-  const modalEditar = $(`#editarProveedorModal${id}`);
-  const formEditar = modalEditar.find("form");
+  const modalEditar = document.querySelector(`#editarProveedorModal${id}`);
+  const form = modalEditar.querySelector("form");
 
-  formEditar.on("submit", function (e) {
+  // Mostrar el modal
+  const modal = new bootstrap.Modal(modalEditar);
+  modal.show();
+
+  // Manejar el envío del formulario
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
+
     Swal.fire({
-      title: "¡Éxito!",
-      text: `El proveedor "${empresa}" ha sido actualizado correctamente`,
-      icon: "success",
+      title: "¿Guardar cambios?",
+      text: `¿Deseas actualizar los datos del proveedor "${empresa}"?`,
+      icon: "question",
+      showCancelButton: true,
       confirmButtonColor: "#22B408",
-    }).then(() => {
-      this.submit();
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, actualizar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
     });
   });
-
-  modalEditar.modal("show");
 }
