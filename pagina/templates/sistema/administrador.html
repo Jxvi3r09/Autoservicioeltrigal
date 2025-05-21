@@ -274,19 +274,18 @@
                           <td data-label="Contacto">{{ usuario.email }}</td>
                           <td data-label="Rol"><span class="badge bg-primary">{{ usuario.rol }}</span></td>
                           <td data-label="Registro">{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
-                          <td data-label="Acciones" class="user-actions">
-                            <form id="formEditar{{ usuario.id }}" action="{% url 'editar_usuario' usuario.id %}" method="POST" style="display: inline;">
-                                {% csrf_token %}
-                                <button type="button" class="btn btn-sm btn-warning" onclick="confirmarEdicion('{{ usuario.id }}', '{{ usuario.username }}')" aria-label="Editar Usuario">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                            </form>
-                            <form id="formEliminar{{ usuario.id }}" action="{% url 'eliminar_usuario' usuario.id %}" method="POST" style="display: inline;">
-                                {% csrf_token %}
-                                <button type="button" class="btn btn-sm btn-danger" onclick="confirmarEliminacion('{{ usuario.id }}', '{{ usuario.username }}')" aria-label="Eliminar Usuario">
-                                    <i class="fas fa-trash"></i> Eliminar
-                                </button>
-                            </form>
+                          <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-warning me-1"
+                                    onclick="confirmarEdicion('{{ usuario.id }}', '{{ usuario.username }}')"
+                                    style="width: 85px; padding: 2px 8px; font-size: 12px;">
+                              <i class="fas fa-edit"></i> Editar
+                            </button>
+                            
+                            <button type="button" class="btn btn-sm btn-danger"
+                                    onclick="confirmarEliminacion('{{ usuario.id }}', '{{ usuario.username }}')"
+                                    style="width: 85px; padding: 2px 8px; font-size: 12px;">
+                              <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
                           </td>
                         </tr>
                         {% endfor %}

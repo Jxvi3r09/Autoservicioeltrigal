@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil de Usuario</title>
 
+  <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
+
   <!-- AdminLTE CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -91,6 +93,13 @@
             <p>Productos</p>
           </a>
         </li>
+
+        <li class="nav-item">
+            <a href="{% url 'copias_bd' %}" class="nav-link">
+                <i class="nav-icon fas fa-database"></i>
+                <p>Copias de seguridad</p>
+            </a>
+       </li>
 
         <li class="nav-item">
           <a href="{% url 'principal' %}" class="nav-link">

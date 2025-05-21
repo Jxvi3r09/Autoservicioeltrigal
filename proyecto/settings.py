@@ -86,7 +86,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'proyecto',
     'USER': 'root',
-    'PASSWORD':'1058038146',
+    'PASSWORD':'Javier',
     'HOST': 'localhost',  # Asegúrate de que solo sea la IP
     'PORT': '3306',  # Solo el número del puerto, sin IP
 }
@@ -153,8 +153,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'oscarjaviergomez12@gmail.com'
-EMAIL_HOST_PASSWORD = 'zqdcufpvbxxshkqf'
+EMAIL_HOST_USER = 'eltrigalautoservicio3@gmail.com'
+EMAIL_HOST_PASSWORD = 'gnxordczmdjkoktj'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # LOGGING = {
