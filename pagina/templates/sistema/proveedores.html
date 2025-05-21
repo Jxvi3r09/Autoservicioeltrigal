@@ -94,20 +94,11 @@
             class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center"
           >
             <div class="image">
-              {% if request.user.is_authenticated and request.user.imagen_perfil
-              %}
-              <img
-                src="{{ request.user.imagen_perfil.url }}"
-                class="img-circle elevation-2 user-avatar"
-                alt="Usuario"
-              />
-              {% else %}
               <img
                 src="{% static 'myapp/imagenes/usuariodefault.png' %}"
                 class="img-circle elevation-2 user-avatar"
                 alt="Usuario"
               />
-              {% endif %}
             </div>
             <div class="info mt-2 text-center">
               <a
@@ -115,9 +106,8 @@
                 class="d-block"
                 style="text-decoration: none"
               >
-                {% if request.user.is_authenticated %} {{
-                request.user.first_name }} {{ request.user.last_name }}<br />
-                {{ request.user.rol }} {% else %} Usuario {% endif %}
+                {% if user.is_authenticated %} {{ user.get_full_name }} {% else
+                %} Usuario {% endif %}
               </a>
             </div>
           </div>
@@ -367,7 +357,11 @@
                           type="button"
                           class="btn btn-sm btn-warning me-1"
                           onclick="mostrarAlertaEdicion('{{ proveedor.id }}', '{{ proveedor.empresa|escapejs }}')"
-                          style="width: 85px; padding: 2px 8px; font-size: 12px"
+                          style="
+                            width: 100px;
+                            padding: 4px 8px;
+                            font-size: 13px;
+                          "
                         >
                           <i class="fas fa-edit"></i> Editar
                         </button>
@@ -384,9 +378,9 @@
                             class="btn btn-sm btn-danger"
                             onclick="confirmarEliminarProveedor({{ proveedor.id }}, '{{ proveedor.empresa }}')"
                             style="
-                              width: 85px;
-                              padding: 2px 8px;
-                              font-size: 12px;
+                              width: 100px;
+                              padding: 4px 8px;
+                              font-size: 13px;
                             "
                           >
                             <i class="fas fa-trash-alt"></i> Eliminar
@@ -459,12 +453,12 @@
     </div>
 
     <!-- Modal de registro de proveedores -->
-    {% include 'sistema/crud_proveedores/modal_registro_proveedores.html' with
-    form=form %}
+    {% include "sistema/crud_proveedores/modal_registro_proveedores.html" %}
 
     <!-- Modales de edición -->
     {% for proveedor in proveedores %} {% include
-    'sistema/crud_proveedores/editar_proveedor.html' %} {% endfor %}
+    "sistema/crud_proveedores/editar_proveedor.html" with proveedor=proveedor %}
+    {% endfor %}
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
