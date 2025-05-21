@@ -1,1 +1,1 @@
-Instrucciones para recuperar tu contraseña en {{ site_name }}
+Instrucciones para recuperar tu contraseña en Autoservicio El Trigal
