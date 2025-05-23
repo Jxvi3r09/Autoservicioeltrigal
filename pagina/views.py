@@ -923,7 +923,7 @@ def detalle_pedido(request, pedido_id):
     })
 
 @login_required
-<<<<<<< HEAD
+
 def ventas(request):
     if request.method == 'POST':
         try:
