@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:;">
   
-  <title>Panel de Administración - Usuarios</title>
+  <title>Panel de Administración - Usuarios </title>
 
   <!-- Favicon -->
  <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
@@ -123,7 +123,7 @@
       <!-- Content Wrapper -->
       <div class="content-wrapper">
         <!-- Content Header -->
-        <div class="content-header sticky-header">
+        <div class="content-header sticky-header mb-2">
           <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
               <!-- Grupo: Botón + Inicio -->
@@ -158,10 +158,10 @@
         </div>
 
         <!-- Main content -->
-        <div class="content">
+        <div class="content p-2">
           <div class="container-fluid">
             <!-- Tarjeta de bienvenida -->
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-2">
               <div class="col-lg-10">
                 <div class="welcome-card text-center">
                   <h1 class="welcome-title">Panel de Administración de Usuarios</h1>
@@ -210,14 +210,18 @@
             <!-- Contenido principal -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Listado de Usuarios</h3>
-                <div class="card-tools" id="botones">
-                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroModal" aria-label="Crear Nuevo Usuario">
-                    <i class="fas fa-user-plus me-1"></i> Nuevo Usuario
-                  </button>
-                  <button class="btn btn-primary" id="btnGenerarPDF">
-                    <i class="fas fa-file-pdf me-1"></i> Exportar PDF
-                  </button>
+                <div class="d-flex justify-content-between align-items-center">
+                  <h3 class="card-title m-0">
+                    <i class="fas fa-list mr-2"></i> Listado de Usuarios
+                  </h3>
+                  <div class="card-tools" id="botones">
+                    <button class="btn btn-usu" data-bs-toggle="modal" data-bs-target="#registroModal">
+                      <i class="fas fa-user-plus me-1"></i> Nuevo Usuario
+                    </button>
+                    <button class="btn btn-usu" id="btnGenerarPDF">
+                      <i class="fas fa-file-pdf me-1"></i> Exportar PDF
+                    </button>
+                  </div>
                 </div>
               </div>
               
@@ -275,15 +279,13 @@
                           <td data-label="Rol"><span class="badge bg-primary">{{ usuario.rol }}</span></td>
                           <td data-label="Registro">{{ usuario.fecha_registro|date:"d/m/Y H:i" }}</td>
                           <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-warning me-1"
-                                    onclick="confirmarEdicion('{{ usuario.id }}', '{{ usuario.username }}')"
-                                    style="width: 85px; padding: 2px 8px; font-size: 12px;">
+                            <button type="button" class="btn btn-sm btn-warning me-1 action-btn"
+                                    onclick="confirmarEdicion('{{ usuario.id }}', '{{ usuario.username }}')">
                               <i class="fas fa-edit"></i> Editar
                             </button>
                             
-                            <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="confirmarEliminacion('{{ usuario.id }}', '{{ usuario.username }}')"
-                                    style="width: 85px; padding: 2px 8px; font-size: 12px;">
+                            <button type="button" class="btn btn-sm btn-danger action-btn"
+                                    onclick="confirmarEliminacion('{{ usuario.id }}', '{{ usuario.username }}')">
                               <i class="fas fa-trash-alt"></i> Eliminar
                             </button>
                           </td>

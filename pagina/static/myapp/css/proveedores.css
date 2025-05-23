@@ -2,7 +2,7 @@
 :root {
   --verde-principal: rgb(34, 132, 33) !important;
   --verde-claro: #00ff51;
-  --verde-oscuro: #0d640e;
+  --verde-oscuro: rgb(34, 132, 33) !important;
   --naranja-principal: rgb(243, 154, 49) !important;
   --naranja-claro: #feca57;
   --naranja-oscuro: #e67e22;
@@ -77,12 +77,12 @@ body {
 
 /* Tarjetas */
 .card {
+  margin-top: 8%;
   border: none;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  box-shadow: var(--card-shadow);
+  border-radius: 8px;
   overflow: hidden;
-  border-top: 3px solid var(--primary-color);
+  animation: fadeIn 0.3s ease-out;
 }
 
 .card:hover {
@@ -91,11 +91,9 @@ body {
 }
 
 .card-header {
-  color: rgb(0, 0, 0);
-  border: none;
+  background-color: white !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   padding: 15px 20px;
-  font-weight: 600;
-  border-left: 5px solid var(--naranja-principal);
 }
 
 /* Botones */
@@ -103,14 +101,19 @@ body {
   border-radius: 8px;
   font-weight: 500;
   letter-spacing: 0.3px;
-  padding: 8px 16px;
   transition: all 0.3s ease;
+  padding: 8px 15px;
 }
 
 .btn-primary {
-  background-color: var(--verde-principal);
-  border: none;
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+  background-color: rgb(34, 132, 33) !important;
+  box-shadow: 0 4px 15px rgba(34, 132, 33, 0.3);
+  text-align: right;
+  text-transform: none;
+  font-size: 0.9rem;
+  font-weight: normal;
+  padding: 0.5rem 1.5rem;
+  border: none !important;
 }
 
 .btn-primary:hover {
@@ -251,17 +254,12 @@ body {
 
 /* Estilos para las stats-cards */
 .stats-card {
-  background: #fff;
-  border-radius: 10px;
+  background-color: #fff;
+  border-radius: 8px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  height: 160px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  margin-bottom: 20px;
 }
 
 .stats-card:hover {
@@ -269,22 +267,21 @@ body {
 }
 
 .feature-icon {
+  color: rgb(34, 132, 33) !important;
   font-size: 2.5rem;
   margin-bottom: 15px;
-  color: #007bff;
 }
 
 .stats-number {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin: 10px 0;
-  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 5px;
 }
 
 .stats-title {
-  font-size: 1rem;
   color: #666;
-  margin-bottom: 0;
+  font-size: 1rem;
 }
 
 /* Animaciones */
@@ -433,7 +430,8 @@ a:hover {
 }
 
 .content-header {
-  margin-left: 60px;
+  margin: 0;
+  background-color: white !important;
 }
 
 /* Imagen del usuario por defecto: pequeña */
@@ -465,7 +463,10 @@ body:not(.sidebar-collapse) .user-avatar,
 
 #menu {
   color: #0d640e;
+  position: relative; /* o absolute si es necesario */
+  /* z-index: 1060; Asegúrate de que sea mayor que el sidebar o avatar */
 }
+
 /* Carta de bienvenida */
 .welcome-card {
   background-color: white;
@@ -520,4 +521,15 @@ body:not(.sidebar-collapse) .user-avatar,
 #resetFilters:hover {
   background-color: var(--gris-claro);
   color: var(--negro-principal);
+}
+
+/* Estilos para los botones de acción más pequeños */
+.action-btn {
+  padding: 4px 8px;
+  font-size: 12px;
+  width: 75px;
+}
+
+.action-buttons {
+  white-space: nowrap;
 }
