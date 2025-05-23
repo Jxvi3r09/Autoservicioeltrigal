@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate  # Agregar este import
+from django.contrib.auth import authenticate, logout  # Agregar logout aquí
 from django.http import FileResponse, HttpResponse  # Agregar HttpResponse aquí
 from django.utils import timezone
 from django.conf import settings
@@ -908,3 +908,11 @@ def detalle_pedido(request, pedido_id):
     return render(request, 'sistema/detalle_pedido.html', {
         'pedido': pedido
     })
+
+def logout_view(request):
+    logout(request)
+    response = redirect('principal')
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response

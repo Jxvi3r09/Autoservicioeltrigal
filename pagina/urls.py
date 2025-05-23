@@ -14,6 +14,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import CopiasBDView, GenerarBackupView
 from .views import configurar_respaldo
+from django.contrib.auth.views import LogoutView
 
 
 
@@ -55,7 +56,7 @@ urlpatterns = [
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
 
     # ✅ Nueva ruta para cerrar sesión
-    path("logout/", auth_views.LogoutView.as_view(next_page='index'), name="logout"),
+    path("logout/", LogoutView.as_view(next_page='principal'), name="logout"),
 
 
 

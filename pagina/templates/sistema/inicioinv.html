@@ -23,6 +23,8 @@
     <!-- Estilos personalizados -->
     <link href="{% static 'myapp/css/inicioinv.css' %}" rel="stylesheet" />
     
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -66,12 +68,14 @@
           </a>
         </li>
 
+        {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
           <a href="{% url 'usuarios' %}" class="nav-link">
             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
             <p>Usuarios</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
           <a href="{% url 'inventario' %}" class="nav-link">
@@ -95,23 +99,25 @@
         </li>
 
         <li class="nav-item">
+            <a href="{% url 'pedidos' %}" class="nav-link">
+                <i class="nav-icon fas fa-tag"></i>
+                <p>
+                    Pedidos
+                </p>
+            </a>
+        </li>
+
+        {% if request.user.rol == 'administrador' %}
+        <li class="nav-item">
           <a href="{% url 'copias_bd' %}" class="nav-link">
             <i class="nav-icon fas fa-database"></i>
             <p>Copias de seguridad</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
-            <a href="{% url 'pedidos' %}" class="nav-link">
-              <i class="nav-icon fas fa-tag"></i>
-              <p>
-                Pedidos
-              </p>
-            </a>
-          </li>
-
-        <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
+          <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
             <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
             <p>Cerrar Sesión</p>
           </a>
@@ -251,11 +257,6 @@
         </div>
       </div>
     </div>
-
-    <!-- AdminLTE JS -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-    <!-- Javascript -->
-    <script src="{% static 'myapp/js/submenu.js' %}"></script>
     
     <script>
       // Animación para elementos de estadísticas
@@ -288,5 +289,9 @@
         {% endif %}
       });
     </script>
+    
+    <!-- AdminLTE JS -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="{% static 'myapp/js/logout.js' %}"></script>
   </body>
 </html>

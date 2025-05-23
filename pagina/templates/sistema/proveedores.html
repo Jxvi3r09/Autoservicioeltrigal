@@ -62,7 +62,7 @@
         </div>
       </div>
 
-        <!-- Sidebar mejorado -->
+       <!-- Sidebar mejorado -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <a href="{% url 'inicioinv' %}" class="brand-link text-center">
     <span class="brand-text font-weight-light">
@@ -100,12 +100,14 @@
           </a>
         </li>
 
+        {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
           <a href="{% url 'usuarios' %}" class="nav-link">
             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
             <p>Usuarios</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
           <a href="{% url 'inventario' %}" class="nav-link">
@@ -129,23 +131,25 @@
         </li>
 
         <li class="nav-item">
-            <a href="{% url 'copias_bd' %}" class="nav-link">
-                <i class="nav-icon fas fa-database"></i>
-                <p>Copias de seguridad</p>
+            <a href="{% url 'pedidos' %}" class="nav-link">
+                <i class="nav-icon fas fa-tag"></i>
+                <p>
+                    Pedidos
+                </p>
             </a>
         </li>
 
+        {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
-          <a href="{% url 'pedidos' %}" class="nav-link">
-            <i class="nav-icon fas fa-tag"></i>
-            <p>
-              Pedidos
-            </p>
+          <a href="{% url 'copias_bd' %}" class="nav-link">
+            <i class="nav-icon fas fa-database"></i>
+            <p>Copias de seguridad</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
+          <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
             <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
             <p>Cerrar Sesión</p>
           </a>
@@ -315,6 +319,8 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-  
+        <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'myapp/js/logout.js' %}"></script>
   </body>
 </html>
