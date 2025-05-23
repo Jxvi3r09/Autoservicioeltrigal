@@ -918,7 +918,6 @@ def detalle_pedido(request, pedido_id):
         'pedido': pedido
     })
 
-<<<<<<< HEAD
 def guardar_proveedor(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST)
@@ -942,12 +941,3 @@ def eliminar_proveedor(request, id):
         proveedor.delete()
         return redirect('/proveedores?success=Proveedor eliminado exitosamente')
     return redirect('/proveedores?error=Error al eliminar el proveedor')
-=======
-def logout_view(request):
-    logout(request)
-    response = redirect('principal')
-    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response['Pragma'] = 'no-cache'
-    response['Expires'] = '0'
-    return response
->>>>>>> roles
