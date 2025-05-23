@@ -917,3 +917,27 @@ def detalle_pedido(request, pedido_id):
     return render(request, 'sistema/detalle_pedido.html', {
         'pedido': pedido
     })
+
+def guardar_proveedor(request):
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/proveedores?success=Proveedor registrado exitosamente')
+    return redirect('/proveedores?error=Error al registrar el proveedor')
+
+def editar_proveedor(request, id):
+    if request.method == 'POST':
+        proveedor = Proveedor.objects.get(id=id)
+        form = ProveedorForm(request.POST, instance=proveedor)
+        if form.is_valid():
+            form.save()
+            return redirect('/proveedores?success=Proveedor actualizado exitosamente')
+    return redirect('/proveedores?error=Error al actualizar el proveedor')
+
+def eliminar_proveedor(request, id):
+    if request.method == 'POST':
+        proveedor = Proveedor.objects.get(id=id)
+        proveedor.delete()
+        return redirect('/proveedores?success=Proveedor eliminado exitosamente')
+    return redirect('/proveedores?error=Error al eliminar el proveedor')
