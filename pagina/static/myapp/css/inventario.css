@@ -415,14 +415,7 @@ textarea:focus {
   outline-offset: 2px;
 }
 
-/* Hasta aqui css de administrador */
-.content-wrapper {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 100vh; /* altura mínima igual a la altura visible del navegador */
-}
+
 
 .container-fluid {
   color: white !important;
@@ -437,21 +430,11 @@ textarea:focus {
   position: fixed !important;
 }
 
-.logo-hover {
-  transition: transform 0.3s ease; /* Suaviza el cambio */
-}
 
-.logo-hover:hover {
-  transform: scale(1.1); /* Hace un zoom del 10% */
-}
 .btn-usuario {
   background-color: rgb(34, 132, 33) !important;
 }
 
-.content-header{
-  max-height: 100px;
-  background-color: white !important;
-}
 
 
 a{
@@ -471,13 +454,6 @@ a:hover{
   color: #0d640e;
 }
 
-  /* Ajusta el espaciado vertical del encabezado */
-.content-header {
-  padding-top: 5px; /* Reducido desde su valor por defecto */
-  padding-bottom: 5px;
-  background-color: white !important;
-}
-
 /* Ajusta el espaciado del contenido interno */
 #conte {
   align-items: flex-start; /* Alinea al inicio verticalmente */
@@ -492,6 +468,7 @@ a:hover{
 
 .logo-hover {
   transition: transform 0.3s ease; /* Suaviza el cambio */
+  height: 80px;
 }
 
 .logo-hover:hover {
@@ -652,18 +629,9 @@ body {
 /* Logo personalizado */
 .logo-container {
   display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 5;
-  margin-left: auto;
-}
-
-.logo-hover {
-  max-height: 80px;
-}
-
-.logo-hover:hover {
-  transform: scale(1.1);
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 6.8%;
 }
 
 .breadcrumb {
@@ -1205,16 +1173,6 @@ body:not(.sidebar-collapse) .user-avatar,
             background: var(--primary-dark);
         }
 
-        .content-header{
-        max-height: 100px;
-        background-color: white !important;
-        }
-
-        .container-fluid {
-            margin-left: 19%;
-            display: flex;
-        }
-
         .fa-solid, .fas{
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
@@ -1244,15 +1202,7 @@ body:not(.sidebar-collapse) .user-avatar,
             flex: 1;
             margin-left: 250px;
             min-height: 100vh;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .content-header {
-            background: white;
-            margin-bottom: 20px;
-            padding: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease !important;
         }
 
         .breadcrumb {
@@ -1300,11 +1250,16 @@ body:not(.sidebar-collapse) .user-avatar,
 
         /* Fix content-header styles */
         .content-header {
-            max-height: 100px;
+            width: 100%;
             background-color: white !important;
             margin-bottom: 20px;
             padding: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            z-index: 1001;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color: white !important;
         }
 
         /* Fix breadcrumb styles */

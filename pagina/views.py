@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate  # Agregar este import
+from django.contrib.auth import authenticate, logout  # Agregar logout aquí
 from django.http import FileResponse, HttpResponse  # Agregar HttpResponse aquí
 from django.utils import timezone
 from django.conf import settings
@@ -923,6 +923,7 @@ def detalle_pedido(request, pedido_id):
     })
 
 @login_required
+<<<<<<< HEAD
 def ventas(request):
     if request.method == 'POST':
         try:

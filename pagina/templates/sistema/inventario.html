@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Autoservicio de Inventario</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+     <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
@@ -18,6 +18,9 @@
     
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" />
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link href="{% static 'myapp/css/inventario.css' %}" rel="stylesheet" />
     
@@ -26,6 +29,7 @@
     
 </head>
   <body class="hold-transition sidebar-mini sidebar-collapse">
+    {% csrf_token %}
     <div class="wrapper">
 
        <!-- Sidebar mejorado -->
@@ -66,12 +70,14 @@
           </a>
         </li>
 
+        {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
           <a href="{% url 'usuarios' %}" class="nav-link">
             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
             <p>Usuarios</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
           <a href="{% url 'inventario' %}" class="nav-link active">
@@ -95,17 +101,28 @@
         </li>
 
         <li class="nav-item">
+            <a href="{% url 'pedidos' %}" class="nav-link">
+                <i class="nav-icon fas fa-tag"></i>
+                <p>
+                    Pedidos
+                </p>
+            </a>
+        </li>
+
+        {% if request.user.rol == 'administrador' %}
+        <li class="nav-item">
           <a href="{% url 'copias_bd' %}" class="nav-link">
             <i class="nav-icon fas fa-database"></i>
             <p>Copias de seguridad</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
+        <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
             <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
             <p>Cerrar Sesión</p>
-          </a>
+        </a>
         </li>
       </ul>
     </nav>
@@ -113,29 +130,40 @@
 </aside>
       <!-- Content Wrapper -->
       <div class="content-wrapper">
-    <!-- Top Menu -->
-    <div class="top-menu">
-        <div class="d-flex align-items-center">
-            <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item">
+        <!-- Content Header -->
+        <div class="content-header">
+            <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+        
+                <!-- Grupo: Botón + Inicio -->
+                <div class="d-flex align-items-center">
+                <!-- Botón de menú -->
+                        <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                        <i class="fas fa-bars"></i>
+                        </button>
+        
+                <!-- Migas de pan -->
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
                     <a href="{% url 'inicioinv' %}">
                         <i class="fas fa-home"></i> Inicio
                     </a>
-                </li>
-                <li class="breadcrumb-item active">Gestión De Productos</li>
-            </ol>
-        </div>
-                    <div class="logo-container">
-              <img
-                src="{% static 'myapp/imagenes/logosinfondo.png' %}"
-                alt="Autoservicio El Trigal"
-                class="logo-hover"
-              />
+                    </li>
+                    <li class="breadcrumb-item active">Gestión De Productos</li>
+                </ol>
+                </div>
+        
+                <!-- Logo -->
+                <div class="logo-container">
+                <img
+                    src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                    alt="Autoservicio El Trigal"
+                    class="logo-hover"
+                />
+                </div>
             </div>
-    </div>
+            </div>
+        </div>
 
     <!-- Controls Section -->
     <div class="controls-section">
@@ -154,8 +182,10 @@
                         <div>{{ categoria.nombre }} <span>({{ categoria.producto_set.count }})</span></div>
                         <div class="category-actions">
                             <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
+                            {% if request.user.rol == 'administrador' %}
                             <button class="btn-icon" onclick="eliminarCategoria({{ categoria.id }})">🗑️</button>
                         </div>
+                        {% endif %}
                     </li>
                     {% endfor %}
                     <li class="category-item add-category">
@@ -196,7 +226,7 @@
 
                 <div class="product-grid">
                     {% for producto in productos %}
-                    <div class="product-card" data-categoria="{{ producto.categoria.id }}">
+                    <div class="product-card" data-categoria="{{ producto.categoria.id }}" data-id="{{ producto.id }}">
                         <div class="product-image">
                             {% if producto.imagen %}
                                 <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
@@ -410,47 +440,10 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="{% static 'myapp/js/inventario.js' %}"></script>
-    <script>
-        function iniciarEscaneo() {
-            document.getElementById('interactive').style.display = 'block';
-            Quagga.init({
-                inputStream: {
-                    name: "Live",
-                    type: "LiveStream",
-                    target: document.querySelector("#interactive"),
-                    constraints: {
-                        facingMode: "environment"
-                    },
-                },
-                decoder: {
-                    readers: ["ean_reader", "ean_8_reader", "code_128_reader", "code_39_reader", "upc_reader"]
-                }
-            }, function(err) {
-                if (err) {
-                    console.error(err);
-                    alert("Error al iniciar la cámara. Asegúrate de dar permisos de cámara.");
-                    return;
-                }
-                Quagga.start();
-            });
-
-            Quagga.onDetected(function(result) {
-                var code = result.codeResult.code;
-                document.getElementById('barcode').value = code;
-                Quagga.stop();
-                document.getElementById('interactive').style.display = 'none';
-            });
-        }
-
-        // Limpiar recursos cuando se cierre el modal
-        document.querySelector('.close-modal').addEventListener('click', function() {
-            if (Quagga.initialized) {
-                Quagga.stop();
-            }
-            document.getElementById('interactive').style.display = 'none';
-        });
-    </script>
+    <script src="{% static 'myapp/js/alertas.js' %}"></script>
+    <script src="{% static 'myapp/js/logout.js' %}"></script>
 </body>
 </html>

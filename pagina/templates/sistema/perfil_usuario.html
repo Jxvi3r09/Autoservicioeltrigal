@@ -28,7 +28,7 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-       <!-- Sidebar mejorado -->
+  <!-- Sidebar mejorado -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <a href="{% url 'inicioinv' %}" class="brand-link text-center">
     <span class="brand-text font-weight-light">
@@ -60,18 +60,20 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="{% url 'inicioinv' %}" class="nav-link active">
+          <a href="{% url 'inicioinv' %}" class="nav-link">
             <i class="nav-icon fas fa-home" aria-hidden="true"></i>
             <p>Inicio</p>
           </a>
         </li>
 
+        {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
           <a href="{% url 'usuarios' %}" class="nav-link">
             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
             <p>Usuarios</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
           <a href="{% url 'inventario' %}" class="nav-link">
@@ -200,24 +202,32 @@
          
           <li class="nav-item">
             <a href="{% url 'pedidos' %}" class="nav-link">
-              <i class="nav-icon fas fa-tag"></i>
-              <p>
-                Pedidos
-              </p>
+                <i class="nav-icon fas fa-tag"></i>
+                <p>
+                    Pedidos
+                </p>
             </a>
-          </li>
+        </li>
 
-          <!-- Sección Cerrar Sesión -->
-          <li class="nav-item">
-            <a href="{% url 'principal' %}" class="nav-link">
-              <i class="nav-icon fas fa-sign-out-alt"></i>
-              <p>Cerrar Sesión</p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </aside>
+        {% if request.user.rol == 'administrador' %}
+        <li class="nav-item">
+          <a href="{% url 'copias_bd' %}" class="nav-link">
+            <i class="nav-icon fas fa-database"></i>
+            <p>Copias de seguridad</p>
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
+            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+            <p>Cerrar Sesión</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
 
   <!-- Contenido principal -->
   <div class="content-wrapper">
@@ -270,11 +280,9 @@
           <div class="profile-name">{{ usuario.username }}</div>
           <div class="profile-role">{{ usuario.get_rol_display }}</div>
 
-
           <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal{{ usuario.id }}" aria-label="Editar Usuario">
             <i class="fas fa-edit"></i> Editar Informacion
           </button>
-  
         </div>
         
         <!-- Información personal -->
@@ -318,7 +326,10 @@
                     <i class="fas fa-user-tag"></i>
                     Rol
                   </div>
+
+                  {% if request.user.rol == 'administrador' %}
                   <div class="info-value">{{ usuario.get_rol_display }}</div>
+                  {% endif %}
                 </div>
                 <div class="info-item">
                   <div class="info-label">
@@ -430,6 +441,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'myapp/js/logout.js' %}"></script>
 </body>
 </html>

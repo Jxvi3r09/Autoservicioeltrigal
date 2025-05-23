@@ -195,23 +195,52 @@
             });
         });
 
-        function eliminarProducto(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                fetch(`/productos/eliminar/${id}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert('Error al eliminar el producto: ' + data.error);
-                    }
-                });
+        function eliminarProducto(productoId) {
+            if (!confirm('¿Está seguro que desea eliminar este producto?')) {
+                return;
             }
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            fetch(`/eliminar_producto/${productoId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Eliminar el elemento del DOM
+                    const productCard = document.querySelector(`.product-card[data-id="${productoId}"]`);
+                    if (productCard) {
+                        productCard.remove();
+                        alert('Producto eliminado correctamente');
+                    }
+                } else {
+                    throw new Error('Error al eliminar el producto');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar el producto');
+            });
+        }
+
+        // Función auxiliar para obtener el token CSRF
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
 
         function filtrarPorCategoria(categoriaId) {
@@ -442,3 +471,4 @@
         function resetCrop() {
             if (cropper) cropper.reset();
         }
+
