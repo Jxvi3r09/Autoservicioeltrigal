@@ -87,6 +87,7 @@ DATABASES = {
     'NAME': 'proyecto',
     'USER': 'root',
     'PASSWORD':'Javier',
+    'PASSWORD':'',
     'HOST': 'localhost',  # Asegúrate de que solo sea la IP
     'PORT': '3306',  # Solo el número del puerto, sin IP
 }
