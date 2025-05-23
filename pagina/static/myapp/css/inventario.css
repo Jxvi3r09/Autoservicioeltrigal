@@ -1577,3 +1577,32 @@ body.sidebar-collapse .controls-section {
 #editarproducto{
   background-color: rgb(34, 132, 33) !important;;
 }
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.scan-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.scan-btn:hover {
+    background-color: #0056b3;
+}
+
+#interactive.viewport {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
