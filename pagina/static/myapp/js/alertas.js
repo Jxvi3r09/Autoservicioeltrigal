@@ -1,3 +1,4 @@
+
 // Función para mostrar mensajes del backend
 function mostrarMensajes(messages) {
     messages.forEach(message => {
@@ -70,3 +71,24 @@ function confirmarEdicion(id, nombre) {
 //         });
 //     }
 // });
+
+
+        function confirmarCerrarSesion(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '¿Cerrar sesión?',
+                text: "¿Estás seguro que deseas cerrar la sesión?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, cerrar sesión',
+                cancelButtonText: 'Cancelar',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/';
+                }
+            });
+        }
+

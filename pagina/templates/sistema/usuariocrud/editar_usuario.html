@@ -45,13 +45,18 @@
             </div>
           </div>
           
+          {% if request.user.rol == 'administrador' %}
           <div class="mb-3">
             <label class="form-label fw-semibold" style="color: #212529;">Rol</label>
             <div class="input-group">
               <span class="input-group-text" style="background-color: #212529; color: white;"><i class="bi bi-person-badge"></i></span>
-              <input type="text" name="rol" class="form-control border-dark" value="{{ usuario.rol }}">
+              <select name="rol" class="form-control border-dark">
+                <option value="empleado" {% if usuario.rol == 'empleado' %}selected{% endif %}>Empleado</option>
+                <option value="administrador" {% if usuario.rol == 'administrador' %}selected{% endif %}>Administrador</option>
+              </select>
             </div>
           </div>
+          {% endif %}
           
           <div class="mb-3">
             <label class="form-label fw-semibold" style="color: #212529;">Correo</label>

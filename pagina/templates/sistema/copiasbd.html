@@ -114,7 +114,7 @@
           </li>
 
             <li class="nav-item">
-            <a href="{% url 'principal' %}" class="nav-link">
+            <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
                 <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
                 <p>Cerrar Sesión</p>
             </a>
@@ -492,5 +492,6 @@
         this.submit();
     });
 </script>
+    <script src="{% static 'myapp/js/alertas.js' %}"></script>
 </body>
 </html>

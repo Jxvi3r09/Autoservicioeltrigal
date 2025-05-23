@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate  # Agregar este import
+from django.contrib.auth import authenticate, logout  # Agregar logout aquí
 from django.http import FileResponse, HttpResponse  # Agregar HttpResponse aquí
 from django.utils import timezone
 from django.conf import settings
@@ -918,6 +918,7 @@ def detalle_pedido(request, pedido_id):
         'pedido': pedido
     })
 
+<<<<<<< HEAD
 def guardar_proveedor(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST)
@@ -941,3 +942,12 @@ def eliminar_proveedor(request, id):
         proveedor.delete()
         return redirect('/proveedores?success=Proveedor eliminado exitosamente')
     return redirect('/proveedores?error=Error al eliminar el proveedor')
+=======
+def logout_view(request):
+    logout(request)
+    response = redirect('principal')
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
+>>>>>>> roles
