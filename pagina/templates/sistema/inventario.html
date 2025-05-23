@@ -445,5 +445,45 @@
     <script src="{% static 'myapp/js/inventario.js' %}"></script>
     <script src="{% static 'myapp/js/alertas.js' %}"></script>
     <script src="{% static 'myapp/js/logout.js' %}"></script>
+        <script>
+        function iniciarEscaneo() {
+            document.getElementById('interactive').style.display = 'block';
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector("#interactive"),
+                    constraints: {
+                        facingMode: "environment"
+                    },
+                },
+                decoder: {
+                    readers: ["ean_reader", "ean_8_reader", "code_128_reader", "code_39_reader", "upc_reader"]
+                }
+            }, function(err) {
+                if (err) {
+                    console.error(err);
+                    alert("Error al iniciar la cámara. Asegúrate de dar permisos de cámara.");
+                    return;
+                }
+                Quagga.start();
+            });
+
+            Quagga.onDetected(function(result) {
+                var code = result.codeResult.code;
+                document.getElementById('barcode').value = code;
+                Quagga.stop();
+                document.getElementById('interactive').style.display = 'none';
+            });
+        }
+
+        // Limpiar recursos cuando se cierre el modal
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            if (Quagga.initialized) {
+                Quagga.stop();
+            }
+            document.getElementById('interactive').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
