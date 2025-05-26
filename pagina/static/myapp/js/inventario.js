@@ -1,4 +1,5 @@
-// Mostrar/ocultar modales
+
+        // Mostrar/ocultar modales
         const addProductBtn = document.getElementById('addProductBtn');
         const addCategoryBtn = document.getElementById('addCategoryBtn');
         const addProductModal = document.getElementById('addProductModal');
@@ -61,60 +62,58 @@
         const addProductForm = document.getElementById('addProductForm');
         addProductForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const formData = new FormData(addProductForm);
-            const barcode = document.getElementById('barcode').value;
-            console.log('Código de barras a enviar:', barcode); // Para depuración
-
-            // Asegurarse de que el código de barras se incluya como ID
-            formData.set('id', barcode);
-
-            fetch('/agregar-producto/', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Producto guardado exitosamente');
-                    addProductModal.style.display = 'none';
-                    addProductForm.reset();
-                    location.reload();
-                } else {
-                    alert('Error al agregar el producto: ' + data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al agregar el producto');
-            });
+            if (cropper) {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    const formData = new FormData(addProductForm);
+                    formData.delete('imagen'); // Eliminar la imagen original
+                    formData.append('imagen', blob, 'cropped.jpg'); // Agregar la imagen recortada
+                    fetch('/agregar-producto/', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            addProductModal.style.display = 'none';
+                            addProductForm.reset();
+                            location.reload();
+                        } else {
+                            alert('Error al agregar el producto: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error al agregar el producto');
+                    });
+                });
+            } else {
+                const formData = new FormData(addProductForm);
+                fetch('/agregar-producto/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        addProductModal.style.display = 'none';
+                        addProductForm.reset();
+                        location.reload();
+                    } else {
+                        alert('Error al agregar el producto: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al agregar el producto');
+                });
+            }
         });
-
-        function enviarFormulario(formData) {
-            fetch('/agregar-producto/', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    addProductModal.style.display = 'none';
-                    addProductForm.reset();
-                    location.reload();
-                } else {
-                    alert('Error al agregar el producto: ' + data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al agregar el producto');
-            });
-        }
 
         const addCategoryForm = document.getElementById('addCategoryForm');
         addCategoryForm.addEventListener('submit', (e) => {
@@ -195,52 +194,23 @@
             });
         });
 
-        function eliminarProducto(productoId) {
-            if (!confirm('¿Está seguro que desea eliminar este producto?')) {
-                return;
-            }
-
-            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            
-            fetch(`/eliminar_producto/${productoId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Eliminar el elemento del DOM
-                    const productCard = document.querySelector(`.product-card[data-id="${productoId}"]`);
-                    if (productCard) {
-                        productCard.remove();
-                        alert('Producto eliminado correctamente');
+        function eliminarProducto(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                fetch(`/productos/eliminar/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
                     }
-                } else {
-                    throw new Error('Error al eliminar el producto');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al eliminar el producto');
-            });
-        }
-
-        // Función auxiliar para obtener el token CSRF
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error al eliminar el producto: ' + data.error);
                     }
-                }
+                });
             }
-            return cookieValue;
         }
 
         function filtrarPorCategoria(categoriaId) {
@@ -471,4 +441,3 @@
         function resetCrop() {
             if (cropper) cropper.reset();
         }
-

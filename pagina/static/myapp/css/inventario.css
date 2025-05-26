@@ -405,15 +405,6 @@ body {
   border-width: 0;
 }
 
-/* Focus styles for accessibility */
-a:focus,
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-}
 
 
 
@@ -816,19 +807,34 @@ body:not(.sidebar-collapse) .user-avatar,
             color: var(--primary);
         }
         
-        .search-input {
+        .search-wrapper {
+            position: relative;
             width: 100%;
-            padding: 10px 15px;
-            border: 1px solid var(--secondary);
-            border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-            margin: 0;
-            height: 38px;
         }
-        
-        .search-input:focus {
-            border-color: var(--primary);
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            pointer-events: none;
+        }
+
+        .search-input {
+            padding: 8px 12px 8px 35px;
+            border: 1px solid #474747;
+            border-radius: 20px;
+            width: 60%;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus{
+            padding-left: 40px;
+        }
+
+        .search-input:focus + .search-icon {
+            color: #fd7e14;
         }
         
         .btn {
@@ -920,18 +926,50 @@ body:not(.sidebar-collapse) .user-avatar,
             display: flex;
             flex-direction: column;
             height: 100%;
-            background-color: white;
-            border-radius: 8px;
+            background: linear-gradient(145deg, #ffffff, #f6f7f9);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                inset 0 2px 4px rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            backdrop-filter: blur(5px);
         }
         
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04),
+                inset 0 2px 4px rgba(255, 255, 255, 0.9);
         }
-        
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #228421, #f39a04);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .product-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            pointer-events: none;
+        }
+
         .product-image {
             position: relative;
             width: 100%;
@@ -950,6 +988,11 @@ body:not(.sidebar-collapse) .user-avatar,
             object-position: center;
             padding: 10px; /* Add some padding around the image */
             background-color: white;
+        }
+        
+        .product-image img:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
+            transition: transform 0.3s ease;
         }
         
         .product-info {
@@ -978,7 +1021,6 @@ body:not(.sidebar-collapse) .user-avatar,
         }
         
         .product-spec {
-            display: flex;
             margin-bottom: 5px;
         }
         
@@ -988,11 +1030,6 @@ body:not(.sidebar-collapse) .user-avatar,
         }
         
         .product-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            padding-top: 10px;
             border-top: 1px solid var(--secondary);
         }
         
@@ -1162,7 +1199,7 @@ body:not(.sidebar-collapse) .user-avatar,
 
         .cropper-controls button {
             padding: 5px 10px;
-            background: var(--primary);
+            background: rgb(243, 154, 49) !important;;
             color: white;
             border: none;
             border-radius: 4px;
@@ -1476,7 +1513,7 @@ body:not(.sidebar-collapse) .user-avatar,
             }
         }
 
-.controls-section {
+        .controls-section {
     background: white;
     margin-top: 89px;
     margin-bottom: 20px;
@@ -1517,19 +1554,13 @@ body.sidebar-collapse .controls-section {
     margin: 0;
 }
 
-.search-input {
-    width: 100%;
-    padding: 8px 15px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
-
 /* Adjust button alignment */
 #addProductBtn {
     margin-left: 0;
     white-space: nowrap;
 }
 #editarproducto{
+  color: white;
   background-color: rgb(34, 132, 33) !important;;
 }
 
@@ -1560,4 +1591,98 @@ body.sidebar-collapse .controls-section {
     margin-bottom: 20px;
     border: 2px solid #ddd;
     border-radius: 4px;
+}
+
+.product-price {
+  font-weight: bold;
+  color: #dc3545;
+}
+
+.input-method-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background: #f8f9fa;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.toggle-btn:hover {
+    background: #e9ecef;
+}
+
+.toggle-btn.active {
+    background: #228421;
+    color: white;
+    border-color: #228421;
+}
+
+.scan-btn {
+    background: #228421;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.scan-btn:hover {
+    background: #1a6618;
+}
+
+.image.position-relative {
+    position: relative;
+    display: inline-block;
+}
+
+.edit-profile-icon {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #228421;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: none; /* Hide by default */
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+/* Show edit icon when sidebar is NOT collapsed */
+body:not(.sidebar-collapse) .edit-profile-icon {
+    display: flex;
+}
+
+/* Show edit icon when hovering over sidebar in collapsed state */
+.sidebar-mini.sidebar-collapse .main-sidebar:hover .edit-profile-icon {
+    display: flex;
+}
+
+/* Hide edit icon when sidebar is collapsed */
+.sidebar-collapse .edit-profile-icon {
+    display: none;
+}
+
+.user-avatar {
+    transition: filter 0.3s ease;
+}
+
+.image:hover .user-avatar {
+    filter: brightness(0.9);
 }

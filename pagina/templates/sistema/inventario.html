@@ -42,12 +42,17 @@
   
   <div class="sidebar">
     <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
-      <div class="image">
-        {% if request.user.is_authenticated and request.user.imagen_perfil %}
-          <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% else %}
-          <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% endif %}
+      <div class="image position-relative">
+        <a href="{% url 'perfil_usuario' %}">
+            {% if request.user.is_authenticated and request.user.imagen_perfil %}
+                <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+            {% else %}
+                <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+            {% endif %}
+        </a>
+        <a href="{% url 'perfil_usuario' %}" class="edit-profile-icon">
+            <i class="fas fa-pencil-alt"></i>
+        </a>
       </div>
       <div class="info mt-2 text-center">
         <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
@@ -174,31 +179,38 @@
                     Categorías
                 </button>
                 <ul class="category-list">
-                    <li class="category-item" onclick="filtrarPorCategoria('todas')" id="categoria-todas">
+                    <li class="category-item active" onclick="filtrarPorCategoria('todas')" id="categoria-todas">
                         Todas las categorías <span>({{ productos.count }})</span>
                     </li>
                     {% for categoria in categorias %}
                     <li class="category-item" onclick="filtrarPorCategoria('{{ categoria.id }}')" id="categoria-{{ categoria.id }}">
                         <div>{{ categoria.nombre }} <span>({{ categoria.producto_set.count }})</span></div>
                         <div class="category-actions">
-                            <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
                             {% if request.user.rol == 'administrador' %}
+                            <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
                             <button class="btn-icon" onclick="eliminarCategoria({{ categoria.id }})">🗑️</button>
                         </div>
                         {% endif %}
                     </li>
                     {% endfor %}
                     <li class="category-item add-category">
+                        {% if request.user.rol == 'administrador' %}
                         <button class="btn btn-primary w-100" id="addCategoryBtn">
                             <i class="fas fa-plus"></i> Agregar Categoría
                         </button>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
             <div class="search-container">
-                <input type="text" placeholder="Buscar productos..." class="search-input" id="searchInput" oninput="buscarProductos()">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Buscar productos..." class="search-input" id="searchInput" oninput="buscarProductos()">
+                </div>
             </div>
+            {% if request.user.rol == 'administrador' %}
             <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
+            {% endif %}
         </div>
     </div>
 
@@ -249,8 +261,10 @@
                             <div class="product-actions">
                                 <div class="product-price">${{ producto.precio }}</div>
                                 <div>
-                                    <button class="btn" onclick="editarProducto('{{ producto.codigo_barras }}')" id="editarproducto">Editar</button>
-                                    <button class="btn btn-danger" onclick="eliminarProducto('{{ producto.codigo_barras }}')" id="eliminarproducto">Eliminar</button>
+                                    {% if request.user.rol == 'administrador' %}
+                                    <button class="btn" onclick="editarProducto('{{ producto.id }}')" id="editarproducto">Editar</button>
+                                    <button class="btn btn-danger" onclick="eliminarProducto('{{ producto.id }}')" id="eliminarproducto">Eliminar</button>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -289,14 +303,22 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="form-label">Código de Barras</label>
-                    <div class="input-group">
-                        <input type="text" name="id" id="barcode" class="form-input" style="flex: 1;" readonly required>
-                        <button type="button" class="scan-btn" onclick="iniciarEscaneo()">
+                    <div class="input-method-toggle">
+                        <button type="button" class="toggle-btn active" data-method="scan">
                             <i class="fas fa-barcode"></i> Escanear
                         </button>
+                        <button type="button" class="toggle-btn" data-method="manual">
+                            <i class="fas fa-keyboard"></i> Manual
+                        </button>
                     </div>
+                    <div class="input-group mt-2">
+                        <input type="text" name="id" id="barcode" class="form-input" style="flex: 1;" readonly required>
+                        <button type="button" class="scan-btn" id="scanButton" onclick="iniciarEscaneo()">
+                            <i class="fas fa-camera"></i> Escanear
+                        </button>
+                    </div>
+                    <div id="interactive" class="viewport" style="display: none;"></div>
                 </div>
-                <div id="interactive" class="viewport" style="display: none;"></div>
                 <div class="form-group">
                     <label class="form-label">Nombre del Producto</label>
                     <input type="text" name="nombre" class="form-input" required>
@@ -444,7 +466,6 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="{% static 'myapp/js/inventario.js' %}"></script>
     <script src="{% static 'myapp/js/alertas.js' %}"></script>
-    <script src="{% static 'myapp/js/logout.js' %}"></script>
         <script>
         function iniciarEscaneo() {
             document.getElementById('interactive').style.display = 'block';
@@ -483,6 +504,29 @@
                 Quagga.stop();
             }
             document.getElementById('interactive').style.display = 'none';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const barcodeInput = document.getElementById('barcode');
+            const scanButton = document.getElementById('scanButton');
+
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const method = this.dataset.method;
+                    if (method === 'manual') {
+                        barcodeInput.readOnly = false;
+                        scanButton.style.display = 'none';
+                        barcodeInput.focus();
+                    } else {
+                        barcodeInput.readOnly = true;
+                        scanButton.style.display = 'block';
+                    }
+                });
+            });
         });
     </script>
 </body>
