@@ -1645,13 +1645,14 @@ body.sidebar-collapse .controls-section {
 .image.position-relative {
     position: relative;
     display: inline-block;
+    margin-top: 20%;
 }
 
 .edit-profile-icon {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: #228421;
+    background-color:rgb(243, 154, 49) !important;
     color: white;
     border-radius: 50%;
     width: 24px;
