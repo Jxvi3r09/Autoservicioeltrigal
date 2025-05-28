@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate, logout  # Agregar logout aquí
+from django.contrib.auth import authenticate  # Agregar este import
 from django.http import FileResponse, HttpResponse  # Agregar HttpResponse aquí
 from django.utils import timezone
 from django.conf import settings
@@ -32,8 +32,7 @@ from .models import ConfiguracionRespaldo
 from .forms import ConfiguracionRespaldoForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
-from django.db import transaction
-from .models import Pedido, DetallePedido, Venta, DetalleVenta
+from .models import Pedido, DetallePedido
 
 
 from .models import Usuario
@@ -360,21 +359,12 @@ def editar_proveedor(request, id):
     return redirect('proveedores')  # Evita renderizar otra plantilla
 
 
-from django.db import transaction
-
-@transaction.atomic
 def eliminar_proveedor(request, id):
+    proveedor = get_object_or_404(Proveedor, id=id)
     if request.method == 'POST':
-        try:
-            proveedor = Proveedor.objects.get(id=id)
-            nombre_empresa = proveedor.empresa
-            proveedor.delete()
-            messages.success(request, f'El proveedor {nombre_empresa} ha sido eliminado correctamente.')
-            return redirect('proveedores')
-        except Exception as e:
-            messages.error(request, f'Error al eliminar el proveedor: {str(e)}')
-            return redirect('proveedores')
-    return redirect('proveedores')
+        proveedor.delete()
+        return redirect('listar_proveedores')
+    return render(request, 'sistema/crud_proveedores/confirmar_eliminar.html', {'proveedor': proveedor})
 
 
 @login_required
@@ -525,17 +515,14 @@ from .models import Producto
 def agregar_producto(request):
     if request.method == 'POST':
         try:
-            data = request.POST.copy()  # Hacer una copia mutable
-            producto = Producto(
-                id=data.get('id'),  # Usar el código de barras como ID
-                nombre=data.get('nombre'),
-                categoria_id=data.get('categoria'),
-                precio=data.get('precio'),
-                cantidad_producto=data.get('cantidad_producto')
+            producto = Producto.objects.create(
+                nombre=request.POST['nombre'],
+                categoria_id=request.POST['categoria'],
+                precio=request.POST['precio']
             )
-            if request.FILES.get('imagen'):
+            if 'imagen' in request.FILES:
                 producto.imagen = request.FILES['imagen']
-            producto.save()
+                producto.save()
             return JsonResponse({'success': True})
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
@@ -920,72 +907,4 @@ def detalle_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     return render(request, 'sistema/detalle_pedido.html', {
         'pedido': pedido
-    })
-
-@login_required
-
-def ventas(request):
-    if request.method == 'POST':
-        try:
-            with transaction.atomic():  # Usar transacción para asegurar integridad
-                # Crear la venta
-                venta = Venta.objects.create(
-                    vendedor=request.user,
-                    total=0  # Se actualizará después
-                )
-                
-                total_venta = 0
-                productos = request.POST.getlist('producto[]')
-                cantidades = request.POST.getlist('cantidad[]')
-                
-                # Procesar cada producto
-                for producto_id, cantidad in zip(productos, cantidades):
-                    producto = Producto.objects.get(id=producto_id)
-                    cantidad = int(cantidad)
-                    
-                    # Verificar stock suficiente
-                    if producto.cantidad_producto < cantidad:
-                        raise ValueError(f'Stock insuficiente para {producto.nombre}')
-                    
-                    # Crear detalle de venta
-                    subtotal = producto.precio * cantidad
-                    DetalleVenta.objects.create(
-                        venta=venta,
-                        producto=producto,
-                        cantidad=cantidad,
-                        precio_unitario=producto.precio,
-                        subtotal=subtotal
-                    )
-                    
-                    # Actualizar stock
-                    producto.cantidad_producto -= cantidad
-                    producto.save()
-                    
-                    total_venta += subtotal
-                
-                # Actualizar total de la venta
-                venta.total = total_venta
-                venta.save()
-                
-                messages.success(request, 'Venta registrada exitosamente')
-                return redirect('ventas')
-                
-        except ValueError as e:
-            messages.error(request, str(e))
-        except Exception as e:
-            messages.error(request, f'Error al procesar la venta: {str(e)}')
-            
-    ventas = Venta.objects.all().order_by('-fecha_venta')
-    productos = Producto.objects.filter(cantidad_producto__gt=0)
-    
-    return render(request, 'sistema/ventas.html', {
-        'ventas': ventas,
-        'productos': productos,
-    })
-
-@login_required
-def detalle_venta(request, venta_id):
-    venta = get_object_or_404(Venta, id=venta_id)
-    return render(request, 'sistema/detalle_venta.html', {
-        'venta': venta
     })

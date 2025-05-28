@@ -784,7 +784,7 @@ body.sidebar-collapse .sidebar-toggle-btn {
   color: var(--naranja-principal) !important;
 }
 
-.nav-sidebar .nav-link.active i {
+.nav-link.active i {
   color: black !important;
 }
 
