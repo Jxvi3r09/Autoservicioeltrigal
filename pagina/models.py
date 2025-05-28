@@ -95,13 +95,10 @@ class Proveedor(models.Model):
     nit_proveedor = models.CharField(max_length=20, unique=True)
     empresa = models.CharField(max_length=100)
     correo = models.EmailField()
-    telefono = models.CharField(max_length=15)
-    direccion = models.CharField(max_length=200)
-    fecha_registro = models.DateTimeField(auto_now_add=True)
-    estado = models.BooleanField(default=True)  # Solo una definición del campo estado
+    telefono = models.CharField(max_length=20)
+    direccion = models.CharField(max_length=255)
 
-    class Meta:
-        db_table = 'pagina_proveedor'
+    fecha_registro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.empresa} ({self.nit_proveedor})"
@@ -114,11 +111,6 @@ class Categoria(models.Model):
         return self.nombre
 
 class Producto(models.Model):
-    id = models.CharField(  # Changed from codigo_barras to id
-        primary_key=True,
-        max_length=50,
-        verbose_name="Código de Barras"
-    )
     nombre = models.CharField(max_length=200)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     iva = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
@@ -128,11 +120,8 @@ class Producto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     
-    class Meta:
-        db_table = 'pagina_producto'
-        
     def __str__(self):
-        return f"{self.nombre} - {self.id}"
+        return self.nombre
 
 # COPIAS DE SEGURIDAD
 class ConfiguracionRespaldo(models.Model):
@@ -186,30 +175,5 @@ class DetallePedido(models.Model):
     
     def __str__(self):
         return f"{self.pedido.id} - {self.producto.nombre}"
-
-class Venta(models.Model):
-    fecha_venta = models.DateTimeField(auto_now_add=True)
-    cliente = models.CharField(max_length=200, blank=True, null=True)  # Hacer opcional
-    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    vendedor = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return f"Venta #{self.id} - {self.fecha_venta.strftime('%d/%m/%Y %H:%M')}"
-
-class DetalleVenta(models.Model):
-    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
-    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
-    cantidad = models.PositiveIntegerField()
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def save(self, *args, **kwargs):
-        # Calcular subtotal antes de guardar
-        self.subtotal = self.cantidad * self.precio_unitario
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.venta.id} - {self.producto.nombre} x {self.cantidad}"
-
 
 
