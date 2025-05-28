@@ -165,6 +165,31 @@
           </a>
         </li>
         {% endif %}
+          <!-- Sección Inventario -->
+          <li class="nav-item">
+            <a href="{% url 'inventario' %}" class="nav-link">
+              <i class="nav-icon fas fa-boxes"></i>
+              <p>Inventario</p>
+            </a>
+          </li>
+          
+          <!-- Sección Proveedores -->
+          <li class="nav-item">
+            <a href="{% url 'proveedores' %}" class="nav-link">
+              <i class="nav-icon fas fa-truck"></i>
+              <p>Proveedores</p>
+            </a>
+          </li>
+          
+          <!-- Sección Productos -->
+          <!-- <li class="nav-item">
+            <a href="{% url 'productos' %}" class="nav-link">
+              <i class="nav-icon fas fa-tag"></i>
+              <p>
+                Productos
+              </p>
+            </a>
+          </li> -->
 
         <li class="nav-item">
           <a href="{% url 'inventario' %}" class="nav-link active">

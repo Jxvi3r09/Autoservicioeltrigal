@@ -27,6 +27,18 @@
     <!-- QuaggaJS para lectura de códigos de barras -->
     <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
     
+    <style>
+        .btn,
+        .btn-primary, 
+        .btn-danger,
+        .btn-cancel,
+        .category-btn,
+        .filter-select,
+        .btn-icon,
+        .action-btn {
+            font-weight: 400;
+        }
+    </style>
 </head>
   <body class="hold-transition sidebar-mini sidebar-collapse">
     {% csrf_token %}
@@ -98,12 +110,12 @@
           </a>
         </li> 
         
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="{% url 'productos' %}" class="nav-link">
             <i class="nav-icon fas fa-tag"></i>
             <p>Productos</p>
           </a>
-        </li>
+        </li> -->
 
         <li class="nav-item">
             <a href="{% url 'pedidos' %}" class="nav-link">
@@ -154,7 +166,7 @@
                         <i class="fas fa-home"></i> Inicio
                     </a>
                     </li>
-                    <li class="breadcrumb-item active">Gestión De Productos</li>
+                    <li class="breadcrumb-item active">Inventario</li>
                 </ol>
                 </div>
         
@@ -170,8 +182,19 @@
             </div>
         </div>
 
+            <div class="row justify-content-center mt-5">
+              <div class="col-lg-10 mt-5">
+                <div class="welcome-card text-center">
+                  <h1 class="welcome-title" style="font-weight: 600;">Panel de Administración de Productos en el Inventario</h1>
+                  <p style="color: rgb(0, 0, 0); font-weight: 400;">
+                    Gestión completa de los productos disponibles en el inventario.
+                  </p>
+                </div>
+              </div>
+            </div>
+
     <!-- Controls Section -->
-    <div class="controls-section">
+    <!-- <div class="controls-section">
         <div class="controls-wrapper">
             <div class="category-dropdown">
                 <button class="category-btn" id="btncategorias">
@@ -212,28 +235,62 @@
             <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
             {% endif %}
         </div>
-    </div>
+    </div> -->
 
     <!-- Main Content Area -->
     <div class="main-content-area">
-        <div class="container">
-            <div class="products-section">
-                <div class="products-header">
-                    <h2>Productos</h2>
-                    <div class="filters">
-                        <select class="filter-select" id="sortSelect" onchange="ordenarProductos()">
-                            <option value="relevancia">Ordenar por: Relevancia</option>
-                            <option value="precio-asc">Precio: Menor a Mayor</option>
-                            <option value="precio-desc">Precio: Mayor a Menor</option>
-                            <option value="nombre-asc">A-Z</option>
-                            <option value="nombre-desc">Z-A</option>
-                        </select>
-                        <select class="filter-select" id="limitSelect" onchange="limitarProductos()">
-                            <option value="20">Mostrar: 20</option>
-                            <option value="50">Mostrar: 50</option>
-                            <option value="100">Mostrar: 100</option>
-                        </select>
-                    </div>
+        <div class="products-section">
+            <div class="products-header" style="padding: 0 20px;">
+                <h3><i class="fas fa-list mr-2"></i>Listado de Productos</h3>
+                <div class="filters">
+                    <select class="filter-select" id="sortSelect" onchange="ordenarProductos()">
+                        <option value="relevancia">Ordenar por: Relevancia</option>
+                        <option value="precio-asc">Precio: Menor a Mayor</option>
+                        <option value="precio-desc">Precio: Mayor a Menor</option>
+                        <option value="nombre-asc">A-Z</option>
+                        <option value="nombre-desc">Z-A</option>
+                    </select>
+                    <select class="filter-select" id="limitSelect" onchange="limitarProductos()">
+                        <option value="20">Mostrar: 20</option>
+                        <option value="50">Mostrar: 50</option>
+                        <option value="100">Mostrar: 100</option>
+                    </select>
+                </div>
+            </div>
+            <div style="margin: 0 20px 20px;">
+            <div class="controls-wrapper">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar productos..." class="search-input" id="searchInput" oninput="buscarProductos()">
+            </div>
+            <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
+                       <div class="category-dropdown">
+                <button class="category-btn" id="btncategorias">
+                    <i class="fas fa-th-list"></i>
+                    Categorías
+                </button>
+                <ul class="category-list">
+                    <li class="category-item" onclick="filtrarPorCategoria('todas')" id="categoria-todas">
+                        Todas las categorías <span>({{ productos.count }})</span>
+                    </li>
+                    {% for categoria in categorias %}
+                    <li class="category-item" onclick="filtrarPorCategoria('{{ categoria.id }}')" id="categoria-{{ categoria.id }}">
+                        <div>{{ categoria.nombre }} <span>({{ categoria.producto_set.count }})</span></div>
+                        <div class="category-actions">
+                            <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
+                            {% if request.user.rol == 'administrador' %}
+                            <button class="btn-icon" onclick="eliminarCategoria({{ categoria.id }})">🗑️</button>
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                    <li class="category-item add-category">
+                        <button class="btn btn-primary w-100" id="addCategoryBtn">
+                            <i class="fas fa-plus"></i> Agregar Categoría
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            </div>
                 </div>
 
                 <div class="product-grid">
