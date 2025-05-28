@@ -220,11 +220,46 @@ body:not(.sidebar-collapse) .user-avatar,
   padding: 2rem;
   box-shadow: var(--card-shadow);
   margin-bottom: 2rem;
+  animation: slideInTop 1s ease-out;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideInTop {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .welcome-title {
   color: var(--verde-oscuro);
   margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 2.5rem; /* Reajustado al tamaño de administrador */
+}
+
+.welcome-card p {
+  font-size: 1.2rem; /* Reajustado al tamaño de administrador */
+  color: var(--negro-principal);
+  line-height: 1.4;
+}
+
+.welcome-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background-color: #ffc107;
 }
 
 /* Stats cards */
@@ -365,7 +400,7 @@ body:not(.sidebar-collapse) .user-avatar,
 }
 
 .btn-sm {
-    background-color: rgb(34, 132, 33) !important;;
+  background-color: rgb(34, 132, 33) !important;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
 }

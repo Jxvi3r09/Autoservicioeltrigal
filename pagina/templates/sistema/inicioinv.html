@@ -91,12 +91,12 @@
           </a>
         </li> 
         
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="{% url 'productos' %}" class="nav-link">
             <i class="nav-icon fas fa-tag"></i>
             <p>Productos</p>
           </a>
-        </li>
+        </li> -->
 
         <li class="nav-item">
             <a href="{% url 'pedidos' %}" class="nav-link">
@@ -170,12 +170,11 @@
             <div class="row justify-content-center">
               <div class="col-lg-10">
                 <div class="welcome-card text-center">
-                  <h1 class="welcome-title">Bienvenido al Sistema de Inventario</h1>
-                  <p style="color: rgb(0, 0, 0);">
+                  <h1 class="welcome-title" style="font-weight: 600;">Bienvenido al Sistema de Inventario</h1>
+                  <p style="color: rgb(0, 0, 0); font-weight: 400;">
                     ¡Hola, {% if request.user.is_authenticated %}{{ request.user.username }}{% else %}Usuario{% endif %}!
                     Administra y gestiona eficientemente el inventario de Autoservicio El Trigal.
                   </p>
-                  
                 </div>
               </div>
             </div>

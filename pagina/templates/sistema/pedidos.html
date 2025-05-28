@@ -89,12 +89,12 @@
           </a>
         </li> 
         
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="{% url 'productos' %}" class="nav-link">
             <i class="nav-icon fas fa-tag"></i>
             <p>Productos</p>
           </a>
-        </li>
+        </li> -->
 
         <li class="nav-item">
             <a href="{% url 'pedidos' %}" class="nav-link active">
@@ -275,43 +275,8 @@
   </div>
 </div>
 
-<!-- Script para manejar productos múltiples -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const contenedorProductos = document.getElementById('productos-container');
-    const btnAgregar = document.getElementById('agregar-producto');
-
-    // Función para crear nuevo elemento de producto
-    function crearProductoItem() {
-        const productoTemplate = document.querySelector('.producto-item').cloneNode(true);
-        
-        // Limpiar valores
-        productoTemplate.querySelector('select').value = '';
-        productoTemplate.querySelector('input').value = '';
-        
-        // Agregar evento al botón de eliminar
-        productoTemplate.querySelector('.remove-producto').addEventListener('click', function() {
-            if (contenedorProductos.children.length > 1) {
-                this.closest('.producto-item').remove();
-            }
-        });
-        
-        return productoTemplate;
-    }
-
-    // Agregar evento al botón de agregar producto
-    btnAgregar.addEventListener('click', function() {
-        contenedorProductos.appendChild(crearProductoItem());
-    });
-
-    // Agregar evento de eliminar al primer elemento
-    document.querySelector('.remove-producto').addEventListener('click', function() {
-        if (contenedorProductos.children.length > 1) {
-            this.closest('.producto-item').remove();
-        }
-    });
-});
-</script>
-    <script src="{% static 'myapp/js/logout.js' %}"></script>
+<!-- Agregar referencia al nuevo archivo JS -->
+<script src="{% static 'myapp/js/pedidos.js' %}"></script>
+<script src="{% static 'myapp/js/logout.js' %}"></script>
 </body>
 </html>
