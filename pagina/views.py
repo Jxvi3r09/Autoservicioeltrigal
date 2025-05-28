@@ -628,7 +628,6 @@ def generar_backup(request):
         command = [
             'mysqldump',
             f'-u{db["USER"]}',
-            f'-p{db["PASSWORD"]}',
             f'-h{db.get("HOST", "localhost")}',
             f'-P{db.get("PORT", "3306")}',
             db['NAME'],
@@ -728,7 +727,7 @@ def restaurar_backup(request, id):
 
         # Restaurar SQL
         db_settings = settings.DATABASES['default']
-        command = f"mysql -u {db_settings['USER']} -p{db_settings['PASSWORD']} {db_settings['NAME']} < {sql_filepath}"
+        command = f"mysql -u {db_settings['USER']} {db_settings['NAME']} < {sql_filepath}"
         subprocess.run(command, shell=True, check=True)
 
         # 2. Restaurar imágenes de perfil

@@ -283,16 +283,17 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="btn-group">
-                                                                <a href="{% url 'descargar_backup' backup.id %}" onclick="return confirmarDescarga('{{ backup.id }}')" class="btn btn-sm btn-primary">
-                                                                    <i class="fas fa-download"></i>
-                                                                </a>
-                                                                <a href="#" onclick="return confirmarEliminacion('{{ backup.id }}')" class="btn btn-sm btn-danger" >
-                                                                     <i class="fas fa-trash"></i>
-                                                            </a>
-                                                            <a href="{% url 'restaurar_backup' backup.id %}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Restaurar">
-                                                                <i class="fas fa-undo"></i>
-                                                            </a>
+                                                                                                                <div class="btn-group">
+                                                        <a href="{% url 'descargar_backup' backup.id %}" class="btn btn-sm btn-primary">
+                                                            <i class="fas fa-download"></i>
+                                                        </a>
+                                                        <a href="{% url 'eliminar_backup' backup.id %}" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        <a href="{% url 'restaurar_backup' backup.id %}" class="btn btn-sm btn-info">
+                                                            <i class="fas fa-undo"></i>
+                                                        </a>
+                                                    </div>
                                                         </td>
                                                     </tr>
                                                     {% empty %}
