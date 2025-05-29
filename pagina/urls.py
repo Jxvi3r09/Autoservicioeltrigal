@@ -115,7 +115,14 @@ urlpatterns = [
 
     path('pedidos/', views.pedidos, name='pedidos'),
     path('pedidos/detalle/<int:pedido_id>/', views.detalle_pedido, name='detalle_pedido'),
-    
+
+    # URLs para el módulo de ventas
+    path('ventas/', views.ventas, name='ventas'),
+    path('ventas/registrar/', views.registrar_venta, name='registrar_venta'),  # Add this line
+    path('ventas/detalle/<int:venta_id>/', views.detalle_venta, name='detalle_venta'),
+    path('ventas/eliminar/<int:venta_id>/', views.eliminar_venta, name='eliminar_venta'),
+    path('buscar-producto/<str:codigo>/', views.buscar_producto, name='buscar_producto'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos
 if settings.DEBUG:

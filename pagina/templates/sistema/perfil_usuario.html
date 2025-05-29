@@ -221,6 +221,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{% url 'ventas' %}" class="nav-link">
+            <i class="nav-icon fas fa-tag"></i>
+            <p>Ventas</p>
+          </a>
+        </li>
+
         {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
           <a href="{% url 'copias_bd' %}" class="nav-link">
