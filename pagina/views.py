@@ -1,8 +1,7 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse, FileResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate, logout  # Agregar logout aquí
-from django.http import FileResponse, HttpResponse  # Agregar HttpResponse aquí
+from django.contrib.auth import authenticate, logout, login  # Agregar logout aquí
 from django.utils import timezone
 from django.conf import settings
 import os
@@ -15,14 +14,6 @@ from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.contrib.auth.views import PasswordResetView
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth import login
-from .forms import ProductoForm
-from .models import Producto, Categoria
-from django.utils import timezone
-from .models import Producto
-from datetime import timedelta
-from .forms import CustomPasswordResetForm
 from django.core.mail import send_mail
 from .models import Proveedor
 from .forms import ProveedorForm
@@ -34,7 +25,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.db import transaction
 from .models import Pedido, DetallePedido, Venta, DetalleVenta
-
+from decimal import Decimal
+import json
 
 from .models import Usuario
 
@@ -206,7 +198,7 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
     subject_template_name = "contrasena/recuperar_contrasena_asunto.txt"
     html_email_template_name = "contrasena/recuperar_contrasena_email.html"
     success_url = reverse_lazy('password_reset_done')
-    form_class = CustomPasswordResetForm
+    # form_class = CustomPasswordResetForm
 
     def form_valid(self, form):
         messages.success(self.request, "Se han enviado las instrucciones a tu correo.")
@@ -556,7 +548,6 @@ def eliminar_producto(request, pk):
             return JsonResponse({'success': False, 'error': str(e)})
     return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
-
 # COPIAS DE SEGURIDAD 
 class CopiasBDView(LoginRequiredMixin, View):
     """Vista para el panel de respaldos"""
@@ -864,7 +855,6 @@ def editar_producto(request, id):
     
     return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
-@login_required
 def pedidos(request):
     if request.method == 'POST':
         try:
@@ -915,77 +905,103 @@ def pedidos(request):
         'productos': productos,
     })
 
-@login_required
 def detalle_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     return render(request, 'sistema/detalle_pedido.html', {
         'pedido': pedido
     })
 
-@login_required
+def buscar_producto(request, codigo):
+    try:
+        producto = Producto.objects.get(id=codigo)
+        return JsonResponse({
+            'found': True,
+            'id': producto.id,
+            'nombre': producto.nombre,
+            'precio': float(producto.precio),
+            'stock': producto.cantidad_producto
+        })
+    except Producto.DoesNotExist:
+        return JsonResponse({'found': False})
 
+@login_required
 def ventas(request):
-    if request.method == 'POST':
-        try:
-            with transaction.atomic():  # Usar transacción para asegurar integridad
-                # Crear la venta
-                venta = Venta.objects.create(
-                    vendedor=request.user,
-                    total=0  # Se actualizará después
-                )
-                
-                total_venta = 0
-                productos = request.POST.getlist('producto[]')
-                cantidades = request.POST.getlist('cantidad[]')
-                
-                # Procesar cada producto
-                for producto_id, cantidad in zip(productos, cantidades):
-                    producto = Producto.objects.get(id=producto_id)
-                    cantidad = int(cantidad)
-                    
-                    # Verificar stock suficiente
-                    if producto.cantidad_producto < cantidad:
-                        raise ValueError(f'Stock insuficiente para {producto.nombre}')
-                    
-                    # Crear detalle de venta
-                    subtotal = producto.precio * cantidad
-                    DetalleVenta.objects.create(
-                        venta=venta,
-                        producto=producto,
-                        cantidad=cantidad,
-                        precio_unitario=producto.precio,
-                        subtotal=subtotal
-                    )
-                    
-                    # Actualizar stock
-                    producto.cantidad_producto -= cantidad
-                    producto.save()
-                    
-                    total_venta += subtotal
-                
-                # Actualizar total de la venta
-                venta.total = total_venta
-                venta.save()
-                
-                messages.success(request, 'Venta registrada exitosamente')
-                return redirect('ventas')
-                
-        except ValueError as e:
-            messages.error(request, str(e))
-        except Exception as e:
-            messages.error(request, f'Error al procesar la venta: {str(e)}')
-            
-    ventas = Venta.objects.all().order_by('-fecha_venta')
-    productos = Producto.objects.filter(cantidad_producto__gt=0)
-    
+    ventas_list = Venta.objects.all().order_by('-fecha_venta')
+    productos = Producto.objects.all()
     return render(request, 'sistema/ventas.html', {
-        'ventas': ventas,
+        'ventas': ventas_list,
         'productos': productos,
     })
 
 @login_required
 def detalle_venta(request, venta_id):
-    venta = get_object_or_404(Venta, id=venta_id)
+    venta = get_object_or_404(Venta.objects.prefetch_related('detalles__producto'), id=venta_id)
     return render(request, 'sistema/detalle_venta.html', {
         'venta': venta
     })
+
+@login_required
+def eliminar_venta(request, venta_id):
+    venta = get_object_or_404(Venta, id=venta_id)
+    if request.method == 'POST':
+        venta.delete()
+        messages.success(request, 'Venta eliminada correctamente')
+        return redirect('ventas')
+    return redirect('ventas')
+
+@login_required
+@transaction.atomic
+def registrar_venta(request):
+    if request.method == 'POST':
+        try:
+            # Obtener y validar datos
+            productos_json = request.POST.get('productos_json')
+            if not productos_json:
+                raise ValueError('No se recibieron productos')
+            
+            productos_data = json.loads(productos_json)
+            total = Decimal(request.POST.get('total', '0'))
+            
+            # Crear la venta
+            venta = Venta.objects.create(
+                vendedor=request.user,
+                total=total,
+                fecha_venta=timezone.now()
+            )
+            
+            # Procesar cada producto
+            for item in productos_data:
+                producto = Producto.objects.select_for_update().get(id=item['id'])
+                cantidad = int(item['cantidad'])
+                precio = Decimal(str(item['precio']))
+                subtotal = Decimal(str(item['subtotal']))
+                
+                if producto.cantidad_producto < cantidad:
+                    raise ValueError(f'Stock insuficiente para {producto.nombre}')
+                
+                # Crear detalle de venta
+                DetalleVenta.objects.create(
+                    venta=venta,
+                    producto=producto,
+                    cantidad_vendida=cantidad,
+                    precio_unitario=precio,
+                    subtotal=subtotal
+                )
+                
+                # Actualizar stock
+                producto.cantidad_producto -= cantidad
+                producto.save()
+            
+            messages.success(request, 'Venta registrada exitosamente')
+            print(f"Venta {venta.id} registrada con éxito")  # Debug log
+            
+            return redirect('ventas')
+            
+        except Exception as e:
+            print(f"Error al registrar venta: {str(e)}")  # Debug log
+            messages.error(request, f'Error al registrar la venta: {str(e)}')
+            return redirect('ventas')
+    
+    return redirect('ventas')
+
+

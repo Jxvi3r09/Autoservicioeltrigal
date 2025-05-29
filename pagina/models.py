@@ -189,27 +189,34 @@ class DetallePedido(models.Model):
 
 class Venta(models.Model):
     fecha_venta = models.DateTimeField(auto_now_add=True)
-    cliente = models.CharField(max_length=200, blank=True, null=True)  # Hacer opcional
+    vendedor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    vendedor = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        db_table = 'pagina_venta'
+        managed = True
+        ordering = ['-fecha_venta']
 
     def __str__(self):
-        return f"Venta #{self.id} - {self.fecha_venta.strftime('%d/%m/%Y %H:%M')}"
+        return f'Venta #{self.id} - {self.fecha_venta}'
 
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
-    cantidad = models.PositiveIntegerField()
+    cantidad_vendida = models.PositiveIntegerField()
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
 
+    class Meta:
+        db_table = 'pagina_detalleventa'
+        managed = True
+
     def save(self, *args, **kwargs):
-        # Calcular subtotal antes de guardar
-        self.subtotal = self.cantidad * self.precio_unitario
+        self.subtotal = self.cantidad_vendida * self.precio_unitario
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.venta.id} - {self.producto.nombre} x {self.cantidad}"
+        return f"{self.venta.id} - {self.producto.nombre} x {self.cantidad_vendida}"
 
 
 

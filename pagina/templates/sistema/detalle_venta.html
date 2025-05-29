@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil de Usuario</title>
+
+  <!-- AdminLTE CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="{% static 'myapp/css/estilos_perfil.css' %}">
+
+  <script src="{% static 'myapp/js/seccion_perfil.js' %}"></script>
+  <script src="{% static 'myapp/js/ventas.js' %}" defer></script>
+
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="{% static 'myapp/css/custom.css' %}" rel="stylesheet" />
+
+  <!-- Agregar QuaggaJS antes de cerrar el head -->
+  <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+       <!-- Sidebar mejorado -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <a href="{% url 'inicioinv' %}" class="brand-link text-center">
+    <span class="brand-text font-weight-light">
+      <strong>Sistema Inventario</strong>
+    </span>
+  </a>
+  
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+      <div class="image">
+        {% if request.user.is_authenticated and request.user.imagen_perfil %}
+          <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+        {% else %}
+          <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+        {% endif %}
+      </div>
+      <div class="info mt-2 text-center">
+        <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
+          {% if request.user.is_authenticated %}
+            {{ request.user.first_name }} {{ request.user.last_name }}<br>
+            {{ request.user.rol }}
+          {% else %}
+            Usuario
+          {% endif %}
+        </a>
+      </div>
+    </div>
+
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          <a href="{% url 'inicioinv' %}" class="nav-link active">
+            <i class="nav-icon fas fa-home" aria-hidden="true"></i>
+            <p>Inicio</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'usuarios' %}" class="nav-link">
+            <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+            <p>Usuarios</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'inventario' %}" class="nav-link">
+            <i class="nav-icon fas fa-boxes"></i>
+            <p>Inventario</p>
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a href="{% url 'proveedores' %}" class="nav-link">
+            <i class="nav-icon fas fa-truck"></i>
+            <p>Proveedores</p>
+          </a>
+        </li> 
+        
+        <li class="nav-item">
+          <a href="{% url 'productos' %}" class="nav-link">
+            <i class="nav-icon fas fa-tag"></i>
+            <p>Productos</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'pedidos' %}" class="nav-link">
+            <i class="nav-icon fas fa-tag"></i>
+            <p>Pedidos</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'ventas' %}" class="nav-link">
+            <i class="nav-icon fas fa-tag"></i>
+            <p>Ventas</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'principal' %}" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+            <p>Cerrar Sesión</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="info-box">
+                        <div class="info-box-content">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>Número de Venta</h5>
+                                    <p class="text-primary">#{{ venta.id }}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Fecha</h5>
+                                    <p>{{ venta.fecha_venta|date:"d/m/Y H:i" }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Vendedor</h5>
+                                    <p>{{ venta.vendedor.get_full_name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Detalle de los Productos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for detalle in venta.detalles.all %}
+                                <tr>
+                                    <td>{{ detalle.producto.nombre }}</td>
+                                    <td>{{ detalle.cantidad_vendida }}</td>
+                                    <td>${{ detalle.precio_unitario|floatformat:2 }}</td>
+                                    <td>${{ detalle.subtotal|floatformat:2 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                                    <td><strong>${{ venta.total|floatformat:2 }}</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'ventas' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Volver a Ventas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</div>
+</body>
+</html>
