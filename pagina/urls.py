@@ -71,7 +71,7 @@ urlpatterns = [
     path('productos/obtener/<int:id>/', views.obtener_producto, name='obtener_producto'),
     path('productos/editar/<int:id>/', views.editar_producto, name='editar_producto'),
     path('productos/eliminar/<int:id>/', views.eliminar_producto, name='eliminar_producto'),
-    path('agregar-producto/', views.agregar_producto, name='agregar_producto'),
+    # path('agregar-producto/', views.agregar_producto, name='agregar_producto'),
 
     path('proveedores/eliminar/<int:id>/', views.eliminar_proveedor, name='eliminar_proveedor'),
     path('proveedores/editar/<int:id>/', views.editar_proveedor, name='editar_proveedor'),
@@ -122,6 +122,8 @@ urlpatterns = [
     path('ventas/detalle/<int:venta_id>/', views.detalle_venta, name='detalle_venta'),
     path('ventas/eliminar/<int:venta_id>/', views.eliminar_venta, name='eliminar_venta'),
     path('buscar-producto/<str:codigo>/', views.buscar_producto, name='buscar_producto'),
+
+    path('guardar_producto/', views.guardar_producto, name='guardar_producto'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos

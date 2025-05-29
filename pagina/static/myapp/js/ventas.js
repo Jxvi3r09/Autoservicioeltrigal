@@ -132,8 +132,6 @@ function buscarProducto(code) {
         .then(data => {
             if (data.found) {
                 agregarProductoATabla(data, code);
-            } else {
-                alert('Producto no encontrado');
             }
         })
         .catch(error => {
@@ -152,7 +150,7 @@ function agregarProductoATabla(data, code) {
         <td>${data.nombre}</td>
         <td>
             <input type="number" class="form-control cantidad-input" 
-                   name="cantidad[]" min="1" value="1" max="${data.stock}">
+                name="cantidad[]" min="1" value="1" max="${data.stock}">
             <input type="hidden" name="producto[]" value="${data.id}">
         </td>
         <td class="precio-unitario">${precioUnitario}</td>

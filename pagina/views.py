@@ -506,21 +506,21 @@ def guardar_categoria(request):
 from django.http import JsonResponse
 from .models import Producto
 
-def agregar_producto(request):
-    if request.method == 'POST':
-        try:
-            producto = Producto.objects.create(
-                nombre=request.POST['nombre'],
-                categoria_id=request.POST['categoria'],
-                precio=request.POST['precio']
-            )
-            if 'imagen' in request.FILES:
-                producto.imagen = request.FILES['imagen']
-                producto.save()
-            return JsonResponse({'success': True})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+# def agregar_producto(request):
+#     if request.method == 'POST':
+#         try:
+#             producto = Producto.objects.create(
+#                 nombre=request.POST['nombre'],
+#                 categoria_id=request.POST['categoria'],
+#                 precio=request.POST['precio']
+#             )
+#             if 'imagen' in request.FILES:
+#                 producto.imagen = request.FILES['imagen']
+#                 producto.save()
+#             return JsonResponse({'success': True})
+#         except Exception as e:
+#             return JsonResponse({'success': False, 'error': str(e)})
+#     return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
 from django.http import JsonResponse
 from .models import Producto
@@ -770,9 +770,29 @@ def get_current_config():
     return f"{config.frecuencia} - {config.hora}" if config else "No configurado"
 
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from .models import Producto
-from .forms import ProductoForm
+
+@csrf_exempt
+def guardar_producto(request):
+    if request.method == 'POST':
+        try:
+            producto = Producto(
+                id=request.POST.get('id'),
+                nombre=request.POST.get('nombre'),
+                categoria_id=request.POST.get('categoria'),
+                precio=request.POST.get('precio'),
+                cantidad_producto=request.POST.get('cantidad_producto')
+            )
+            
+            if 'imagen' in request.FILES:
+                producto.imagen = request.FILES['imagen']
+                
+            producto.save()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
 def obtener_producto(request, id):
     try:

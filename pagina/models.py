@@ -111,6 +111,11 @@ class Categoria(models.Model):
         return self.nombre
 
 class Producto(models.Model):
+    id = models.CharField(  # Changed from codigo_barras to id
+        primary_key=True,
+        max_length=50,
+        verbose_name="Código de Barras"
+    )
     nombre = models.CharField(max_length=200)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     iva = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
@@ -120,8 +125,11 @@ class Producto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        db_table = 'pagina_producto'
+        
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} - {self.id}"
 
 # COPIAS DE SEGURIDAD
 class ConfiguracionRespaldo(models.Model):
