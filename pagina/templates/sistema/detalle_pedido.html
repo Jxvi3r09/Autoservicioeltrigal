@@ -128,7 +128,7 @@
               <!-- Grupo: Botón + Inicio -->
               <div class="d-flex align-items-center">
                 <!-- Botón de menú -->
-                <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                <button class="sidebar-toggle-btn" id="sidebarToggle">
                   <i class="fas fa-bars"></i>
                 </button>
                 
@@ -248,5 +248,29 @@
     </section>
   </div>
 </div>
+
+<!-- Agregar antes de cerrar el body -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    
+    sidebarToggle.addEventListener('click', function() {
+      document.body.classList.toggle('sidebar-collapse');
+      const isCollapsed = document.body.classList.contains('sidebar-collapse');
+      
+      // Ajustar el margen del contenedor
+      const contentWrapper = document.querySelector('.content-wrapper');
+      const contentHeader = document.querySelector('.content-header');
+      
+      if (isCollapsed) {
+        contentWrapper.style.marginLeft = '4.6rem';
+        contentHeader.style.marginLeft = '4.6rem';
+      } else {
+        contentWrapper.style.marginLeft = '250px';
+        contentHeader.style.marginLeft = '250px';
+      }
+    });
+  });
+</script>
 </body>
 </html>
