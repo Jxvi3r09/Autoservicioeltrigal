@@ -556,3 +556,7 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 .image:hover .user-avatar {
     filter: brightness(0.9);
 }
+
+.d-flex{
+  margin-left: 1%;
+}

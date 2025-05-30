@@ -90,7 +90,7 @@ def editar_usuario(request, id):
         if all([
             usuario.tipo_documento, usuario.numero_documento,
             usuario.first_name, usuario.last_name,
-            usuario.rol, usuario.email, usuario.username
+            usuario.rol, usuario.email, usuario.usernamebac
         ]):
             usuario.save()
             messages.success(request, 'Usuario actualizado correctamente.')
