@@ -360,14 +360,6 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="form-label">Código de Barras</label>
-                    <div class="input-method-toggle">
-                        <button type="button" class="toggle-btn active" data-method="scan">
-                            <i class="fas fa-barcode"></i> Escanear
-                        </button>
-                        <button type="button" class="toggle-btn" data-method="manual">
-                            <i class="fas fa-keyboard"></i> Manual
-                        </button>
-                    </div>
                     <div class="input-group mt-2">
                         <input type="text" name="id" id="barcode" class="form-input" style="flex: 1;" required>
                         <button type="button" class="scan-btn" id="scanButton" onclick="iniciarEscaneo()">
@@ -414,7 +406,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-cancel" id="cancelAddProduct">Cancelar</button>
-                    <button type="submit" class="btn">Guardar Producto</button>
+                    <button type="submit" class="btn" id="btnguardar">Guardar Producto</button>
                 </div>
             </form>
         </div>
@@ -473,6 +465,17 @@
             <form id="editProductForm" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="producto_id" id="edit_producto_id">
+                <!-- Agregar campo de código de barras -->
+                <div class="form-group">
+                    <label class="form-label">Código de Barras</label>
+                    <div class="input-group mt-2">
+                        <input type="text" name="id" id="edit_producto_barcode" class="form-input" style="flex: 1;" required>
+                        <button type="button" class="scan-btn" id="editScanButton" onclick="iniciarEscaneoEdicion()">
+                            <i class="fas fa-camera"></i> Escanear
+                        </button>
+                    </div>
+                    <div id="interactive_edit" class="viewport" style="display: none;"></div>
+                </div>
                 <div class="form-group">
                     <label class="form-label">Nombre del Producto</label>
                     <input type="text" name="nombre" id="edit_producto_nombre" class="form-input" required>
@@ -513,7 +516,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-cancel" onclick="closeEditProductModal()">Cancelar</button>
-                    <button type="submit" class="btn">Guardar Cambios</button>
+                    <button type="submit" class="btn" id="btnguardar">Guardar Cambios</button>
                 </div>
             </form>
         </div>
@@ -566,6 +569,7 @@
     document.getElementById('addProductForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
+        const modal = document.getElementById('addProductModal');
         
         fetch('{% url "guardar_producto" %}', {
             method: 'POST',
@@ -577,6 +581,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                modal.style.display = 'none'; // Cerrar el modal
                 Swal.fire({
                     title: 'Éxito',
                     text: 'Producto guardado correctamente',
@@ -585,9 +590,44 @@
                     window.location.reload();
                 });
             } 
-        })
+        });
     });
-</script>
+
+    // Función para iniciar el escaneo en el modal de edición
+    function iniciarEscaneoEdicion() {
+        document.getElementById('interactive_edit').style.display = 'block';
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector("#interactive_edit"),
+                constraints: {
+                    facingMode: "environment"
+                }
+            },
+            decoder: {
+                readers: ["ean_reader", "ean_8_reader", "code_128_reader", "code_39_reader", "upc_reader"]
+            }
+        }, function(err) {
+            if (err) {
+                console.error(err);
+                alert("Error al iniciar la cámara");
+                return;
+            }
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function(result) {
+            const code = result.codeResult.code;
+            if (code) {
+                document.getElementById('edit_producto_barcode').value = code;
+                Quagga.stop();
+                document.getElementById('interactive_edit').style.display = 'none';
+            }
+        });
+    }
+
+    </script>
     <style>
 #interactive.viewport {
     position: relative;
