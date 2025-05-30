@@ -852,6 +852,11 @@ body:not(.sidebar-collapse) .user-avatar,
             background-color: rgb(190, 0, 0);
             transform: scale(1.1); /* Agranda el botón */
         }
+
+        #btnguardar{
+            background-color: rgb(34, 132, 33) !important;;
+            color: white;
+        }
         
         .main-content {
             display: flex;
