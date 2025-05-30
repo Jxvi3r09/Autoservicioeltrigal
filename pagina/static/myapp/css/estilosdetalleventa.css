@@ -180,7 +180,7 @@ body:not(.sidebar-collapse) .user-avatar,
 
 /* Card styles */
 .card {
-  /* margin-top: 1%; */
+  margin-top: 8%;
   border: none;
   box-shadow: var(--card-shadow);
   border-radius: 8px;
@@ -308,7 +308,6 @@ body:not(.sidebar-collapse) .user-avatar,
 
 /* Button styles */
 .btn {
-  border: none !important;
   border-radius: 8px;
   font-weight: 500;
   letter-spacing: 0.3px;
@@ -568,7 +567,6 @@ thead {
 /* Menu and icons */
 #menu {
   color: rgb(34, 132, 33) !important;
-  margin-left: 70px;
 }
 
 .fas:hover {
@@ -735,13 +733,14 @@ textarea:focus {
 .image.position-relative {
     position: relative;
     display: inline-block;
+    margin-top: 20%;
 }
 
 .edit-profile-icon {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: #228421;
+    background-color: rgb(243, 154, 49) !important;
     color: white;
     border-radius: 50%;
     width: 24px;
@@ -776,5 +775,3 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 .image:hover .user-avatar {
     filter: brightness(0.9);
 }
-
-
