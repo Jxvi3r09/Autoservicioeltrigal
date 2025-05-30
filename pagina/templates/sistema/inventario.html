@@ -356,13 +356,18 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="form-label">Código de Barras</label>
-                    <div class="input-group mt-2">
-                        <input type="text" name="id" id="barcode" class="form-input" style="flex: 1;" required>
-                        <button type="button" class="scan-btn" id="scanButton" onclick="iniciarEscaneo()">
-                            <i class="fas fa-camera"></i> Escanear
+                    <div class="mb-3 text-center">
+                        <button type="button" class="btn btn-primary btn-lg mb-2" onclick="iniciarEscaneo()">
+                            <i class="fas fa-barcode"></i> Escanear Código de Barras
                         </button>
+                        <div id="scanner-container" style="display:none;">
+                            <div id="interactive" class="viewport"></div>
+                            <button type="button" class="btn btn-danger mt-2" onclick="detenerEscaneo()">
+                                <i class="fas fa-times"></i> Cancelar Escaneo
+                            </button>
+                        </div>
                     </div>
-                    <div id="interactive" class="viewport" style="display: none;"></div>
+                    <input type="text" name="id" id="barcode" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Nombre del Producto</label>
@@ -464,13 +469,18 @@
                 <!-- Agregar campo de código de barras -->
                 <div class="form-group">
                     <label class="form-label">Código de Barras</label>
-                    <div class="input-group mt-2">
-                        <input type="text" name="id" id="edit_producto_barcode" class="form-input" style="flex: 1;" required>
-                        <button type="button" class="scan-btn" id="editScanButton" onclick="iniciarEscaneoEdicion()">
-                            <i class="fas fa-camera"></i> Escanear
+                    <div class="mb-3 text-center">
+                        <button type="button" class="btn btn-primary btn-lg mb-2" onclick="iniciarEscaneo()">
+                            <i class="fas fa-barcode"></i> Escanear Código de Barras
                         </button>
+                        <div id="scanner-container" style="display:none;">
+                            <div id="interactive_edit" class="viewport"></div>
+                            <button type="button" class="btn btn-danger mt-2" onclick="detenerEscaneo()">
+                                <i class="fas fa-times"></i> Cancelar Escaneo
+                            </button>
+                        </div>
                     </div>
-                    <div id="interactive_edit" class="viewport" style="display: none;"></div>
+                    <input type="text" name="id" id="edit_producto_barcode" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Nombre del Producto</label>
@@ -529,7 +539,7 @@
 
     // Función para iniciar el escaneo
     function iniciarEscaneo() {
-        document.getElementById('interactive').style.display = 'block';
+        document.getElementById('scanner-container').style.display = 'block';
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -539,9 +549,15 @@
                     facingMode: "environment"
                 }
             },
+            locator: {
+                patchSize: "medium",
+                halfSample: true
+            },
+            numOfWorkers: 2,
             decoder: {
                 readers: ["ean_reader", "ean_8_reader", "code_128_reader", "code_39_reader", "upc_reader"]
-            }
+            },
+            locate: true
         }, function(err) {
             if (err) {
                 console.error(err);
@@ -551,17 +567,45 @@
             Quagga.start();
         });
 
-        Quagga.onDetected(function(result) {
+        Quagga.onProcessed(function(result) {
+        var drawingCtx = Quagga.canvas.ctx.overlay,
+            drawingCanvas = Quagga.canvas.dom.overlay;
+
+        if (result) {
+            if (result.boxes) {
+                drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+                result.boxes.filter(function(box) {
+                    return box !== result.box;
+                }).forEach(function(box) {
+                    Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: "green", lineWidth: 2 });
+                });
+            }
+
+            if (result.box) {
+                Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "#00F", lineWidth: 2 });
+            }
+
+            if (result.codeResult && result.codeResult.code) {
+                Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: 'red', lineWidth: 3 });
+            }
+        }
+    });
+
+    Quagga.onDetected(function(result) {
             const code = result.codeResult.code;
             if (code) {
                 document.getElementById('barcode').value = code;
-                Quagga.stop();
-                document.getElementById('interactive').style.display = 'none';
+                detenerEscaneo();
             }
         });
     }
 
-    // Manejar el envío del formulario
+function detenerEscaneo() {
+    Quagga.stop();
+    document.getElementById('scanner-container').style.display = 'none';
+}
+
+// Manejar el envío del formulario
     document.getElementById('addProductForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -625,12 +669,16 @@
 
     </script>
     <style>
+#scanner-container {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
 #interactive.viewport {
     position: relative;
     width: 100%;
-    max-width: 640px;
-    height: 480px;
-    margin: 0 auto;
+    height: 300px;
 }
 
 #interactive.viewport > video {
@@ -639,12 +687,25 @@
     object-fit: cover;
 }
 
-#interactive.viewport > canvas {
+canvas.drawingBuffer {
+    width: 100%;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+}
+
+/* Estilos para las líneas de detección */
+#interactive canvas, 
+#interactive video {
+    max-width: 100%;
     width: 100%;
-    height: 100%;
+}
+
+#interactive.viewport canvas.drawingBuffer {
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 </style>
 </body>

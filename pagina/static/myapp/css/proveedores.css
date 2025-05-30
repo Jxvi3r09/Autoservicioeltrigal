@@ -77,7 +77,7 @@ body {
 
 /* Tarjetas */
 .card {
-  margin-top: 8%;
+  margin-top: 4%;
   border: none;
   box-shadow: var(--card-shadow);
   border-radius: 8px;
@@ -367,10 +367,6 @@ a:hover {
   transition: margin-left 0.3s ease-in-out;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
-.justify-content-center {
-  margin-top: 7% !important;
-}
 /* Ajusta el espaciado del contenido interno */
 #conte {
   align-items: flex-start; /* Alinea al inicio verticalmente */
@@ -482,6 +478,7 @@ body:not(.sidebar-collapse) .user-avatar,
   animation: slideInTop 1s ease-out;
   opacity: 0;
   animation-fill-mode: forwards;
+  margin-top: 5%;
 }
 
 @keyframes slideInTop {
