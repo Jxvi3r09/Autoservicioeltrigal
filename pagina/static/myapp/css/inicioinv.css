@@ -454,24 +454,6 @@ textarea:focus {
   background-color: white !important;
 }
 
-
-a{
-  color: #0d640e;
-}
-a:hover{
-  color:#ff9f43 ;
-}
-.breadcrumb{
-  margin-left: 30px;
-}
-.fas:hover, .fa:hover{
-  color: #ff9f43 !important;
-}
-
-.fa-solid{
-  color: #0d640e;
-}
-
   /* Ajusta el espaciado vertical del encabezado */
 .content-header {
   padding-top: 5px; /* Reducido desde su valor por defecto */

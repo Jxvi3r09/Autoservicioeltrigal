@@ -31,8 +31,21 @@ body {
   background-color: #f1f2f6; /* Changed to match users page gray color */
   color: var(--negro-principal);
 }
-a {
-  text-decoration: none;
+a{
+  color: #0d640e;
+}
+a:hover{
+  color:#ff9f43 ;
+}
+.breadcrumb{
+  margin-left: 30px;
+}
+.fas:hover, .fa:hover{
+  color: #ff9f43 !important;
+}
+
+.fa-solid{
+  color: #0d640e;
 }
 
 .wrapper {
@@ -880,4 +893,14 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 
 .image:hover .user-avatar {
     filter: brightness(0.9);
+}
+
+.breadcrumb-item a {
+    color: #2e7d32 !important;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #1b5e20 !important;
+    text-decoration: none;
 }
