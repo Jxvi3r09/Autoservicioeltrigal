@@ -15,7 +15,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- AdminLTE CSS (incluye Bootstrap) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
 
@@ -40,25 +39,30 @@
     </a>
     
     <div class="sidebar">
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
-        <div class="image">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+      <div class="image position-relative">
+        <a href="{% url 'perfil_usuario' %}">
             {% if request.user.is_authenticated and request.user.imagen_perfil %}
-            <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+                <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
             {% else %}
-            <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+                <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
             {% endif %}
-        </div>
-        <div class="info mt-2 text-center">
-            <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
-            {% if request.user.is_authenticated %}
-                {{ request.user.first_name }} {{ request.user.last_name }}<br>
-                {{ request.user.rol }}
-            {% else %}
-                Usuario
-            {% endif %}
-            </a>
-        </div>
-        </div>
+        </a>
+        <a href="{% url 'perfil_usuario' %}" class="edit-profile-icon">
+            <i class="fas fa-pencil-alt"></i>
+        </a>
+      </div>
+            <div class="info mt-2 text-center">
+              <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
+                {% if request.user.is_authenticated %}
+                  {{ request.user.first_name }} {{ request.user.last_name }}<br>
+                  {{ request.user.rol }}
+                {% else %}
+                  Usuario
+                {% endif %}
+              </a>
+            </div>
+          </div>
 
         <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -126,25 +130,54 @@
 
         <!-- Content Wrapper -->
         <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                            <li class="breadcrumb-item active">Respaldos de Base de Datos</li>
-                        </ol>
-                        <div>
-                            <span class="badge bg-success p-2">
-                                <i class="fas fa-calendar me-1"></i> <span id="current-date-display"></span>
-                            </span>
-                        </div>
-                    </div>
+        <div class="content-header sticky-header mb-2">
+          <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+              <!-- Grupo: Botón + Inicio -->
+              <div class="d-flex align-items-center">
+                <!-- Botón de menú -->
+                <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                  <i class="fas fa-bars"></i>
+                </button>
+                
+      
+                <!-- Migas de pan -->
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item">
+                    <a href="{% url 'inicioinv' %}">
+                      <i class="fas fa-home"></i> Inicio
+                    </a>
+                  </li>
+                  <li class="breadcrumb-item active"> Copias de seguridad</li>
+                </ol>
+              </div>
+      
+              <!-- Logo -->
+              <div class="logo-container">
+                <img
+                  src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                  alt="Autoservicio El Trigal"
+                  class="logo-hover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+            <div class="row justify-content-center mt-4">
+              <div class="col-lg-10">
+                <div class="welcome-card text-center">
+                  <h1 class="welcome-title">Panel de Administración de Copias de seguridad</h1>
+                  <p style="color: rgb(0, 0, 0);">
+                    Administra fácilmente las copias de seguridad de tu inventario y mantén tus datos seguros en todo momento
+                  </p>
                 </div>
+              </div>
             </div>
 
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="card card-primary card-outline">
+            <section class="content mt-5">
+                <div class="container-fluid mt-5">
+                    <div class="card card-primary card-outline mt-5">
                         <div class="card-header d-flex align-items-center">
                             <h3 class="card-title">
                                 <i class="fas fa-database me-2"></i> Sistema de Respaldos
@@ -248,9 +281,9 @@
                                             </h3>
                                             <div class="card-tools">
                                                 <div class="input-group input-group-sm" style="width: 250px;">
-                                                    <input type="text" class="form-control" placeholder="Buscar respaldo...">
+                                                    <input type="text" id="searchBackups" class="form-control" placeholder="Buscar respaldos por fecha, tipo o estado" aria-label="Buscar respaldos">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-primary">
+                                                        <button class="btn btn-primary" onclick="return false;">
                                                             <i class="fas fa-search"></i>
                                                         </button>
                                                     </div>
@@ -258,7 +291,7 @@
                                             </div>
                                         </div>
                                         <div class="card-body table-responsive p-0">
-                                            <table class="table table-hover">
+                                            <table class="table table-hover" id="backupsTable">
                                                 <thead>
                                                     <tr>
                                                         <th width="25%">Fecha y Hora</th>
@@ -306,14 +339,32 @@
                                         </div>
                                         <div class="card-footer d-flex justify-content-between align-items-center">
                                             <div>
-                                                <span class="text-muted">Mostrando 3 de 24 respaldos</span>
+                                                <span class="text-muted">Mostrando {{ backups|length }} de {{ total_backups }} respaldos</span>
                                             </div>
                                             <ul class="pagination pagination-sm m-0">
-                                                <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">»</a></li>
+                                                {% if page_obj.has_previous %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                                                    </li>
+                                                {% endif %}
+
+                                                {% for num in page_obj.paginator.page_range %}
+                                                    {% if page_obj.number == num %}
+                                                        <li class="page-item active">
+                                                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                                        </li>
+                                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if page_obj.has_next %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                                                    </li>
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </div>
@@ -399,13 +450,16 @@
                                                 <td>{{ backup.archivo }}</td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a href="{% url 'descargar_backup' backup.id %}" class="btn btn-sm btn-primary">
+                                                        <a href="{% url 'descargar_backup' backup.id %}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Descargar">
+                                                            <span>Descargar</span>
                                                             <i class="fas fa-download"></i>
                                                         </a>
-                                                        <a href="{% url 'eliminar_backup' backup.id %}" class="btn btn-sm btn-danger">
+                                                        <a href="{% url 'eliminar_backup' backup.id %}" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Eliminar">
+                                                            <span>Eliminar</span>
                                                             <i class="fas fa-trash"></i>
                                                         </a>
-                                                        <a href="{% url 'restaurar_backup' backup.id %}" class="btn btn-sm btn-info">
+                                                        <a href="{% url 'restaurar_backup' backup.id %}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Restaurar">
+                                                           <span>Restaurar</span>
                                                             <i class="fas fa-undo"></i>
                                                         </a>
                                                     </div>
@@ -491,6 +545,28 @@
             allowOutsideClick: false
         });
         this.submit();
+    });
+
+    document.getElementById('searchBackups').addEventListener('keyup', function() {
+        let searchText = this.value.toLowerCase();
+        let table = document.getElementById('backupsTable');
+        let rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) { // Empezar desde 1 para saltar el encabezado
+            let visible = false;
+            let cells = rows[i].getElementsByTagName('td');
+            
+            // Si no hay celdas, es probablemente la fila "No hay respaldos disponibles"
+            if (cells.length === 0) continue;
+
+            for (let cell of cells) {
+                if (cell.textContent.toLowerCase().includes(searchText)) {
+                    visible = true;
+                    break;
+                }
+            }
+            rows[i].style.display = visible ? '' : 'none';
+        }
     });
 </script>
     <script src="{% static 'myapp/js/alertas.js' %}"></script>
