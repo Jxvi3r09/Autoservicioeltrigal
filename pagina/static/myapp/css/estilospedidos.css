@@ -62,7 +62,7 @@ a:hover{
   background-position: center;
   min-height: 100vh;
   margin-left: 250px;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease-in-out;
 }
 
 .container-fluid {
@@ -110,7 +110,7 @@ a:hover{
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   position: fixed !important;
   width: 250px;
-  transition: all 0.3s ease;
+  transition: width 0.3s ease-in-out;
   z-index: 1040;
 }
 

@@ -567,6 +567,7 @@ thead {
 /* Menu and icons */
 #menu {
   color: rgb(34, 132, 33) !important;
+  border: none !important;
 }
 
 .fas:hover {

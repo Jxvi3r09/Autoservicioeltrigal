@@ -381,6 +381,8 @@ body:not(.sidebar-collapse) .user-avatar,
 }
 
 .btn-sm {
+  background-color: rgb(34, 132, 33) !important;
+  color: white !important;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
 }
@@ -568,7 +570,6 @@ thead {
 /* Menu and icons */
 #menu {
   color: rgb(34, 132, 33) !important;
-  margin-left: 70px;
 }
 
 .fas:hover {
