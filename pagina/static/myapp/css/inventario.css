@@ -1341,8 +1341,8 @@ body:not(.sidebar-collapse) .user-avatar,
         }
 
         .btn-primary {
-            background-color: rgb(34, 132, 33) !important;
-            border-color: rgb(34, 132, 33) !important;
+            background-color: rgb(26, 109, 25) !important;
+            border-color: rgb(26, 109, 25) !important;
             color: white !important;
             cursor: pointer;
             pointer-events: auto;
@@ -1351,8 +1351,8 @@ body:not(.sidebar-collapse) .user-avatar,
         }
 
         .btn-primary:hover {
-            background-color: #ff9f43 !important;
-            border-color: #ff9f43 !important;
+            background-color: rgb(25, 122, 23) !important;
+            border-color: rgb(25, 122, 23) !important;
         }
 
         /* New layout styles */
@@ -1449,6 +1449,7 @@ body:not(.sidebar-collapse) .user-avatar,
 
         #addProductBtn {
             margin-left: auto;
+            padding: 10px;
         }
 
         .category-dropdown {
