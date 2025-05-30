@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestión de Pedidos</title>
 
+    <!-- Favicon -->
+ <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
+
   <!-- AdminLTE CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -174,8 +177,8 @@
           </div>
           <div class="row justify-content-center mt-2">
             <div class="col-lg-10">
-              <div class="welcome-card text-center" style="background: rgb(255, 255, 255) !important; border-radius: 8px;">
-                <h1 class="welcome-title" style="color: rgb(34, 132, 33) !important;">Detalle del Pedido #{{ pedido.id }}</h1>
+              <div class="welcome-card text-center" style="background: rgb(255, 255, 255) !important; border-radius: 8px; ">
+                <h1 class="welcome-title" style="color: rgb(34, 132, 33) !important; font-size: 2.5rem;">Detalle del Pedido #{{ pedido.id }}</h1>
                 <p style="color: rgb(0, 0, 0);">
                   Consulta la información y productos asociados a este pedido.
                 </p>

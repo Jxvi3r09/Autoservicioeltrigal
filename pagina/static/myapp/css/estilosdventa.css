@@ -578,6 +578,7 @@ thead {
 }
 
 .sidebar-toggle-btn {
+  color:rgb(34, 132, 33) !important;
   background: transparent;
   border: none;
   font-size: 1.2rem;
