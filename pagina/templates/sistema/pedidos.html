@@ -37,13 +37,18 @@
   </a>
   
   <div class="sidebar">
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
-      <div class="image">
-        {% if request.user.is_authenticated and request.user.imagen_perfil %}
-          <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% else %}
-          <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-        {% endif %}
+<div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+      <div class="image position-relative">
+        <a href="{% url 'perfil_usuario' %}">
+            {% if request.user.is_authenticated and request.user.imagen_perfil %}
+                <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+            {% else %}
+                <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+            {% endif %}
+        </a>
+        <a href="{% url 'perfil_usuario' %}" class="edit-profile-icon">
+            <i class="fas fa-pencil-alt"></i>
+        </a>
       </div>
       <div class="info mt-2 text-center">
         <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
