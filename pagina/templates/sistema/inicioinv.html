@@ -185,32 +185,36 @@
               <div class="col-md-3">
                 <div class="stats-card">
                   <i class="fas fa-box-open feature-icon"></i>
-                  <div class="stats-number">{{ total_productos|default:"0" }}</div>
+                  <div class="stats-number">{{ total_productos }}</div>
                   <div class="stats-title">Productos en Inventario</div>
+                  <small class="text-muted">Stock actual</small>
                 </div>
               </div>
               
               <div class="col-md-3">
                 <div class="stats-card">
                   <i class="fas fa-truck-loading feature-icon"></i>
-                  <div class="stats-number">{{ total_proveedores|default:"0" }}</div>
+                  <div class="stats-number">{{ total_proveedores }}</div>
                   <div class="stats-title">Proveedores Activos</div>
+                  <small class="text-muted">Actualizados hoy</small>
                 </div>
               </div>
               
               <div class="col-md-3">
                 <div class="stats-card">
                   <i class="fas fa-exclamation-triangle feature-icon"></i>
-                  <div class="stats-number">{{ stock_bajo|default:"0" }}</div>
-                  <div class="stats-title">Productos con Stock Bajo</div>
+                  <div class="stats-number">{{ stock_bajo }}</div>
+                  <div class="stats-title">Stock Bajo</div>
+                  <small class="text-muted">Menos de 10 unidades</small>
                 </div>
               </div>
               
               <div class="col-md-3">
                 <div class="stats-card">
                   <i class="fas fa-users feature-icon"></i>
-                  <div class="stats-number">{{ total_usuarios|default:"0" }}</div>
-                  <div class="stats-title">Usuarios Registrados</div>
+                  <div class="stats-number">{{ total_usuarios }}</div>
+                  <div class="stats-title">Usuarios del Sistema</div>
+                  <small class="text-muted">Usuarios registrados</small>
                 </div>
               </div>
             </div>

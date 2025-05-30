@@ -295,145 +295,46 @@
         
         <!-- Información personal -->
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-12">
             <div class="card profile-card">
-              <div class="card-header bg-primary">
-                <h3 class="card-title"><i class="fas fa-id-card mr-2"></i>Información Personal</h3>
-              </div>
-              <div class="card-body p-0">
-                <div class="info-item">
-                  <div class="info-label">
-                    <i class="fas fa-user"></i>
-                    Nombre de Usuario
-                  </div>
-                  <div class="info-value">{{ usuario.username }}</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-label">
-                    <i class="fas fa-envelope"></i>
-                    Correo Electrónico
-                  </div>
-                  <div class="info-value">{{ usuario.email }}</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-label">
-                    <i class="fas fa-id-badge"></i>
-                    Tipo de Documento
-                  </div>
-                  <div class="info-value">{{ usuario.get_tipo_documento_display }}</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-label">
-                    <i class="fas fa-fingerprint"></i>
-                    Número de Documento
-                  </div>
-                  <div class="info-value">{{ usuario.numero_documento }}</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-label">
-                    <i class="fas fa-user-tag"></i>
-                    Rol
-                  </div>
-
-                  {% if request.user.rol == 'administrador' %}
-                  <div class="info-value">{{ usuario.get_rol_display }}</div>
-                  {% endif %}
-                </div>
-                <div class="info-item">
-                  <div class="info-label">
-                    <i class="fas fa-phone"></i>
-                    Contacto
-                  </div>
-                  <div class="info-value">{{ usuario.email}}</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-label">
-                    <i class="fas fa-calendar"></i>
-                    Fecha de Registro
-                  </div>
-                  <div class="info-value">{{ usuario.fecha_registro }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <!-- Tarjeta de actividad reciente -->
-            <div class="card profile-card">
-              <div class="card-header bg-success">
-                <h3 class="card-title"><i class="fas fa-history mr-2"></i>Actividad Reciente</h3>
-              </div>
-              <div class="card-body p-0">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
-                    Ingreso al sistema
-                    <small class="float-right text-muted">Hoy, 10:45</small>
-                  </li>
-                  <li class="list-group-item">
-                    <i class="fas fa-edit text-primary mr-2"></i>
-                    Actualización de inventario
-                    <small class="float-right text-muted">Ayer, 15:30</small>
-                  </li>
-                  <li class="list-group-item">
-                    <i class="fas fa-plus text-info mr-2"></i>
-                    Nuevo producto agregado
-                    <small class="float-right text-muted">25/04/2025</small>
-                  </li>
-                  <li class="list-group-item">
-                    <i class="fas fa-user-plus text-warning mr-2"></i>
-                    Nuevo proveedor registrado
-                    <small class="float-right text-muted">22/04/2025</small>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-footer text-center">
-                <a href="#" class="btn btn-sm btn-outline-primary">Ver todas las actividades</a>
-              </div>
-            </div>
-            
-            <!-- Tarjeta de rendimiento
-            <div class="card profile-card">
-              <div class="card-header bg-warning">
-                <h3 class="card-title"><i class="fas fa-chart-line mr-2"></i>Rendimiento</h3>
+              <div class="card-header bg-primary d-flex justify-content-between align-items-center">
+                <h3 class="card-title mb-0"><i class="fas fa-id-card mr-2"></i>Información Personal</h3>
               </div>
               <div class="card-body">
-                <div class="progress-group mb-4">
-                  <div class="progress-group-header">
-                    <div>Productos registrados</div>
-                    <div class="ml-auto font-weight-bold">85%</div>
-                  </div>
-                  <div class="progress-group-bars">
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-primary" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="row">
+                  <!-- Columna Izquierda -->
+                  <div class="col-md-6">
+                    <div class="info-group mb-4 text-center p-3 border rounded">
+                      <label class="text-muted mb-2"><i class="fas fa-user me-2"></i>Nombre de Usuario</label>
+                      <p class="h5 mb-0">{{ usuario.username }}</p>
+                    </div>
+                    <div class="info-group mb-4 text-center p-3 border rounded">
+                      <label class="text-muted mb-2"><i class="fas fa-id-badge me-2"></i>Tipo de Documento</label>
+                      <p class="h5 mb-0">{{ usuario.get_tipo_documento_display }}</p>
+                    </div>
+                    <div class="info-group mb-4 text-center p-3 border rounded">
+                      <label class="text-muted mb-2"><i class="fas fa-user-tag me-2"></i>Rol</label>
+                      <p class="h5 mb-0">{% if request.user.rol == 'administrador' %}{{ usuario.get_rol_display }}{% endif %}</p>
                     </div>
                   </div>
-                </div>
-                
-                <div class="progress-group mb-4">
-                  <div class="progress-group-header">
-                    <div>Precisión de inventario</div>
-                    <div class="ml-auto font-weight-bold">92%</div>
-                  </div>
-                  <div class="progress-group-bars">
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
+                  <!-- Columna Derecha -->
+                  <div class="col-md-6">
+                    <div class="info-group mb-4 text-center p-3 border rounded">
+                      <label class="text-muted mb-2"><i class="fas fa-envelope me-2"></i>Correo Electrónico</label>
+                      <p class="h5 mb-0">{{ usuario.email }}</p>
                     </div>
-                  </div>
-                </div>
-                
-                <div class="progress-group mb-4">
-                  <div class="progress-group-header">
-                    <div>Eficiencia en compras</div>
-                    <div class="ml-auto font-weight-bold">78%</div>
-                  </div>
-                  <div class="progress-group-bars">
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-warning" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="info-group mb-4 text-center p-3 border rounded">
+                      <label class="text-muted mb-2"><i class="fas fa-fingerprint me-2"></i>Número de Documento</label>
+                      <p class="h5 mb-0">{{ usuario.numero_documento }}</p>
+                    </div>
+                    <div class="info-group mb-4 text-center p-3 border rounded">
+                      <label class="text-muted mb-2"><i class="fas fa-calendar me-2"></i>Fecha de Registro</label>
+                      <p class="h5 mb-0">{{ usuario.fecha_registro }}</p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
