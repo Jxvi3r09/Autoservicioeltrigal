@@ -192,3 +192,22 @@ function calcularTotal() {
     });
     document.getElementById('total-venta').textContent = total.toFixed(2);
 }
+
+function calcularVueltas() {
+    const totalVenta = parseFloat(document.getElementById('total-venta').textContent.replace('$', '').trim());
+    
+    const montoPago = parseFloat(document.getElementById('monto-pago').value) || 0;
+    
+    const vueltas = montoPago - totalVenta;
+    const vueltasInput = document.getElementById('vueltas');
+
+    if (montoPago < totalVenta) {
+        vueltasInput.value = 'Pago insuficiente';
+        vueltasInput.style.color = 'red';
+        vueltasInput.style.fontWeight = 'bold';
+    } else {
+        vueltasInput.value = vueltas.toFixed(2);
+        vueltasInput.style.color = 'green';
+        vueltasInput.style.fontWeight = 'normal';
+    }
+}
