@@ -993,3 +993,5 @@ def registrar_venta(request):
     return redirect('ventas')
 
 
+
+
