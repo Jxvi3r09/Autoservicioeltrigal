@@ -649,6 +649,7 @@ body {
 }
 
 .breadcrumb {
+  margin-left: 30px;
   background-color: transparent;
   padding: 10px 0;
   position: relative;
@@ -824,4 +825,8 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 
 .image:hover .user-avatar {
     filter: brightness(0.9);
+}
+
+.d-flex{
+  margin-left: 1%;
 }

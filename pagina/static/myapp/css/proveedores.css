@@ -387,11 +387,6 @@ a:hover {
   transform: scale(1.1); /* Hace un zoom del 10% */
 }
 
-/* Estilos para el breadcrumb */
-.breadcrumb {
-  margin-left: 30px;
-}
-
 /* Estilos para enlaces */
 a {
   color: #0d640e;
