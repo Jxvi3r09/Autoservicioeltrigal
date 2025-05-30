@@ -173,8 +173,8 @@
             </div>
             
             <!-- Estadísticas rápidas -->
-            <div class="row mt-4">
-              <div class="col-md-3">
+            <div class="row mt-4 justify-content-center">
+              <div class="col-md-3 mx-2">
                 <div class="stats-card">
                   <i class="fas fa-users feature-icon"></i>
                   <div class="stats-number">{{ total_usuarios }}</div>
@@ -182,7 +182,7 @@
                 </div>
               </div>
               
-              <div class="col-md-3">
+              <div class="col-md-3 mx-2">
                 <div class="stats-card">
                   <i class="fas fa-user-check feature-icon"></i>
                   <div class="stats-number">{{ usuarios_activos }}</div>
@@ -190,19 +190,11 @@
                 </div>
               </div>
               
-              <div class="col-md-3">
+              <div class="col-md-3 mx-2">
                 <div class="stats-card">
                   <i class="fas fa-user-shield feature-icon"></i>
                   <div class="stats-number">{{ administradores }}</div>
                   <div class="stats-title">Administradores</div>
-                </div>
-              </div>
-              
-              <div class="col-md-3">
-                <div class="stats-card">
-                  <i class="fas fa-user-clock feature-icon"></i>
-                  <div class="stats-number">{{ inactivos_30dias }}</div>
-                  <div class="stats-title">Inactivos (30 días)</div>
                 </div>
               </div>
             </div>
@@ -292,7 +284,7 @@
                         </tr>
                         {% endfor %}
                       {% else %}
-                     
+                      
                         <tr>
                           <td colspan="7" class="text-center py-5">
                             <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
@@ -302,7 +294,7 @@
                             </button>
                           </td>
                         </tr>
-                     
+                      
                       {% endif %}
                     </tbody>
                   </table>

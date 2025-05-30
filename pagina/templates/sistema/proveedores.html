@@ -177,20 +177,12 @@
             </div>
             
             <!-- Estadísticas rápidas -->
-            <div class="row mt-4">
-              <div class="col-md-3">
+            <div class="row mt-4 justify-content-center">
+              <div class="col-md-3 mx-2">
                 <div class="stats-card">
                   <i class="fas fa-truck feature-icon"></i>
                   <div class="stats-number">{{ proveedores|length }}</div>
                   <div class="stats-title">Proveedores Totales</div>
-                </div>
-              </div>
-              
-              <div class="col-md-3">
-                <div class="stats-card">
-                  <i class="fas fa-user-check feature-icon"></i>
-                  <div class="stats-number">{{ proveedores_activos|default:"0" }}</div>
-                  <div class="stats-title">Proveedores Activos</div>
                 </div>
               </div>
               
@@ -201,15 +193,6 @@
                   <div class="stats-title">Productos Adquiridos</div>
                 </div>
               </div>
-              
-              <div class="col-md-3">
-                <div class="stats-card">
-                  <i class="fas fa-user-clock feature-icon"></i>
-                  <div class="stats-number">{{ proveedores_inactivos|default:"0" }}</div>
-                  <div class="stats-title">Inactivos (30 días)</div>
-                </div>
-              </div>
-            </div>
             <!-- Fin Estadísticas rápidas -->
 
             <!-- Sección para gestionar proveedores -->

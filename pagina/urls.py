@@ -125,6 +125,8 @@ urlpatterns = [
 
     path('guardar_producto/', views.guardar_producto, name='guardar_producto'),
 
+    path('eliminar_producto/<str:id>/', views.eliminar_producto, name='eliminar_producto'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Archivos estáticos
 if settings.DEBUG:

@@ -1,5 +1,4 @@
-
-        // Mostrar/ocultar modales
+// Mostrar/ocultar modales
         const addProductBtn = document.getElementById('addProductBtn');
         const addCategoryBtn = document.getElementById('addCategoryBtn');
         const addProductModal = document.getElementById('addProductModal');
@@ -138,22 +137,51 @@
         });
 
         function eliminarProducto(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                fetch(`/productos/eliminar/${id}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert('Error al eliminar el producto: ' + data.error);
-                    }
-                });
-            }
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esta acción",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/eliminar_producto/${id}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire(
+                                '¡Eliminado!',
+                                'El producto ha sido eliminado.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire(
+                                'Error',
+                                data.error || 'Error al eliminar el producto',
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire(
+                            'Error',
+                            'Error al eliminar el producto',
+                            'error'
+                        );
+                    });
+                }
+            });
         }
 
         function filtrarPorCategoria(categoriaId) {
@@ -268,6 +296,7 @@
                 .then(producto => {
                     console.log('Producto recibido:', producto);
                     document.getElementById('edit_producto_id').value = producto.id;
+                    document.getElementById('edit_producto_barcode').value = producto.id; // Agregar esta línea
                     document.getElementById('edit_producto_nombre').value = producto.nombre;
                     document.getElementById('edit_producto_categoria').value = producto.categoria;
                     document.getElementById('edit_producto_precio').value = producto.precio;
