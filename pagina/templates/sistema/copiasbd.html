@@ -136,10 +136,9 @@
               <!-- Grupo: Botón + Inicio -->
               <div class="d-flex align-items-center">
                 <!-- Botón de menú -->
-                <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                <button class="sidebar-toggle-btn" id="sidebarToggle">
                   <i class="fas fa-bars"></i>
                 </button>
-                
       
                 <!-- Migas de pan -->
                 <ol class="breadcrumb mb-0">
@@ -568,6 +567,16 @@
             rows[i].style.display = visible ? '' : 'none';
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Control del sidebar
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        
+        sidebarToggle.addEventListener('click', function() {
+          document.body.classList.toggle('sidebar-collapse');
+          document.body.classList.toggle('sidebar-open');
+        });
+      });
 </script>
     <script src="{% static 'myapp/js/alertas.js' %}"></script>
 </body>
