@@ -65,6 +65,7 @@ body {
 #conte {
   align-items: flex-start;
   padding-top: 0;
+  margin-left: 3%;
 }
 
 .navbar-brand {
@@ -776,6 +777,26 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 
 .image:hover .user-avatar {
     filter: brightness(0.9);
+}
+
+/* Sidebar transitions */
+.main-sidebar {
+  width: 250px;
+  transition: width 0.3s ease-in-out;
+}
+
+.content-wrapper,
+.content-header {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar-collapse .main-sidebar {
+  width: 4.6rem;
+}
+
+.sidebar-collapse .content-wrapper,
+.sidebar-collapse .content-header {
+  margin-left: -0.4rem;
 }
 
 
