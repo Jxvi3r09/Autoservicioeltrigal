@@ -555,7 +555,6 @@ body:not(.sidebar-collapse) .user-avatar,
 .action-btn {
   padding: 4px 8px;
   font-size: 12px;
-  width: 75px;
 }
 
 .action-buttons {
@@ -608,4 +607,8 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 
 .image:hover .user-avatar {
     filter: brightness(0.9);
+}
+
+.modal-header{
+    background-color: #2e7d32 !important;
 }

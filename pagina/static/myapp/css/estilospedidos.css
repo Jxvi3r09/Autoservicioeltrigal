@@ -328,6 +328,7 @@ body:not(.sidebar-collapse) .user-avatar,
 
 /* Button styles */
 .btn {
+  border: none !important;
   border-radius: 8px;
   font-weight: 500;
   letter-spacing: 0.3px;

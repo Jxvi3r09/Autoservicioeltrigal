@@ -4,8 +4,8 @@
     <div class="modal-content border-0" style="box-shadow: 0 0 15px rgba(0,0,0,0.3);">
       <form method="POST" action="{% url 'editar_usuario' usuario.id %}">
         {% csrf_token %}
-        <div class="modal-header" style="background-color: #212529; color: white;">
-          <h5 class="modal-title fw-bold" style="color: #ffc107;">
+        <div class="modal-header" style="background-color: rgb(34, 132, 33) !important; color: white;">
+          <h5 class="modal-title fw-bold" style="color: #ffffff;">
             <i class="bi bi-person-gear me-2"></i>Editar Usuario
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -13,17 +13,23 @@
         <div class="modal-body p-4" style="background-color: #f8f9fa;">
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label class="form-label fw-semibold" style="color: #212529;">Tipo de Documento</label>
+              <label class="form-label fw-semibold">Tipo de Documento</label>
               <div class="input-group">
-                <span class="input-group-text" style="background-color: #198754; color: white;"><i class="bi bi-card-text"></i></span>
-                <input type="text" name="tipo_documento" class="form-control border-success" value="{{ usuario.tipo_documento }}">
+                <span style="background-color: #198754; color: white;"><i class="bi bi-card-text"></i></span>
+                <select name="tipo_documento" class="form-control" required>
+                  <option value="CC" {% if usuario.tipo_documento == 'CC' %}selected{% endif %}>Cédula de Ciudadanía</option>
+                  <option value="CE" {% if usuario.tipo_documento == 'CE' %}selected{% endif %}>Cédula de Extranjería</option>
+                  <option value="TI" {% if usuario.tipo_documento == 'TI' %}selected{% endif %}>Tarjeta de Identidad</option>
+                  <option value="PP" {% if usuario.tipo_documento == 'PP' %}selected{% endif %}>Pasaporte</option>
+                  <option value="NIT" {% if usuario.tipo_documento == 'NIT' %}selected{% endif %}>NIT</option>
+                </select>
               </div>
             </div>
             <div class="col-md-6 mb-3">
-              <label class="form-label fw-semibold" style="color: #212529;">Número de Documento</label>
+              <label class="form-label fw-semibold">Número de Documento</label>
               <div class="input-group">
-                <span class="input-group-text" style="background-color: #198754; color: white;"><i class="bi bi-hash"></i></span>
-                <input type="text" name="numero_documento" class="form-control border-success" value="{{ usuario.numero_documento }}">
+                <span><i class="bi bi-hash"></i></span>
+                <input type="text" name="numero_documento" class="form-control" value="{{ usuario.numero_documento }}">
               </div>
             </div>
           </div>
@@ -32,25 +38,25 @@
             <div class="col-md-6 mb-3">
               <label class="form-label fw-semibold" style="color: #212529;">Nombres</label>
               <div class="input-group">
-                <span class="input-group-text" style="background-color: #fd7e14; color: white;"><i class="bi bi-person"></i></span>
-                <input type="text" name="first_name" class="form-control border-warning" value="{{ usuario.first_name }}">
+                <span><i class="bi bi-person"></i></span>
+                <input type="text" name="first_name" class="form-control" value="{{ usuario.first_name }}">
               </div>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label fw-semibold" style="color: #212529;">Apellidos</label>
               <div class="input-group">
-                <span class="input-group-text" style="background-color: #fd7e14; color: white;"><i class="bi bi-person"></i></span>
-                <input type="text" name="last_name" class="form-control border-warning" value="{{ usuario.last_name }}">
+                <span><i class="bi bi-person"></i></span>
+                <input type="text" name="last_name" class="form-control" value="{{ usuario.last_name }}">
               </div>
             </div>
           </div>
           
           {% if request.user.rol == 'administrador' %}
           <div class="mb-3">
-            <label class="form-label fw-semibold" style="color: #212529;">Rol</label>
+            <label class="form-label fw-semibold">Rol</label>
             <div class="input-group">
-              <span class="input-group-text" style="background-color: #212529; color: white;"><i class="bi bi-person-badge"></i></span>
-              <select name="rol" class="form-control border-dark">
+              <span><i class="bi bi-person-badge"></i></span>
+              <select name="rol" class="form-control">
                 <option value="empleado" {% if usuario.rol == 'empleado' %}selected{% endif %}>Empleado</option>
                 <option value="administrador" {% if usuario.rol == 'administrador' %}selected{% endif %}>Administrador</option>
               </select>
@@ -59,26 +65,26 @@
           {% endif %}
           
           <div class="mb-3">
-            <label class="form-label fw-semibold" style="color: #212529;">Correo</label>
+            <label class="form-label fw-semibold">Correo</label>
             <div class="input-group">
-              <span class="input-group-text" style="background-color: #fd7e14; color: white;"><i class="bi bi-telephone"></i></span>
-              <input type="text" name="contacto" class="form-control border-warning" value="{{ usuario.email }}">
+              <span><i class="bi bi-telephone"></i></span>
+              <input type="text" name="email" class="form-control" value="{{ usuario.email }}">
             </div>
           </div>
           
           <div class="mb-3">
-            <label class="form-label fw-semibold" style="color: #212529;">Usuario</label>
+            <label class="form-label fw-semibold">Usuario</label>
             <div class="input-group">
-              <span class="input-group-text" style="background-color: #198754; color: white;"><i class="bi bi-person-circle"></i></span>
-              <input type="text" name="username" class="form-control border-success" value="{{ usuario.username }}">
+              <span><i class="bi bi-person-circle"></i></span>
+              <input type="text" name="username" class="form-control" value="{{ usuario.username }}">
             </div>
           </div>
         </div>
-        <div class="modal-footer" style="background-color: #212529;">
-          <button type="button" class="btn" style="background-color: #fd7e14; color: white;" data-bs-dismiss="modal">
+        <div class="modal-footer">
+          <button type="button" class="btn" style="background-color: #dc3545 !important; color: white;" data-bs-dismiss="modal">
             <i class="bi bi-x-circle me-1"></i>Cancelar
           </button>
-          <button type="submit" class="btn" style="background-color: #198754; color: white;">
+          <button type="submit" class="btn" style="background-color: rgb(34, 132, 33) !important; color: white;">
             <i class="bi bi-check-circle me-1"></i>Guardar Cambios
           </button>
         </div>

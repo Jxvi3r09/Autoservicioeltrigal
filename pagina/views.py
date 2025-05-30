@@ -83,14 +83,14 @@ def editar_usuario(request, id):
         usuario.first_name = request.POST.get('first_name')
         usuario.last_name = request.POST.get('last_name')
         usuario.rol = request.POST.get('rol')
-        usuario.contacto = request.POST.get('contacto')
+        usuario.contacto = request.POST.get('email')
         usuario.username = request.POST.get('username')
 
         # Validar que ningún campo esté vacío (opcional pero recomendado)
         if all([
             usuario.tipo_documento, usuario.numero_documento,
             usuario.first_name, usuario.last_name,
-            usuario.rol, usuario.contacto, usuario.username
+            usuario.rol, usuario.email, usuario.username
         ]):
             usuario.save()
             messages.success(request, 'Usuario actualizado correctamente.')
@@ -525,10 +525,10 @@ from .models import Producto
 from django.http import JsonResponse
 from .models import Producto
 
-def eliminar_producto(request, pk):
-    if request.method == 'DELETE':
+def eliminar_producto(request, id):
+    if request.method == 'POST':
         try:
-            producto = Producto.objects.get(id=pk)
+            producto = Producto.objects.get(id=id)
             producto.delete()
             return JsonResponse({'success': True})
         except Producto.DoesNotExist:

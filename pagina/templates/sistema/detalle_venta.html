@@ -128,13 +128,57 @@
 </aside>
 
 <div class="content-wrapper">
-    <section class="content-header">
+    <div class="content-header">
+              <div class="content-header sticky-header mb-2">
+          <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+              <!-- Grupo: Botón + Inicio -->
+              <div class="d-flex align-items-center">
+                <!-- Botón de menú -->
+                <button class="sidebar-toggle-btn" data-widget="pushmenu" href="#" role="button" id="menu">
+                  <i class="fas fa-bars"></i>
+                </button>
+                
+      
+                <!-- Migas de pan -->
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item">
+                    <a href="{% url 'inicioinv' %}">
+                      <i class="fas fa-home"></i> Inicio
+                    </a>
+                  </li>
+                  <li class="breadcrumb-item active">Detalle de venta</li>
+                </ol>
+              </div>
+      
+              <!-- Logo -->
+              <div class="logo-container">
+                <img
+                  src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                  alt="Autoservicio El Trigal"
+                  class="logo-hover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+              <div class="row justify-content-center mt-2">
+            <div class="col-lg-10">
+              <div class="welcome-card text-center" style="background: rgb(255, 255, 255) !important; border-radius: 8px;">
+                <h1 class="welcome-title" style="color: rgb(34, 132, 33) !important;">  <Nav>Número de venta</Nav> #{{ venta.id }}</h1>
+
+              </div>
+            </div>
+          </div>
+    <div>
+            <section class="mt-4">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 mt-4">
                     <div class="info-box">
                         <div class="info-box-content">
-                            <div class="row">
+                            <div class="row justify-content-center text-center">
                                 <div class="col-md-3">
                                     <h5>Número de Venta</h5>
                                     <p class="text-primary">#{{ venta.id }}</p>
@@ -153,7 +197,8 @@
                 </div>
             </div>
         </div>
-    </section>
+        </section>
+    </div>
 
     <section class="content">
         <div class="container-fluid">
