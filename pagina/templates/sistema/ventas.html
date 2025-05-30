@@ -61,7 +61,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="{% url 'inicioinv' %}" class="nav-link active">
+          <a href="{% url 'inicioinv' %}" class="nav-link">
             <i class="nav-icon fas fa-home" aria-hidden="true"></i>
             <p>Inicio</p>
           </a>
@@ -75,23 +75,9 @@
         </li>
 
         <li class="nav-item">
-          <a href="{% url 'inventario' %}" class="nav-link">
-            <i class="nav-icon fas fa-boxes"></i>
-            <p>Inventario</p>
-          </a>
-        </li>
-        
-        <li class="nav-item">
           <a href="{% url 'proveedores' %}" class="nav-link">
             <i class="nav-icon fas fa-truck"></i>
             <p>Proveedores</p>
-          </a>
-        </li> 
-        
-        <li class="nav-item">
-          <a href="{% url 'productos' %}" class="nav-link">
-            <i class="nav-icon fas fa-tag"></i>
-            <p>Productos</p>
           </a>
         </li>
 
@@ -103,11 +89,27 @@
         </li>
 
         <li class="nav-item">
-          <a href="{% url 'ventas' %}" class="nav-link">
-            <i class="nav-icon fas fa-tag"></i>
+          <a href="{% url 'inventario' %}" class="nav-link">
+            <i class="nav-icon fas fa-boxes"></i>
+            <p>Inventario</p>
+          </a>
+        </li> 
+
+        <li class="nav-item">
+          <a href="{% url 'ventas' %}" class="nav-link active">
+            <i class="nav-icon fas fa-cash-register"></i>
             <p>Ventas</p>
           </a>
         </li>
+
+        {% if request.user.rol == 'administrador' %}
+        <li class="nav-item">
+          <a href="{% url 'copias_bd' %}" class="nav-link">
+            <i class="nav-icon fas fa-database"></i>
+            <p>Copias de seguridad</p>
+          </a>
+        </li>
+        {% endif %}
 
         <li class="nav-item">
           <a href="{% url 'principal' %}" class="nav-link">
@@ -269,8 +271,8 @@
     </div>
 </div>
 
-<script src="{% static 'myapp/js/custom.js' %}"></script>
-<script src="{% static 'myapp/js/sienna.js' %}"></script>
+<!-- <script src="{% static 'myapp/js/custom.js' %}"></script>
+<script src="{% static 'myapp/js/sienna.js' %}"></script> -->
 
 <style>
 #scanner-container {

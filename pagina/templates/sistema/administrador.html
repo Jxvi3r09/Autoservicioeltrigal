@@ -28,102 +28,97 @@
 <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
       <!-- Sidebar mejorado -->
-      <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="{% url 'inicioinv' %}" class="brand-link text-center">
-          <span class="brand-text font-weight-light">
-            <strong>Sistema Inventario</strong>
-          </span>
-        </a>
-        
-        <div class="sidebar">
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
-      <div class="image position-relative">
-        <a href="{% url 'perfil_usuario' %}">
-            {% if request.user.is_authenticated and request.user.imagen_perfil %}
-                <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-            {% else %}
-                <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
-            {% endif %}
-        </a>
-        <a href="{% url 'perfil_usuario' %}" class="edit-profile-icon">
-            <i class="fas fa-pencil-alt"></i>
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <a href="{% url 'inicioinv' %}" class="brand-link text-center">
+    <span class="brand-text font-weight-light">
+      <strong>Sistema Inventario</strong>
+    </span>
+  </a>
+  
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+      <div class="image">
+        {% if request.user.is_authenticated and request.user.imagen_perfil %}
+          <img src="{{ request.user.imagen_perfil.url }}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+        {% else %}
+          <img src="{% static 'myapp/imagenes/usuariodefault.png' %}" class="img-circle elevation-2 user-avatar" alt="Usuario">
+        {% endif %}
+      </div>
+      <div class="info mt-2 text-center">
+        <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
+          {% if request.user.is_authenticated %}
+            {{ request.user.first_name }} {{ request.user.last_name }}<br>
+            {{ request.user.rol }}
+          {% else %}
+            Usuario
+          {% endif %}
         </a>
       </div>
-            <div class="info mt-2 text-center">
-              <a href="{% url 'perfil_usuario' %}" class="d-block" style="text-decoration: none;">
-                {% if request.user.is_authenticated %}
-                  {{ request.user.first_name }} {{ request.user.last_name }}<br>
-                  {{ request.user.rol }}
-                {% else %}
-                  Usuario
-                {% endif %}
-              </a>
-            </div>
-          </div>
+    </div>
 
-          <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <li class="nav-item">
-                <a href="{% url 'inicioinv' %}" class="nav-link">
-                  <i class="nav-icon fas fa-home" aria-hidden="true"></i>
-                  <p>Inicio</p>
-                </a>
-              </li>
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          <a href="{% url 'inicioinv' %}" class="nav-link">
+            <i class="nav-icon fas fa-home" aria-hidden="true"></i>
+            <p>Inicio</p>
+          </a>
+        </li>
 
-              <li class="nav-item">
-                <a href="{% url 'usuarios' %}" class="nav-link active">
-                  <i class="nav-icon fas fa-users" aria-hidden="true"></i>
-                  <p>Usuarios</p>
-                </a>
-              </li>
+        <li class="nav-item">
+          <a href="{% url 'usuarios' %}" class="nav-link active">
+            <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+            <p>Usuarios</p>
+          </a>
+        </li>
 
-              <li class="nav-item">
-                <a href="{% url 'inventario' %}" class="nav-link">
-                  <i class="nav-icon fas fa-boxes"></i>
-                  <p>Inventario</p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="{% url 'proveedores' %}" class="nav-link">
-                  <i class="nav-icon fas fa-truck"></i>
-                  <p>Proveedores</p>
-                </a>
-              </li> 
-              
-              <!-- <li class="nav-item">
-                <a href="{% url 'productos' %}" class="nav-link">
-                  <i class="nav-icon fas fa-tag"></i>
-                  <p>Productos</p>
-                </a>
-              </li> -->
+        <li class="nav-item">
+          <a href="{% url 'proveedores' %}" class="nav-link">
+            <i class="nav-icon fas fa-truck"></i>
+            <p>Proveedores</p>
+          </a>
+        </li>
 
-            <li class="nav-item">
-            <a href="{% url 'copias_bd' %}" class="nav-link">
-                <i class="nav-icon fas fa-database"></i>
-                <p>Copias de seguridad</p>
-            </a>
-            </li>
+        <li class="nav-item">
+          <a href="{% url 'pedidos' %}" class="nav-link">
+            <i class="nav-icon fas fa-tag"></i>
+            <p>Pedidos</p>
+          </a>
+        </li>
 
-            <li class="nav-item">
-              <a href="{% url 'pedidos' %}" class="nav-link">
-                <i class="nav-icon fas fa-tag"></i>
-                <p>
-                  Pedidos
-                </p>
-              </a>
-            </li>
+        <li class="nav-item">
+          <a href="{% url 'inventario' %}" class="nav-link">
+            <i class="nav-icon fas fa-boxes"></i>
+            <p>Inventario</p>
+          </a>
+        </li> 
 
-              <li class="nav-item">
-                <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
-                  <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-                  <p>Cerrar Sesión</p>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </aside>
+        <li class="nav-item">
+          <a href="{% url 'ventas' %}" class="nav-link">
+            <i class="nav-icon fas fa-cash-register"></i>
+            <p>Ventas</p>
+          </a>
+        </li>
+
+        {% if request.user.rol == 'administrador' %}
+        <li class="nav-item">
+          <a href="{% url 'copias_bd' %}" class="nav-link">
+            <i class="nav-icon fas fa-database"></i>
+            <p>Copias de seguridad</p>
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a href="{% url 'principal' %}" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+            <p>Cerrar Sesión</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
 
       <!-- Content Wrapper -->
       <div class="content-wrapper">

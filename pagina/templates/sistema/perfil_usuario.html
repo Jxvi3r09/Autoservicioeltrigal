@@ -157,73 +157,37 @@
           </a>
         </li>
 
-        {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
           <a href="{% url 'usuarios' %}" class="nav-link">
             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
             <p>Usuarios</p>
           </a>
         </li>
-        {% endif %}
-          <!-- Sección Inventario -->
-          <li class="nav-item">
-            <a href="{% url 'inventario' %}" class="nav-link">
-              <i class="nav-icon fas fa-boxes"></i>
-              <p>Inventario</p>
-            </a>
-          </li>
-          
-          <!-- Sección Proveedores -->
-          <li class="nav-item">
-            <a href="{% url 'proveedores' %}" class="nav-link">
-              <i class="nav-icon fas fa-truck"></i>
-              <p>Proveedores</p>
-            </a>
-          </li>
-          
-          <!-- Sección Productos -->
-          <!-- <li class="nav-item">
-            <a href="{% url 'productos' %}" class="nav-link">
-              <i class="nav-icon fas fa-tag"></i>
-              <p>
-                Productos
-              </p>
-            </a>
-          </li> -->
 
-        <li class="nav-item">
-          <a href="{% url 'inventario' %}" class="nav-link active">
-            <i class="nav-icon fas fa-boxes"></i>
-            <p>Inventario</p>
-          </a>
-        </li>
-        
         <li class="nav-item">
           <a href="{% url 'proveedores' %}" class="nav-link">
             <i class="nav-icon fas fa-truck"></i>
             <p>Proveedores</p>
           </a>
-        </li> 
-        
+        </li>
+
         <li class="nav-item">
-          <a href="{% url 'productos' %}" class="nav-link">
+          <a href="{% url 'pedidos' %}" class="nav-link">
             <i class="nav-icon fas fa-tag"></i>
-            <p>Productos</p>
+            <p>Pedidos</p>
           </a>
         </li>
 
         <li class="nav-item">
-            <a href="{% url 'pedidos' %}" class="nav-link">
-                <i class="nav-icon fas fa-tag"></i>
-                <p>
-                    Pedidos
-                </p>
-            </a>
-        </li>
+          <a href="{% url 'inventario' %}" class="nav-link">
+            <i class="nav-icon fas fa-boxes"></i>
+            <p>Inventario</p>
+          </a>
+        </li> 
 
         <li class="nav-item">
           <a href="{% url 'ventas' %}" class="nav-link">
-            <i class="nav-icon fas fa-tag"></i>
+            <i class="nav-icon fas fa-cash-register"></i>
             <p>Ventas</p>
           </a>
         </li>
@@ -238,10 +202,10 @@
         {% endif %}
 
         <li class="nav-item">
-        <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
+          <a href="{% url 'principal' %}" class="nav-link">
             <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
             <p>Cerrar Sesión</p>
-        </a>
+          </a>
         </li>
       </ul>
     </nav>
