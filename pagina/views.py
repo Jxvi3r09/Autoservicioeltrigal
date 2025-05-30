@@ -621,6 +621,7 @@ def generar_backup(request):
         command = [
             'mysqldump',
             f'-u{db["USER"]}',
+            f'-p{db["PASSWORD"]}',
             f'-h{db.get("HOST", "localhost")}',
             f'-P{db.get("PORT", "3306")}',
             db['NAME'],
