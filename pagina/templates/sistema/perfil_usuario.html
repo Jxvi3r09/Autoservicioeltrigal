@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="{% static 'myapp/css/estilos_perfil.css' %}">
 
   <script src="{% static 'myapp/js/seccion_perfil.js' %}"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 
 
   <!-- Bootstrap CSS -->
@@ -26,7 +28,7 @@
 
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
 <div class="wrapper">
   <!-- Sidebar mejorado -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -250,21 +252,39 @@
 
   <!-- Contenido principal -->
   <div class="content-wrapper">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"><i class="fas fa-user-circle mr-2"></i> Mi Perfil</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{% url 'inicioinv' %}">Inicio</a></li>
-              <li class="breadcrumb-item active">Mi Perfil</li>
-            </ol>
+        <div class="content-header sticky-header mb-2">
+          <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mt-2" id="conte">
+              <!-- Grupo: Botón + Inicio -->
+              <div class="d-flex align-items-center">
+                <!-- Botón de menú -->
+                <button class="sidebar-toggle-btn btn btn-link text-white" data-widget="pushmenu" type="button" aria-label="Mostrar/Ocultar menú"></button>
+                  <i class="fas fa-bars"></i>
+                </button>
+                
+      
+                <!-- Migas de pan -->
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item">
+                    <a href="{% url 'inicioinv' %}">
+                      <i class="fas fa-home"></i> Inicio
+                    </a>
+                  </li>
+                  <li class="breadcrumb-item active">Mi perfil</li>
+                </ol>
+              </div>
+      
+              <!-- Logo -->
+              <div class="logo-container">
+                <img
+                  src="{% static 'myapp/imagenes/logosinfondo.png' %}"
+                  alt="Autoservicio El Trigal"
+                  class="logo-hover"
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
     <div class="content">
       <div class="container-fluid profile-container">
