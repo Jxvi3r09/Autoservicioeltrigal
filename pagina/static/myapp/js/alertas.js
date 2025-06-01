@@ -1,3 +1,75 @@
+// Función para obtener el CSRF Token desde las cookies del navegador
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function confirmarHabilitacion(usuarioId, usuarioNombre) {
+    console.log("Botón de habilitación presionado para usuario:", usuarioNombre);  // Depuración
+
+    Swal.fire({
+        title: '¿Habilitar usuario?',
+        text: `¿Estás seguro de que deseas habilitar a ${usuarioNombre}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, habilitar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('/habilitar_usuario/' + usuarioId + '/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ 'usuario_id': usuarioId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: data.message,
+                        confirmButtonColor: '#28a745'
+                    }).then(() => {
+                        window.location.href = "/usuarios_inhabilitados/";
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || "No se pudo habilitar el usuario."
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de red',
+                    text: 'Hubo un problema al procesar la solicitud.'
+                });
+            });
+        }
+    });
+}
+
+
+
 // Función para mostrar mensajes del backend
 function mostrarMensajes(messages) {
   messages.forEach((message) => {
@@ -9,6 +81,70 @@ function mostrarMensajes(messages) {
     });
   });
 }
+// funcion para inabilitar usuario
+function confirmarDeshabilitacion(usuarioId, usuarioNombre) {
+    Swal.fire({
+        title: '¿Deshabilitar usuario?',
+        text: `¿Estás seguro de que deseas deshabilitar a ${usuarioNombre}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, deshabilitar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('/deshabilitar_usuario/' + usuarioId + '/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ 'usuario_id': usuarioId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Respuesta no válida del servidor.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Usuario deshabilitado',
+                        text: data.message,
+                        confirmButtonColor: '#3085d6'
+                    }).then(() => {
+                        // Recarga la página para que desaparezca el usuario deshabilitado
+                        window.location.reload();
+                        // O redirige directamente si tienes una URL exacta:
+                        // window.location.href = "/usuarios/";
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || "No se pudo deshabilitar el usuario."
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de red',
+                    text: 'Hubo un problema al procesar la solicitud.'
+                });
+            });
+        }
+    });
+}
+
+
+
+
 
 // Función para confirmar eliminación
 function confirmarEliminacion(id, nombre) {

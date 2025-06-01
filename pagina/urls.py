@@ -40,6 +40,15 @@ urlpatterns = [
     
     path('usuarios/editar/<int:id>/', views.editar_usuario, name='editar_usuario'),
 
+    # Inabilitar usuario
+    path('deshabilitar_usuario/<int:id>/', views.deshabilitar_usuario, name='deshabilitar_usuario'),
+    
+    # Desabilitar usuario
+    path('usuarios_inhabilitados/', views.usuarios_inhabilitados, name='usuarios_inhabilitados'),
+    
+    # Habilitar usuario
+    path('habilitar_usuario/<int:id>/', views.habilitar_usuario, name='habilitar_usuario'),
+    
     path('usuarios/eliminar/<int:id>/', views.eliminar_usuario, name='eliminar_usuario'),
 
     path("inicioinv/", views.inicioinv, name="inicioinv"),
