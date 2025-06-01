@@ -32,22 +32,40 @@ import json
 from .models import Usuario
 
 #mostrar todos los usuarios
+from django.utils import timezone
+from datetime import timedelta
+
 def lista_usuarios(request):
     # Mostrar solo usuarios activos
-    usuarios = Usuario.objects.filter(is_active=True)
+    usuarios = Usuario.objects.all()  # Cambié aquí para obtener todos los usuarios, activos e inactivos
 
     form = RegistroUsuarioForm()
     total_usuarios = usuarios.count()
-    usuarios_activos = usuarios.filter(
+
+    # Filtrar usuarios activos
+    usuarios_activos = usuarios.filter(is_active=True)
+
+    # Filtrar usuarios inactivos
+    usuarios_inactivos = usuarios.filter(is_active=False)  # Usuarios inhabilitados
+
+    # Contar usuarios activos en los últimos 30 días
+    usuarios_activos_30dias = usuarios_activos.filter(
         last_login__gte=timezone.now() - timedelta(days=30)
     ).count()
+
+    # Contar usuarios inactivos en los últimos 30 días
+    usuarios_inactivos_30dias = usuarios_inactivos.filter(
+        last_login__lt=timezone.now() - timedelta(days=30)
+    ).count()
+
     administradores = usuarios.filter(rol='Admin').count()
+
     inactivos_30dias = usuarios.filter(
         last_login__lt=timezone.now() - timedelta(days=30)
     ).count()
-    
+
     try:
-        cambio_activos = round((usuarios_activos / total_usuarios) * 100, 1)
+        cambio_activos = round((usuarios_activos_30dias / total_usuarios) * 100, 1)
     except ZeroDivisionError:
         cambio_activos = 0
     
@@ -55,12 +73,17 @@ def lista_usuarios(request):
         'usuarios': usuarios,
         'form': form,
         'total_usuarios': total_usuarios,
-        'usuarios_activos': usuarios_activos,
+        'usuarios_activos': usuarios_activos.count(),
+        'usuarios_inactivos': usuarios_inactivos.count(),  # Agregamos la cantidad de inactivos
+        'usuarios_activos_30dias': usuarios_activos_30dias,
+        'usuarios_inactivos_30dias': usuarios_inactivos_30dias,  # Agregamos los inactivos en los últimos 30 días
         'administradores': administradores,
         'inactivos_30dias': inactivos_30dias,
         'cambio_activos': cambio_activos,
     }
+
     return render(request, 'sistema/administrador.html', context)
+
 
 def editar_usuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
@@ -126,10 +149,20 @@ def habilitar_usuario(request, id):
 
 # Lista de usuarios inhabilitados
 def usuarios_inhabilitados(request):
-    # Aquí puedes obtener todos los usuarios inhabilitados (is_active=False)
+    # Obtener usuarios inhabilitados
     usuarios_inhabilitados = Usuario.objects.filter(is_active=False)
     
-    return render(request, 'sistema/usuarios_inhabilitados.html', {'usuarios_inhabilitados': usuarios_inhabilitados})
+    # Estadísticas adicionales para las cards
+    usuarios_activos = Usuario.objects.filter(is_active=True).count()
+    total_usuarios = Usuario.objects.count()
+    
+    context = {
+        'usuarios_inhabilitados': usuarios_inhabilitados,
+        'usuarios_activos': usuarios_activos,
+        'total_usuarios': total_usuarios,
+    }
+    
+    return render(request, 'sistema/usuarios_inhabilitados.html', context)
 
 
 def eliminar_usuario(request, id):

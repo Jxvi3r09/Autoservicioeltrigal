@@ -177,32 +177,47 @@
               </div>
             </div>
             
-            <!-- Estadísticas rápidas -->
-            <div class="row mt-4 justify-content-center">
-              <div class="col-md-3 mx-2">
-                <div class="stats-card">
-                  <i class="fas fa-users feature-icon"></i>
-                  <div class="stats-number">{{ total_usuarios }}</div>
-                  <div class="stats-title">Usuarios Totales</div>
+              <!-- Estadísticas rápidas -->
+              <div class="row mt-4 justify-content-center">
+                
+                <!-- Carta de Usuarios Totales -->
+                <div class="col-md-3 mb-3">
+                  <div class="stats-card">
+                    <i class="fas fa-users feature-icon"></i>
+                    <div class="stats-number">{{ total_usuarios }}</div>
+                    <div class="stats-title">Usuarios Totales</div>
+                  </div>
                 </div>
-              </div>
-              
-              <div class="col-md-3 mx-2">
-                <div class="stats-card">
-                  <i class="fas fa-user-check feature-icon"></i>
-                  <div class="stats-number">{{ usuarios_activos }}</div>
-                  <div class="stats-title">Usuarios Activos</div>
+                
+                <!-- Carta de Usuarios Activos -->
+                <div class="col-md-3 mb-3">
+                  <div class="stats-card">
+                    <i class="fas fa-user-check feature-icon"></i>
+                    <div class="stats-number">{{ usuarios_activos }}</div>
+                    <div class="stats-title">Usuarios Activos</div>
+                  </div>
                 </div>
-              </div>
-              
-              <div class="col-md-3 mx-2">
-                <div class="stats-card">
-                  <i class="fas fa-user-shield feature-icon"></i>
-                  <div class="stats-number">{{ administradores }}</div>
-                  <div class="stats-title">Administradores</div>
+
+                <!-- Carta de Usuarios Inhabilitados -->
+                <div class="col-md-3 mb-3">
+                  <div class="stats-card">
+                    <i class="fas fa-user-slash feature-icon"></i>
+                    <div class="stats-number">{{ usuarios_inactivos }}</div>
+                    <div class="stats-title">Usuarios Inhabilitados</div>
+                  </div>
                 </div>
+                
+                <!-- Carta de Administradores -->
+                <div class="col-md-3 mb-3">
+                  <div class="stats-card">
+                    <i class="fas fa-user-shield feature-icon"></i>
+                    <div class="stats-number">{{ administradores }}</div>
+                    <div class="stats-title">Administradores</div>
+                  </div>
+                </div>
+
               </div>
-            </div>
+
 
 
             
