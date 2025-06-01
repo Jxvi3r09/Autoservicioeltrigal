@@ -400,13 +400,6 @@
                     <div class="image-preview-container">
                         <img id="imagePreview" class="image-preview" style="display: none;">
                     </div>
-                    <div class="cropper-controls">
-                        <button type="button" onclick="zoomIn()">Zoom +</button>
-                        <button type="button" onclick="zoomOut()">Zoom -</button>
-                        <button type="button" onclick="rotateLeft()">↶ Rotar</button>
-                        <button type="button" onclick="rotateRight()">↷ Rotar</button>
-                        <button type="button" onclick="resetCrop()">Resetear</button>
-                    </div>
                     <input type="hidden" name="cropped_image" id="croppedImageData">
                 </div>
                 <div class="form-actions">
@@ -432,7 +425,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-cancel" id="cancelAddCategory">Cancelar</button>
-                    <button type="submit" class="btn">Guardar Categoría</button>
+                    <button type="submit" class="btn" id="btnguardar">Guardar Categoría</button>
                 </div>
             </form>
         </div>
@@ -454,7 +447,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-cancel" onclick="closeEditModal()">Cancelar</button>
-                    <button type="submit" class="btn">Guardar Cambios</button>
+                    <button type="submit" class="btn" id="btnguardar">Guardar Cambios</button>
                 </div>
             </form>
         </div>
@@ -514,13 +507,6 @@
                     <input type="file" name="imagen" class="form-input" accept="image/*" onchange="previewImage(this)">
                     <div class="image-preview-container">
                         <img id="imagePreview" class="image-preview" style="display: none;">
-                    </div>
-                    <div class="cropper-controls">
-                        <button type="button" onclick="zoomIn()">Zoom +</button>
-                        <button type="button" onclick="zoomOut()">Zoom -</button>
-                        <button type="button" onclick="rotateLeft()">↶ Rotar</button>
-                        <button type="button" onclick="rotateRight()">↷ Rotar</button>
-                        <button type="button" onclick="resetCrop()">Resetear</button>
                     </div>
                     <input type="hidden" name="cropped_image" id="croppedImageData">
                 </div>

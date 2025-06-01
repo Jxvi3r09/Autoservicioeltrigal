@@ -854,6 +854,10 @@ body:not(.sidebar-collapse) .user-avatar,
         }
 
         #btnguardar{
+          background-color: rgb(34, 132, 33) !important;
+        }
+
+        #btnguardar{
             background-color: rgb(34, 132, 33) !important;;
             color: white;
         }
@@ -1127,8 +1131,13 @@ body:not(.sidebar-collapse) .user-avatar,
         }
         
         .btn-cancel {
-            background-color: var(--secondary);
-            color: var(--text);
+            background-color: #ff0000;
+            color: white;
+        }
+
+        .btn-cancel {
+            background-color: #ff0000 !important;
+            color: white !important;
         }
         
         .pagination {
