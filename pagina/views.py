@@ -33,30 +33,19 @@ from .models import Usuario
 
 #mostrar todos los usuarios
 def lista_usuarios(request):
-    # Obtener todos los usuarios
-    usuarios = Usuario.objects.all()
-    
-    # Obtener el formulario
+    # Mostrar solo usuarios activos
+    usuarios = Usuario.objects.filter(is_active=True)
+
     form = RegistroUsuarioForm()
-    
-    # Calcular métricas estadísticas
     total_usuarios = usuarios.count()
-    
-    # Usuarios activos (últimos 30 días)
     usuarios_activos = usuarios.filter(
         last_login__gte=timezone.now() - timedelta(days=30)
     ).count()
-    
-    # Administradores (asumiendo que hay un campo 'rol' en tu modelo)
     administradores = usuarios.filter(rol='Admin').count()
-    
-    # Usuarios inactivos (más de 30 días sin login)
     inactivos_30dias = usuarios.filter(
         last_login__lt=timezone.now() - timedelta(days=30)
     ).count()
     
-    # Porcentaje de cambio (puedes ajustar esta lógica según tus necesidades)
-    # Esto es un ejemplo - deberías implementar tu propia lógica de comparación
     try:
         cambio_activos = round((usuarios_activos / total_usuarios) * 100, 1)
     except ZeroDivisionError:
@@ -71,27 +60,25 @@ def lista_usuarios(request):
         'inactivos_30dias': inactivos_30dias,
         'cambio_activos': cambio_activos,
     }
-    
     return render(request, 'sistema/administrador.html', context)
 
 def editar_usuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
 
     if request.method == 'POST':
+        # Asignando los valores del formulario a los campos del usuario
         usuario.tipo_documento = request.POST.get('tipo_documento')
         usuario.numero_documento = request.POST.get('numero_documento')
         usuario.first_name = request.POST.get('first_name')
         usuario.last_name = request.POST.get('last_name')
         usuario.rol = request.POST.get('rol')
         usuario.contacto = request.POST.get('email')
-        usuario.username = request.POST.get('username')
+        usuario.username = request.POST.get('username')  # Correcto: usuario.username
 
         # Validar que ningún campo esté vacío (opcional pero recomendado)
-        if all([
-            usuario.tipo_documento, usuario.numero_documento,
-            usuario.first_name, usuario.last_name,
-            usuario.rol, usuario.email, usuario.usernamebac
-        ]):
+        if all([usuario.tipo_documento, usuario.numero_documento,
+                usuario.first_name, usuario.last_name,
+                usuario.rol, usuario.email, usuario.username]):  # Aquí cambiamos a usuario.username
             usuario.save()
             messages.success(request, 'Usuario actualizado correctamente.')
         else:
@@ -100,6 +87,50 @@ def editar_usuario(request, id):
         return redirect('usuarios')  # Redirige a la vista de gestión/listado
 
     return redirect('usuarios')  # Previene accesos por GET no permitidos
+# Inabilitar usuario
+def deshabilitar_usuario(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+
+    if request.method == 'POST':
+        # Deshabilitar el usuario
+        usuario.is_active = False
+        usuario.save()
+
+        # Verificar si la solicitud es AJAX (sin redirección)
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': True,
+                'message': f"¡Usuario {usuario.username} deshabilitado exitosamente!",
+                'usuario_id': usuario.id
+            })
+
+        return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
+
+# Habilitar usuario
+def habilitar_usuario(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+
+    if request.method == 'POST':
+        usuario.is_active = True
+        usuario.save()
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            # Si es una solicitud AJAX, devolver JSON
+            return JsonResponse({'success': True, 'message': f"¡Usuario {usuario.username} habilitado exitosamente!"})
+        else:
+            # Si no es AJAX, redirigir a la página de "usuarios_inhabilitados" o cualquier otra
+            messages.success(request, f"¡Usuario {usuario.username} habilitado exitosamente!")
+            return redirect('usuarios_inhabilitados')  # Cambia 'usuarios_inhabilitados' por la URL de tu nueva página.
+
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
+
+# Lista de usuarios inhabilitados
+def usuarios_inhabilitados(request):
+    # Aquí puedes obtener todos los usuarios inhabilitados (is_active=False)
+    usuarios_inhabilitados = Usuario.objects.filter(is_active=False)
+    
+    return render(request, 'sistema/usuarios_inhabilitados.html', {'usuarios_inhabilitados': usuarios_inhabilitados})
+
 
 def eliminar_usuario(request, id):
     messages.success(request, "¡Usuario eliminado exitosamente!")
@@ -109,7 +140,7 @@ def eliminar_usuario(request, id):
         usuario.delete()
         return redirect('usuarios')  
 
-    return render(request, 'sistema/administrador.html', {'usuario': usuario})
+    return render(request, 'sistema/usuarios_inhabilitados.html', {'usuario': usuario})
     
 def principal(request):
     return render(request, "paginas/principal.html")
