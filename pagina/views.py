@@ -229,6 +229,20 @@ def gestion(request):
 
 # Validacion del login
 def inicioinv(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('inicioinv')  # O la vista donde va tras loguearse
+        else:
+            messages.error(request, "Usuario o contraseña incorrectos.")
+            return render(request, "paginas/principal.html", {
+                "mostrar_modal_login": True
+            })
     context = {
         'total_productos': Producto.objects.count(),
         'total_proveedores': Proveedor.objects.count(),
