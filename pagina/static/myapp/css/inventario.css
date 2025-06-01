@@ -1693,3 +1693,141 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 .image:hover .user-avatar {
     filter: brightness(0.9);
 }
+
+
+ .btn,
+        .btn-primary, 
+        .btn-danger,
+        .btn-cancel,
+        .category-btn,
+        .filter-select,
+        .btn-icon,
+        .action-btn {
+            font-weight: 400;
+        }
+
+        /* Estilos responsivos */
+    @media (max-width: 768px) {
+        .content-wrapper {
+            margin-left: 0;
+        }
+
+        .controls-wrapper {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .search-container {
+            width: 100%;
+        }
+
+        .filters {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .filter-select {
+            width: 100%;
+        }
+
+        .product-grid {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 1rem;
+        }
+
+        .product-card {
+            display: inline-block;
+            width: 280px;
+            margin-right: 10px;
+            white-space: normal;
+            vertical-align: top;
+        }
+
+        .product-actions {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .product-actions button {
+            width: 100%;
+        }
+
+        .modal-content {
+            width: 95%;
+            margin: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .welcome-card {
+            padding: 15px;
+            margin: 10px;
+        }
+
+        .welcome-title {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* Ajustes para dispositivos muy pequeños */
+    @media (max-width: 480px) {
+        .product-specs {
+            flex-direction: column;
+        }
+
+        .product-card {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .product-image img {
+            height: 150px;
+        }
+
+        .modal {
+            padding: 0;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-actions button {
+            width: 100%;
+        }
+    }
+
+    /* Indicador de scroll horizontal */
+    .scroll-indicator {
+        display: none;
+        text-align: center;
+        padding: 10px;
+        color: #666;
+    }
+
+    @media (max-width: 768px) {
+        .scroll-indicator {
+            display: block;
+        }
+    }
+
+    /* Mejoras en la navegación móvil */
+    @media (max-width: 768px) {
+        .sidebar-open .content-wrapper {
+            margin-left: 250px;
+        }
+
+        .main-sidebar {
+            margin-left: -250px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .sidebar-open .main-sidebar {
+            margin-left: 0;
+        }
+    }

@@ -86,13 +86,14 @@
             <p>Inicio</p>
           </a>
         </li>
-
+        {% if request.user.rol == 'administrador' %}
         <li class="nav-item">
           <a href="{% url 'usuarios' %}" class="nav-link">
             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
             <p>Usuarios</p>
           </a>
         </li>
+        {% endif %}
 
         <li class="nav-item">
           <a href="{% url 'proveedores' %}" class="nav-link">
@@ -259,8 +260,10 @@
             <div class="search-container">
                 <input type="text" placeholder="Buscar productos..." class="search-input" id="searchInput" oninput="buscarProductos()">
             </div>
+            {% if request.user.rol == 'administrador' %}
             <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
-                       <div class="category-dropdown">
+            {% endif %}
+                    <div class="category-dropdown">
                 <button class="category-btn" id="btncategorias">
                     <i class="fas fa-th-list"></i>
                     Categorías
@@ -273,8 +276,8 @@
                     <li class="category-item" onclick="filtrarPorCategoria('{{ categoria.id }}')" id="categoria-{{ categoria.id }}">
                         <div>{{ categoria.nombre }} <span>({{ categoria.producto_set.count }})</span></div>
                         <div class="category-actions">
-                            <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
                             {% if request.user.rol == 'administrador' %}
+                            <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
                             <button class="btn-icon" onclick="eliminarCategoria({{ categoria.id }})">🗑️</button>
                         </div>
                         {% endif %}

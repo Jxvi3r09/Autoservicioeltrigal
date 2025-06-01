@@ -623,3 +623,67 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 .content-wrapper {
     padding-top: 60px;
 }
+
+
+        @media (max-width: 768px) {
+            .content-header {
+                margin-left: 0 !important;
+            }
+            
+            .content-wrapper {
+                margin-top: 60px;
+            }
+            
+            .stats-card {
+                margin-bottom: 15px;
+            }
+            
+            .action-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+            
+            .welcome-card {
+                padding: 15px;
+            }
+            
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            
+            .card-header .d-flex {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .table-responsive {
+                font-size: 0.9rem;
+            }
+            
+            .logo-container img {
+                max-width: 120px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-card {
+                margin: 10px 15px;
+            }
+            
+            .welcome-title {
+                font-size: 1.2rem;
+            }
+            
+            .breadcrumb {
+                display: none;
+            }
+            
+            .pagination {
+                font-size: 0.9rem;
+            }
+        }
