@@ -1,5 +1,8 @@
-{% extends "contrasena/base.html" %} {% block title %}Correo Enviado | {{
-site_name }}{% endblock %} {% block auth_content %}
+{% extends "contrasena/base.html" %}
+
+{% block title %}Correo Enviado | {{ site_name }}{% endblock %}
+
+{% block auth_content %}
 <div class="auth-container">
   <div class="auth-card">
     <div class="auth-header text-center mb-4">
@@ -24,10 +27,7 @@ site_name }}{% endblock %} {% block auth_content %}
     </div>
 
     <div class="d-grid gap-2 mt-4">
-      <!-- <a href="{% url 'principal' %}" class="btn btn-outline-primary">
-        <i class="bi bi-house-door"></i> Volver al inicio
-      </a> -->
-      <a id="btn" href="{% url 'principal' %}" class="btn btn-success">
+      <a id="btn" href="{% url 'principal' %}" class="btn btn-custom">
         <i class="bi bi-box-arrow-in-right"></i> Ir a Iniciar Sesión
       </a>
     </div>
@@ -40,17 +40,32 @@ site_name }}{% endblock %} {% block auth_content %}
     </div>
   </div>
 </div>
-{% endblock %} {% block extra_css %}
+{% endblock %}
+
+{% block extra_css %}
 <style>
   .auth-icon-success {
     font-size: 3rem;
-    color: #28a745;
+    color: rgb(34, 132, 33) !important;
     margin-bottom: 1rem;
   }
-  .btn-success{
-    background-color: #28a745 !important;
-    border-color: #28a745;
+  
+  /* Botón con color personalizado */
+  .btn-custom {
+    background-color: rgb(34, 132, 33) !important;
+    border-color: rgb(34, 132, 33) !important;
+    color: white !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
   }
+
+  /* Efecto hover para el botón */
+  .btn-custom:hover {
+    background-color: rgb(28, 107, 28) !important;
+    border-color: rgb(28, 107, 28) !important;
+  }
+
   .auth-card {
     max-width: 450px;
     margin: 0 auto;
@@ -58,6 +73,7 @@ site_name }}{% endblock %} {% block auth_content %}
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
+
   .alert {
     border-left: 4px solid #28a745;
   }

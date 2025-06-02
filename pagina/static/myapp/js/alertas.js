@@ -84,13 +84,13 @@ function mostrarMensajes(messages) {
 // funcion para inabilitar usuario
 function confirmarDeshabilitacion(usuarioId, usuarioNombre) {
     Swal.fire({
-        title: '¿Deshabilitar usuario?',
-        text: `¿Estás seguro de que deseas deshabilitar a ${usuarioNombre}?`,
+        title: '¿Inhabilitar usuario?',
+        text: `¿Estás seguro de que deseas Inhabilitar a ${usuarioNombre}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Sí, deshabilitar',
+        confirmButtonText: 'Sí, Inhabilitar',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -113,7 +113,7 @@ function confirmarDeshabilitacion(usuarioId, usuarioNombre) {
                 if (data.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Usuario deshabilitado',
+                        title: 'Usuario Inhabilitado',
                         text: data.message,
                         confirmButtonColor: '#3085d6'
                     }).then(() => {

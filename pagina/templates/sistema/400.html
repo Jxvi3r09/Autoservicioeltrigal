@@ -1,0 +1,12 @@
+{% extends "sistema/base_errores.html" %}
+{% block title %}Página no encontrada | Mi Sitio{% endblock %}
+{% block content %}
+  <div>
+    <h1><i class="fas fa-exclamation-triangle"></i></h1>
+    <h2>¡Vaya! Página no encontrada</h2>
+    <p>Lo sentimos, pero la página que estás buscando no existe o ha sido movida.</p>
+    <a href="{% url 'principal' %}" class="btn btn-primary">
+      Volver al Inicio
+    </a>
+  </div>
+{% endblock %}

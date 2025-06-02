@@ -9,6 +9,8 @@
     <!-- Favicon -->
  <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
 
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- AdminLTE CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -123,10 +125,10 @@
         {% endif %}
 
         <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
-            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-            <p>Cerrar Sesión</p>
-          </a>
+        <a href="{% url 'principal' %}" class="nav-link" onclick="confirmarCerrarSesion(event)">
+          <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+          <p>Cerrar Sesión</p>
+        </a>
         </li>
       </ul>
     </nav>
@@ -348,6 +350,7 @@ canvas.drawingBuffer {
     left: 0;
 }
 </style>
+ <script src="{% static 'myapp/js/alertas.js' %}"></script>
 </div>
 
     <!-- Antes de cerrar el body -->
