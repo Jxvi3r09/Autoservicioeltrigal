@@ -27,19 +27,8 @@
     
     <!-- QuaggaJS para lectura de códigos de barras -->
     <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+
     
-    <style>
-        .btn,
-        .btn-primary, 
-        .btn-danger,
-        .btn-cancel,
-        .category-btn,
-        .filter-select,
-        .btn-icon,
-        .action-btn {
-            font-weight: 400;
-        }
-    </style>
 </head>
   <body class="hold-transition sidebar-mini sidebar-collapse">
     {% csrf_token %}
@@ -259,12 +248,12 @@
             <div style="margin: 0 20px 20px;">
             <div class="controls-wrapper">
             <div class="search-container">
-                <input type="text" placeholder="Buscar productos..." class="search-input" id="searchInput" oninput="buscarProductos()">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Buscar productos..." class="search-input" id="searchInput" oninput="buscarProductos()">
+                </div>
             </div>
-            {% if request.user.rol == 'administrador' %}
-            <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
-            {% endif %}
-                    <div class="category-dropdown">
+                                <div class="category-dropdown">
                 <button class="category-btn" id="btncategorias">
                     <i class="fas fa-th-list"></i>
                     Categorías
@@ -291,6 +280,9 @@
                     </li>
                 </ul>
             </div>
+            {% if request.user.rol == 'administrador' %}
+            <button class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
+            {% endif %}
             </div>
                 </div>
 

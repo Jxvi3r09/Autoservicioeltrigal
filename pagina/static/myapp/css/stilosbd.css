@@ -43,6 +43,33 @@ body {
   color: var(--negro-principal);
 }
 
+/* Prevenir scroll horizontal */
+body, 
+.wrapper,
+.content-wrapper,
+.container-fluid,
+.main-content-area {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Ajustar contenedores */
+.card {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.table-responsive {
+    margin: 0;
+    padding: 0;
+    max-width: 100vw;
+}
+
+.content {
+    padding: 0 15px;
+    max-width: 100%;
+}
 
 /* Ensure specific icon colors don't override */
 .sidebar .nav-link:hover .fas,
