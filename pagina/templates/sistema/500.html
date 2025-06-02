@@ -1,0 +1,12 @@
+{% extends "sistema/base_errores.html" %}
+{% block title %}Error del servidor | Mi Sitio{% endblock %}
+{% block content %}
+  <div>
+    <h1><i class="fas fa-server"></i></h1>
+    <h2>¡Ups! Algo salió mal</h2>
+    <p>Lo sentimos, parece que hubo un problema con el servidor. Por favor, inténtalo más tarde.</p>
+    <a href="{% url 'principal' %}" class="btn btn-primary">
+      Volver al Inicio
+    </a>
+  </div>
+{% endblock %}

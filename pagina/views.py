@@ -37,6 +37,17 @@ from .models import Usuario
 from django.utils import timezone
 from datetime import timedelta
 
+
+# ERRROES
+def custom_400(request, exception=None):
+    return render(request, 'sistema/400.html', status=400)
+
+def custom_404(request, exception=None):
+    return render(request, 'sistema/404.html', status=404)
+
+def custom_500(request):
+    return render(request, 'sistema/500.html', status=500)
+
 def lista_usuarios(request):
     usuarios = Usuario.objects.filter(is_active=True)  # Solo los usuarios habilitados
 
