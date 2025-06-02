@@ -8,6 +8,8 @@
 
    <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
 
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
@@ -115,10 +117,10 @@
         {% endif %}
 
         <li class="nav-item">
-          <a href="#" class="nav-link" onclick="confirmarCerrarSesion(event)">
-            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-            <p>Cerrar Sesión</p>
-          </a>
+        <a href="{% url 'principal' %}" class="nav-link" onclick="confirmarCerrarSesion(event)">
+          <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+          <p>Cerrar Sesión</p>
+        </a>
         </li>
       </ul>
     </nav>
@@ -315,6 +317,7 @@
       });
     });
   </script>
+   <script src="{% static 'myapp/js/alertas.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{% static 'myapp/js/logout.js' %}"></script>
 </body>

@@ -7,6 +7,8 @@
     <title>Panel de Administración</title>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
      <link rel="shortcut icon" href="{% static 'myapp/imagenes/faviconlogo.ico' %}" type="image/x-icon">
     <!-- Cargar jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -120,10 +122,10 @@
         {% endif %}
 
         <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
-            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-            <p>Cerrar Sesión</p>
-          </a>
+        <a href="{% url 'principal' %}" class="nav-link" onclick="confirmarCerrarSesion(event)">
+          <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+          <p>Cerrar Sesión</p>
+        </a>
         </li>
       </ul>
     </nav>
@@ -331,6 +333,7 @@
     {% endfor %}
     
     <!-- Scripts -->
+      <script src="{% static 'myapp/js/alertas.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

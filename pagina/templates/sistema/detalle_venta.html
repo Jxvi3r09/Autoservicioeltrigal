@@ -123,10 +123,10 @@
         {% endif %}
 
         <li class="nav-item">
-          <a href="{% url 'principal' %}" class="nav-link">
-            <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
-            <p>Cerrar Sesión</p>
-          </a>
+        <a href="{% url 'principal' %}" class="nav-link" onclick="confirmarCerrarSesion(event)">
+          <i class="nav-icon fas fa-sign-out-alt" aria-hidden="true"></i>
+          <p>Cerrar Sesión</p>
+        </a>
         </li>
       </ul>
     </nav>
@@ -250,6 +250,8 @@
 </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script src="{% static 'myapp/js/alertas.js' %}"></script>
 
 <script>
 window.jsPDF = window.jspdf.jsPDF;
