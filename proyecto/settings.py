@@ -87,7 +87,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'proyecto',
     'USER': 'root',
-    'PASSWORD':'Javier',  # Asegúrate de que sea la contraseña correcta
+    'PASSWORD':'',  # Asegúrate de que sea la contraseña correcta
     'HOST': 'localhost',  # Asegúrate de que solo sea la IP
     'PORT': '3306',  # Solo el número del puerto, sin IP
 }
@@ -215,7 +215,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # COPIAS DE SEGURIDAD
 # Datos para backup de MySQL
 MYSQL_BACKUP = {
-    'USER': 'root', 
-    'PASSWORD': 'Javier',  
+    'USER': 'root',
+    'PASSWORD': 'Javier',
     'NAME': 'Proyecto',
 }
