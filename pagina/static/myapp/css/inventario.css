@@ -1871,3 +1871,60 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 .user-panel .image img {
   border: 2px solid rgb(243, 154, 49) !important;
 }
+
+.btn,
+.btn-primary, 
+.btn-danger,
+.btn-cancel,
+.category-btn,
+.filter-select,
+.btn-icon,
+.action-btn {
+    font-weight: 400;
+}
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    z-index: 1;
+}
+
+.search-input {
+    padding-left: 35px !important;
+}
+
+/* Prevenir scroll horizontal */
+body, 
+.wrapper,
+.content-wrapper,
+.container-fluid,
+.main-content-area,
+.products-section {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Asegurar que los contenedores se ajusten */
+.controls-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 100%;
+}

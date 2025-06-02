@@ -673,6 +673,43 @@ thead {
   }
 }
 
+/* Prevenir scroll horizontal */
+body, 
+.wrapper,
+.content-wrapper,
+.container-fluid,
+.main-content-area,
+.products-section {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.controls-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.table-responsive {
+    margin: 0;
+    padding: 0;
+    max-width: 100vw;
+}
+
+/* Ajustar contenedores principales */
+.content {
+    padding: 0 15px;
+    max-width: 100%;
+}
+
+.card {
+    margin: 0;
+    max-width: 100%;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
