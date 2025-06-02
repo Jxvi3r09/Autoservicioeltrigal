@@ -1,4 +1,3 @@
-
 .asw-menu-btn {
     background-color: #ffa600 !important; 
     top: 80%;
@@ -18,8 +17,6 @@
     background: #ffa600 !important; 
     color: #fff !important; 
 }
-
-
 
 [data-asw-filter="light-contrast"] #contacto {
     background-color: var(--light-bg) !important;
@@ -295,7 +292,6 @@ nav-items .nav-link {
     background-color: var(--dark-accent) !important;
     color: #000000 !important;
     border: 2px solid #ffffff;
-    font-weight: bold;
 }
 
 
@@ -593,5 +589,577 @@ button:focus, a:focus, input:focus, textarea:focus, select:focus {
 [data-asw-filter="dark-contrast"] iframe,
 [data-asw-filter="light-contrast"] iframe {
     border: 3px solid var(--light-border) !important;
+}
+
+/* Dark contrast styles for inicioinv.html */
+[data-asw-filter="dark-contrast"] .main-sidebar {
+    background-color: var(--dark-secondary) !important;
+    border-right: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .brand-link {
+    color: var(--dark-text) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .user-panel {
+    border-bottom: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .nav-link {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .nav-link.active {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+}
+
+[data-asw-filter="dark-contrast"] .content-wrapper {
+    background-color: var(--dark-bg) !important;
+}
+
+[data-asw-filter="dark-contrast"] .breadcrumb {
+    background-color: var(--dark-secondary) !important;
+}
+
+[data-asw-filter="dark-contrast"] .breadcrumb-item a {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .welcome-card {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .stats-card {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .feature-box {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .feature-icon {
+    color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .footer {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border-top: 1px solid var(--dark-accent) !important;
+}
+
+/* Light contrast styles for inicioinv.html */
+[data-asw-filter="light-contrast"] .main-sidebar {
+    background-color: var(--light-secondary) !important;
+    border-right: 3px solid var(--light-border) !important;
+}
+
+[data-asw-filter="light-contrast"] .brand-link {
+    color: var(--light-text) !important;
+    border-bottom: 3px solid var(--light-border) !important;
+}
+
+[data-asw-filter="light-contrast"] .user-panel {
+    border-bottom: 3px solid var(--light-border) !important;
+}
+
+[data-asw-filter="light-contrast"] .nav-link {
+    color: var(--light-text) !important;
+}
+
+[data-asw-filter="light-contrast"] .nav-link.active {
+    background-color: var(--light-accent) !important;
+    color: #ffffff !important;
+}
+
+[data-asw-filter="light-contrast"] .content-wrapper {
+    background-color: var(--light-bg) !important;
+}
+
+[data-asw-filter="light-contrast"] .breadcrumb {
+    background-color: var(--light-secondary) !important;
+}
+
+[data-asw-filter="light-contrast"] .breadcrumb-item a {
+    color: var(--light-text) !important;
+}
+
+[data-asw-filter="light-contrast"] .welcome-card {
+    background-color: var(--light-secondary) !important;
+    color: var(--light-text) !important;
+    border: 3px solid var(--light-border) !important;
+}
+
+[data-asw-filter="light-contrast"] .stats-card {
+    background-color: var(--light-secondary) !important;
+    color: var(--light-text) !important;
+    border: 3px solid var(--light-border) !important;
+}
+
+[data-asw-filter="light-contrast"] .feature-box {
+    background-color: var(--light-secondary) !important;
+    color: var(--light-text) !important;
+    border: 3px solid var(--light-border) !important;
+}
+
+[data-asw-filter="light-contrast"] .feature-icon {
+    color: var(--light-accent) !important;
+}
+
+[data-asw-filter="light-contrast"] .footer {
+    background-color: var(--light-secondary) !important;
+    color: var(--light-text) !important;
+    border-top: 3px solid var(--light-border) !important;
+}
+
+/* Dark contrast styles for header */
+[data-asw-filter="dark-contrast"] .content-header {
+    background-color: var(--dark-secondary) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .sidebar-toggle-btn {
+    color: var(--dark-text) !important;
+    background-color: var(--dark-accent) !important;
+    border: 1px solid var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .breadcrumb {
+    background-color: transparent !important;
+}
+
+[data-asw-filter="dark-contrast"] .breadcrumb-item,
+[data-asw-filter="dark-contrast"] .breadcrumb-item a {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .logo-container img {
+    filter: brightness(0.9) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+/* Light contrast styles for header */
+[data-asw-filter="light-contrast"] .content-header {
+    background-color: var(--light-secondary) !important;
+    border-bottom: 3px solid var(--light-border) !important;
+}
+
+[data-asw-filter="light-contrast"] .sidebar-toggle-btn {
+    color: var(--light-text) !important;
+    background-color: var(--light-accent) !important;
+    border: 2px solid var(--light-text) !important;
+}
+
+[data-asw-filter="light-contrast"] .breadcrumb {
+    background-color: transparent !important;
+}
+
+[data-asw-filter="light-contrast"] .breadcrumb-item,
+[data-asw-filter="light-contrast"] .breadcrumb-item a {
+    color: var(--light-text) !important;
+    font-weight: bold;
+}
+
+[data-asw-filter="light-contrast"] .logo-container img {
+    border: 2px solid var(--light-border) !important;
+}
+
+/* Dark contrast styles for main content */
+[data-asw-filter="dark-contrast"] .welcome-title {
+    color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .stats-number {
+    color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .stats-title {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .text-muted {
+    color: var(--dark-text) !important;
+    opacity: 0.7;
+}
+
+[data-asw-filter="dark-contrast"] .quick-access h2 {
+    color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .feature-title {
+    color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .feature-description {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table thead th {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+    border-color: var(--dark-border) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table td {
+    border-color: var(--dark-border) !important;
+}
+
+[data-asw-filter="dark-contrast"] .badge {
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .action-btn {
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .pagination .page-link {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border-color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .pagination .page-item.active .page-link {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+}
+
+[data-asw-filter="dark-contrast"] .form-control {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border-color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .form-select {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border-color: var(--dark-accent) !important;
+}
+
+/* Dark contrast styles for users list section */
+[data-asw-filter="dark-contrast"] .card-header {
+    background-color: var(--dark-secondary) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card-title {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card-tools .btn {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+    border: 1px solid var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] #searchInput,
+[data-asw-filter="dark-contrast"] #rolFilter {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] #searchButton {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+    border: 1px solid var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table caption {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table-hover tbody tr:hover {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+}
+
+/* Dark contrast styles for table - increased specificity */
+[data-asw-filter="dark-contrast"] .card .table-responsive .table {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card .table-responsive .table tbody tr {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card .table-responsive .table tbody tr:nth-of-type(odd) {
+    background-color: var(--dark-bg) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card .table-responsive .table tbody td {
+    background-color: inherit !important;
+    color: var(--dark-text) !important;
+    border-color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card .table-responsive .table thead {
+    background-color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card .table-responsive .table thead th {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+    border-color: var(--dark-border) !important;
+}
+
+[data-asw-filter="dark-contrast"] .card .table-responsive .table-hover tbody tr:hover {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+}
+
+/* Dark contrast styles for inventario, ventas y pedidos tables */
+[data-asw-filter="dark-contrast"] .products-section .table-responsive table {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .table-responsive tbody tr {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .table-responsive tbody tr:nth-of-type(odd) {
+    background-color: var(--dark-bg) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .table-responsive tbody td {
+    background-color: inherit !important;
+    color: var(--dark-text) !important;
+    border-color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .table-responsive thead {
+    background-color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .table-responsive thead th {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+    border-color: var(--dark-border) !important;
+    font-weight: bold;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .table-hover tbody tr:hover {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+}
+
+/* Estilos específicos para los controles de las tablas */
+[data-asw-filter="dark-contrast"] .filter-select,
+[data-asw-filter="dark-contrast"] .search-input {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .filter-select option {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-header {
+    background-color: var(--dark-secondary) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+    color: var(--dark-text) !important;
+}
+
+/* Dark contrast styles for all tables */
+[data-asw-filter="dark-contrast"] .table,
+[data-asw-filter="dark-contrast"] .table-responsive {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table th,
+[data-asw-filter="dark-contrast"] .table td {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table thead th {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+    font-weight: bold;
+    border: 1px solid var(--dark-border) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table tbody tr:nth-of-type(odd) {
+    background-color: var(--dark-bg) !important;
+}
+
+[data-asw-filter="dark-contrast"] .table tbody tr:hover {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+}
+
+[data-asw-filter="dark-contrast"] .table tbody tr:hover td {
+    color: #000000 !important;
+    background-color: var(--dark-accent) !important;
+}
+
+/* Dark contrast styles for inventory tables */
+[data-asw-filter="dark-contrast"] .products-section .product-grid {
+    background-color: var(--dark-bg) !important;
+    color: var(--dark-text) !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .product-card {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 166, 0, 0.2);
+    border-color: var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .product-title {
+    color: var(--dark-accent) !important;
+    font-weight: bold;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .product-specs {
+    background-color: var(--dark-bg) !important;
+    border: 1px solid var(--dark-accent) !important;
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .product-image {
+    border: 1px solid var(--dark-accent) !important;
+    background-color: var(--dark-bg) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section .product-category {
+    color: var(--dark-text) !important;
+    opacity: 0.8;
+}
+
+[data-asw-filter="dark-contrast"] .spec-label {
+    color: var(--dark-accent) !important;
+    font-weight: bold;
+}
+
+[data-asw-filter="dark-contrast"] .products-header h3 {
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .filters select {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .search-input {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .category-list {
+    background-color: var(--dark-secondary) !important;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .category-item {
+    color: var(--dark-text) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .category-item:hover,
+[data-asw-filter="dark-contrast"] .category-item.active {
+    background-color: var(--dark-accent) !important;
+    color: #000000 !important;
+}
+
+[data-asw-filter="dark-contrast"] .main-content-area {
+    background-color: var(--dark-bg) !important;
+    color: var(--dark-text) !important;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .products-section {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .product-card {
+    background-color: var(--dark-secondary) !important;
+    color: var(--dark-text) !important;
+    border: 1px solid var(--dark-accent) !important;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+[data-asw-filter="dark-contrast"] .product-card .product-info {
+    background-color: var(--dark-bg) !important;
+}
+
+[data-asw-filter="dark-contrast"] .product-card .product-actions {
+    background-color: var(--dark-bg) !important;
+    border-top: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .product-card .product-price {
+    color: var(--dark-accent) !important;
+}
+
+/* Dark contrast styles for fixed header */
+[data-asw-filter="dark-contrast"] .content-header {
+    background-color: var(--dark-bg) !important;
+    border-bottom: 1px solid var(--dark-accent) !important;
+}
+
+[data-asw-filter="dark-contrast"] .content-header .container-fluid {
+    background-color: var(--dark-bg) !important;
+}
+
+[data-asw-filter="dark-contrast"] .content-header .bg-white {
+    background-color: var(--dark-bg) !important;
+    color: var(--dark-text) !important;
+}
+
+[data-asw-filter="dark-contrast"] .content-header .breadcrumb-item,
+[data-asw-filter="dark-contrast"] .content-header .breadcrumb-item.active,
+[data-asw-filter="dark-contrast"] .content-header .breadcrumb-item a {
+    color: var(--dark-text) !important;
 }
 

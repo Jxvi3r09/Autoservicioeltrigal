@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="{% static 'myapp/css/usuarios.css' %}">
+  <link href="{% static 'myapp/css/custom.css' %}" rel="stylesheet" />
   
   <!-- jsPDF para generar PDFs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -441,5 +442,9 @@
     <button class="floating-help-btn" onclick="descargarManual()" title="Manual de Ayuda">
         <i class="fas fa-question-circle" id="ayuda"></i>
     </button>
+
+    <script src="{% static 'myapp/js/custom.js' %}"></script>
+    <script src="{% static 'myapp/js/sienna.js' %}"></script>
+
 </body>
 </html>
