@@ -29,6 +29,7 @@ from .models import Pedido, DetallePedido, Venta, DetalleVenta
 from decimal import Decimal
 import json
 from django.db.models import Q
+from django.contrib.auth import get_user_model
 
 from .models import Usuario
 
@@ -263,13 +264,21 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
     subject_template_name = "contrasena/recuperar_contrasena_asunto.txt"
     html_email_template_name = "contrasena/recuperar_contrasena_email.html"
     success_url = reverse_lazy('password_reset_done')
-    # form_class = CustomPasswordResetForm
 
     def form_valid(self, form):
+        email = form.cleaned_data['email']
+        
+        # Obtenemos el modelo de usuario personalizado
+        User = get_user_model()
+
+        # Validamos si el correo existe en la base de datos
+        if not User.objects.filter(email=email).exists():
+            messages.error(self.request, "Este correo electrónico no está registrado.")
+            return self.form_invalid(form)
+
         messages.success(self.request, "Se han enviado las instrucciones a tu correo.")
         return super().form_valid(form)
     
-
 class CustomPasswordResetDoneView(auth_views.PasswordResetDoneView):
     template_name = "contrasena/recuperar_contrasena_enviado.html"
 
