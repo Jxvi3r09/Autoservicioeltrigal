@@ -28,6 +28,7 @@ from django.db import transaction
 from .models import Pedido, DetallePedido, Venta, DetalleVenta
 from decimal import Decimal
 import json
+from django.db.models import Q
 
 from .models import Usuario
 
@@ -36,8 +37,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 def lista_usuarios(request):
-    # Mostrar solo usuarios activos
-    usuarios = Usuario.objects.all()  # Cambié aquí para obtener todos los usuarios, activos e inactivos
+    usuarios = Usuario.objects.filter(is_active=True)  # Solo los usuarios habilitados
 
     form = RegistroUsuarioForm()
     total_usuarios = usuarios.count()
@@ -300,13 +300,21 @@ def inicioinv(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            return redirect('inicioinv')  # O la vista donde va tras loguearse
+            # Validar si el usuario está habilitado
+            if user.is_active:
+                login(request, user)
+                return redirect('inicioinv')  # O la vista donde va tras loguearse
+            else:
+                messages.error(request, "Tu cuenta está inhabilitada. Contacta con un administrador.")
+                return render(request, "paginas/principal.html", {
+                    "mostrar_modal_login": True
+                })
         else:
             messages.error(request, "Usuario o contraseña incorrectos.")
             return render(request, "paginas/principal.html", {
                 "mostrar_modal_login": True
             })
+
     context = {
         'total_productos': Producto.objects.count(),
         'total_proveedores': Proveedor.objects.count(),
