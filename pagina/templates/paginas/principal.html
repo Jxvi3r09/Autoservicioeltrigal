@@ -95,8 +95,9 @@
                 class="btn mi-boton"
                 data-bs-toggle="modal"
                 data-bs-target="#loginModal"
+                title="accede al sistema administrativo"
               >
-                <i class="bi bi-person-circle me-1"></i> Acceder
+                <i class="bi bi-person-circle me-1"></i>Acceder
               </button>
             </li>
           </ul>
@@ -105,9 +106,8 @@
     </nav>
 
     <!-- CARRUSEL DE IMAGENES -->
-<section>
-  <div class="container my-5">
-    <div id="carouselExampleAutoplaying" class="carousel slide custom-carousel" data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true">
+<section class="carousel-section">
+  <div id="carouselExampleAutoplaying" class="carousel slide custom-carousel" data-bs-ride="carousel" data-bs-interval="6000" data-bs-wrap="true">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -118,42 +118,42 @@
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="{% static 'myapp/imagenes/publicida02.png' %}" class="d-block w-100" alt="...">
+          <img src="{% static 'myapp/imagenes/carrusel1.jpeg' %}" class="d-block w-100 carousel-zoom" alt="...">
           <div class="carousel-caption d-none d-md-block">
-            <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
+            <h1 id="textocarrusel" class="bg-opacity-50 p-3 rounded">Bienvenidos al sitio oficial del Autoservicio El Trigal</h1>
           </div>
         </div>
 
         <div class="carousel-item">
-          <img src="{% static 'myapp/imagenes/imagen2.jpeg' %}" class="d-block w-100" alt="...">
+          <img src="{% static 'myapp/imagenes/carrusel2.jpeg' %}" class="d-block w-100 carousel-zoom" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Productos de la mas alta calidad </h1>
           </div>
         </div>
 
         <div class="carousel-item">
-          <img src="{% static 'myapp/imagenes/imagen3.jpeg' %}" class="d-block w-100" alt="...">
+          <img src="{% static 'myapp/imagenes/carrusel3.jpeg' %}" class="d-block w-100 carousel-zoom" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Cada producto, una garantía. Cada visita, una experiencia de calidad.</h1>
           </div>
         </div>
 
         <div class="carousel-item">
-          <img src="{% static 'myapp/imagenes/imagen4.jpeg' %}" class="d-block w-100" alt="...">
+          <img src="{% static 'myapp/imagenes/carrusel4.jpeg' %}" class="d-block w-100 carousel-zoom" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Autoservicio con estándares altos y precios bajos</h1>
           </div>
         </div>
 
         <div class="carousel-item">
-          <img src="{% static 'myapp/imagenes/imagen6.jpeg' %}" class="d-block w-100" alt="...">
+          <img src="{% static 'myapp/imagenes/carrusel6.jpeg' %}" class="d-block w-100 carousel-zoom" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded">Lo bueno se nota y aquí, se encuentra.</h1>
           </div>
         </div>
 
         <div class="carousel-item">
-          <img src="{% static 'myapp/imagenes/imagen8.jpeg' %}" class="d-block w-100" alt="...">
+          <img src="{% static 'myapp/imagenes/carrusel7.jpeg' %}" class="d-block w-100 carousel-zoom" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h1 id="textocarrusel" class="bg-opacity-50 text-white p-3 rounded"></h1>
           </div>
@@ -170,8 +170,28 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
 </section>
+
+<style>
+.carousel-section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel-section .carousel {
+    width: 100%;
+}
+
+.carousel-inner {
+    width: 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    object-fit: cover;
+}
+</style>
 
 <!-- SECCION DE PROMOCION -->
 <section id="promocion" class="py-5">
@@ -285,48 +305,6 @@
     </section>
 
 
-
-<!-- SECCION DE PRODUCTOS -->
-    <section id="productos" class="productos">
-      <hr>
-        <h2> Nuestros Productos</h2>
-        <div class="contenedor-productos">
-            <div class="producto">
-                <img src="{% static 'myapp/imagenes/lacteo.jpg' %}" alt="productos 1">
-                <h3>Alimentos frescos</h3>
-                <p class="descripcion">Productos naturales como frutas, verduras, carnes y lácteos que se caracterizan por su frescura...</p>
-            </div>
-            <div class="producto">
-                <img src="{% static 'myapp/imagenes/cereal.jpg' %}" alt="Producto 2">
-                <h3>Alimentos envasados y procesados</h3>
-                <p class="descripcion">Productos listos para consumir o preparar, como pastas, enlatados, galletas...</p>
-            </div>
-            <div class="producto">
-                <img src="{% static 'myapp/imagenes/cerveza.jpg' %}" alt="Producto 3">
-                <h3>Bebidas</h3>
-                <p class="descripcion">Refresca tu día con nuestra variedad de bebidas: desde aguas y jugos naturales hasta gaseosas...</p>
-            </div>
-            <div class="producto">
-                <img src="{% static 'myapp/imagenes/limpieza.jpg' %}" alt="Producto 4">
-                <h3>Limpieza del hogar</h3>
-                <p class="descripcion">Todo lo que necesitas para mantener tu hogar impecable: detergentes, desinfectantes...</p>
-            </div>
-            <div class="producto">
-                <img src="{% static 'myapp/imagenes/lpersonal.jpg' %}" alt="Producto 5">
-                <h3>Cuidado personal y aseo</h3>
-                <p class="descripcion">Productos pensados para tu bienestar diario: shampoos, jabones, desodorantes...</p>
-            </div>
-            <div class="producto">
-                <img src="{% static 'myapp/imagenes/bateria.jpg' %}" alt="Producto 6">
-                <h3>Otros productos</h3>
-                <p class="descripcion">Encuentra artículos complementarios para tu día a día: útiles escolares, utensilios...</p>
-            </div>
-        </div>
-    </section>
-</body>
-</html>
-
-
 <!-- SECCION DE CONTACTO -->
 <section id="contacto">
   <div class="container">
@@ -343,10 +321,9 @@
             <center><h3 class="card-title mb-4 text-success">Información de Contacto</h3> </center>
             <ul class="list-unstyled">
               <ul class="list-unstyled" style="font-size: 1.2rem;">
-  <li class="mb-3">📍 Av. Principal #123, Ciudad, País</li>
-  <li class="mb-3">☎️ +123 456 7890</li>
-  <li class="mb-3">📧 info@example.com</li>
-  <li class="mb-3">🕒 Lunes a Domingo: 9:00 AM - 5:00 PM</li>
+  <li class="mb-3">📍 Tv. 3ª Cr 4, Topaga, Boyacá</li><br>
+  <li class="mb-3">☎️ +57 3138809829</li><br>
+  <li class="mb-3">📧 autoservicioeltrigal@gmail.com</li>
 </ul>
 
             </ul>
