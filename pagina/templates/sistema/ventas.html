@@ -359,6 +359,20 @@ canvas.drawingBuffer {
           document.body.classList.toggle('sidebar-open');
         });
       });
+
+            function descargarManual() {
+        const link = document.createElement('a');
+        link.href = "/media/manuales/manual_usuario.pdf";
+        link.download = 'manual_usuario.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
     </script>
+
+        <!-- Reemplazar el botón del sidebar por esto antes del cierre del body -->
+    <button class="floating-help-btn" onclick="descargarManual()" title="Manual de Ayuda">
+        <i class="fas fa-question-circle" id="ayuda"></i>
+    </button>
   </body>
 </html>

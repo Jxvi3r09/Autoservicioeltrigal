@@ -625,65 +625,92 @@ body:not(.sidebar-collapse) .edit-profile-icon {
 }
 
 
-        @media (max-width: 768px) {
-            .content-header {
-                margin-left: 0 !important;
-            }
-            
-            .content-wrapper {
-                margin-top: 60px;
-            }
-            
-            .stats-card {
-                margin-bottom: 15px;
-            }
-            
-            .action-buttons {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .action-btn {
-                width: 100%;
-            }
-            
-            .welcome-card {
-                padding: 15px;
-            }
-            
-            .welcome-title {
-                font-size: 1.5rem;
-            }
-            
-            .card-header .d-flex {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .table-responsive {
-                font-size: 0.9rem;
-            }
-            
-            .logo-container img {
-                max-width: 120px;
-            }
-        }
+@media (max-width: 768px) {
+    .content-header {
+        margin-left: 0 !important;
+    }
+    
+    .content-wrapper {
+        margin-top: 60px;
+    }
+    
+    .stats-card {
+        margin-bottom: 15px;
+    }
+    
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+    
+    .welcome-card {
+        padding: 15px;
+    }
+    
+    .welcome-title {
+        font-size: 1.5rem;
+    }
+    
+    .card-header .d-flex {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+    
+    .logo-container img {
+        max-width: 120px;
+    }
+}
 
-        @media (max-width: 576px) {
-            .stats-card {
-                margin: 10px 15px;
-            }
-            
-            .welcome-title {
-                font-size: 1.2rem;
-            }
-            
-            .breadcrumb {
-                display: none;
-            }
-            
-            .pagination {
-                font-size: 0.9rem;
-            }
-        }
+@media (max-width: 576px) {
+    .stats-card {
+        margin: 10px 15px;
+    }
+    
+    .welcome-title {
+        font-size: 1.2rem;
+    }
+    
+    .breadcrumb {
+        display: none;
+    }
+    
+    .pagination {
+        font-size: 0.9rem;
+    }
+}
+        
+.floating-help-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgb(243, 154, 49) !important;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    border: none;
+    z-index: 1000;
+    transition: transform 0.2s;
+}
+.floating-help-btn:hover {
+    transform: scale(1.1);
+}
+
+#ayuda:hover {
+  color: white !important;
+}

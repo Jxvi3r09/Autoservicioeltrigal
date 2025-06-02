@@ -336,5 +336,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="{% static 'myapp/js/proveedores_crud.js' %}"></script>
+
+
+    <!-- Reemplazar el botón del sidebar por esto antes del cierre del body -->
+    <button class="floating-help-btn" onclick="descargarManual()" title="Manual de Ayuda">
+        <i class="fas fa-question-circle" id="ayuda"></i>
+    </button>
   </body>
 </html>
