@@ -197,6 +197,18 @@
             <h5 class="card-title">Ventas Realizadas</h5>
         </div>
         <div class="card-body">
+            <!-- Agregar filtro de fecha -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                        <input type="date" id="fecha_filtro" class="form-control" onchange="filtrarVentas()">
+                        <button class="btn btn-outline-secondary" type="button" onclick="limpiarFiltro()">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -380,3 +392,24 @@ canvas.drawingBuffer {
     </button>
   </body>
 </html>
+
+<script>
+function filtrarVentas() {
+    const fecha = document.getElementById('fecha_filtro').value;
+    const filas = document.querySelectorAll('tbody tr');
+    
+    filas.forEach(fila => {
+        const fechaVenta = fila.querySelector('td:nth-child(2)').textContent;
+        if (fecha === '' || fechaVenta.includes(fecha.split('-').reverse().join('/'))) {
+            fila.style.display = '';
+        } else {
+            fila.style.display = 'none';
+        }
+    });
+}
+
+function limpiarFiltro() {
+    document.getElementById('fecha_filtro').value = '';
+    filtrarVentas();
+}
+</script>
