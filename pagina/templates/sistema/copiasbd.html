@@ -213,48 +213,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Respaldos automaticos -->
-                                {% block content %}
-                                <div class="col-md-6">
-                                    <div class="card auto-backup">
-                                        <div class="card-header">
-                                            <h3 class="card-title">
-                                                <i class="fas fa-calendar-alt me-2"></i>
-                                                Respaldos Automáticos
-                                            </h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <!-- Formulario -->
-                                            <form method="post">
-                                                {% csrf_token %}
-                                                <div class="mb-3">
-                                                    <label class="form-label">Frecuencia de respaldo</label>
-                                                    {{ form.frecuencia }}
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Hora del respaldo</label>
-                                                    {{ form.hora }}
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Cantidad de respaldos a mantener</label>
-                                                    {{ form.cantidad }}
-                                                </div>
-                                                <button type="submit" class="btn btn-warning w-100">
-                                                    <i class="fas fa-save me-2"></i> Guardar Configuración
-                                                </button>
-                                            </form>
-
-
-                                        </div>
-                                        <div class="card-footer bg-white">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fas fa-info-circle me-2 text-warning"></i>
-                                                <small>Próximo respaldo programado: <strong id="next-backup">{{ config.hora|default:"02:00" }}</strong></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endblock %}
 
                                 {% if form.errors %}
                                 <div class="alert alert-danger">
@@ -381,9 +339,9 @@
                                             </h3>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-3 col-sm-6">
-                                                    <div class="info-box bg-light">
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-3 col-sm-6 mx-2">
+                                                    <div class="info-box bg-light text-center">
                                                         <span class="info-box-icon bg-success"><i class="fas fa-database"></i></span>
                                                         <div class="info-box-content">
                                                             <span class="info-box-text">Total Respaldos</span>
@@ -391,30 +349,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 col-sm-6">
-                                                    <div class="info-box bg-light">
+                                                <div class="col-md-3 col-sm-6 mx-2">
+                                                    <div class="info-box bg-light text-center">
                                                         <span class="info-box-icon" style="background-color: var(--verde-logo);color: white"><i class="fas fa-hdd"></i></span>
                                                         <div class="info-box-content">
                                                             <span class="info-box-text">Espacio Utilizado</span>
                                                             <span class="info-box-number">{{ estadisticas.espacio_usado }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 col-sm-6">
-                                                    <div class="info-box bg-light">
-                                                        <span class="info-box-icon" style="background-color: var(--naranja-logo);color: white"><i class="fas fa-calendar-check"></i></span>
-                                                        <div class="info-box-content">
-                                                            <span class="info-box-text">Últ. Respaldo Auto.</span>
-                                                            <span class="info-box-number">{{ estadisticas.ultimo_auto }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 col-sm-6">
-                                                    <div class="info-box bg-light">
-                                                        <span class="info-box-icon bg-info"><i class="fas fa-cog"></i></span>
-                                                        <div class="info-box-content">
-                                                            <span class="info-box-text">Config. Actual</span>
-                                                            <span class="info-box-number">{{ estadisticas.config_actual }}</span>
                                                         </div>
                                                     </div>
                                                 </div>

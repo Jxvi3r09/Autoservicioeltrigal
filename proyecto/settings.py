@@ -93,7 +93,7 @@ DATABASES = {
     'PORT': '3306',  # Solo el número del puerto, sin IP
 }
 }
-# 
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

@@ -825,7 +825,7 @@ body:not(.sidebar-collapse) .user-avatar,
             padding: 8px 12px 8px 35px;
             border: 1px solid #474747;
             border-radius: 20px;
-            width: 60%;
+            min-width: 600px;
             transition: all 0.3s ease;
         }
 
@@ -1163,7 +1163,7 @@ body:not(.sidebar-collapse) .user-avatar,
         }
         
         .page-item.active {
-            background-color: var(--primary);
+            background-color: rgb(243, 154, 49) !important;;
             color: white;
         }
 
@@ -1565,13 +1565,12 @@ body.sidebar-collapse .controls-section {
 
 /* Fix search container styles */
 .search-container {
-    flex: 1;
     margin: 0;
 }
 
 /* Adjust button alignment */
 #addProductBtn {
-    margin-left: 0;
+    margin-right: 0;
     white-space: nowrap;
 }
 #editarproducto{
@@ -1928,4 +1927,12 @@ body,
     gap: 1rem;
     padding: 1rem;
     max-width: 100%;
+}
+
+#exportar{
+  background-color: rgb(34, 132, 33) !important;;
+  color: white !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
 }
