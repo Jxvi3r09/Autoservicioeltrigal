@@ -274,9 +274,11 @@
                     </li>
                     {% endfor %}
                     <li class="category-item add-category">
+                        {% if request.user.rol == 'administrador' %}
                         <button class="btn btn-primary w-100" id="addCategoryBtn">
                             <i class="fas fa-plus"></i> Agregar Categoría
                         </button>
+                        {% endif %}
                     </li>
                 </ul>
             </div>

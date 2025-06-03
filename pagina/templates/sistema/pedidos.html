@@ -186,6 +186,18 @@
             </div>
           </div>
           <div class="card-body">
+            <!-- Agregar filtro de fecha -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                  <input type="date" id="fecha_filtro" class="form-control" onchange="filtrarPedidos()">
+                  <button class="btn btn-outline-secondary" type="button" onclick="limpiarFiltro()">
+                    <i class="fas fa-times"></i> Limpiar
+                  </button>
+                </div>
+              </div>
+            </div>
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -301,6 +313,25 @@
         link.click();
         document.body.removeChild(link);
     }
+
+    function filtrarPedidos() {
+    const fecha = document.getElementById('fecha_filtro').value;
+    const filas = document.querySelectorAll('tbody tr');
+    
+    filas.forEach(fila => {
+        const fechaPedido = fila.querySelector('td:nth-child(2)').textContent;
+        if (fecha === '' || fechaPedido.includes(fecha.split('-').reverse().join('/'))) {
+            fila.style.display = '';
+        } else {
+            fila.style.display = 'none';
+        }
+    });
+}
+
+function limpiarFiltro() {
+    document.getElementById('fecha_filtro').value = '';
+    filtrarPedidos();
+}
 </script>
 
     <!-- Reemplazar el botón del sidebar por esto antes del cierre del body -->

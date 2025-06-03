@@ -269,10 +269,11 @@
                               data-bs-target="#editarProveedorModal{{ proveedor.id }}">
                               <i class="fas fa-edit"></i> Editar
                             </button>
-                            
+                                    {% if request.user.rol == 'administrador' %}
                             <button type="button" class="btn btn-sm btn-danger action-btn delete-provider" data-id="{{ proveedor.id }}">
                                 <i class="fas fa-trash-alt"></i> Eliminar
                             </button>
+                            {% endif %}
                             <form id="deleteForm{{ proveedor.id }}" action="{% url 'eliminar_proveedor' proveedor.id %}" method="post" style="display:none;">
                                 {% csrf_token %}
                             </form>

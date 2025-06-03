@@ -104,12 +104,23 @@ function iniciarEscaneo() {
     Quagga.onDetected(function(result) {
         const code = result.codeResult.code;
         
+        // Verificar si el código ya existe en la tabla
+        const existingProduct = document.querySelector(`#productos-container tr td:first-child[data-code="${code}"]`);
+        if (existingProduct) {
+            console.log("Producto ya escaneado");
+            return;
+        }
+
         if (code === lastResult) {
             countResults++;
             if (countResults >= 3) {
                 console.log("Código detectado:", code);
-                detenerEscaneo();
-                buscarProducto(code);
+                // Ya no detenemos el escaneo aquí
+                buscarProducto(code, (encontrado) => {
+                    if (encontrado) {
+                        detenerEscaneo(); // Solo detenemos si encontramos el producto
+                    }
+                });
                 lastResult = null;
                 countResults = 0;
             }
@@ -125,28 +136,44 @@ function detenerEscaneo() {
     document.getElementById('scanner-container').style.display = 'none';
 }
 
-function buscarProducto(code) {
+function buscarProducto(code, callback) {
     console.log("Buscando producto con código:", code);
     fetch(`/buscar-producto/${code}/`)
         .then(response => response.json())
         .then(data => {
             if (data.found) {
                 agregarProductoATabla(data, code);
+                callback(true); // Producto encontrado
+            } else {
+                callback(false); // Producto no encontrado
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error al buscar el producto');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al buscar el producto',
+                timer: 2000,
+                showConfirmButton: false
+            });
+            callback(false);
         });
 }
 
 function agregarProductoATabla(data, code) {
+    // Verificar si el producto ya existe
+    if (document.querySelector(`#productos-container tr td:first-child[data-code="${code}"]`)) {
+        console.log("Producto ya existe en la tabla");
+        return;
+    }
+
     const row = document.createElement('tr');
     row.className = 'producto-item';
     const precioUnitario = parseFloat(data.precio).toFixed(2);
     
     row.innerHTML = `
-        <td>${code}</td>
+        <td data-code="${code}">${code}</td>
         <td>${data.nombre}</td>
         <td>
             <input type="number" class="form-control cantidad-input" 
@@ -211,3 +238,44 @@ function calcularVueltas() {
         vueltasInput.style.fontWeight = 'normal';
     }
 }
+
+let productosEscaneados = new Set(); // Para mantener registro de productos ya escaneados
+
+function onScanSuccess(decodedText, decodedResult) {
+    if (!productosEscaneados.has(decodedText)) {
+        productosEscaneados.add(decodedText);
+        fetch(`/buscar_producto/${decodedText}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.found) {
+                    agregarProductoATabla(data);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Producto no encontrado',
+                        text: 'El código escaneado no corresponde a ningún producto'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    } else {
+        // Si el producto ya fue escaneado, incrementar cantidad en vez de agregar nuevo
+        incrementarCantidadProducto(decodedText);
+    }
+}
+
+// Eliminar o comentar las funciones que ya no se usarán
+// function incrementarCantidadProducto(codigo) { ... }
+// function actualizarSubtotal(fila) { ... }
+
+// Agregar limpieza de productos escaneados al cerrar o reiniciar
+function limpiarProductosEscaneados() {
+    productosEscaneados.clear();
+}
+
+// Modificar el evento de cierre del modal
+document.querySelector('#modalNuevaVenta').addEventListener('hidden.bs.modal', function () {
+    limpiarProductosEscaneados();
+});

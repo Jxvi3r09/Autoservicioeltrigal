@@ -816,10 +816,28 @@ def restaurar_backup(request, id):
         if not os.path.exists(sql_filepath):
             raise FileNotFoundError("Archivo de respaldo SQL no encontrado")
 
-        # Restaurar SQL
+        # Restaurar SQL - Corregido el comando MySQL
         db_settings = settings.DATABASES['default']
-        command = f"mysql -u {db_settings['USER']} {db_settings['NAME']} < {sql_filepath}"
-        subprocess.run(command, shell=True, check=True)
+        command = [
+            'mysql',
+            f'-u{db_settings["USER"]}',
+            f'-p{db_settings["PASSWORD"]}',
+            f'-h{db_settings.get("HOST", "localhost")}',
+            f'-P{db_settings.get("PORT", "3306")}',
+            db_settings['NAME']
+        ]
+        
+        with open(sql_filepath, 'r') as f:
+            process = subprocess.Popen(
+                command,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
+            stdout, stderr = process.communicate(f.read().encode())
+            
+            if process.returncode != 0:
+                raise Exception(f"Error en MySQL: {stderr.decode()}")
 
         # 2. Restaurar imágenes de perfil
         media_dir = os.path.join(settings.BASE_DIR, 'media')
