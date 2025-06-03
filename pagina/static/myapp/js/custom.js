@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
       function descargarManual() {
         const link = document.createElement('a');
-        link.href = "/media/manuales/manual_usuario.pdf";
-        link.download = 'manual_usuario.pdf';
+        link.href = "/media/manuales/Manual de usuario el trigal.pdf";
+        link.download = 'Manual de usuario el trigal.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
