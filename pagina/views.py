@@ -30,6 +30,9 @@ from decimal import Decimal
 import json
 from django.db.models import Q
 from django.contrib.auth import get_user_model
+import re
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 from .models import Usuario
 
@@ -268,7 +271,6 @@ def registro(request):
     return render(request, "paginas/registrate.html", {"form": form})
 
 
-# Recuperación de contraseña
 class CustomPasswordResetView(auth_views.PasswordResetView):
     template_name = "contrasena/recuperar_contrasena.html"
     email_template_name = "contrasena/recuperar_contrasena_email.html"
@@ -276,8 +278,67 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
     html_email_template_name = "contrasena/recuperar_contrasena_email.html"
     success_url = reverse_lazy('password_reset_done')
 
+    def validate_email_format(self, email):
+        """
+        Valida que el email tenga un formato completo y válido
+        """
+        # Patrón para validar email completo
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        
+        # Verificar si el email coincide con el patrón
+        if not re.match(email_pattern, email):
+            return False
+        
+        # Validación adicional usando el validador de Django
+        try:
+            validate_email(email)
+            return True
+        except ValidationError:
+            return False
+
+    def suggest_email_completion(self, email):
+        """
+        Sugiere una corrección para emails incompletos
+        """
+        if not email or '@' not in email:
+            return None
+            
+        parts = email.split('@')
+        if len(parts) != 2:
+            return None
+            
+        username, domain = parts
+        
+        # Dominios comunes para sugerir
+        common_domains = [
+            'gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com',
+            'hotmail.es', 'yahoo.es', 'gmail.es', 'live.com'
+        ]
+        
+        # Si no tiene punto, sugerir dominio completo
+        if '.' not in domain:
+            suggestion = next((d for d in common_domains if d.startswith(domain)), f"{domain}.com")
+            return f"{username}@{suggestion}"
+        
+        return None
+
     def form_valid(self, form):
         email = form.cleaned_data['email']
+        
+        # Validar formato del email
+        if not self.validate_email_format(email):
+            suggestion = self.suggest_email_completion(email)
+            if suggestion:
+                messages.error(
+                    self.request, 
+                    f"El formato del correo parece incompleto. ¿Quisiste decir '{suggestion}'?"
+                )
+            else:
+                messages.error(
+                    self.request, 
+                    "Por favor ingresa un correo electrónico válido (ejemplo: usuario@dominio.com)"
+                )
+            return self.form_invalid(form)
         
         # Obtenemos el modelo de usuario personalizado
         User = get_user_model()
@@ -289,6 +350,20 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
 
         messages.success(self.request, "Se han enviado las instrucciones a tu correo.")
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """
+        Agregar contexto adicional al template
+        """
+        context = super().get_context_data(**kwargs)
+        
+        # Si hay errores de validación, mantener el valor del email
+        if self.request.method == 'POST':
+            email_value = self.request.POST.get('email', '')
+            if email_value:
+                context['form'].initial = {'email': email_value}
+        
+        return context
     
 class CustomPasswordResetDoneView(auth_views.PasswordResetDoneView):
     template_name = "contrasena/recuperar_contrasena_enviado.html"

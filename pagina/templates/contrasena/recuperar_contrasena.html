@@ -5,7 +5,7 @@ Sitio{%endblock %} {% block auth_content %}
   <p class="text-muted">Ingresa tu email para recibir instrucciones</p>
 </div>
 
-<form method="post">
+<form method="post" id="passwordResetForm">
   {% csrf_token %}
   <div class="mb-3">
     <label for="id_email" class="form-label">Correo electrónico:</label>
@@ -15,9 +15,18 @@ Sitio{%endblock %} {% block auth_content %}
       class="form-control"
       required
       id="id_email"
+      placeholder="ejemplo@dominio.com"
+      value="{{ form.email.value|default:'' }}"
     />
+    <!-- Caja de sugerencia -->
+    <div id="emailSuggestion" class="suggestion-box d-none mt-2">
+      <i class="fas fa-lightbulb text-warning"></i>
+      ¿Quisiste decir <span class="suggestion-link" id="suggestionText"></span>?
+    </div>
+    <!-- Mensaje de error personalizado -->
+    <div id="emailError" class="text-danger mt-1" style="font-size: 0.875em;"></div>
   </div>
-  <button type="submit" class="btn btn-primary w-100">
+  <button type="submit" class="btn btn-primary w-100" id="submitBtn">
     Enviar Instrucciones
   </button>
 </form>
@@ -27,20 +36,218 @@ Sitio{%endblock %} {% block auth_content %}
     >Volver al inicio de sesión</a
   >
 </div>
+
 <style>
   .btn-primary {
     background-color: rgb(34, 132, 33) !important; /* verde ejemplo */
     border-color: #28a745 !important;
   }
+  
+  /* Estilos para la validación de email */
+  .suggestion-box {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.9em;
+    color: #856404;
+  }
+  
+  .suggestion-link {
+    color: #856404;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  
+  .suggestion-link:hover {
+    color: #533f03;
+    background-color: #f8f9fa;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  
+  .email-valid {
+    border-color: #28a745 !important;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+  }
+  
+  .email-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+  }
+  
+  .form-control:focus.email-valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  }
+  
+  .form-control:focus.email-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
 </style>
+
+<!-- Script de validación -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const emailInput = document.getElementById('id_email');
+    const suggestionBox = document.getElementById('emailSuggestion');
+    const suggestionText = document.getElementById('suggestionText');
+    const emailError = document.getElementById('emailError');
+    const form = document.getElementById('passwordResetForm');
+
+    // Dominios comunes para sugerencias
+    const commonDomains = [
+        'gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com',
+        'hotmail.es', 'yahoo.es', 'gmail.es', 'live.com'
+    ];
+
+    function validateEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
+
+    function getSuggestion(email) {
+        if (!email.includes('@')) return null;
+        
+        const parts = email.split('@');
+        if (parts.length !== 2) return null;
+        
+        const [username, domain] = parts;
+        
+        // Si no tiene punto después del @, sugerir dominios comunes
+        if (!domain.includes('.')) {
+            // Buscar dominio que comience con lo que escribió
+            const suggestion = commonDomains.find(d => d.startsWith(domain));
+            return suggestion ? `${username}@${suggestion}` : `${username}@${domain}.com`;
+        }
+        
+        // Verificar errores comunes como "gmail.co" en lugar de "gmail.com"
+        if (domain.includes('.')) {
+            const [domainName, extension] = domain.split('.');
+            if (extension.length < 2) {
+                const suggestion = commonDomains.find(d => d.startsWith(domainName));
+                return suggestion ? `${username}@${suggestion}` : null;
+            }
+        }
+        
+        return null;
+    }
+
+    function showSuggestion(suggestion) {
+        suggestionText.textContent = suggestion;
+        suggestionBox.classList.remove('d-none');
+        
+        suggestionText.onclick = function() {
+            emailInput.value = suggestion;
+            suggestionBox.classList.add('d-none');
+            emailInput.classList.remove('email-invalid');
+            emailInput.classList.add('email-valid');
+            emailError.textContent = '';
+            emailInput.focus();
+        };
+    }
+
+    function hideSuggestion() {
+        suggestionBox.classList.add('d-none');
+    }
+
+    function showError(message) {
+        emailError.textContent = message;
+    }
+
+    function clearError() {
+        emailError.textContent = '';
+    }
+
+    // Validación en tiempo real
+    emailInput.addEventListener('input', function() {
+        const email = this.value.trim();
+        
+        if (email === '') {
+            this.classList.remove('email-valid', 'email-invalid');
+            hideSuggestion();
+            clearError();
+            return;
+        }
+
+        if (validateEmail(email)) {
+            this.classList.remove('email-invalid');
+            this.classList.add('email-valid');
+            hideSuggestion();
+            clearError();
+        } else {
+            this.classList.remove('email-valid');
+            this.classList.add('email-invalid');
+            
+            const suggestion = getSuggestion(email);
+            if (suggestion && email.includes('@')) {
+                showSuggestion(suggestion);
+                clearError();
+            } else {
+                hideSuggestion();
+                if (email.includes('@')) {
+                    showError('Formato de correo incompleto');
+                } else {
+                    clearError();
+                }
+            }
+        }
+    });
+
+    // Validación al perder el foco
+    emailInput.addEventListener('blur', function() {
+        const email = this.value.trim();
+        if (email && !validateEmail(email)) {
+            showError('Por favor ingresa un correo electrónico válido');
+        }
+    });
+
+    // Validación al enviar el formulario
+    form.addEventListener('submit', function(e) {
+        const email = emailInput.value.trim();
+        
+        if (!email) {
+            e.preventDefault();
+            emailInput.focus();
+            showError('Este campo es obligatorio');
+            return;
+        }
+        
+        if (!validateEmail(email)) {
+            e.preventDefault();
+            emailInput.classList.add('email-invalid');
+            emailInput.focus();
+            
+            const suggestion = getSuggestion(email);
+            if (suggestion) {
+                showSuggestion(suggestion);
+                showError('El formato del correo parece incompleto');
+            } else {
+                showError('Por favor, ingresa un correo electrónico válido');
+            }
+        }
+    });
+});
+</script>
+
 {% if messages %}
     <script>
         {% for message in messages %}
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: '{{ message }}'
-            });
+            {% if message.tags == 'error' %}
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '{{ message }}'
+                });
+            {% else %}
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: '{{ message }}'
+                });
+            {% endif %}
         {% endfor %}
     </script>
 {% endif %}
