@@ -594,32 +594,46 @@ function detenerEscaneo() {
 }
 
 // Manejar el envío del formulario
-    document.getElementById('addProductForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        const modal = document.getElementById('addProductModal');
-        
-        fetch('{% url "guardar_producto" %}', {
+document.getElementById('addProductForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const modal = document.getElementById('addProductModal');
+    
+    try {
+        const response = await fetch('{% url "guardar_producto" %}', {
             method: 'POST',
             body: formData,
             headers: {
                 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                modal.style.display = 'none'; // Cerrar el modal
-                Swal.fire({
-                    title: 'Éxito',
-                    text: 'Producto guardado correctamente',
-                    icon: 'success'
-                }).then(() => {
-                    window.location.reload();
-                });
-            } 
         });
-    });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            modal.style.display = 'none';
+            await Swal.fire({
+                title: 'Éxito',
+                text: 'Producto guardado correctamente',
+                icon: 'success'
+            });
+            window.location.reload();
+        } else {
+            await Swal.fire({
+                title: 'Error',
+                text: 'Ya hay un producto registrado con este codigo de barras',
+                icon: 'error'
+            });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        await Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al procesar la solicitud',
+            icon: 'error'
+        });
+    }
+});
 
     // Función para iniciar el escaneo en el modal de edición
     function iniciarEscaneoEdicion() {
@@ -741,6 +755,10 @@ canvas.drawingBuffer {
     position: absolute;
     left: 0;
     top: 0;
+}
+
+.swal2-container {
+    z-index: 9999 !important;
 }
 </style>
     <!-- Reemplazar el botón de    <!-- Reemplazar el botón del sidebar por esto antes del cierre del body -->
