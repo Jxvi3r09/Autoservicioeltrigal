@@ -78,7 +78,7 @@ urlpatterns = [
     path('restablecer/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('restablecer/completado/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
     
-
+    # Productos
     path('productos/', views.productos, name='productos'),
     path('productos/crear/', views.crear_producto, name='crear_producto'),  # NUEVA
     path('productos/obtener/<int:id>/', views.obtener_producto, name='obtener_producto'),

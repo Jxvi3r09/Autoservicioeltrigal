@@ -33,7 +33,7 @@ from django.contrib.auth import get_user_model
 import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-
+from .models import Categoria
 from .models import Usuario
 
 #mostrar todos los usuarios
@@ -206,9 +206,9 @@ def inventario(request):
 
 def agregar_categoria(request):
     if request.method == 'POST':
-        try:
-            nombre = request.POST.get('nombre')
-            categoria = Categoria.objects.create(nombre=nombre)
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            categoria = form.save()
             return JsonResponse({
                 'success': True,
                 'categoria': {
@@ -216,8 +216,11 @@ def agregar_categoria(request):
                     'nombre': categoria.nombre
                 }
             })
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
+        else:
+            # Extrae el primer error (puedes personalizar esto si lo deseas)
+            error = next(iter(form.errors.values()))[0]
+            return JsonResponse({'success': False, 'error': error})
+    
     return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
 def administrador(request):
@@ -584,12 +587,12 @@ def listar_categorias(request):
         'form': form,
     })
 
-def registrar_categoria(request):
-    if request.method == 'POST':
-        form = CategoriaForm(request.POST)
-        if form.is_valid():
-            form.save()
-    return redirect('listar_categorias')  
+# def registrar_categoria(request):
+#     if request.method == 'POST':
+#         form = CategoriaForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     return redirect('listar_categorias')  
 
 
 def categoria_detalle(request, categoria_id):
@@ -634,15 +637,15 @@ from .models import Categoria
 
 def editar_categoria(request, categoria_id):
     if request.method == 'POST':
-        try:
-            categoria = get_object_or_404(Categoria, id=categoria_id)
-            categoria.nombre = request.POST['nombre']
-            categoria.descripcion = request.POST.get('descripcion', '')
-            categoria.save()
-            return JsonResponse({'success': True})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+        nombre = request.POST.get('nombre')
+        if Categoria.objects.exclude(id=categoria_id).filter(nombre__iexact=nombre).exists():
+            return JsonResponse({'success': False, 'error': 'Ya existe una categoría con ese nombre'})
+        
+        # Continuar con la edición si no existe duplicado
+        categoria = Categoria.objects.get(id=categoria_id)
+        categoria.nombre = nombre
+        categoria.save()
+        return JsonResponse({'success': True})
 
 def eliminar_categoria(request, categoria_id):
     if request.method == 'DELETE':
@@ -661,19 +664,19 @@ from .models import Categoria
 def modal_registro_categoria(request):
     return render(request, 'sistema/modal_registro_categoria.html')
 
-def guardar_categoria(request):
-    if request.method == 'POST':
-        try:
-            categoria = Categoria.objects.create(
-                nombre=request.POST['nombre'],
-                descripcion=request.POST.get('descripcion', '')
-            )
-            messages.success(request, 'Categoría guardada correctamente')
-            return redirect('inventario')
-        except Exception as e:
-            messages.error(request, f'Error al guardar la categoría: {str(e)}')
-            return redirect('modal_registro_categoria')
-    return redirect('modal_registro_categoria')
+# def guardar_categoria(request):
+#     if request.method == 'POST':
+#         try:
+#             categoria = Categoria.objects.create(
+#                 nombre=request.POST['nombre'],
+#                 descripcion=request.POST.get('descripcion', '')
+#             )
+#             messages.success(request, 'Categoría guardada correctamente')
+#             return redirect('inventario')
+#         except Exception as e:
+#             messages.error(request, f'Error al guardar la categoría: {str(e)}')
+#             return redirect('modal_registro_categoria')
+#     return redirect('modal_registro_categoria')
 
 from django.http import JsonResponse
 from .models import Producto

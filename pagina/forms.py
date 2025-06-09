@@ -148,11 +148,18 @@ class CategoriaForm(forms.ModelForm):
         model = Categoria
         fields = ['nombre']
         widgets = {
-            'nombre': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Nombre de la categoría'
-            }),
-        }
+    'nombre': forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Nombre de la categoría',
+        'required': 'required'  # Esto lo hace obligatorio en HTML
+    }),
+}
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data['nombre'].strip().lower()  # Ignora mayúsculas/minúsculas y espacios
+        if Categoria.objects.filter(nombre__iexact=nombre).exists():
+            raise forms.ValidationError("Ya existe una categoría con ese nombre.")
+        return nombre
 
 
 class ProductoForm(forms.ModelForm):

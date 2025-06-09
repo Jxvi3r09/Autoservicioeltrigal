@@ -270,7 +270,7 @@
                         <div>{{ categoria.nombre }} <span>({{ categoria.producto_set.count }})</span></div>
                         <div class="category-actions">
                             {% if request.user.rol == 'administrador' %}
-                            <button class="btn-icon" onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
+                            <button onclick="editarCategoria({{ categoria.id }}, '{{ categoria.nombre }}')">✏️</button>
                             <button class="btn-icon" onclick="eliminarCategoria({{ categoria.id }})">🗑️</button>
                         </div>
                         {% endif %}
@@ -443,7 +443,8 @@
                     <input type="text" name="nombre" id="edit_categoria_nombre" class="form-input" required>
                 </div>
                 <div class="form-actions">
-                    <button type="button" class="btn btn-cancel" onclick="closeEditModal()">Cancelar</button>
+                    <button type="button" class="btn btn-cancel" onclick="closeEditProductModal()">Cancelar</button>
+
                     <button type="submit" class="btn" id="btnguardar">Guardar Cambios</button>
                 </div>
             </form>
