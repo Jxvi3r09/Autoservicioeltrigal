@@ -129,14 +129,6 @@ class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
         fields = ['nit_proveedor', 'empresa', 'correo', 'telefono', 'direccion']
-        widgets = {
-            'nit_proveedor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'NIT del proveedor'}),
-            'empresa': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de la empresa'}),
-            'correo': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo electrónico'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono de contacto'}),
-            'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dirección'}),
-        }
-
 
 
 # inventario/forms.py

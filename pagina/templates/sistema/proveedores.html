@@ -210,8 +210,9 @@
                     Listado de proveedores
                   </h3>
                   <div class="d-flex" style="gap: 15px;">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registroProveedorModal">
-                      <i class="fas fa-truck me-1"></i> Nuevo Proveedor
+                    <!-- Botón que abre el modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProveedor">
+                        <i class="fas fa-truck"></i> Agregar Proveedor
                     </button>
                     {% if request.user.rol == 'administrador' %}
                     <button class="btn btn-primary" id="btnGenerarPDF">

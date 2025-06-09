@@ -92,10 +92,27 @@ class Usuario(AbstractUser):
 
 
 class Proveedor(models.Model):
-    nit_proveedor = models.CharField(max_length=20, unique=True)
+    nit_proveedor = models.CharField(
+        max_length=11,
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{9,11}$',
+                message='El NIT debe tener entre 9 y 11 dígitos'
+            )
+        ]
+    )
     empresa = models.CharField(max_length=100)
-    correo = models.EmailField()
-    telefono = models.CharField(max_length=20)
+    correo = models.EmailField(unique=True)
+    telefono = models.CharField(
+        max_length=10,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{10}$',
+                message='El teléfono debe tener exactamente 10 dígitos'
+            )
+        ]
+    )
     direccion = models.CharField(max_length=255)
 
     fecha_registro = models.DateTimeField(auto_now_add=True)
