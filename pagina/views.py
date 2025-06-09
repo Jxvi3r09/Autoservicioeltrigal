@@ -39,6 +39,8 @@ from .models import Usuario
 #mostrar todos los usuarios
 from django.utils import timezone
 from datetime import timedelta
+from datetime import datetime
+from django.utils.timezone import make_aware
 
 
 # ERRROES
@@ -1128,11 +1130,22 @@ def buscar_producto(request, codigo):
 
 @login_required
 def ventas(request):
-    ventas_list = Venta.objects.all().order_by('-fecha_venta')
+    fecha_filtro = request.GET.get('fecha')  # Se recibe desde el input HTML
+    if fecha_filtro:
+        fecha = datetime.strptime(fecha_filtro, "%Y-%m-%d").date()
+    else:
+        fecha = datetime.now().date()  # Por defecto, la fecha de hoy
+
+    inicio_dia = make_aware(datetime.combine(fecha, datetime.min.time()))
+    fin_dia = make_aware(datetime.combine(fecha, datetime.max.time()))
+
+    ventas_list = Venta.objects.filter(fecha_venta__range=(inicio_dia, fin_dia)).order_by('-fecha_venta')
     productos = Producto.objects.all()
+
     return render(request, 'sistema/ventas.html', {
         'ventas': ventas_list,
         'productos': productos,
+        'fecha_filtro': fecha_filtro or fecha.strftime("%Y-%m-%d")
     })
 
 @login_required
