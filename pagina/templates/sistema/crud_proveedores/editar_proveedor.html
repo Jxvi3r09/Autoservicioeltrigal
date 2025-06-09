@@ -22,7 +22,7 @@
           aria-label="Close"
         ></button>
       </div>
-      <form action="{% url 'editar_proveedor' proveedor.id %}" method="post">
+      <form action="{% url 'editar_proveedor' proveedor.id %}" method="post" id="editarProveedorForm{{ proveedor.id }}">
         {% csrf_token %}
         <div class="modal-body">
           <div class="mb-3">
@@ -31,9 +31,12 @@
               type="text"
               class="form-control"
               name="nit_proveedor"
+              id="edit_nit_{{ proveedor.id }}"
               value="{{ proveedor.nit_proveedor }}"
-              required
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+              maxlength="11"
             />
+            <span class="error-message" id="edit-nit-error-{{ proveedor.id }}"></span>
           </div>
           <div class="mb-3">
             <label for="empresa" class="form-label">Empresa</label>
@@ -58,12 +61,15 @@
           <div class="mb-3">
             <label for="telefono" class="form-label">Teléfono</label>
             <input
-              type="tel"
+              type="text"
               class="form-control"
               name="telefono"
+              id="edit_telefono_{{ proveedor.id }}"
               value="{{ proveedor.telefono }}"
-              required
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+              maxlength="10"
             />
+            <span class="error-message" id="edit-telefono-error-{{ proveedor.id }}"></span>
           </div>
           <div class="mb-3">
             <label for="direccion" class="form-label">Dirección</label>
@@ -92,3 +98,40 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all edit forms
+    document.querySelectorAll('[id^="editarProveedorForm"]').forEach(form => {
+        const proveedorId = form.id.replace('editarProveedorForm', '');
+        const nitInput = document.getElementById(`edit_nit_${proveedorId}`);
+        const telefonoInput = document.getElementById(`edit_telefono_${proveedorId}`);
+
+        // Prevent paste of non-numeric values
+        [nitInput, telefonoInput].forEach(input => {
+            if (!input) return;
+
+            input.addEventListener('paste', function(e) {
+                let pastedText = (e.clipboardData || window.clipboardData).getData('text');
+                if (!/^\d+$/.test(pastedText)) {
+                    e.preventDefault();
+                }
+            });
+
+            // Clean non-numeric values
+            input.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^\d]/g, '');
+            });
+        });
+    });
+});
+</script>
+
+<style>
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    display: none;
+    margin-top: 5px;
+}
+</style>

@@ -14,11 +14,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import CopiasBDView, GenerarBackupView
 from .views import configurar_respaldo
-from django.conf.urls import handler404, handler500
-from . import views
 
-handler404 = 'miapp.views.custom_404'
-handler500 = 'miapp.views.custom_500'
 
 
 urlpatterns = [

@@ -1,15 +1,16 @@
-<!-- Modal Registrar Proveedor -->
-<div
-  class="modal fade"
-  id="registroProveedorModal"
-  tabindex="-1"
-  aria-labelledby="registroProveedorModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
+
+
+<!-- Modal Bootstrap -->
+<div class="modal fade" id="modalProveedor" tabindex="-1" aria-labelledby="modalProveedorLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Registro de Nuevo Proveedor</h3>
+            <div class="modal-header bg-warning text-white">
+        <h5
+          class="modal-title"
+          id="editarProveedorModalLabel{{ proveedor.id }}"
+        >
+          <i class="fas fa-truck"></i> Agregar Proveedor
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -17,165 +18,129 @@
           aria-label="Close"
         ></button>
       </div>
-      <form
-        id="formRegistroProveedor"
-        method="post"
-        action="{% url 'agregar_proveedor' %}"
-        autocomplete="off"
-      >
+      <form id="formProveedor" method="post" action="{% url 'agregar_proveedor' %}">
         {% csrf_token %}
-        <div class="form-group">
-          <label class="form-label">NIT Proveedor</label>
-          <input
-            type="text"
-            name="nit_proveedor"
-            id="input_nit"
-            class="form-input"
-            required
-          />
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="id_nit_proveedor" class="form-label">NIT Proveedor</label>
+            <input type="text" name="nit_proveedor" id="id_nit_proveedor" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="11">
+            <div class="text-danger" id="error_nit_proveedor"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_empresa" class="form-label">Empresa</label>
+            <input type="text" name="empresa" id="id_empresa" class="form-control">
+            <div class="text-danger" id="error_empresa"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_correo" class="form-label">Correo</label>
+            <input type="email" name="correo" id="id_correo" class="form-control">
+            <div class="text-danger" id="error_correo"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_telefono" class="form-label">Teléfono</label>
+            <input type="text" name="telefono" id="id_telefono" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10">
+            <div class="text-danger" id="error_telefono"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_direccion" class="form-label">Dirección</label>
+            <input type="text" name="direccion" id="id_direccion" class="form-control">
+            <div class="text-danger" id="error_direccion"></div>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Empresa</label>
-          <input
-            type="text"
-            name="empresa"
-            id="input_empresa"
-            class="form-input"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Correo</label>
-          <input
-            type="email"
-            name="correo"
-            id="input_correo"
-            class="form-input"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Teléfono</label>
-          <input
-            type="text"
-            name="telefono"
-            id="input_telefono"
-            class="form-input"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Dirección</label>
-          <input
-            type="text"
-            name="direccion"
-            id="input_direccion"
-            class="form-input"
-            required
-          />
-        </div>
-        <div class="form-actions">
-          <button
-            type="button"
-            class="btn btn-cancel"
-            data-bs-dismiss="modal"
-            id="btn_cancelar"
-          >
-            Cancelar
-          </button>
-          <button type="submit" class="btn">
-            Guardar Proveedor
-          </button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<style>
-.modal-content {
-    background-color: #fff;
-    border-radius: 8px;
-}
-
-.modal-header {
-    background-color: #2e7d32;
-    color: white;
-    border-bottom: 3px solid #ff9800;
-}
-
-.modal-header .btn-close {
-    color: white;
-    opacity: 1;
-}
-
-.form-group {
-    margin: 15px 20px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: 500;
-}
-
-.form-input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #fff;
-}
-
-.form-input:focus {
-    border-color: #2e7d32;
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25);
-}
-
-.form-actions {
-    padding: 15px 20px;
-    border-top: 2px solid #ff9800;
-    text-align: right;
-    background-color: #f8f9fa;
-}
-
-.btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-left: 10px;
-}
-
-.btn-cancel {
-    background-color: #dc3545 !important;
-    color: white;
-}
-
-.btn-cancel:hover {
-    background-color: #a11b28 !important;
-    color: white;
-}
-
-.btn {
-    background-color: #2e7d32;
-    color: white;
-}
-.btn:hover{
-    background-color: #1b5e20;
-    color: white;
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('registroProveedorModal');
-    modal.addEventListener('shown.bs.modal', function () {
-        document.getElementById('input_nit').focus();
+    const form = document.getElementById('formProveedor');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validación de campos
+        if (!validarFormulario()) {
+            return false;
+        }
+
+        // Usar FormData del formulario directamente
+        const formData = new FormData(this);
+
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: 'Proveedor registrado correctamente'
+                }).then(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('modalProveedor'));
+                    modal.hide();
+                    window.location.reload();
+                });
+            } else {
+                const errorMsg = data.errors ? Object.values(data.errors).join('\n') : 'Error al guardar el proveedor';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: errorMsg
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al procesar la solicitud'
+            });
+        });
     });
+
+    function validarFormulario() {
+        let isValid = true;
+        const campos = ['nit_proveedor', 'empresa', 'correo', 'telefono', 'direccion'];
+        
+        campos.forEach(campo => {
+            const input = document.getElementById(`id_${campo}`);
+            const error = document.getElementById(`error_${campo}`);
+            
+            if (!input.value.trim()) {
+                error.textContent = 'Este campo es obligatorio';
+                error.style.display = 'block';
+                isValid = false;
+            } else {
+                error.style.display = 'none';
+            }
+        });
+
+        // Validar formato de correo
+        const correo = document.getElementById('id_correo').value;
+        if (!correo.endsWith('@gmail.com')) {
+            document.getElementById('error_correo').textContent = 'Debe ser un correo de Gmail';
+            document.getElementById('error_correo').style.display = 'block';
+            isValid = false;
+        }
+
+        return isValid;
+    }
 });
 </script>

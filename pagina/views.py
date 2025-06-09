@@ -231,9 +231,6 @@ def administrador(request):
 def proveedores(request):
     return render(request, "sistema/proveedores.html")
 
-def agregar_proveedor(request):
-    return render(request, "sistema/agregar_proveedor.html")
-
 def modal_inicio(request):
     return render(request, "paginas/modal_inicio.html")
 
@@ -512,11 +509,29 @@ def agregar_proveedor(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('listar_proveedores')  
-    else:
-        form = ProveedorForm()
-    return render(request, 'sistema/proveedores.html', {'form': form})
+            try:
+                proveedor = form.save()
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Proveedor registrado correctamente'
+                })
+            except Exception as e:
+                print('Error al guardar:', str(e))  # Para debugging
+                return JsonResponse({
+                    'success': False,
+                    'errors': {'general': str(e)}
+                }, status=400)
+        else:
+            print('Errores de validación:', form.errors)  # Para debugging
+            return JsonResponse({
+                'success': False,
+                'errors': form.errors
+            }, status=400)
+    
+    return JsonResponse({
+        'success': False,
+        'errors': {'general': 'Método no permitido'}
+    }, status=405)
 
 
 def editar_proveedor(request, id):

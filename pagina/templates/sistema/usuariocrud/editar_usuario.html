@@ -29,8 +29,17 @@
               <label class="form-label fw-semibold">Número de Documento</label>
               <div class="input-group">
                 <span><i class="bi bi-hash"></i></span>
-                <input type="text" name="numero_documento" class="form-control" value="{{ usuario.numero_documento }}">
+                <input 
+                  type="text" 
+                  name="numero_documento" 
+                  class="form-control" 
+                  value="{{ usuario.numero_documento }}"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  maxlength="20"
+                  id="numero_documento_{{ usuario.id }}"
+                >
               </div>
+              <div class="text-danger small" id="error_documento_{{ usuario.id }}"></div>
             </div>
           </div>
           
@@ -92,3 +101,29 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const documentoInput = document.getElementById('numero_documento_{{ usuario.id }}');
+    
+    // Prevenir pegar texto no numérico
+    documentoInput.addEventListener('paste', function(e) {
+        let pastedText = (e.clipboardData || window.clipboardData).getData('text');
+        if (!/^\d+$/.test(pastedText)) {
+            e.preventDefault();
+        }
+    });
+
+    // Limpiar caracteres no numéricos
+    documentoInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^\d]/g, '');
+        
+        const errorDiv = document.getElementById('error_documento_{{ usuario.id }}');
+        if (this.value && !/^\d+$/.test(this.value)) {
+            errorDiv.textContent = 'Solo se permiten números';
+        } else {
+            errorDiv.textContent = '';
+        }
+    });
+});
+</script>
