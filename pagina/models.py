@@ -33,12 +33,14 @@ class Usuario(AbstractUser):
     unique=True,
     validators=[
         RegexValidator(
-            regex='^[0-9]+$',
-            message='El número de documento solo puede contener dígitos'
+            regex=r'^\d+$',
+            message='El número de documento solo puede contener dígitos.'
         )
     ],
-    default='0000000000'  # Valor temporal por defecto
-    )
+    default='0000000000',
+    blank=False,
+    null=False
+)
     
     rol = models.CharField(
         max_length=20,

@@ -11,6 +11,7 @@ import zipfile
 import shutil
 from .models import Backup
 from .forms import RegistroUsuarioForm  # Asegúrate de importar el formulario
+from.forms import ProductoForm 
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView

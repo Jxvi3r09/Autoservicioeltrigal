@@ -39,12 +39,23 @@ class RegistroUsuarioForm(UserCreationForm):
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     
+
     numero_documento = forms.CharField(
         max_length=20,
         label="Número de Documento",
-        widget=forms.TextInput(attrs={'autocomplete': 'off'}),
+        widget=forms.TextInput(attrs={
+            'autocomplete': 'off',
+            'placeholder': 'Ingrese solo números',
+            'oninput': 'this.value = this.value.replace(/[^0-9]/g, "")'
+        }),
         help_text="Solo números, sin puntos ni espacios"
     )
+
+    def clean_numero_documento(self):
+        data = self.cleaned_data['numero_documento']
+        if not data.isdigit():
+            raise forms.ValidationError("El número de documento solo puede contener números.")
+        return data
     
     rol = forms.ChoiceField(
         choices=Usuario.ROLES,
