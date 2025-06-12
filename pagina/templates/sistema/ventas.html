@@ -29,6 +29,9 @@
 
   <!-- Agregar QuaggaJS antes de cerrar el head -->
   <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+  <!-- Agregar jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
   <link href="{% static 'myapp/css/custom.css' %}" rel="stylesheet" />
 </head>
@@ -192,75 +195,69 @@
                 </div>
             </div>
 
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Ventas Realizadas</h5>
-    </div>
-    <div class="card-body">
-        <!-- Agregar filtro de fecha -->
-        <form method="get" class="row mb-3">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                    <input 
-                        type="date" 
-                        name="fecha" 
-                        id="fecha_filtro" 
-                        class="form-control" 
-                        value="{{ fecha_filtro }}" 
-                        onchange="this.form.submit()"
-                    >
-                    <button 
-                        class="btn btn-outline-secondary" 
-                        type="button" 
-                        onclick="window.location.href='{% url 'ventas' %}'"
-                    >
-                        <i class="fas fa-times"></i> Limpiar
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Ventas Realizadas</h5>
+        </div>
+        <div class="card-body">
+            <!-- Barra de herramientas -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                        <input type="date" id="fecha_filtro" class="form-control" onchange="filtrarVentas()">
+                        <button class="btn btn-outline-secondary" type="button" onclick="limpiarFiltro()">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button type="button" class="btn btn-success" onclick="exportarPDF()">
+                        <i class="fas fa-file-pdf"></i> Exportar PDF
                     </button>
                 </div>
             </div>
-        </form>
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Nro. Venta</th>
-                    <th>Fecha</th>
-                    <th>Vendedor</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for venta in ventas %}
-                <tr>
-                    <td>#{{ venta.id }}</td>
-                    <td>{{ venta.fecha_venta|date:"d/m/Y H:i" }}</td>
-                    <td>{{ venta.vendedor.get_full_name }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a href="{% url 'detalle_venta' venta.id %}" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye"></i> Ver Detalle
-                            </a>
-                            <form method="POST" action="{% url 'eliminar_venta' venta.id %}" style="display: inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm" 
-                                        onclick="return confirm('¿Está seguro de eliminar esta venta?')">
-                                    <i class="fas fa-trash"></i> Eliminar
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center">No hay ventas registradas</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nro. Venta</th>
+                        <th>Fecha</th>
+                        <th>Vendedor</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                    <tr>
+                        <td>#{{ venta.id }}</td>
+                        <td>{{ venta.fecha_venta|date:"d/m/Y H:i" }}</td>
+                        <td>{{ venta.vendedor.get_full_name }}</td>
+                        <td>${{ venta.total }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'detalle_venta' venta.id %}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> Ver Detalle
+                                </a>
+                                <form method="POST" action="{% url 'eliminar_venta' venta.id %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" 
+                                            onclick="return confirm('¿Está seguro de eliminar esta venta?')">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No hay ventas registradas</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-
         </div>
     </section>
 </div>
@@ -378,26 +375,26 @@ canvas.drawingBuffer {
 </div>
 
     <!-- Antes de cerrar el body -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Control del sidebar
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        
-        sidebarToggle.addEventListener('click', function() {
-          document.body.classList.toggle('sidebar-collapse');
-          document.body.classList.toggle('sidebar-open');
-        });
-      });
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            // Control del sidebar
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            sidebarToggle.addEventListener('click', function() {
+              document.body.classList.toggle('sidebar-collapse');
+              document.body.classList.toggle('sidebar-open');
+            });
+          });
 
-            function descargarManual() {
-        const link = document.createElement('a');
-        link.href = "/media/manuales/manual_usuario.pdf";
-        link.download = 'manual_usuario.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-    </script>
+                function descargarManual() {
+            const link = document.createElement('a');
+            link.href = "/media/manuales/manual_usuario.pdf";
+            link.download = 'manual_usuario.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        </script>
 
         <!-- Reemplazar el botón del sidebar por esto antes del cierre del body -->
     <button class="floating-help-btn" onclick="descargarManual()" title="Manual de Ayuda">
@@ -424,5 +421,47 @@ function filtrarVentas() {
 function limpiarFiltro() {
     document.getElementById('fecha_filtro').value = '';
     filtrarVentas();
+}
+
+function exportarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+   
+    doc.setFontSize(18);
+    doc.text('Reporte de Ventas', 14, 20);
+
+  
+    let totalVentas = 0;
+    document.querySelectorAll('tbody tr:not([style*="display: none"])').forEach(tr => {
+        const totalText = tr.querySelector('td:nth-child(4)').textContent;
+        const monto = parseInt(totalText.replace('$', '').replace(/\./g, ''));
+        if (!isNaN(monto)) {
+            totalVentas += monto;
+        }
+    });
+
+    doc.autoTable({
+        html: '.table',
+        startY: 30,
+        theme: 'grid',
+        headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+        styles: { fontSize: 8 },
+        columns: [
+            { header: 'Nro. Venta', dataKey: 0 },
+            { header: 'Fecha', dataKey: 1 },
+            { header: 'Vendedor', dataKey: 2 },
+            { header: 'Total', dataKey: 3 }
+        ],
+        didDrawPage: function(data) {
+            // Agregar el total general al final de la tabla
+            let finalY = data.cursor.y + 10;
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text(`Total General: $${totalVentas.toLocaleString('es-CL')}`, 14, finalY);
+        }
+    });
+
+    doc.save('reporte-ventas.pdf');
 }
 </script>
