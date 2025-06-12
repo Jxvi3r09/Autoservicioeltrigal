@@ -1146,22 +1146,30 @@ def buscar_producto(request, codigo):
 
 @login_required
 def ventas(request):
-    fecha_filtro = request.GET.get('fecha')  # Se recibe desde el input HTML
+    fecha_filtro = request.GET.get('fecha')
+
     if fecha_filtro:
-        fecha = datetime.strptime(fecha_filtro, "%Y-%m-%d").date()
+        try:
+            fecha = datetime.strptime(fecha_filtro, "%Y-%m-%d").date()
+            inicio_dia = make_aware(datetime.combine(fecha, datetime.min.time()))
+            fin_dia = make_aware(datetime.combine(fecha, datetime.max.time()))
+            ventas_list = Venta.objects.filter(fecha_venta__range=(inicio_dia, fin_dia))
+        except ValueError:
+            # Si hay un error con la fecha, mostrar todas las ventas
+            ventas_list = Venta.objects.all()
+            fecha_filtro = None
     else:
-        fecha = datetime.now().date()  # Por defecto, la fecha de hoy
+        # Si no hay filtro, mostrar todas las ventas
+        ventas_list = Venta.objects.all()
+        fecha_filtro = None
 
-    inicio_dia = make_aware(datetime.combine(fecha, datetime.min.time()))
-    fin_dia = make_aware(datetime.combine(fecha, datetime.max.time()))
-
-    ventas_list = Venta.objects.filter(fecha_venta__range=(inicio_dia, fin_dia)).order_by('-fecha_venta')
+    ventas_list = ventas_list.order_by('-fecha_venta')
     productos = Producto.objects.all()
 
     return render(request, 'sistema/ventas.html', {
         'ventas': ventas_list,
         'productos': productos,
-        'fecha_filtro': fecha_filtro or fecha.strftime("%Y-%m-%d")
+        'fecha_filtro': fecha_filtro
     })
 
 @login_required
