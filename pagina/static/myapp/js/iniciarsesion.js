@@ -68,27 +68,50 @@ window.addEventListener("load", function () {
     }
   
     // ========== MOSTRAR / OCULTAR CONTRASEÑA ==========
-    const passwordToggle = document.querySelector("#loginModal .password-toggle");
-    if (passwordToggle) {
-      passwordToggle.addEventListener("click", function () {
-        const passwordInput = document.getElementById("contraseña");
-        const toggleIcon = passwordToggle.querySelector("i");
+    function initializePasswordToggle() {
+      const toggleButton = document.querySelector('.password-toggle');
+      const passwordInput = document.getElementById('contraseña');
+      const toggleIcon = document.querySelector('.password-toggle i');
   
-        if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-          toggleIcon.classList.replace("bi-eye-fill", "bi-eye-slash-fill");
-        } else {
-          passwordInput.type = "password";
-          toggleIcon.classList.replace("bi-eye-slash-fill", "bi-eye-fill");
-        }
-      });
+      if (toggleButton && passwordInput && toggleIcon) {
+        toggleButton.addEventListener('click', function(e) {
+          e.preventDefault(); // Prevenir comportamiento por defecto del botón
+  
+          // Cambiar el tipo de input
+          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordInput.setAttribute('type', type);
+  
+          // Cambiar el ícono
+          toggleIcon.classList.toggle('bi-eye-fill');
+          toggleIcon.classList.toggle('bi-eye-slash-fill');
+        });
+      }
     }
-  // Login modal
-  document.addEventListener("DOMContentLoaded", function () {
-    var loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
-    loginModal.show();
-  });
   
-    
-  });
+    initializePasswordToggle();
   
+    // Login modal
+    document.addEventListener("DOMContentLoaded", function () {
+      var loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+      loginModal.show();
+    });
+  
+    // Función para manejar el toggle de la contraseña
+    const togglePassword = document.querySelector('.password-toggle');
+    const passwordInput = document.getElementById('contraseña');
+    const toggleIcon = togglePassword.querySelector('i');
+  
+    if (togglePassword && passwordInput && toggleIcon) {
+        togglePassword.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Cambiar tipo de input
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Cambiar icono
+            toggleIcon.classList.toggle('bi-eye-fill');
+            toggleIcon.classList.toggle('bi-eye-slash-fill');
+        });
+    }
+  });

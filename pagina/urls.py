@@ -69,10 +69,21 @@ urlpatterns = [
 
 
     # Recuperación de contraseña 
-    path('recuperar_contrasena/', CustomPasswordResetView.as_view(), name='password_reset'),
-    path('recuperar_contrasena/enviado/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('restablecer/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('restablecer/completado/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('password_reset/', 
+         views.CustomPasswordResetView.as_view(), 
+         name='password_reset'),
+    
+    path('password_reset/done/', 
+         views.CustomPasswordResetDoneView.as_view(), 
+         name='password_reset_done'),
+    
+    path('reset/<uidb64>/<token>/', 
+         views.CustomPasswordResetConfirmView.as_view(), 
+         name='password_reset_confirm'),
+    
+    path('reset/done/', 
+         views.CustomPasswordResetCompleteView.as_view(), 
+         name='password_reset_complete'),
     
     # Productos
     path('productos/', views.productos, name='productos'),
