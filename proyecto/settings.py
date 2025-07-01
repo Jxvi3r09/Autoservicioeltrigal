@@ -29,7 +29,7 @@ DEBUG = True
 
 
 ALLOWED_HOSTS = ['eltrigal.artisandev.site', 'www.eltrigal.artisandev.site']
-
+CSRF_TRUSTED_ORIGINS = ['https://eltrigal.artisandev.site']
 
 
 # Application definition
