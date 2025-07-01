@@ -82,16 +82,16 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 
 
 
-# desconecte la base de datos
+
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'proyecto',
-    'USER': 'root',
-    'PASSWORD':'yeisson2808',  # Asegúrate de que sea la contraseña correcta
-    'HOST': 'localhost',  # Asegúrate de que solo sea la IP
-    'PORT': '3306',  # Solo el número del puerto, sin IP
-}
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('DB_NAME', 'eltrigal'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', 'db'),  # <--- debe ser 'db'
+        'PORT': os.environ.get('DB_PORT', '3306'), # <--- debe ser '3306'
+    }
 }
 #
 # DATABASES = {
@@ -139,7 +139,8 @@ USE_I18N = True
 #Archivos estaticos
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'pagina/static'),)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pagina/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # <-- Agrega esta línea
 
 LOGIN_REDIRECT_URL = "inicio_inventario"  # ✅ Redirige a inicio_inventario tras iniciar sesión
 # Default primary key field type

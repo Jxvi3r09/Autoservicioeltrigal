@@ -1,0 +1,97 @@
+services:
+  # --- Django Application Service ---
+  web:
+    # Build the image from the Dockerfile in the current directory
+    build: .
+    # Name the custom image using the project name for easy identification
+    image: eltrigal_web
+    # Name the running container
+    container_name: eltrigal_app
+    # Use Gunicorn, a production-ready WSGI server, and point it to your project's WSGI application.
+    # Assumes your main Django project directory is 'eltrigal'
+    command: gunicorn --bind 0.0.0.0:8000 proyecto.wsgi:application
+    volumes:
+      # Mount local code into the container for live development
+      - .:/app
+      # Use named volumes for persistent static and media files
+      - eltrigal_static_volume:/app/staticfiles
+      - eltrigal_media_volume:/app/media
+    ports:
+      - "8014:8000"
+    networks:
+      - eltrigal_network    # Changed from eltrigal_network521 to match the defined network
+    env_file:
+      - .env # Load all environment variables from .env file
+    # While you can explicitly list environment variables here,
+    # using `env_file` is cleaner if all are in .env.
+    # The variables listed here will override those in .env if duplicated.
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db # This should always be the service name of the database container
+      - DB_PORT=${DB_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+    # This service will not start until the 'db' service reports as healthy
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # --- MySQL Database Service ---
+  db:
+    image: mysql:8.0
+    container_name: eltrigal_mysql_db
+    # Essential for MySQL 8.0 compatibility with older clients/libraries like mysqlclient in Django
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      # Use a named volume for persistent database data
+      - eltrigal_mysql_data:/var/lib/mysql
+    networks:
+      - eltrigal_network    # This is already correct
+    ports:
+      - "3315:3306"
+    # Healthcheck ensures the database is fully initialized and ready
+    # for connections before other services start.
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- phpMyAdmin Service ---
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: eltrigal_phpmyadmin_gui
+    environment:
+      PMA_HOST: db # Points to the database service
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} # Use the root password from your .env
+    ports:
+      - "8030:80"
+    networks:
+      - eltrigal_network    # This is already correct
+    # This service also waits for the database to be healthy
+    depends_on:
+      db:
+        condition: service_healthy
+
+# --- Network Definition ---
+# A dedicated network for the project's services to communicate
+networks:
+  eltrigal_network:
+    driver: bridge
+
+# --- Volume Definitions ---
+# Defines the named volumes for data persistence
+volumes:
+  eltrigal_mysql_data: {}
+  eltrigal_static_volume: {}
+  eltrigal_media_volume: {}
